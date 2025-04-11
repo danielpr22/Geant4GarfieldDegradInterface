@@ -74,8 +74,8 @@ target_link_libraries(ALICE -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIB
 #
 
 set(ALICE_SCRIPTS
-  vis.mac
-  run1.mac
+  #vis.mac
+  #run1.mac
   Ne_90_CO2_10_N2_5_with_mg.gas
 )
 

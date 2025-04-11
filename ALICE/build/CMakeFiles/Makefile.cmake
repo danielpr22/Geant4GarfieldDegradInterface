@@ -25,8 +25,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeSystem.cmake"
-  "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/run1.mac"
-  "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/vis.mac"
   "/home/Daniel/root/root_install/cmake/ROOTConfig-targets-release.cmake"
   "/home/Daniel/root/root_install/cmake/ROOTConfig-targets.cmake"
   "/home/Daniel/root/root_install/cmake/ROOTConfig-version.cmake"
@@ -118,8 +116,6 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "vis.mac"
-  "run1.mac"
   "Ne_90_CO2_10_N2_5_with_mg.gas"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
