@@ -569,6 +569,66 @@ CMakeFiles/ALICE.dir/src/EventAction.cc.o: \
  /home/Daniel/root/root_install/include/Rtypes.h \
  /home/Daniel/root/root_install/include/ROOT/TRWSpinLock.hxx \
  /home/Daniel/root/root_install/include/ROOT/TSpinMutex.hxx \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericAnalysisManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4ToolsAnalysisManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VAnalysisManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisManagerState.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisVerbose.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisUtilities.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VTBaseHnManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4HnInformation.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4BinScheme.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Fcn.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VAnalysisManager.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4HnManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4BaseAnalysisManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4NtupleBookingManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/ntuple_booking \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/cids \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/cid \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/typedefs \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/forit \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4NtupleBookingManager.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VNtupleManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VFileManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4BaseFileManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VTHnFileManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TH1ToolsManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnToolsManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnManager.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnMessenger.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnToolsManager.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnMessenger.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Tokenizer.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TH2ToolsManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TH3ToolsManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TP1ToolsManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TP2ToolsManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h1d \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h1 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/b1 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/base_histo \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/histo_data \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/axes \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/axis \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/eqT \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h2d \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h2 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/b2 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h3d \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h3 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/b3 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p1d \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p1 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/profile_data \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p2d \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p2 \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4ToolsAnalysisManager.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericAnalysisManager.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericFileManager.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericFileManager.icc \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4SDManager.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4HCtable.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4SDStructure.hh \
@@ -722,66 +782,6 @@ CMakeFiles/ALICE.dir/src/EventAction.cc.o: \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Orb.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Orb.icc \
  /home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/include/Analysis.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericAnalysisManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4ToolsAnalysisManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VAnalysisManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisManagerState.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisVerbose.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4AnalysisUtilities.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VTBaseHnManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4HnInformation.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4BinScheme.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Fcn.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VAnalysisManager.icc \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4HnManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4BaseAnalysisManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4NtupleBookingManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/ntuple_booking \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/cids \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/cid \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/typedefs \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/forit \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4NtupleBookingManager.icc \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VNtupleManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VFileManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4BaseFileManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VTHnFileManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TH1ToolsManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnToolsManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnManager.icc \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnMessenger.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnToolsManager.icc \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4THnMessenger.icc \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Tokenizer.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TH2ToolsManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TH3ToolsManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TP1ToolsManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4TP2ToolsManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h1d \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h1 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/b1 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/base_histo \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/histo_data \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/axes \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/axis \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/eqT \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h2d \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h2 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/b2 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h3d \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/h3 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/b3 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p1d \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p1 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/profile_data \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p2d \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/tools/histo/p2 \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4ToolsAnalysisManager.icc \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericAnalysisManager.icc \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericFileManager.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4GenericFileManager.icc \
  /home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/include/SteppingAction.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4UserSteppingAction.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Types.hh \

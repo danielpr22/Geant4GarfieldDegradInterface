@@ -40,7 +40,7 @@
 #/param/InActivateModel HeedNewTrackModel
 #/param/InActivateModel HeedDeltaElectronModel
 
-/analysis/setFileName test
+/analysis/setFileName output.root
 
 ####################################
 ############ Verbosities ###########

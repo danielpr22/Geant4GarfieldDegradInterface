@@ -28,7 +28,7 @@
 
 /run/numberOfThreads 1
 /control/cout/ignoreThreadsExcept 0
-#/control/cout/setCoutFile output.dmp
+# /control/cout/setCoutFile output.dmp
 /ALICE/phys/setLowLimitE 20. eV
 /ALICE/phys/InitializePhysics emlivermore
 /ALICE/phys/AddParametrisation
@@ -40,7 +40,7 @@
 #/param/InActivateModel HeedNewTrackModel
 #/param/InActivateModel HeedDeltaElectronModel
 
-/analysis/setFileName test
+/analysis/setFileName output.root
 
 ####################################
 ############ Verbosities ###########

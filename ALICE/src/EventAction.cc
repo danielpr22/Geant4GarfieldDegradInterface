@@ -4,12 +4,18 @@
 #include "G4EventManager.hh"
 #include "G4ios.hh"
 #include "RunAction.hh"
+#include "G4AnalysisManager.hh"
 
 #include "G4SDManager.hh"
 #include "G4Threading.hh"
 #include "DetectorConstruction.hh"
 #include "Analysis.hh"
 #include "SteppingAction.hh"
+
+
+auto analysisManager = G4AnalysisManager::Instance();
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
 EventAction::EventAction() {
   
