@@ -1,0 +1,7 @@
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/build/CMakeFiles/ALICE.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/build/CMakeFiles/edit_cache.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/build/CMakeFiles/rebuild_cache.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/build/CMakeFiles/list_install_components.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/build/CMakeFiles/install.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/build/CMakeFiles/install/local.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE/build/CMakeFiles/install/strip.dir

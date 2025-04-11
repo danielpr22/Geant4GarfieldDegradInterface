@@ -25,7 +25,7 @@ GasBoxSD::~GasBoxSD(){}
 
 void GasBoxSD::Initialize(G4HCofThisEvent * HCE){
     fGasBoxHitsCollection = new GasBoxHitsCollection(SensitiveDetectorName, collectionName[0]);
-    if(GBHCID==-1){
+    if(GBHCID == -1){
         GBHCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
     }
     HCE->AddHitsCollection(GBHCID,fGasBoxHitsCollection);

@@ -74,8 +74,8 @@ void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTra
     }
     PlotTrack();
     fastStep.KillPrimaryTrack();
-    fastStep.SetPrimaryTrackPathLength(0.0);
-    fastStep.SetTotalEnergyDeposited(ekin_keV*keV);
+    fastStep.ProposePrimaryTrackPathLength(0.0);
+    fastStep.ProposeTotalEnergyDeposited(ekin_keV*keV);
 
 }
 

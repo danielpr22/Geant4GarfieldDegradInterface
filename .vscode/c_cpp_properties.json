@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:GARFIELD_DIR}/**",
+                "${env:GARFIELD_HOME}/**",
+                "${env:GEANT4_DIR}/**",
+                "${env:ROOTSYS}/**",
+                "${env:G4LIB}",
+                "${env:GARFIELD_LIB}/**",
+                "${env:LD_LIBRARY_PATH}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

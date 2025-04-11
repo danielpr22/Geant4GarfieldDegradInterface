@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------
 # Setup the project
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10)
 project(ALICE)
 
 #----------------------------------------------------------------------------
@@ -33,10 +33,14 @@ include(${ROOT_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Setup GARFIELD++ include directories
-include_directories($ENV{GARFIELD_HOME}/Include)
-include_directories($ENV{GARFIELD_HOME}/Heed)
+include_directories($ENV{GARFIELD_DIR})
+include_directories($ENV{GEANT4_DIR}/)
+include_directories($ENV{GARFIELD_HOME}/include)
+include_directories($ENV{GARFIELD_HOME}/share/Heed)
 # Add additional libraries needed for GARFIELD++
 link_directories($ENV{GARFIELD_LIB})
+
+
 IF(APPLE)
     # Fix linking on 10.14+. See https://stackoverflow.com/questions/54068035
     LINK_DIRECTORIES(/usr/local/lib)

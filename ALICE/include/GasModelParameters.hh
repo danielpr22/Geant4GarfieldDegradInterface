@@ -1,4 +1,4 @@
-#ifndef GasModelParameters_hh
+//#ifndef GasModelParameters_hh
 #define GasModelParameters_hh
 
 #include "G4SystemOfUnits.hh"
@@ -88,4 +88,4 @@ class GasModelParameters{
     double vDeltaGate;
 };
 
-#endif
+//#endif

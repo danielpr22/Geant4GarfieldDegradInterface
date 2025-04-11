@@ -60,7 +60,7 @@
 #include "G4IonParametrisedLossModel.hh"
 #include "G4NuclearStopping.hh"
 
-#include "G4EmProcessOptions.hh"
+#include "G4EmParameters.hh"
 #include "G4MscStepLimitType.hh"
 
 #include "G4LossTableManager.hh"
@@ -167,21 +167,17 @@ void PhysListEmStandard::ConstructProcess() {
     // Main options and setting parameters are shown here.
     // Several of them have default values.
     //
-    G4EmProcessOptions emOptions;
-    
-    // physics tables
-    //
-    emOptions.SetMinEnergy(10 * eV);      // default 100 eV
-    emOptions.SetMaxEnergy(10 * TeV);     // default 100 TeV
-    emOptions.SetDEDXBinning(12 * 10);    // default=12*7
-    emOptions.SetLambdaBinning(12 * 10);  // default=12*7
-    
-    // multiple coulomb scattering
-    //
-    emOptions.SetMscStepLimitation(fUseSafety);  // default
-    
+    G4EmParameters* emOptions = G4EmParameters::Instance();
+
+    // Set physics tables
+    emOptions->SetMinEnergy(10 * eV);      // default 100 eV
+    emOptions->SetMaxEnergy(10 * TeV);     // default 100 TeV
+    emOptions->SetNumberOfBinsPerDecade(120); // Adjust binning if needed
+
+    // Multiple Coulomb scattering
+    emOptions->SetMscStepLimitType(fUseSafety);  // default
+
     // Deexcitation
-    //
     G4VAtomDeexcitation* de = new G4UAtomicDeexcitation();
     de->SetFluo(true);
     de->SetAuger(false);

@@ -25,6 +25,7 @@ class GasBoxSD : public G4VSensitiveDetector{
 	
 	private:
 	
+	using GasBoxHitsCollection = G4THitsCollection<GasBoxHit>;
     GasBoxHitsCollection* fGasBoxHitsCollection;
     G4int GBHCID;
 	

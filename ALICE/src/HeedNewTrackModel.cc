@@ -106,8 +106,8 @@ void HeedNewTrackModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G
     // (at the place it would reach without the change of its momentum).
     fastStep.ProposePrimaryTrackFinalPosition( endTrack.GetPosition(), false );
     G4cout << "Particle location: " << endTrack.GetPosition() << G4endl;
-    fastStep.SetPrimaryTrackFinalKineticEnergyAndDirection(ekin_eV*eV, G4ThreeVector(dx,dy,dz),false);
-    fastStep.SetTotalEnergyDeposited((ekin_keV*1000-ekin_eV)*eV);
+    fastStep.ProposePrimaryTrackFinalKineticEnergyAndDirection(ekin_eV*eV, G4ThreeVector(dx,dy,dz),false);
+    fastStep.ProposeTotalEnergyDeposited((ekin_keV*1000-ekin_eV)*eV);
     std::cout << "Particle Tracked out of the gas volume" << std::endl;
 }
 

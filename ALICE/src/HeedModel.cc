@@ -273,45 +273,50 @@ void HeedModel::CreateFieldView(){
 }
 
 // Drift the electrons from point of creation towards the electrodes (This is common for both models, i.e. HeedDeltaElectron and HeedModel) (see Garfield++ documentation)
-void HeedModel::Drift(double x, double y, double z, double t){
-    if(driftElectrons){
-        DriftLineTrajectory* dlt = new DriftLineTrajectory();
-        G4TrackingManager* fpTrackingManager = G4EventManager::GetEventManager()->GetTrackingManager();
-        fpTrackingManager->SetTrajectory(dlt);
-        if(driftRKF){
-            fDriftRKF->DriftElectron(x,y,z,t);
-            unsigned int n = fDriftRKF->GetNumberOfDriftLinePoints();
-            double xi,yi,zi,ti;
-            for(int i=0;i<n;i++){
-                fDriftRKF->GetDriftLinePoint(i,xi,yi,zi,ti);
-                if(G4VVisManager::GetConcreteInstance() && i % 1000 == 0)
-                  dlt->AppendStep(G4ThreeVector(xi*CLHEP::cm,yi*CLHEP::cm,zi*CLHEP::cm),ti);
-            }
-        }
-        else if(trackMicro){
-            fAvalanche->AvalancheElectron(x,y,z,t,0,0,0,0);
-            unsigned int nLines = fAvalanche->GetNumberOfElectronEndpoints();
-            for(int i=0;i<nLines;i++){
-                unsigned int n = fAvalanche->GetNumberOfElectronDriftLinePoints(i);
-                double xi,yi,zi,ti;
-                for(int j=0;j<n;j++){
-                    fAvalanche->GetElectronDriftLinePoint(xi,yi,zi,ti,j,i);
-                    if(G4VVisManager::GetConcreteInstance() && i % 1000 == 0)
-                      dlt->AppendStep(G4ThreeVector(xi*CLHEP::cm,yi*CLHEP::cm,zi*CLHEP::cm),ti);
-                }
-            }
-        }
-        else{
-            fDrift->DriftElectron(x,y,z,t);
-            unsigned int n = fDrift->GetNumberOfDriftLinePoints();
-            double xi,yi,zi,ti;
-            for(int i=0;i<n;i++){
-                fDrift->GetDriftLinePoint(i,xi,yi,zi,ti);
-                if(G4VVisManager::GetConcreteInstance() && i % 1000 == 0)
-                  dlt->AppendStep(G4ThreeVector(xi*CLHEP::cm,yi*CLHEP::cm,zi*CLHEP::cm),ti);
-            }
-        }
-    }
+void HeedModel::Drift(double x, double y, double z, double t) {
+  if (driftElectrons) {
+      DriftLineTrajectory* dlt = new DriftLineTrajectory();
+      G4TrackingManager* fpTrackingManager = G4EventManager::GetEventManager()->GetTrackingManager();
+      fpTrackingManager->SetTrajectory(dlt);
+
+      if (driftRKF) {
+          fDriftRKF->DriftElectron(x, y, z, t);
+          unsigned int n = fDriftRKF->GetNumberOfDriftLinePoints();
+          double xi, yi, zi, ti;
+          int status; // Add a variable to store the status
+          for (unsigned int i = 0; i < n; i++) {
+              fDriftRKF->GetEndPoint(xi, yi, zi, ti, status); // Pass correct arguments
+              if (G4VVisManager::GetConcreteInstance() && i % 1000 == 0) {
+                  dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
+              }
+          }
+      } else if (trackMicro) {
+          fAvalanche->AvalancheElectron(x, y, z, t, 0, 0, 0, 0);
+          unsigned int nLines = fAvalanche->GetNumberOfElectronEndpoints();
+          for (unsigned int i = 0; i < nLines; i++) {
+              unsigned int n = fAvalanche->GetNumberOfElectronDriftLinePoints(i);
+              double xi, yi, zi, ti;
+              for (unsigned int j = 0; j < n; j++) {
+                  fAvalanche->GetElectronDriftLinePoint(xi, yi, zi, ti, j, i);
+                  if (G4VVisManager::GetConcreteInstance() && j % 1000 == 0) {
+                      dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
+                  }
+              }
+          }
+      } else {
+          fDrift->DriftElectron(x, y, z, t);
+          unsigned int n = fDrift->GetNumberOfIonEndpoints();
+          double x0, y0, z0, t0;
+          double x1, y1, z1, t1;
+          int status;
+          for (unsigned int i = 0; i < n; i++) {
+              fDrift->GetIonEndpoint(i, x0, y0, z0, t0, x1, y1, z1, t1, status);
+              if (G4VVisManager::GetConcreteInstance() && i % 1000 == 0) {
+                  dlt->AppendStep(G4ThreeVector(x1 * CLHEP::cm, y1 * CLHEP::cm, z1 * CLHEP::cm), t1);
+              }
+          }
+      }
+  }
 }
 
 // Plot the track, only called when visualization is turned on by the user

@@ -10,6 +10,7 @@
 
 #include "SolidTube.hh"      //Geometry
 #include "ComponentAnalyticField.hh"  //Garfield field
+#include "Sensor.hh"
 #include "G4ThreeVector.hh"
 #include "ComponentVoxel.hh"
 #include "AvalancheMicroscopic.hh"

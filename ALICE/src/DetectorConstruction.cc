@@ -147,7 +147,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   
   physiWorld = new G4PVPlacement(0, G4ThreeVector(), logicWorld,
                                                     "solidWorld_phys", 0, false, 0, checkOverlaps);
-  logicWorld->SetVisAttributes(G4VisAttributes::Invisible);
+  logicWorld->SetVisAttributes(& G4VisAttributes::GetInvisible());
   
   //GasBox volume
   G4RotationMatrix* myRotation = new G4RotationMatrix();
