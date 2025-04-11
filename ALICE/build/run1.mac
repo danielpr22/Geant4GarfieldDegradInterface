@@ -1,9 +1,9 @@
 /ALICE/geometry/SetGasPressure 0.6 bar
 
 /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 0.001
-#/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0. 10000000
-#/gasModelParameters/heed/heednewtrack/addparticle e- 0.1 100000.
-#/gasModelParameters/heed/heednewtrack/addparticle e+ 1000. 100000.
+/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0. 10000000
+/gasModelParameters/heed/heednewtrack/addparticle e- 0.1 100000.
+/gasModelParameters/heed/heednewtrack/addparticle e+ 1000. 100000.
 #/gasModelParameters/heed/heednewtrack/addparticle proton 1000. 1000000.
 #/gasModelParameters/heed/heednewtrack/addparticle mu+ 1000. 1000000.
 #/gasModelParameters/heed/heednewtrack/addparticle mu- 1000. 1000000.
@@ -34,8 +34,12 @@
 /ALICE/phys/AddParametrisation
 /process/em/AddPAIRegion all RegionGasBox PAIPhoton
 
+
 #/random/setSeeds 0 0
 /run/initialize
+
+# Added by me
+/control/execute vis.mac
 
 #/param/InActivateModel HeedNewTrackModel
 #/param/InActivateModel HeedDeltaElectronModel
