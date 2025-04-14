@@ -46,21 +46,19 @@ int main(int argc, char** argv) {
   DetectorConstruction* detector = new DetectorConstruction(gmp);
   runManager->SetUserInitialization(detector);
 
-  
   G4cout << "Creation of PhysicsList" << G4endl;
   PhysicsList* physics = new PhysicsList();
   runManager->SetUserInitialization(physics);
   
   runManager->SetUserInitialization(new MyUserActionInitialization());
  
-   // get the pointer to the User Interface manager
+  // get the pointer to the User Interface manager
   G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
   G4VisManager* visManager = new G4VisExecutive();
   visManager->Initialize();
 
   //runManager->Initialize();
-
   if (argc == 1) {
     // Interactive mode
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
