@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Created by Freecad g4cad workbench (https://github.com/drhlxiao/g4cad) at  Mon Apr 14 11:00:31 2025.-->
+      <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    <define>
+      <constant name="HALFPI" value="pi/2"/>
+      <constant name="PI" value="1.0*pi"/>
+      <constant name="TWOPI" value="2.0*pi"/>
+      <position name="center" x="0.000000e+00" y="0.000000e+00" z="0.000000e+00" unit="mm"/>
+      <rotation name="identity" x="0.000000e+00" y="0.000000e+00" z="0.000000e+00" unit="deg"/>
+      <position name="__v___sol_42__00000" x="3.510330e+00" y="1.917702e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00001" x="3.399358e+00" y="2.108166e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00002" x="3.510330e+00" y="1.917702e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00003" x="3.399358e+00" y="2.108166e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00004" x="3.278062e+00" y="2.292228e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00005" x="3.278062e+00" y="2.292228e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00006" x="3.146811e+00" y="2.469329e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00007" x="3.146811e+00" y="2.469329e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00008" x="3.006002e+00" y="2.638930e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00009" x="3.006002e+00" y="2.638930e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00010" x="2.856065e+00" y="2.800516e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00011" x="2.856065e+00" y="2.800516e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00012" x="2.697454e+00" y="2.953598e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00013" x="2.697454e+00" y="2.953598e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00014" x="2.530651e+00" y="3.097710e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00015" x="2.530651e+00" y="3.097710e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00016" x="2.356162e+00" y="3.232414e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00017" x="2.356162e+00" y="3.232414e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00018" x="2.174518e+00" y="3.357301e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00019" x="2.174518e+00" y="3.357301e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00020" x="1.986270e+00" y="3.471993e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00021" x="1.986270e+00" y="3.471993e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00022" x="1.791989e+00" y="3.576140e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00023" x="1.791989e+00" y="3.576140e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00024" x="1.592267e+00" y="3.669426e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00025" x="1.592267e+00" y="3.669426e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00026" x="1.387708e+00" y="3.751568e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00027" x="1.387708e+00" y="3.751568e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00028" x="1.178936e+00" y="3.822317e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00029" x="1.178936e+00" y="3.822317e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00030" x="9.665827e-01" y="3.881458e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00031" x="9.665827e-01" y="3.881458e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00032" x="7.512941e-01" y="3.928811e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00033" x="7.512941e-01" y="3.928811e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00034" x="5.337238e-01" y="3.964232e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00035" x="5.337238e-01" y="3.964232e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00036" x="3.145327e-01" y="3.987614e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00037" x="3.145327e-01" y="3.987614e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00038" x="9.438634e-02" y="3.998886e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00039" x="9.438634e-02" y="3.998886e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00040" x="-1.260467e-01" y="3.998014e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00041" x="-1.260467e-01" y="3.998014e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00042" x="-3.460969e-01" y="3.984999e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00043" x="-3.460969e-01" y="3.984999e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00044" x="-5.650960e-01" y="3.959882e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00045" x="-5.650960e-01" y="3.959882e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00046" x="-7.823790e-01" y="3.922739e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00047" x="-7.823790e-01" y="3.922739e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00048" x="-9.972858e-01" y="3.873683e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00049" x="-9.972858e-01" y="3.873683e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00050" x="-1.209164e+00" y="3.812863e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00051" x="-1.209164e+00" y="3.812863e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00052" x="-1.417370e+00" y="3.740463e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00053" x="-1.417370e+00" y="3.740463e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00054" x="-1.621271e+00" y="3.656703e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00055" x="-1.621271e+00" y="3.656703e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00056" x="-1.820249e+00" y="3.561838e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00057" x="-1.820249e+00" y="3.561838e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00058" x="-2.013699e+00" y="3.456156e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00059" x="-2.013699e+00" y="3.456156e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00060" x="-2.201033e+00" y="3.339978e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00061" x="-2.201033e+00" y="3.339978e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00062" x="-2.381683e+00" y="3.213656e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00063" x="-2.381683e+00" y="3.213656e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00064" x="-2.555099e+00" y="3.077575e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00065" x="-2.555099e+00" y="3.077575e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00066" x="-2.720756e+00" y="2.932147e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00067" x="-2.720756e+00" y="2.932147e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00068" x="-2.878150e+00" y="2.777814e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00069" x="-2.878150e+00" y="2.777814e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00070" x="-3.026803e+00" y="2.615045e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00071" x="-3.026803e+00" y="2.615045e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00072" x="-3.166264e+00" y="2.444335e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00073" x="-3.166264e+00" y="2.444335e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00074" x="-3.296109e+00" y="2.266201e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00075" x="-3.296109e+00" y="2.266201e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00076" x="-3.415944e+00" y="2.081184e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00077" x="-3.415944e+00" y="2.081184e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00078" x="-3.525405e+00" y="1.889847e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00079" x="-3.525405e+00" y="1.889847e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00080" x="-3.624159e+00" y="1.692771e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00081" x="-3.624159e+00" y="1.692771e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00082" x="-3.711907e+00" y="1.490554e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00083" x="-3.711907e+00" y="1.490554e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00084" x="-3.788381e+00" y="1.283810e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00085" x="-3.788381e+00" y="1.283810e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00086" x="-3.853351e+00" y="1.073167e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00087" x="-3.853351e+00" y="1.073167e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00088" x="-3.906618e+00" y="8.592646e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00089" x="-3.906618e+00" y="8.592646e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00090" x="-3.948021e+00" y="6.427530e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00091" x="-3.948021e+00" y="6.427530e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00092" x="-3.977434e+00" y="4.242894e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00093" x="-3.977434e+00" y="4.242894e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00094" x="-3.994767e+00" y="2.045372e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00095" x="-3.994767e+00" y="2.045372e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00096" x="-3.999969e+00" y="-1.583618e-02" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00097" x="-3.999969e+00" y="-1.583618e-02" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00098" x="-3.993022e+00" y="-2.361614e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00099" x="-3.993022e+00" y="-2.361614e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00100" x="-3.973949e+00" y="-4.557695e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00101" x="-3.973949e+00" y="-4.557695e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00102" x="-3.942808e+00" y="-6.739934e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00103" x="-3.942808e+00" y="-6.739934e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00104" x="-3.899692e+00" y="-8.901704e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00105" x="-3.899692e+00" y="-8.901704e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00106" x="-3.844733e+00" y="-1.103644e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00107" x="-3.844733e+00" y="-1.103644e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00108" x="-3.778097e+00" y="-1.313766e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00109" x="-3.778097e+00" y="-1.313766e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00110" x="-3.699988e+00" y="-1.519898e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00111" x="-3.699988e+00" y="-1.519898e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00112" x="-3.610642e+00" y="-1.721414e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00113" x="-3.610642e+00" y="-1.721414e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00114" x="-3.510330e+00" y="-1.917702e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00115" x="-3.510330e+00" y="-1.917702e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00116" x="-3.399358e+00" y="-2.108166e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00117" x="-3.399358e+00" y="-2.108166e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00118" x="-3.278062e+00" y="-2.292228e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00119" x="-3.278062e+00" y="-2.292228e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00120" x="-3.146811e+00" y="-2.469329e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00121" x="-3.146811e+00" y="-2.469329e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00122" x="-3.006002e+00" y="-2.638930e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00123" x="-3.006002e+00" y="-2.638930e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00124" x="-2.856065e+00" y="-2.800516e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00125" x="-2.856065e+00" y="-2.800516e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00126" x="-2.697454e+00" y="-2.953598e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00127" x="-2.697454e+00" y="-2.953598e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00128" x="-2.530651e+00" y="-3.097710e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00129" x="-2.530651e+00" y="-3.097710e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00130" x="-2.356162e+00" y="-3.232414e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00131" x="-2.356162e+00" y="-3.232414e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00132" x="-2.174518e+00" y="-3.357301e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00133" x="-2.174518e+00" y="-3.357301e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00134" x="-1.986270e+00" y="-3.471993e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00135" x="-1.986270e+00" y="-3.471993e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00136" x="-1.791989e+00" y="-3.576140e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00137" x="-1.791989e+00" y="-3.576140e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00138" x="-1.592267e+00" y="-3.669426e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00139" x="-1.592267e+00" y="-3.669426e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00140" x="-1.387708e+00" y="-3.751568e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00141" x="-1.387708e+00" y="-3.751568e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00142" x="-1.178936e+00" y="-3.822317e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00143" x="-1.178936e+00" y="-3.822317e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00144" x="-9.665827e-01" y="-3.881458e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00145" x="-9.665827e-01" y="-3.881458e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00146" x="-7.512941e-01" y="-3.928811e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00147" x="-7.512941e-01" y="-3.928811e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00148" x="-5.337238e-01" y="-3.964232e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00149" x="-5.337238e-01" y="-3.964232e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00150" x="-3.145327e-01" y="-3.987614e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00151" x="-3.145327e-01" y="-3.987614e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00152" x="-9.438634e-02" y="-3.998886e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00153" x="-9.438634e-02" y="-3.998886e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00154" x="1.260467e-01" y="-3.998014e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00155" x="1.260467e-01" y="-3.998014e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00156" x="3.460969e-01" y="-3.984999e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00157" x="3.460969e-01" y="-3.984999e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00158" x="5.650960e-01" y="-3.959882e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00159" x="5.650960e-01" y="-3.959882e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00160" x="7.823790e-01" y="-3.922739e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00161" x="7.823790e-01" y="-3.922739e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00162" x="9.972858e-01" y="-3.873683e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00163" x="9.972858e-01" y="-3.873683e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00164" x="1.209164e+00" y="-3.812863e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00165" x="1.209164e+00" y="-3.812863e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00166" x="1.417370e+00" y="-3.740463e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00167" x="1.417370e+00" y="-3.740463e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00168" x="1.621271e+00" y="-3.656703e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00169" x="1.621271e+00" y="-3.656703e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00170" x="1.820249e+00" y="-3.561838e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00171" x="1.820249e+00" y="-3.561838e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00172" x="2.013699e+00" y="-3.456156e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00173" x="2.013699e+00" y="-3.456156e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00174" x="2.201033e+00" y="-3.339978e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00175" x="2.201033e+00" y="-3.339978e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00176" x="2.381683e+00" y="-3.213656e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00177" x="2.381683e+00" y="-3.213656e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00178" x="2.555099e+00" y="-3.077575e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00179" x="2.555099e+00" y="-3.077575e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00180" x="2.720756e+00" y="-2.932147e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00181" x="2.720756e+00" y="-2.932147e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00182" x="2.878150e+00" y="-2.777814e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00183" x="2.878150e+00" y="-2.777814e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00184" x="3.026803e+00" y="-2.615045e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00185" x="3.026803e+00" y="-2.615045e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00186" x="3.166264e+00" y="-2.444335e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00187" x="3.166264e+00" y="-2.444335e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00188" x="3.296109e+00" y="-2.266201e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00189" x="3.296109e+00" y="-2.266201e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00190" x="3.415944e+00" y="-2.081184e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00191" x="3.415944e+00" y="-2.081184e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00192" x="3.525405e+00" y="-1.889847e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00193" x="3.525405e+00" y="-1.889847e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00194" x="3.624159e+00" y="-1.692771e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00195" x="3.624159e+00" y="-1.692771e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00196" x="3.711907e+00" y="-1.490554e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00197" x="3.711907e+00" y="-1.490554e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00198" x="3.788381e+00" y="-1.283810e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00199" x="3.788381e+00" y="-1.283810e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00200" x="3.853351e+00" y="-1.073167e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00201" x="3.853351e+00" y="-1.073167e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00202" x="3.906618e+00" y="-8.592646e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00203" x="3.906618e+00" y="-8.592646e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00204" x="3.948021e+00" y="-6.427530e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00205" x="3.948021e+00" y="-6.427530e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00206" x="3.977434e+00" y="-4.242894e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00207" x="3.977434e+00" y="-4.242894e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00208" x="3.994767e+00" y="-2.045372e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00209" x="3.994767e+00" y="-2.045372e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00210" x="3.999969e+00" y="1.583618e-02" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00211" x="3.999969e+00" y="1.583618e-02" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00212" x="3.993022e+00" y="2.361614e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00213" x="3.993022e+00" y="2.361614e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00214" x="3.973949e+00" y="4.557695e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00215" x="3.973949e+00" y="4.557695e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00216" x="3.942808e+00" y="6.739934e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00217" x="3.942808e+00" y="6.739934e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00218" x="3.899692e+00" y="8.901704e-01" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00219" x="3.899692e+00" y="8.901704e-01" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00220" x="3.844733e+00" y="1.103644e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00221" x="3.844733e+00" y="1.103644e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00222" x="3.778097e+00" y="1.313766e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00223" x="3.778097e+00" y="1.313766e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00224" x="3.699988e+00" y="1.519898e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00225" x="3.699988e+00" y="1.519898e+00" z="3.000000e-01" unit="mm"/>
+      <position name="__v___sol_42__00226" x="3.610642e+00" y="1.721414e+00" z="2.400000e+01" unit="mm"/>
+      <position name="__v___sol_42__00227" x="3.610642e+00" y="1.721414e+00" z="3.000000e-01" unit="mm"/>
+    </define>
+    <materials>
+      <material name="Galaxy" Z="1" formula="H">
+        <D value="1e-25" unit="g/cm3"/>
+        <atom value="1.0"/>
+      </material>
+    </materials>
+    <solids>
+      <box name="__box_world__" x="1.000000e+04" y="1.000000e+04" z="1.000000e+04" lunit="mm"/>
+      <tessellated name="__sol_42_">
+        <triangular vertex1="__v___sol_42__00000" vertex2="__v___sol_42__00001" vertex3="__v___sol_42__00002" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00002" vertex2="__v___sol_42__00001" vertex3="__v___sol_42__00003" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00001" vertex2="__v___sol_42__00004" vertex3="__v___sol_42__00003" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00003" vertex2="__v___sol_42__00004" vertex3="__v___sol_42__00005" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00004" vertex2="__v___sol_42__00006" vertex3="__v___sol_42__00005" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00005" vertex2="__v___sol_42__00006" vertex3="__v___sol_42__00007" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00006" vertex2="__v___sol_42__00008" vertex3="__v___sol_42__00007" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00007" vertex2="__v___sol_42__00008" vertex3="__v___sol_42__00009" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00008" vertex2="__v___sol_42__00010" vertex3="__v___sol_42__00009" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00009" vertex2="__v___sol_42__00010" vertex3="__v___sol_42__00011" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00010" vertex2="__v___sol_42__00012" vertex3="__v___sol_42__00011" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00011" vertex2="__v___sol_42__00012" vertex3="__v___sol_42__00013" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00013" vertex2="__v___sol_42__00012" vertex3="__v___sol_42__00014" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00012" vertex2="__v___sol_42__00015" vertex3="__v___sol_42__00014" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00015" vertex2="__v___sol_42__00016" vertex3="__v___sol_42__00014" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00014" vertex2="__v___sol_42__00016" vertex3="__v___sol_42__00017" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00016" vertex2="__v___sol_42__00018" vertex3="__v___sol_42__00017" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00017" vertex2="__v___sol_42__00018" vertex3="__v___sol_42__00019" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00018" vertex2="__v___sol_42__00020" vertex3="__v___sol_42__00019" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00019" vertex2="__v___sol_42__00020" vertex3="__v___sol_42__00021" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00020" vertex2="__v___sol_42__00022" vertex3="__v___sol_42__00021" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00021" vertex2="__v___sol_42__00022" vertex3="__v___sol_42__00023" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00022" vertex2="__v___sol_42__00024" vertex3="__v___sol_42__00023" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00023" vertex2="__v___sol_42__00024" vertex3="__v___sol_42__00025" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00024" vertex2="__v___sol_42__00026" vertex3="__v___sol_42__00025" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00025" vertex2="__v___sol_42__00026" vertex3="__v___sol_42__00027" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00027" vertex2="__v___sol_42__00028" vertex3="__v___sol_42__00029" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00029" vertex2="__v___sol_42__00028" vertex3="__v___sol_42__00030" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00026" vertex2="__v___sol_42__00028" vertex3="__v___sol_42__00027" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00028" vertex2="__v___sol_42__00031" vertex3="__v___sol_42__00030" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00030" vertex2="__v___sol_42__00032" vertex3="__v___sol_42__00033" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00031" vertex2="__v___sol_42__00032" vertex3="__v___sol_42__00030" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00033" vertex2="__v___sol_42__00034" vertex3="__v___sol_42__00035" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00032" vertex2="__v___sol_42__00034" vertex3="__v___sol_42__00033" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00035" vertex2="__v___sol_42__00036" vertex3="__v___sol_42__00037" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00034" vertex2="__v___sol_42__00036" vertex3="__v___sol_42__00035" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00037" vertex2="__v___sol_42__00038" vertex3="__v___sol_42__00039" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00036" vertex2="__v___sol_42__00038" vertex3="__v___sol_42__00037" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00039" vertex2="__v___sol_42__00040" vertex3="__v___sol_42__00041" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00038" vertex2="__v___sol_42__00040" vertex3="__v___sol_42__00039" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00040" vertex2="__v___sol_42__00042" vertex3="__v___sol_42__00041" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00041" vertex2="__v___sol_42__00042" vertex3="__v___sol_42__00043" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00042" vertex2="__v___sol_42__00044" vertex3="__v___sol_42__00043" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00043" vertex2="__v___sol_42__00044" vertex3="__v___sol_42__00045" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00044" vertex2="__v___sol_42__00046" vertex3="__v___sol_42__00045" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00045" vertex2="__v___sol_42__00046" vertex3="__v___sol_42__00047" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00046" vertex2="__v___sol_42__00048" vertex3="__v___sol_42__00047" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00047" vertex2="__v___sol_42__00048" vertex3="__v___sol_42__00049" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00048" vertex2="__v___sol_42__00050" vertex3="__v___sol_42__00049" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00049" vertex2="__v___sol_42__00050" vertex3="__v___sol_42__00051" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00050" vertex2="__v___sol_42__00052" vertex3="__v___sol_42__00051" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00051" vertex2="__v___sol_42__00052" vertex3="__v___sol_42__00053" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00052" vertex2="__v___sol_42__00054" vertex3="__v___sol_42__00053" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00053" vertex2="__v___sol_42__00054" vertex3="__v___sol_42__00055" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00054" vertex2="__v___sol_42__00056" vertex3="__v___sol_42__00055" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00055" vertex2="__v___sol_42__00056" vertex3="__v___sol_42__00057" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00056" vertex2="__v___sol_42__00058" vertex3="__v___sol_42__00057" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00057" vertex2="__v___sol_42__00058" vertex3="__v___sol_42__00059" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00058" vertex2="__v___sol_42__00060" vertex3="__v___sol_42__00059" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00059" vertex2="__v___sol_42__00060" vertex3="__v___sol_42__00061" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00060" vertex2="__v___sol_42__00062" vertex3="__v___sol_42__00061" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00061" vertex2="__v___sol_42__00062" vertex3="__v___sol_42__00063" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00062" vertex2="__v___sol_42__00064" vertex3="__v___sol_42__00063" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00063" vertex2="__v___sol_42__00064" vertex3="__v___sol_42__00065" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00064" vertex2="__v___sol_42__00066" vertex3="__v___sol_42__00065" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00065" vertex2="__v___sol_42__00066" vertex3="__v___sol_42__00067" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00066" vertex2="__v___sol_42__00068" vertex3="__v___sol_42__00067" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00067" vertex2="__v___sol_42__00068" vertex3="__v___sol_42__00069" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00068" vertex2="__v___sol_42__00070" vertex3="__v___sol_42__00069" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00069" vertex2="__v___sol_42__00070" vertex3="__v___sol_42__00071" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00070" vertex2="__v___sol_42__00072" vertex3="__v___sol_42__00071" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00071" vertex2="__v___sol_42__00072" vertex3="__v___sol_42__00073" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00072" vertex2="__v___sol_42__00074" vertex3="__v___sol_42__00073" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00073" vertex2="__v___sol_42__00074" vertex3="__v___sol_42__00075" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00074" vertex2="__v___sol_42__00076" vertex3="__v___sol_42__00075" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00075" vertex2="__v___sol_42__00076" vertex3="__v___sol_42__00077" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00076" vertex2="__v___sol_42__00078" vertex3="__v___sol_42__00077" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00077" vertex2="__v___sol_42__00078" vertex3="__v___sol_42__00079" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00078" vertex2="__v___sol_42__00080" vertex3="__v___sol_42__00079" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00079" vertex2="__v___sol_42__00080" vertex3="__v___sol_42__00081" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00082" vertex2="__v___sol_42__00083" vertex3="__v___sol_42__00084" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00080" vertex2="__v___sol_42__00083" vertex3="__v___sol_42__00081" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00081" vertex2="__v___sol_42__00083" vertex3="__v___sol_42__00082" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00083" vertex2="__v___sol_42__00085" vertex3="__v___sol_42__00084" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00084" vertex2="__v___sol_42__00086" vertex3="__v___sol_42__00087" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00087" vertex2="__v___sol_42__00086" vertex3="__v___sol_42__00088" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00085" vertex2="__v___sol_42__00086" vertex3="__v___sol_42__00084" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00086" vertex2="__v___sol_42__00089" vertex3="__v___sol_42__00088" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00088" vertex2="__v___sol_42__00090" vertex3="__v___sol_42__00091" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00089" vertex2="__v___sol_42__00090" vertex3="__v___sol_42__00088" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00091" vertex2="__v___sol_42__00092" vertex3="__v___sol_42__00093" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00090" vertex2="__v___sol_42__00092" vertex3="__v___sol_42__00091" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00093" vertex2="__v___sol_42__00094" vertex3="__v___sol_42__00095" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00092" vertex2="__v___sol_42__00094" vertex3="__v___sol_42__00093" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00095" vertex2="__v___sol_42__00096" vertex3="__v___sol_42__00097" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00094" vertex2="__v___sol_42__00096" vertex3="__v___sol_42__00095" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00097" vertex2="__v___sol_42__00098" vertex3="__v___sol_42__00099" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00096" vertex2="__v___sol_42__00098" vertex3="__v___sol_42__00097" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00099" vertex2="__v___sol_42__00100" vertex3="__v___sol_42__00101" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00098" vertex2="__v___sol_42__00100" vertex3="__v___sol_42__00099" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00101" vertex2="__v___sol_42__00102" vertex3="__v___sol_42__00103" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00100" vertex2="__v___sol_42__00102" vertex3="__v___sol_42__00101" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00103" vertex2="__v___sol_42__00104" vertex3="__v___sol_42__00105" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00102" vertex2="__v___sol_42__00104" vertex3="__v___sol_42__00103" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00105" vertex2="__v___sol_42__00106" vertex3="__v___sol_42__00107" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00104" vertex2="__v___sol_42__00106" vertex3="__v___sol_42__00105" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00107" vertex2="__v___sol_42__00108" vertex3="__v___sol_42__00109" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00106" vertex2="__v___sol_42__00108" vertex3="__v___sol_42__00107" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00109" vertex2="__v___sol_42__00110" vertex3="__v___sol_42__00111" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00111" vertex2="__v___sol_42__00110" vertex3="__v___sol_42__00112" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00108" vertex2="__v___sol_42__00110" vertex3="__v___sol_42__00109" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00110" vertex2="__v___sol_42__00113" vertex3="__v___sol_42__00112" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00112" vertex2="__v___sol_42__00114" vertex3="__v___sol_42__00115" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00113" vertex2="__v___sol_42__00114" vertex3="__v___sol_42__00112" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00114" vertex2="__v___sol_42__00116" vertex3="__v___sol_42__00115" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00115" vertex2="__v___sol_42__00116" vertex3="__v___sol_42__00117" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00116" vertex2="__v___sol_42__00118" vertex3="__v___sol_42__00117" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00117" vertex2="__v___sol_42__00118" vertex3="__v___sol_42__00119" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00118" vertex2="__v___sol_42__00120" vertex3="__v___sol_42__00119" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00119" vertex2="__v___sol_42__00120" vertex3="__v___sol_42__00121" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00120" vertex2="__v___sol_42__00122" vertex3="__v___sol_42__00121" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00121" vertex2="__v___sol_42__00122" vertex3="__v___sol_42__00123" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00122" vertex2="__v___sol_42__00124" vertex3="__v___sol_42__00123" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00123" vertex2="__v___sol_42__00124" vertex3="__v___sol_42__00125" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00124" vertex2="__v___sol_42__00126" vertex3="__v___sol_42__00125" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00125" vertex2="__v___sol_42__00126" vertex3="__v___sol_42__00127" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00127" vertex2="__v___sol_42__00126" vertex3="__v___sol_42__00128" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00126" vertex2="__v___sol_42__00129" vertex3="__v___sol_42__00128" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00128" vertex2="__v___sol_42__00129" vertex3="__v___sol_42__00130" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00129" vertex2="__v___sol_42__00131" vertex3="__v___sol_42__00130" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00131" vertex2="__v___sol_42__00132" vertex3="__v___sol_42__00130" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00130" vertex2="__v___sol_42__00132" vertex3="__v___sol_42__00133" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00133" vertex2="__v___sol_42__00132" vertex3="__v___sol_42__00134" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00132" vertex2="__v___sol_42__00135" vertex3="__v___sol_42__00134" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00134" vertex2="__v___sol_42__00135" vertex3="__v___sol_42__00136" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00135" vertex2="__v___sol_42__00137" vertex3="__v___sol_42__00136" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00136" vertex2="__v___sol_42__00137" vertex3="__v___sol_42__00138" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00137" vertex2="__v___sol_42__00139" vertex3="__v___sol_42__00138" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00139" vertex2="__v___sol_42__00140" vertex3="__v___sol_42__00138" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00138" vertex2="__v___sol_42__00140" vertex3="__v___sol_42__00141" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00141" vertex2="__v___sol_42__00140" vertex3="__v___sol_42__00142" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00140" vertex2="__v___sol_42__00143" vertex3="__v___sol_42__00142" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00142" vertex2="__v___sol_42__00144" vertex3="__v___sol_42__00145" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00145" vertex2="__v___sol_42__00144" vertex3="__v___sol_42__00146" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00143" vertex2="__v___sol_42__00144" vertex3="__v___sol_42__00142" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00144" vertex2="__v___sol_42__00147" vertex3="__v___sol_42__00146" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00146" vertex2="__v___sol_42__00148" vertex3="__v___sol_42__00149" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00149" vertex2="__v___sol_42__00148" vertex3="__v___sol_42__00150" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00147" vertex2="__v___sol_42__00148" vertex3="__v___sol_42__00146" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00148" vertex2="__v___sol_42__00151" vertex3="__v___sol_42__00150" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00150" vertex2="__v___sol_42__00152" vertex3="__v___sol_42__00153" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00151" vertex2="__v___sol_42__00152" vertex3="__v___sol_42__00150" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00153" vertex2="__v___sol_42__00154" vertex3="__v___sol_42__00155" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00152" vertex2="__v___sol_42__00154" vertex3="__v___sol_42__00153" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00154" vertex2="__v___sol_42__00156" vertex3="__v___sol_42__00155" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00155" vertex2="__v___sol_42__00156" vertex3="__v___sol_42__00157" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00156" vertex2="__v___sol_42__00158" vertex3="__v___sol_42__00157" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00157" vertex2="__v___sol_42__00158" vertex3="__v___sol_42__00159" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00159" vertex2="__v___sol_42__00158" vertex3="__v___sol_42__00160" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00158" vertex2="__v___sol_42__00161" vertex3="__v___sol_42__00160" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00161" vertex2="__v___sol_42__00162" vertex3="__v___sol_42__00160" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00160" vertex2="__v___sol_42__00162" vertex3="__v___sol_42__00163" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00162" vertex2="__v___sol_42__00164" vertex3="__v___sol_42__00163" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00163" vertex2="__v___sol_42__00164" vertex3="__v___sol_42__00165" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00164" vertex2="__v___sol_42__00166" vertex3="__v___sol_42__00165" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00165" vertex2="__v___sol_42__00166" vertex3="__v___sol_42__00167" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00166" vertex2="__v___sol_42__00168" vertex3="__v___sol_42__00167" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00167" vertex2="__v___sol_42__00168" vertex3="__v___sol_42__00169" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00168" vertex2="__v___sol_42__00170" vertex3="__v___sol_42__00169" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00169" vertex2="__v___sol_42__00170" vertex3="__v___sol_42__00171" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00170" vertex2="__v___sol_42__00172" vertex3="__v___sol_42__00171" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00171" vertex2="__v___sol_42__00172" vertex3="__v___sol_42__00173" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00172" vertex2="__v___sol_42__00174" vertex3="__v___sol_42__00173" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00173" vertex2="__v___sol_42__00174" vertex3="__v___sol_42__00175" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00174" vertex2="__v___sol_42__00176" vertex3="__v___sol_42__00175" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00175" vertex2="__v___sol_42__00176" vertex3="__v___sol_42__00177" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00176" vertex2="__v___sol_42__00178" vertex3="__v___sol_42__00177" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00177" vertex2="__v___sol_42__00178" vertex3="__v___sol_42__00179" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00178" vertex2="__v___sol_42__00180" vertex3="__v___sol_42__00179" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00179" vertex2="__v___sol_42__00180" vertex3="__v___sol_42__00181" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00180" vertex2="__v___sol_42__00182" vertex3="__v___sol_42__00181" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00181" vertex2="__v___sol_42__00182" vertex3="__v___sol_42__00183" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00182" vertex2="__v___sol_42__00184" vertex3="__v___sol_42__00183" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00183" vertex2="__v___sol_42__00184" vertex3="__v___sol_42__00185" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00184" vertex2="__v___sol_42__00186" vertex3="__v___sol_42__00185" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00185" vertex2="__v___sol_42__00186" vertex3="__v___sol_42__00187" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00186" vertex2="__v___sol_42__00188" vertex3="__v___sol_42__00187" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00187" vertex2="__v___sol_42__00188" vertex3="__v___sol_42__00189" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00188" vertex2="__v___sol_42__00190" vertex3="__v___sol_42__00189" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00189" vertex2="__v___sol_42__00190" vertex3="__v___sol_42__00191" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00190" vertex2="__v___sol_42__00192" vertex3="__v___sol_42__00191" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00191" vertex2="__v___sol_42__00192" vertex3="__v___sol_42__00193" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00192" vertex2="__v___sol_42__00194" vertex3="__v___sol_42__00193" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00193" vertex2="__v___sol_42__00194" vertex3="__v___sol_42__00195" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00194" vertex2="__v___sol_42__00196" vertex3="__v___sol_42__00195" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00195" vertex2="__v___sol_42__00196" vertex3="__v___sol_42__00197" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00197" vertex2="__v___sol_42__00198" vertex3="__v___sol_42__00199" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00196" vertex2="__v___sol_42__00198" vertex3="__v___sol_42__00197" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00199" vertex2="__v___sol_42__00200" vertex3="__v___sol_42__00201" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00198" vertex2="__v___sol_42__00200" vertex3="__v___sol_42__00199" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00201" vertex2="__v___sol_42__00202" vertex3="__v___sol_42__00203" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00200" vertex2="__v___sol_42__00202" vertex3="__v___sol_42__00201" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00203" vertex2="__v___sol_42__00204" vertex3="__v___sol_42__00205" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00202" vertex2="__v___sol_42__00204" vertex3="__v___sol_42__00203" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00205" vertex2="__v___sol_42__00206" vertex3="__v___sol_42__00207" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00204" vertex2="__v___sol_42__00206" vertex3="__v___sol_42__00205" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00207" vertex2="__v___sol_42__00208" vertex3="__v___sol_42__00209" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00206" vertex2="__v___sol_42__00208" vertex3="__v___sol_42__00207" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00209" vertex2="__v___sol_42__00210" vertex3="__v___sol_42__00211" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00208" vertex2="__v___sol_42__00210" vertex3="__v___sol_42__00209" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00211" vertex2="__v___sol_42__00212" vertex3="__v___sol_42__00213" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00210" vertex2="__v___sol_42__00212" vertex3="__v___sol_42__00211" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00213" vertex2="__v___sol_42__00214" vertex3="__v___sol_42__00215" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00212" vertex2="__v___sol_42__00214" vertex3="__v___sol_42__00213" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00215" vertex2="__v___sol_42__00216" vertex3="__v___sol_42__00217" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00214" vertex2="__v___sol_42__00216" vertex3="__v___sol_42__00215" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00217" vertex2="__v___sol_42__00218" vertex3="__v___sol_42__00219" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00216" vertex2="__v___sol_42__00218" vertex3="__v___sol_42__00217" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00219" vertex2="__v___sol_42__00220" vertex3="__v___sol_42__00221" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00218" vertex2="__v___sol_42__00220" vertex3="__v___sol_42__00219" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00221" vertex2="__v___sol_42__00222" vertex3="__v___sol_42__00223" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00220" vertex2="__v___sol_42__00222" vertex3="__v___sol_42__00221" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00223" vertex2="__v___sol_42__00224" vertex3="__v___sol_42__00225" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00222" vertex2="__v___sol_42__00224" vertex3="__v___sol_42__00223" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00225" vertex2="__v___sol_42__00226" vertex3="__v___sol_42__00227" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00224" vertex2="__v___sol_42__00226" vertex3="__v___sol_42__00225" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00226" vertex2="__v___sol_42__00000" vertex3="__v___sol_42__00227" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_42__00227" vertex2="__v___sol_42__00000" vertex3="__v___sol_42__00002" type="ABSOLUTE"/>
+      </tessellated>
+    </solids>
+    <structure>
+      <volume name="__vol__42_">
+        <materialref ref="G4_Al"/>
+        <solidref ref="__sol_42_"/>
+      </volume>
+      <volume name="world">
+        <materialref ref="G4_Galactic"/>
+        <solidref ref="__box_world__"/>
+        <physvol name="__phys_42">
+          <volumeref ref="__vol__42_"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+      </volume>
+    </structure>
+    <setup name="__setup__world" version="0.0">
+      <world ref="__vol__42_"/>
+    </setup>
+  </gdml>
+<!--  Created by Freecad g4cad workbench (https://github.com/drhlxiao/g4cad) at  Mon Apr 14 11:00:31 2025.-->
+    
