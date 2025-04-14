@@ -1,3 +1,4 @@
+#include "G4GDMLParser.hh"
 #include "DetectorConstruction.hh"
 #include "G4PVParameterised.hh"
 #include "G4PVReplica.hh"
@@ -19,6 +20,12 @@
 #include "HeedDeltaElectronModel.hh"
 #include "HeedNewTrackModel.hh"
 #include "G4SDManager.hh"
+
+
+G4GDMLParser parser; 
+parser.SetOverlapCheck(false);
+parser.Read("DMPX/World.gdml", false);
+G4VPhysicalVolume* worldPhys = parser.GetWorldVolume();
 
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
