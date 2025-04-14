@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Created by Freecad g4cad workbench (https://github.com/drhlxiao/g4cad) at  Mon Apr 14 11:00:41 2025.-->
+      <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    <define>
+      <constant name="HALFPI" value="pi/2"/>
+      <constant name="PI" value="1.0*pi"/>
+      <constant name="TWOPI" value="2.0*pi"/>
+      <position name="center" x="0.000000e+00" y="0.000000e+00" z="0.000000e+00" unit="mm"/>
+      <rotation name="identity" x="0.000000e+00" y="0.000000e+00" z="0.000000e+00" unit="deg"/>
+    </define>
+    <materials>
+      <material name="Galaxy" Z="1" formula="H">
+        <D value="1e-25" unit="g/cm3"/>
+        <atom value="1.0"/>
+      </material>
+    </materials>
+    <solids>
+      <box name="__box_world__" x="1.000000e+04" y="1.000000e+04" z="1.000000e+04" lunit="mm"/>
+    </solids>
+    <structure>
+      <volume name="world">
+        <materialref ref="G4_Galactic"/>
+        <solidref ref="__box_world__"/>
+        <physvol name="__phys_0">
+          <file name="gdml/SPC-AH3659_0.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_1">
+          <file name="gdml/SPC-AH3703_1.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_2">
+          <file name="gdml/SPC-AH3705_2.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_3">
+          <file name="gdml/SPC-AH4065_3.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_4">
+          <file name="gdml/SPC-AH3708_4.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_5">
+          <file name="gdml/SPC-AH3707_5.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_6">
+          <file name="gdml/SPC-AH3889_6.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_7">
+          <file name="gdml/SPC-AH3890_7.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_8">
+          <file name="gdml/SPC-AH3748_8.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_9">
+          <file name="gdml/STD-0005063_9.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_10">
+          <file name="gdml/STD-0005034_10.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_11">
+          <file name="gdml/SPC-AH3892_11.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_12">
+          <file name="gdml/SPC-AH4068_12.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_13">
+          <file name="gdml/SPC-AH4069_13.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_14">
+          <file name="gdml/SPC-AH4070_14.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_15">
+          <file name="gdml/SPC-AH4071_15.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_16">
+          <file name="gdml/STD-0004594_16.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_17">
+          <file name="gdml/STD-0005064_17.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_18">
+          <file name="gdml/STD-0005065_18.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_19">
+          <file name="gdml/STD-0005066_19.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_20">
+          <file name="gdml/SPC-AH4084_20.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_21">
+          <file name="gdml/STD-0005067_21.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_22">
+          <file name="gdml/STD-0005068_22.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_23">
+          <file name="gdml/STD-0005069_23.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_24">
+          <file name="gdml/STD-0005070_24.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_25">
+          <file name="gdml/STD-0005071_25.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_26">
+          <file name="gdml/STD-0005072_26.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_27">
+          <file name="gdml/STD-0005073_27.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_28">
+          <file name="gdml/STD-0005074_28.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_29">
+          <file name="gdml/STD-0005075_29.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_30">
+          <file name="gdml/STD-0005076_30.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_31">
+          <file name="gdml/STD-0004384_31.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_32">
+          <file name="gdml/STD-0005077_32.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_33">
+          <file name="gdml/STD-0005079_33.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_34">
+          <file name="gdml/STD-0005080_34.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_35">
+          <file name="gdml/STD-0005112_35.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_36">
+          <file name="gdml/SPC-AH4614_36.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_37">
+          <file name="gdml/STD-0005113_37.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_38">
+          <file name="gdml/STD-0005114_38.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_39">
+          <file name="gdml/STD-0005116_39.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_40">
+          <file name="gdml/STD-0005117_40.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_41">
+          <file name="gdml/SPC-AH4105_41.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_42">
+          <file name="gdml/COMPOUND_42.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_43">
+          <file name="gdml/COMPOUND001_43.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_44">
+          <file name="gdml/SOLID_44.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_45">
+          <file name="gdml/SPC-AH4615_45.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_46">
+          <file name="gdml/STD-0005119_46.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_47">
+          <file name="gdml/STD-0005120_47.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_48">
+          <file name="gdml/SPC-AH4623_48.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_49">
+          <file name="gdml/SPC-AH4624_49.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_50">
+          <file name="gdml/SPC-AH4625_50.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_51">
+          <file name="gdml/SPC-AH4626_51.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_52">
+          <file name="gdml/SPC-AH4627_52.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_53">
+          <file name="gdml/STD-0005121_53.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_54">
+          <file name="gdml/STD-0005122_54.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_55">
+          <file name="gdml/STD-0005123_55.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_56">
+          <file name="gdml/STD-0005124_56.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_57">
+          <file name="gdml/SPC-AH4628_57.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_58">
+          <file name="gdml/STD-0005125_58.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_59">
+          <file name="gdml/STD-0005126_59.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_60">
+          <file name="gdml/STD-0005127_60.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_61">
+          <file name="gdml/STD-0005128_61.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_62">
+          <file name="gdml/STD-0005129_62.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_63">
+          <file name="gdml/STD-0005130_63.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_64">
+          <file name="gdml/STD-0005131_64.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_65">
+          <file name="gdml/STD-0005132_65.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_66">
+          <file name="gdml/STD-0005133_66.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_67">
+          <file name="gdml/STD-0005134_67.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_68">
+          <file name="gdml/STD-0005135_68.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_69">
+          <file name="gdml/STD-0005136_69.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_70">
+          <file name="gdml/STD-0005138_70.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_71">
+          <file name="gdml/STD-0005139_71.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_72">
+          <file name="gdml/STD-0005141_72.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_73">
+          <file name="gdml/SPC-AH4629_73.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_74">
+          <file name="gdml/STD-0005227_74.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+        <physvol name="__phys_75">
+          <file name="gdml/STD-0005228_75.gdml"/>
+          <positionref ref="center"/>
+          <rotationref ref="identity"/>
+        </physvol>
+      </volume>
+    </structure>
+    <setup name="__setup__world" version="1.0">
+      <world ref="world"/>
+    </setup>
+  </gdml>
+<!--  Created by Freecad g4cad workbench (https://github.com/drhlxiao/g4cad) at  Mon Apr 14 11:00:41 2025.-->
+    
