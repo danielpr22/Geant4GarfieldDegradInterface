@@ -1,9 +1,9 @@
 /ALICE/geometry/SetGasPressure 0.6 bar
 
-/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 0.001
-/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0. 10000000
+#/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 0.001
+#/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0. 10000000
 /gasModelParameters/heed/heednewtrack/addparticle e- 0.1 100000.
-/gasModelParameters/heed/heednewtrack/addparticle e+ 1000. 100000.
+#/gasModelParameters/heed/heednewtrack/addparticle e+ 1000. 100000.
 #/gasModelParameters/heed/heednewtrack/addparticle proton 1000. 1000000.
 #/gasModelParameters/heed/heednewtrack/addparticle mu+ 1000. 1000000.
 #/gasModelParameters/heed/heednewtrack/addparticle mu- 1000. 1000000.
