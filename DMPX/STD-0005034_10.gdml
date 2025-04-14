@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Created by Freecad g4cad workbench (https://github.com/drhlxiao/g4cad) at  Mon Apr 14 11:00:24 2025.-->
+      <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    <define>
+      <constant name="HALFPI" value="pi/2"/>
+      <constant name="PI" value="1.0*pi"/>
+      <constant name="TWOPI" value="2.0*pi"/>
+      <position name="center" x="0.000000e+00" y="0.000000e+00" z="0.000000e+00" unit="mm"/>
+      <rotation name="identity" x="0.000000e+00" y="0.000000e+00" z="0.000000e+00" unit="deg"/>
+      <position name="__v___sol_10__00000" x="-2.500000e+01" y="-4.200000e+01" z="6.450000e+00" unit="mm"/>
+      <position name="__v___sol_10__00001" x="2.500000e+01" y="-4.200000e+01" z="6.500000e+00" unit="mm"/>
+      <position name="__v___sol_10__00002" x="-2.500000e+01" y="-4.200000e+01" z="6.500000e+00" unit="mm"/>
+      <position name="__v___sol_10__00003" x="2.500000e+01" y="-4.200000e+01" z="6.450000e+00" unit="mm"/>
+      <position name="__v___sol_10__00004" x="-2.500000e+01" y="4.200000e+01" z="6.450000e+00" unit="mm"/>
+      <position name="__v___sol_10__00005" x="-2.500000e+01" y="4.200000e+01" z="6.500000e+00" unit="mm"/>
+      <position name="__v___sol_10__00006" x="2.500000e+01" y="4.200000e+01" z="6.450000e+00" unit="mm"/>
+      <position name="__v___sol_10__00007" x="2.500000e+01" y="4.200000e+01" z="6.500000e+00" unit="mm"/>
+      <position name="__pos__10_" x="-4.440892e-16" y="3.143118e-31" z="6.500000e+00" unit="mm"/>
+      <rotation name="__rot__10_" x="-2.464930e-14" y="0.000000e+00" z="-1.800000e+02" unit="deg"/>
+    </define>
+    <materials>
+      <material name="Galaxy" Z="1" formula="H">
+        <D value="1e-25" unit="g/cm3"/>
+        <atom value="1.0"/>
+      </material>
+    </materials>
+    <solids>
+      <box name="__box_world__" x="1.000000e+04" y="1.000000e+04" z="1.000000e+04" lunit="mm"/>
+      <tessellated name="__sol_10_">
+        <triangular vertex1="__v___sol_10__00000" vertex2="__v___sol_10__00001" vertex3="__v___sol_10__00002" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00000" vertex2="__v___sol_10__00003" vertex3="__v___sol_10__00001" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00004" vertex2="__v___sol_10__00002" vertex3="__v___sol_10__00005" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00004" vertex2="__v___sol_10__00000" vertex3="__v___sol_10__00002" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00006" vertex2="__v___sol_10__00005" vertex3="__v___sol_10__00007" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00006" vertex2="__v___sol_10__00004" vertex3="__v___sol_10__00005" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00003" vertex2="__v___sol_10__00007" vertex3="__v___sol_10__00001" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00003" vertex2="__v___sol_10__00006" vertex3="__v___sol_10__00007" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00002" vertex2="__v___sol_10__00001" vertex3="__v___sol_10__00005" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00005" vertex2="__v___sol_10__00001" vertex3="__v___sol_10__00007" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00003" vertex2="__v___sol_10__00000" vertex3="__v___sol_10__00004" type="ABSOLUTE"/>
+        <triangular vertex1="__v___sol_10__00003" vertex2="__v___sol_10__00004" vertex3="__v___sol_10__00006" type="ABSOLUTE"/>
+      </tessellated>
+    </solids>
+    <structure>
+      <volume name="__vol__10_">
+        <materialref ref="G4_Al"/>
+        <solidref ref="__sol_10_"/>
+      </volume>
+      <volume name="world">
+        <materialref ref="G4_Galactic"/>
+        <solidref ref="__box_world__"/>
+        <physvol name="__phys_10">
+          <volumeref ref="__vol__10_"/>
+          <positionref ref="__pos__10_"/>
+          <rotationref ref="__rot__10_"/>
+        </physvol>
+      </volume>
+    </structure>
+    <setup name="__setup__world" version="0.0">
+      <world ref="__vol__10_"/>
+    </setup>
+  </gdml>
+<!--  Created by Freecad g4cad workbench (https://github.com/drhlxiao/g4cad) at  Mon Apr 14 11:00:24 2025.-->
+    
