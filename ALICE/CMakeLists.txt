@@ -64,7 +64,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 and GARFIELD++ libraries
 #
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -g")
 add_executable(ALICE ALICE.cc ${sources} ${headers})
 target_link_libraries(ALICE -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
 #----------------------------------------------------------------------------

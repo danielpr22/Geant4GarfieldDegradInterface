@@ -39,10 +39,6 @@ int main(int argc, char** argv) {
 //  G4RunManager* runManager = new G4RunManager();
   
   
-  G4int randseed = atoi(argv[2]);
-  G4Random::setTheSeed(randseed);
-  G4cout << "Setting the Random seed: " << randseed << G4endl;
-  
   G4cout << "Creation of the gas model parameter class" << G4endl;
   GasModelParameters* gmp = new GasModelParameters();
     
@@ -65,31 +61,32 @@ int main(int argc, char** argv) {
 
   //runManager->Initialize();
 
-  if (argc == 1)  //! define UI terminal for interactive mode:
-  {
-    //#ifdef G4UI_USE
+  if (argc == 1) {
+    // Interactive mode
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-    //#ifdef G4VIS_USE
     UImanager->ApplyCommand("/control/execute vis.mac");
-    //#endif
-
     ui->SessionStart();
     delete ui;
-    //#endif
-  } else  //! batch mode:
-  {
+  } else {
+    // Batch mode
+    if (argc < 3) {
+      G4cout << "❌ No macro or random seed provided.\n"
+             << "Usage: ./ALICE <macro.mac> <random_seed>" << G4endl;
+      delete runManager;
+      return 1;
+    }
+
+    G4int randseed = atoi(argv[2]);
+    G4Random::setTheSeed(randseed);
+    G4cout << "Setting the Random seed: " << randseed << G4endl;
+
     G4String command = "/control/execute ";
     G4String fileName = argv[1];
-    if (argc < 3) {
-      G4cout << "No random seed has been provided" << G4endl;
-      delete runManager;
-      return 0;
-    }
 
     time_t start=time(0);
     UImanager->ApplyCommand(command + fileName);
     double duration = difftime(time(0),start);
-    cout << "Simulation Time: " << duration << endl;
+    std::cout << "Simulation Time: " << duration << " s" << std::endl;
   }
   //#ifdef G4VIS_USE
   delete visManager;
