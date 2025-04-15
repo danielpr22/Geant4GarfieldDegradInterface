@@ -1,6 +1,6 @@
 //
 //  PrimaryGeneratorAction.hh
-//  ALICE
+//  ALICE (adapted for DMPX)
 //
 //  Created by Lennert De Keukeleere on 25/10/2018.
 //

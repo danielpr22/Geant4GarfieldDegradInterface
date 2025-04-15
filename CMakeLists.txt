@@ -5,5 +5,6 @@ project(Interface)
 
 add_subdirectory(Xenon)
 add_subdirectory(ALICE)
+add_subdirectory(DMPX)
 
-add_custom_target(Interface DEPENDS Xenon ALICE)
+add_custom_target(Interface DEPENDS Xenon ALICE DMPX)

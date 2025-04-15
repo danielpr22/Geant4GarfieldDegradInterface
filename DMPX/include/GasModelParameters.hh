@@ -20,8 +20,6 @@ class GasModelParameters{
 	GasModelParameters();
 	~GasModelParameters();
     
-    
-    
     void AddParticleNameHeedNewTrack(const G4String particleName,double ekin_min_keV,double ekin_max_keV);
     void AddParticleNameHeedDeltaElectron(const G4String particleName,double ekin_min_keV,double ekin_max_keV);
     

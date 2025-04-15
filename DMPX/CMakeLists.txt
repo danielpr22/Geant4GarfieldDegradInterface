@@ -25,7 +25,7 @@ list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 #
 find_package(ROOT QUIET REQUIRED COMPONENTS RIO Net)
 if(NOT ROOT_FOUND)
-  message(STATUS "ALICE: ROOT package not found. --> ALICE disabled")  
+  message(STATUS "DMPX: ROOT package not found. --> DMPX disabled")  
   return()
 endif()
 include(${ROOT_USE_FILE})

@@ -15,17 +15,17 @@
 
 DetectorMessenger::DetectorMessenger(DetectorConstruction* HPGeDet)
     : detector(HPGeDet) {
-    miniDir = new G4UIdirectory("/ALICE/");
-    miniDir->SetGuidance("ALICE specific controls");
+    miniDir = new G4UIdirectory("/DMPX/");
+    miniDir->SetGuidance("DMPX specific controls");
 
     ////////////////////
-    geometryDir = new G4UIdirectory("/ALICE/geometry/");
-    geometryDir->SetGuidance("ALICE geometry specific controls");
+    geometryDir = new G4UIdirectory("/DMPX/geometry/");
+    geometryDir->SetGuidance("DMPX geometry specific controls");
 
 
     ////////////////////
     setGasPressCmd =
-      new G4UIcmdWithADoubleAndUnit("/ALICE/geometry/SetGasPressure", this);
+      new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/SetGasPressure", this);
 
     setGasPressCmd->SetGuidance("Set gas pressure.");
     setGasPressCmd->SetUnitCategory("Pressure");

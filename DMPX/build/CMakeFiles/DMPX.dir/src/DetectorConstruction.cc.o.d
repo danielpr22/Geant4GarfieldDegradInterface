@@ -880,6 +880,9 @@ CMakeFiles/DMPX.dir/src/DetectorConstruction.cc.o: \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4LogicalSurface.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4LogicalSurface.icc \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4LogicalBorderSurface.icc \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4LogicalVolumeStore.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VStoreNotifier.hh \
+ /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VNotifier.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4OpticalSurface.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Physics2DVector.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Physics2DVector.icc \
@@ -887,11 +890,8 @@ CMakeFiles/DMPX.dir/src/DetectorConstruction.cc.o: \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Trd.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Threading.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4RegionStore.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VStoreNotifier.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4VNotifier.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4Cons.hh \
  /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4IntersectionSolid.hh \
- /home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4/G4LogicalVolumeStore.hh \
  /home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX/include/DetectorMessenger.hh \
  /home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX/include/GasBoxSD.hh \
  /home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX/include/SiliconSD.hh \
