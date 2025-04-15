@@ -13,6 +13,7 @@
 #include "G4FieldManager.hh"
 #include "G4Cons.hh"
 #include "G4IntersectionSolid.hh"
+#include "G4LogicalVolumeStore.hh"
 #include "G4Trd.hh"
 #include "DetectorMessenger.hh"
 #include "GasBoxSD.hh"
@@ -22,25 +23,26 @@
 #include "G4SDManager.hh"
 
 
-G4GDMLParser parser; 
-parser.SetOverlapCheck(false);
-parser.Read("DMPX/World.gdml", false);
-G4VPhysicalVolume* worldPhys = parser.GetWorldVolume();
-
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
     :
     fGasModelParameters(gmp),
     checkOverlaps(0),
-    worldHalfLength(3.*m), //World volume is a cube with side length = 3m;
-    wallThickness(0.05*m), //thickness of the aluminum walls
-    caloThickness(1.*mm), // thickness of the silicon detectors
+    worldHalfLength(2.*m), //World volume is a cube with side length = 3m;
     gasPressure(1.*bar), // Pressure inside the gas
     temperature(273.15*kelvin), // temperature
-    neonPercentage(85.72), // mixture settings
-    co2Percentage(9.52)
+    kryptonPercentage(90.0), // mixture settings
+    ch4Percentage(10.0)
 {
   detectorMessenger = new DetectorMessenger(this);
+  G4GDMLParser parser; 
+  parser.SetOverlapCheck(false);
+  parser.Read("../World.gdml", false);
+  G4VPhysicalVolume* worldPhys = parser.GetWorldVolume();
+
+  G4cout << "Loaded " 
+       << G4LogicalVolumeStore::GetInstance()->size() 
+       << " logical volumes from GDML." << G4endl;
 
 
 }
@@ -63,97 +65,72 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
 
   /*First: build materials
     World: vacuum
-    Walls: Aluminum
-    Gas: mixture of Helium and Isobutane or Ar and CO2
-    Calorimeter: Silicon 
+    Gas: mixture of Kr and CH4
   */
-  
-    
+
   //World material: vacuum
   G4NistManager* man = G4NistManager::Instance();
   man->SetVerbose(1);
   G4Material* vacuum = man->FindOrBuildMaterial("G4_Galactic");
+
+  G4Element* elC = man->FindOrBuildElement("C");
+  G4Element* elH = man->FindOrBuildElement("H");
   
-  //Gas material: mixture of HeIso or ArCO2
+  
+  //Gas material: mixture of Kr or CH4
   G4double nMoles = gasPressure / (8.314 * joule / mole * temperature);
   G4Material* mixture=NULL;
   G4VPhysicalVolume* physiWorld = NULL;
+
   // TPC setup
-  gasboxR = 0.25*m;
-  gasboxH = 1.25*m;
-
-  G4Element* elC = man->FindOrBuildElement("C");
-  G4Element* elO = man->FindOrBuildElement("O");
-  G4Element* elN = man->FindOrBuildElement("N");
+  gasboxR = 1*m;
+  gasboxH = 1*m;
   
-  G4double molarMass = 20.17*g/mole;  // pure neon
+  G4double molarMass = 83.798*g/mole;  // pure krypton
   
-  G4double gasDensityNe = nMoles * molarMass;
-  G4cout << "gasPressure: " << G4BestUnit(gasPressure, "Pressure")
-     << G4endl;
-  G4cout << "gasDensityNe: " << G4BestUnit(gasDensityNe, "Volumic Mass")
-     << G4endl;
+  G4double gasDensityKr = nMoles * molarMass;
+  G4cout << "gasPressure: " << G4BestUnit(gasPressure, "Pressure") << G4endl;
 
-  G4Material* neon = new G4Material("neon", 10, molarMass, gasDensityNe,
+  G4cout << "gasDensityNe: " << G4BestUnit(gasDensityKr, "Volumic Mass") << G4endl;
+
+  G4Material* krypton = new G4Material("krypton", 10, molarMass, gasDensityKr,
                                       kStateGas, temperature, gasPressure);
-  G4double molfracNe = (neonPercentage/100.) * molarMass;
+  G4double molfracKr = (kryptonPercentage/100.) * molarMass;
 
-  // C4H10 Density 2.51 mg/mL (at 15 °C, 100 kPa=0.1 bar =100mBar)
-  // GasDensity = 2.51*mg/cm3 ;
-  molarMass = 44.01*g/mole;  // source wikipedia
-  G4double gasDensityCO2 = nMoles * molarMass;
-  G4cout << "gasDensityCO2: " << G4BestUnit(gasDensityCO2, "Volumic Mass")
-         << G4endl;
-  G4Material* CO2 = new G4Material("co2", gasDensityCO2, 2,
+  // CH4 Density 0.657 mg/mL
+  molarMass = 16.04206*g/mole;  // source wikipedia
+  G4double gasDensityCH4 = nMoles * molarMass;
+  G4cout << "Gas density CH4: " << G4BestUnit(gasDensityCH4, "Volumic Mass") << G4endl;
+  G4Material* CH4 = new G4Material("ch4", gasDensityCH4, 2,
                                     kStateGas, temperature, gasPressure);
-  CO2->AddElement(elC, 1);
-  CO2->AddElement(elO, 2);
+  CH4->AddElement(elC, 1);
+  CH4->AddElement(elH, 4);
   
-  G4double molfracCO2 = (co2Percentage/100.)*molarMass;
+  G4double molfracCH4 = (ch4Percentage/100.)*molarMass;
   
-  molarMass = 28.0134*g/mole;  // source wikipedia
-  G4double gasDensityN2 = nMoles * molarMass;
-  G4cout << "gasDensityN2: " << G4BestUnit(gasDensityN2, "Volumic Mass")
-  << G4endl;
-  G4Material* N2 = new G4Material("n2",gasDensityN2,1,
-                                   kStateGas, temperature, gasPressure);
-  N2->AddElement(elN,1);
-  G4double molfracN2 = (1-(neonPercentage+co2Percentage)/100.)*molarMass;
+ 
+  G4double molfracKr_norm = molfracKr/(molfracKr+molfracCH4);
+  G4double molfracCH4_norm = 1 - molfracKr_norm;
 
-  G4double molfracNe_norm = molfracNe/(molfracNe+molfracCO2+molfracN2);
-  G4double molfracCO2_norm = molfracCO2/(molfracNe+molfracCO2+molfracN2);
-  G4double molfracN2_norm = 1-molfracNe_norm-molfracCO2_norm;
+  G4cout << "Molar fraction Kr: " << molfracKr_norm << G4endl;
+  G4cout << "Molar fraction CH4: " << molfracCH4_norm << G4endl;
 
-  G4cout << "Molar fraction Neon: " << molfracNe_norm << G4endl;
-  G4cout << "Molar fraction CO2: " << molfracCO2_norm << G4endl;
-  G4cout << "Molar fraction N2: " << molfracN2_norm << G4endl;
-
-  G4double gasDensityMixture = (neonPercentage/100.) * gasDensityNe +
-                               co2Percentage/100. * gasDensityCO2 + (1-(neonPercentage+co2Percentage)/100.)*gasDensityN2;
+  G4double gasDensityMixture = (kryptonPercentage/100.) * gasDensityKr +
+                               ch4Percentage/100. * gasDensityCH4;
   
-  mixture = new G4Material("mixture", gasDensityMixture, 3);
+  mixture = new G4Material("mixture", gasDensityMixture, 2);
   
   
-  mixture->AddMaterial(neon, molfracNe_norm);
-  mixture->AddMaterial(CO2, molfracCO2_norm);
-  mixture->AddMaterial(N2, molfracN2_norm);
-  G4cout << "gasDensityC4H10He: " << G4BestUnit(gasDensityMixture,
-                                                "Volumic Mass") << G4endl;
-  
-  //geometry dimensions:
-  //Aluminum walls
-  G4Material* aluminiumMaterial = man->FindOrBuildMaterial("G4_Al");
-  
-  //Silicon calorimeters
-  G4Material* siliconMaterial =man->FindOrBuildMaterial("G4_Si");
+  mixture->AddMaterial(krypton, molfracKr_norm);
+  mixture->AddMaterial(CH4, molfracCH4_norm);
+  G4cout << "Gas density Kr + CH4: " << G4BestUnit(gasDensityMixture, "Volumic Mass") << G4endl;
+    
   
   //World Volume
   G4Box* solidWorld = new G4Box("solidWorld_box", worldHalfLength, worldHalfLength, worldHalfLength);
-  G4LogicalVolume* logicWorld =
-  new G4LogicalVolume(solidWorld, vacuum, "solidWorld_log");
+  G4LogicalVolume* logicWorld = new G4LogicalVolume(solidWorld, vacuum, "solidWorld_log");
   
-  physiWorld = new G4PVPlacement(0, G4ThreeVector(), logicWorld,
-                                                    "solidWorld_phys", 0, false, 0, checkOverlaps);
+  physiWorld = new G4PVPlacement(0, G4ThreeVector(), logicWorld, "solidWorld_phys", 0, false, 0, checkOverlaps);
   logicWorld->SetVisAttributes(& G4VisAttributes::GetInvisible());
   
   //GasBox volume
@@ -162,31 +139,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   myRotation->rotateY(0.*deg);
   myRotation->rotateZ(0.*rad);
   G4Tubs* solidGasBox = new G4Tubs("solid_gasbox_tube",0,gasboxR,gasboxH*0.5, 0., twopi);
-  logicGasBox =
-  new G4LogicalVolume(solidGasBox, mixture, "solidGasBox_log");
+  logicGasBox = new G4LogicalVolume(solidGasBox, mixture, "solidGasBox_log");
   new G4PVPlacement(myRotation,G4ThreeVector(), logicGasBox,"solidGasBox_phys",logicWorld,false,0,checkOverlaps);
-  
-  //Silicon calorimeters
-  G4Tubs* solidCalo = new G4Tubs("solid_tube_Calo",gasboxR,gasboxR+caloThickness,gasboxH*0.5, 0., twopi);
-  logicCalo =
-  new G4LogicalVolume(solidCalo, siliconMaterial, "solidCalo_log");
-  new G4PVPlacement(myRotation,G4ThreeVector(), logicCalo,"solidCalo_phys",logicWorld,false,0,checkOverlaps);
-  
-  //Aluminum Walls
-  G4Tubs* solidWalls = new G4Tubs("solid_tube_wall",0,gasboxR,wallThickness*0.5, 0., twopi);
-  G4LogicalVolume* logicWall1 =
-  new G4LogicalVolume(solidWalls, aluminiumMaterial, "solidWall1_log");
-  G4LogicalVolume* logicWall2 =
-  new G4LogicalVolume(solidWalls, aluminiumMaterial, "solidWall2_log");
-  new G4PVPlacement(myRotation,G4ThreeVector(0,(gasboxH+wallThickness)/2.,0), logicWall1,
-                    "solidWall1_phys",logicWorld,false,0,checkOverlaps);
-  new G4PVPlacement(myRotation,G4ThreeVector(0,-(gasboxH+wallThickness)/2.,0), logicWall2,
-                    "solidWall2_phys",logicWorld,false,0,checkOverlaps);
-
-  //logicGasBox->SetVisAttributes(blue);
-  logicWall1->SetVisAttributes(red);
-  logicWall2->SetVisAttributes(red);
-  //logicCalo->SetVisAttributes(yellow);
   
   
   //Construct a G4Region, connected to the logical volume in which you want to use the G4FastSimulationModel

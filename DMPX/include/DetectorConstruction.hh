@@ -55,20 +55,16 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   inline void SetWorldHalfLength(G4double d){worldHalfLength=d;};
   inline void SetGasBoxR(G4double d){gasboxR=d;};
   inline void SetGasBoxH(G4double d){gasboxH=d;};
-  inline void SetWallThickness(G4double d){wallThickness=d;};
-  inline void SetCaloThickness(G4double d){caloThickness=d;};
   inline void SetGasPressure(G4double d){gasPressure=d;};
   inline void SetTemperature(G4double d){temperature=d;};
   //Getters for the dimensions and environment variables of the setup
   inline G4double GetWorldHalfLength(){return worldHalfLength;};
   inline G4double GetGasBoxR(){return gasboxR;};
   inline G4double GetGasBoxH(){return gasboxH;};
-  inline G4double GetWallThickness(){return wallThickness;};
-  inline G4double GetCaloThickness(){return caloThickness;};
   inline G4double GetGasPressure(){return gasPressure;};
   inline G4double GetTemperature(){return temperature;};
-  inline G4double GetNeonPercentage(){return neonPercentage;};
-  inline G4double GetCO2Percentage(){return co2Percentage;};
+  inline G4double GetKryptonPercentage(){return kryptonPercentage;};
+  inline G4double GetCH4Percentage(){return ch4Percentage;};
     
   
  private:
@@ -80,12 +76,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   G4double worldHalfLength; //World volume is a cube with side length = 2m;
   G4double gasboxR; // radius of tube filled with gas
   G4double gasboxH; // length of the tube
-  G4double wallThickness; //thickness of the aluminum walls
-  G4double caloThickness; // thickness of the silicon detector
   G4double gasPressure; // pressure in the gas
   G4double temperature; // temperature of the gas
   G4double addmixturePercentage;
-  G4double neonPercentage;
-  G4double co2Percentage;
+  G4double kryptonPercentage;
+  G4double ch4Percentage;
 };
 #endif

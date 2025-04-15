@@ -104,10 +104,9 @@ void HeedModel::makeGas(){
   fMediumMagboltz = new Garfield::MediumMagboltz();
   double pressure = detCon->GetGasPressure()/torr;
   double temperature = detCon->GetTemperature()/kelvin;
-  double neonPerc = detCon->GetNeonPercentage();
-  double co2Perc = detCon->GetCO2Percentage();
-  double n2Perc = 1-neonPerc-co2Perc;
-  fMediumMagboltz->SetComposition("ne", neonPerc, "co2", co2Perc, "n2", n2Perc);
+  double krPerc = detCon->GetKryptonPercentage();
+  double ch4Perc = detCon->GetCH4Percentage();
+  fMediumMagboltz->SetComposition("kr", krPerc, "ch4", ch4Perc);
   fMediumMagboltz->SetTemperature(temperature);
   fMediumMagboltz->SetPressure(pressure); 
   fMediumMagboltz->EnableDebugging();
