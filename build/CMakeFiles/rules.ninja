@@ -6,10 +6,37 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: ALICE
+# Project: Interface
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
+
+#############################################
+# Rule for running custom commands.
+
+rule CUSTOM_COMMAND
+  command = $COMMAND
+  description = $DESC
+
+
+#############################################
+# Rule for compiling CXX files.
+
+rule CXX_COMPILER__Xenon_unscanned_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ${LAUNCHER}${CODE_CHECK}/usr/bin/g++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__Xenon_Debug
+  command = $PRE_LINK && /usr/bin/g++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
+
 
 #############################################
 # Rule for compiling CXX files.
@@ -31,18 +58,29 @@ rule CXX_EXECUTABLE_LINKER__ALICE_Debug
 
 
 #############################################
-# Rule for running custom commands.
+# Rule for compiling CXX files.
 
-rule CUSTOM_COMMAND
-  command = $COMMAND
-  description = $DESC
+rule CXX_COMPILER__DMPX_unscanned_Debug
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ${LAUNCHER}${CODE_CHECK}/usr/bin/g++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building CXX object $out
+
+
+#############################################
+# Rule for linking CXX executable.
+
+rule CXX_EXECUTABLE_LINKER__DMPX_Debug
+  command = $PRE_LINK && /usr/bin/g++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking CXX executable $TARGET_FILE
+  restat = $RESTAT
 
 
 #############################################
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake --regenerate-during-build -S/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE -B/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build
+  command = /usr/bin/cmake --regenerate-during-build -S/home/Daniel/Desktop/Geant4GarfieldDegradInterface -B/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build
   description = Re-running CMake...
   generator = 1
 

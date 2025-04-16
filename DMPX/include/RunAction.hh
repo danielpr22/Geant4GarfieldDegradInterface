@@ -3,7 +3,6 @@
 
 #include "G4UserRunAction.hh"
 
-
 #include "TROOT.h"
 #include "TROOT.h"
 #include "TH1F.h"

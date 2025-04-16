@@ -1,18 +1,20 @@
 #include <iostream>
-#include "HeedModel.hh"
+#include <stdio.h>
+
+#include "../include/HeedModel.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/DriftLineTrajectory.hh"
+
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
-#include "DetectorConstruction.hh"
 #include "G4RunManager.hh"
-#include <stdio.h>
-#include "DriftLineTrajectory.hh"
 #include "G4TrackingManager.hh"
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
-
 #include "G4AutoLock.hh"
+
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 const static G4double torr = 1. / 760. * atmosphere;
@@ -104,10 +106,9 @@ void HeedModel::makeGas(){
   fMediumMagboltz = new Garfield::MediumMagboltz();
   double pressure = detCon->GetGasPressure()/torr;
   double temperature = detCon->GetTemperature()/kelvin;
-  double neonPerc = detCon->GetNeonPercentage();
-  double co2Perc = detCon->GetCO2Percentage();
-  double n2Perc = 1-neonPerc-co2Perc;
-  fMediumMagboltz->SetComposition("ne", neonPerc, "co2", co2Perc, "n2", n2Perc);
+  double kryptonPerc = detCon->GetKryptonPercentage();
+  double ch4Perc = detCon->GetCH4Percentage();
+  fMediumMagboltz->SetComposition("kr", kryptonPerc, "ch4", ch4Perc);
   fMediumMagboltz->SetTemperature(temperature);
   fMediumMagboltz->SetPressure(pressure); 
   fMediumMagboltz->EnableDebugging();

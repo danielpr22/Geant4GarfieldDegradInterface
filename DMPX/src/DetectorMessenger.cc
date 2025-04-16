@@ -1,6 +1,6 @@
-#include "DetectorMessenger.hh"
+#include "../include/DetectorMessenger.hh"
+#include "../include/DetectorConstruction.hh"
 
-#include "DetectorConstruction.hh"
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithAnInteger.hh"

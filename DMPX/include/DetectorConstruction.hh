@@ -1,12 +1,13 @@
 #ifndef DetectorConstruction_hh
 #define DetectorConstruction_hh 1
 
-#include "G4VUserDetectorConstruction.hh"
 #include "HeedDeltaElectronModel.hh"
+#include "DetectorMessenger.hh"
+#include "GasModelParameters.hh"
+
+#include "G4VUserDetectorConstruction.hh"
 #include "G4SystemOfUnits.hh"
-#include "DetectorMessenger.hh"
 #include "G4UserLimits.hh"
-#include "DetectorMessenger.hh"
 #include "G4Material.hh"
 #include "G4NistManager.hh"
 #include "G4PVPlacement.hh"
@@ -27,8 +28,6 @@
 #include "G4UnionSolid.hh"
 #include "G4Region.hh"
 #include "G4Orb.hh"
-#include "GasModelParameters.hh"
-
 
 
 class G4VSolid;
@@ -67,8 +66,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   inline G4double GetCaloThickness(){return caloThickness;};
   inline G4double GetGasPressure(){return gasPressure;};
   inline G4double GetTemperature(){return temperature;};
-  inline G4double GetNeonPercentage(){return neonPercentage;};
-  inline G4double GetCO2Percentage(){return co2Percentage;};
+  inline G4double GetKryptonPercentage(){return kryptonPercentage;};
+  inline G4double GetCH4Percentage(){return ch4Percentage;};
     
   
  private:
@@ -85,7 +84,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   G4double gasPressure; // pressure in the gas
   G4double temperature; // temperature of the gas
   G4double addmixturePercentage;
-  G4double neonPercentage;
-  G4double co2Percentage;
+  G4double kryptonPercentage;
+  G4double ch4Percentage;
 };
 #endif

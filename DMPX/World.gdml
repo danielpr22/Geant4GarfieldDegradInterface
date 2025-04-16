@@ -19,14 +19,14 @@
     </solids>
     <structure>
       <volume name="world">
-        <materialref ref="G4_Galactic"/>
+        <materialref ref="KrCH4_90_10"/>
         <solidref ref="__box_world__"/>
         <physvol name="__phys_0">
-          <file name="../gdml/SPC-AH3659_0.gdml"/>
+          <file name="../../DMPX/gdml/SPC-AH3659_0.gdml"/>
           <positionref ref="center"/>
           <rotationref ref="identity"/>
         </physvol>
-        <physvol name="__phys_1">
+        <!-- physvol name="__phys_1">
           <file name="../gdml/SPC-AH3703_1.gdml"/>
           <positionref ref="center"/>
           <rotationref ref="identity"/>
@@ -75,13 +75,13 @@
           <file name="../gdml/STD-0005034_10.gdml"/>
           <positionref ref="center"/>
           <rotationref ref="identity"/>
-        </physvol>
+        </physvol> -->
         <physvol name="__phys_11">
-          <file name="../gdml/SPC-AH3892_11.gdml"/>
+          <file name="../../DMPX/gdml/SPC-AH3892_11.gdml"/>
           <positionref ref="center"/>
           <rotationref ref="identity"/>
         </physvol>
-        <physvol name="__phys_12">
+        <!-- <physvol name="__phys_12">
           <file name="../gdml/SPC-AH4068_12.gdml"/>
           <positionref ref="center"/>
           <rotationref ref="identity"/>
@@ -400,7 +400,7 @@
           <file name="../gdml/STD-0005228_75.gdml"/>
           <positionref ref="center"/>
           <rotationref ref="identity"/>
-        </physvol>
+        </physvol> -->
       </volume>
     </structure>
     <setup name="__setup__world" version="1.0">

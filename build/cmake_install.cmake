@@ -1,4 +1,4 @@
-# Install script for directory: /home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE
+# Install script for directory: /home/Daniel/Desktop/Geant4GarfieldDegradInterface
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -42,28 +42,12 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/ALICE" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/ALICE")
-    file(RPATH_CHECK
-         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/ALICE"
-         RPATH "")
-  endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/ALICE")
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/ALICE" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/ALICE")
-    file(RPATH_CHANGE
-         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/ALICE"
-         OLD_RPATH "/home/Daniel/root/root_install/lib:/home/Daniel/garfield_install/lib:/home/Daniel/Desktop/GEANT4/geant4_install/lib:"
-         NEW_RPATH "")
-    if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/ALICE")
-    endif()
-  endif()
-endif()
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for each subdirectory.
+  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/Xenon/cmake_install.cmake")
+  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/ALICE/cmake_install.cmake")
+  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/cmake_install.cmake")
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/CMakeFiles/ALICE.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)

@@ -15,10 +15,10 @@
 ########################
 
 //Value Computed by CMake
-ALICE_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build
+ALICE_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/ALICE
 
 //Value Computed by CMake
-ALICE_IS_TOP_LEVEL:STATIC=ON
+ALICE_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 ALICE_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE
@@ -153,7 +153,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=ALICE
+CMAKE_PROJECT_NAME:STATIC=Interface
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -220,6 +220,15 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Value Computed by CMake
+DMPX_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX
+
+//Value Computed by CMake
+DMPX_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+DMPX_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX
+
 //Path to a file.
 EXPAT_INCLUDE_DIR:PATH=/usr/include
 
@@ -249,6 +258,15 @@ Fontconfig_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libfontconfig.so
 
 //The directory containing a CMake configuration file for Geant4.
 Geant4_DIR:PATH=/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4
+
+//Value Computed by CMake
+Interface_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build
+
+//Value Computed by CMake
+Interface_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Interface_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface
 
 //Path to a file.
 OPENGL_EGL_INCLUDE_DIR:PATH=/usr/include
@@ -820,6 +838,15 @@ X11_xkbfile_INCLUDE_PATH:PATH=X11_xkbfile_INCLUDE_PATH-NOTFOUND
 //Path to a library.
 X11_xkbfile_LIB:FILEPATH=X11_xkbfile_LIB-NOTFOUND
 
+//Value Computed by CMake
+Xenon_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/Xenon
+
+//Value Computed by CMake
+Xenon_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Xenon_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/Xenon
+
 //Xerces-C++ include directory
 XercesC_INCLUDE_DIR:PATH=/usr/include
 
@@ -931,7 +958,7 @@ CMAKE_HAVE_REMOVE:INTERNAL=1
 CMAKE_HAVE_SHMAT:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE
+CMAKE_HOME_DIRECTORY:INTERNAL=/home/Daniel/Desktop/Geant4GarfieldDegradInterface
 //Install .so files without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=1
 //Have library ICE
@@ -953,7 +980,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
