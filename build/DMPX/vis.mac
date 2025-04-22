@@ -6,33 +6,33 @@
 /DMPX/geometry/SetGasPressure 1. bar
 
 # The HeedDeltaElectron model simulates the transport and ionization of low-energy electrons and photons
-/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 0.001
-/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0. 10000000
+#/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.1 100 keV
+#/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 3 30 keV
 
 # The HeedNewTrack model simulates the primary ionization caused by charged particles entering a gas volume.
-/gasModelParameters/heed/heednewtrack/addparticle e- 0.1 100000.
+#/gasModelParameters/heed/heednewtrack/addparticle e- 10 30 keV
 
 # Setting the gasModelParameters 
-/gasModelParameters/heed/drift 1
-/gasModelParameters/heed/driftRKF 0
+/gasModelParameters/heed/drift 0
+/gasModelParameters/heed/driftRKF 1
 /gasModelParameters/heed/trackmicroscopic 0
-/gasModelParameters/heed/createAval 1
+/gasModelParameters/heed/createAval 0
 /gasModelParameters/heed/visualizechamber 1
 /gasModelParameters/heed/visualizesignals 0
 /gasModelParameters/heed/visualizefield 1
-/gasModelParameters/heed/voltageplanehv -100000
-/gasModelParameters/heed/voltageplanelow 0
-/gasModelParameters/heed/voltageanodewire 1500.
-/gasModelParameters/heed/voltagecathodewire 0.
-/gasModelParameters/heed/voltagegate -70.
-/gasModelParameters/heed/voltagedeltagate 90.
+#/gasModelParameters/heed/voltageplanehv -100
+#/gasModelParameters/heed/voltageplanelow 0
+#/gasModelParameters/heed/voltageanodewire 1500.
+#/gasModelParameters/heed/voltagecathodewire 0.
+#/gasModelParameters/heed/voltagegate -70.
+#/gasModelParameters/heed/voltagedeltagate 90.
 
 /run/numberOfThreads 1
 /control/cout/ignoreThreadsExcept 0
 /DMPX/phys/setLowLimitE 1. keV
 /DMPX/phys/InitializePhysics emlivermore
 /DMPX/phys/AddParametrisation
-/process/em/AddPAIRegion all RegionGasBox PAIphoton
+/process/em/AddPAIRegion all GasRegion PAIphoton
 
 /run/initialize
 
@@ -60,33 +60,26 @@
 /vis/modeling/trajectories/drawByParticleID-0/set gamma yellow
 /vis/modeling/trajectories/drawByParticleID-0/set e- magenta
 
-
+# When running an event, accumulate N events (in this case, up to 100) for visualization
 /vis/scene/endOfEventAction accumulate 100
 
+# The particles are shot from a rectangular plane situated at the position of the slit, in the positive z direction
 /gps/pos/type Plane
 /gps/pos/shape Rectangle
-/gps/pos/centre -21. 0.9 -300.27 mm
+/gps/pos/centre -21. 0.9 102.27 mm
 /gps/pos/halfx 17.5 mm
 /gps/pos/halfy 1.0 mm
 
-/gps/direction 0. 1. 0.
+/gps/direction 0. 0. -1.
 /gps/particle gamma
 /gps/ene/type Mono
-/gps/ene/mono 10 keV
-
-
-####################################
+/gps/ene/mono 30 keV
 
 
 
 
-# Draw smooth trajectories at end of event
-# Gamma-rays represented in red.
-
-
-# When running an event, accumulate N events (in this case, 100) for visualization
 
 
 
 
-#/run/beamOn 10
+
