@@ -9,7 +9,7 @@
       <rotation name="identity" x="0.000000e+00" y="0.000000e+00" z="0.000000e+00" unit="deg"/>
     </define>
     <materials>
-      <material name="G4_Galactic" Z="1" formula="H">
+      <material name="Galactic" Z="1" formula="H">
         <D value="1e-25" unit="g/cm3"/>
         <atom value="1.0"/>
       </material>
@@ -19,7 +19,7 @@
     </solids>
     <structure>
       <volume name="world">
-        <materialref ref="G4_Galactic"/>
+        <materialref ref="Galactic"/>
         <solidref ref="__box_world__"/>
         <!-- <physvol name="__phys_0">
           <file name="../../DMPX/gdml/SPC-AH3659_0.gdml"/>

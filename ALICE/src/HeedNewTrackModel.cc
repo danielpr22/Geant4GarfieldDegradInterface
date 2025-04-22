@@ -27,7 +27,7 @@
 #include "G4AutoLock.hh"
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
-// HeedNewTrackModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables
+// HeedNewTrackModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined variables
 HeedNewTrackModel::HeedNewTrackModel(GasModelParameters* gmp,G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : HeedModel(modelName, envelope,dc,sd)	{
         G4cout << "Copying the particle map" << G4endl;

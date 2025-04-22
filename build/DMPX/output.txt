@@ -1,0 +1,4323 @@
+
+**************************************************************
+ Geant4 version Name: geant4-11-03-patch-01    (21-March-2025)
+                       Copyright : Geant4 Collaboration
+                      References : NIM A 506 (2003), 250-303
+                                 : IEEE-TNS 53 (2006), 270-278
+                                 : NIM A 835 (2016), 186-225
+                             WWW : http://geant4.org/
+**************************************************************
+
+Setting the Random seed: 0
+Creation of the gas model parameter class
+Creation of DetectorConstruction
+Creation of PhysicsList
+Creating AnalysisManager
+Creating RunAction
+Visualization Manager instantiating with verbosity "warnings (3)"...
+Visualization Manager initialising...
+Registering graphics systems...
+
+You have successfully registered the following graphics systems.
+Registered graphics systems are:
+  ASCIITree (ATree)
+  DAWNFILE (DAWNFILE)
+  G4HepRepFile (HepRepFile)
+  RayTracer (RayTracer)
+  VRML2FILE (VRML2FILE)
+  gMocrenFile (gMocrenFile)
+  TOOLSSG_OFFSCREEN (TSG_OFFSCREEN, TSG_FILE)
+  OpenGLImmediateQt (OGLIQt, OGLI)
+  OpenGLStoredQt (OGLSQt, OGL, OGLS)
+  OpenGLImmediateX (OGLIX, OGLIQt_FALLBACK)
+  OpenGLStoredX (OGLSX, OGLSQt_FALLBACK)
+  RayTracerX (RayTracerX)
+  TOOLSSG_X11_GLES (TSG_X11_GLES, TSGX11, TSG_QT_GLES_FALLBACK)
+  TOOLSSG_X11_ZB (TSG_X11_ZB, TSGX11ZB)
+  TOOLSSG_QT_GLES (TSG_QT_GLES, TSGQt, TSG)
+  TOOLSSG_QT_ZB (TSG_QT_ZB, TSGQtZB)
+You may choose a graphics system (driver) with a parameter of
+the command "/vis/open" or "/vis/sceneHandler/create",
+or you may omit the driver parameter and choose at run time:
+- by argument in the construction of G4VisExecutive;
+- by environment variable "G4VIS_DEFAULT_DRIVER";
+- by entry in "~/.g4session";
+- by build flags.
+- Note: This feature is not allowed in batch mode.
+For further information see "examples/basic/B1/exampleB1.cc"
+and "vis.mac".
+
+Registering model factories...
+
+You have successfully registered the following model factories.
+Registered model factories:
+  generic
+  drawByAttribute
+  drawByCharge
+  drawByOriginVolume
+  drawByParticleID
+  drawByEncounteredVolume
+
+Registered models:
+  None
+
+Registered filter factories:
+  attributeFilter
+  chargeFilter
+  originVolumeFilter
+  particleFilter
+  encounteredVolumeFilter
+
+Registered filters:
+  None
+
+You have successfully registered the following user vis actions.
+Run Duration User Vis Actions: none
+End of Event User Vis Actions: none
+End of Run User Vis Actions: none
+
+Some /vis commands (optionally) take a string to specify colour.
+"/vis/list" to see available colours.
+Available UI session types: [ Qt, tcsh, csh ]
+*** /run/numberOfThreads command is issued in sequential mode.
+Command is ignored.
+G4GDML: Reading '../../DMPX/World.gdml'...
+G4GDML: Reading definitions...
+G4GDML: Reading materials...
+G4GDML: Reading solids...
+G4GDML: Reading structure...
+G4GDML: Reading module '../../DMPX/gdml/SPC-AH3892_11.gdml'...
+G4GDML: Reading definitions...
+G4GDML: Reading materials...
+G4GDML: Reading solids...
+G4GDML: Reading structure...
+G4GDML: Reading setup...
+G4GDML: Reading module '../../DMPX/gdml/SPC-AH3892_11.gdml' done!
+G4GDML: Reading setup...
+G4GDML: Reading '../../DMPX/World.gdml' done!
+Stripping off GDML names of materials, solids and volumes ...
+Checking overlaps for volume cadObjectsPhys:0 (G4TessellatedSolid) ... OK! 
+Checking overlaps for volume physGasBox:0 (G4Box) ... OK! 
+G4SDManager::AddNewCollection : the collection <GasBoxSD/GBHC> is registered at 1
+New sensitive detector <GasBoxSD> is registered at /interface/
+G4SDManager::AddNewCollection : the collection <SiliconSD/SHC> is registered at 2
+New sensitive detector <SiliconSD> is registered at /interface/
+Copying the particle map
+0
+set the gas file
+MediumMagboltz::SetComposition: Kr/CH4 (90/10)
+MediumMagboltz::Mixer:
+    4000 linear energy steps between 0 and 40 eV.
+    KRYPTON 2013  ANISOTROPICJ¿ú¢\
+      mass: 83.798 amu
+      ionisation threshold: 13.9996 eV
+      51 inelastic terms (51 excitations, 0 superelastic, 0 other)
+     CH4 2015  ANISOTROPIC   J¿ú¢\
+      mass: 16.0426 amu
+      ionisation threshold: 12.65 eV
+      34 inelastic terms (25 excitations, 2 superelastic, 7 other)
+MediumMagboltz::Mixer:
+    Lowest ionisation threshold in the mixture: 12.65 eV (CH4)
+MediumMagboltz::Mixer:
+    Energy [eV]    Collision Rate [ns-1]
+          2.50               1448.83
+          7.50               5753.67
+         12.50              10598.56
+         17.50              13872.77
+         22.50              15408.83
+         27.50              15951.02
+         32.50              15900.79
+         37.50              16159.42
+MediumMagboltz::Mixer: Resetting transfer probabilities.
+    Global: 0
+    Component 0: 0
+    Component 1: 0
+    Component 2: 0
+    Component 3: 0
+    Component 4: 0
+    Component 5: 0
+
+ComponentAnalyticField::CellCheck:
+    Moved the 's' wire at (-0.25, 5.72212e+241) to the basic x period.
+    This should not affect the results.
+    The 's' wire at (0.25, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 's' wire at (0, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'c' wire at (-0.125, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'c' wire at (0.125, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (-0.1875, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (-0.0625, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (0.0625, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (0.1875, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+ComponentAnalyticField::CellCheck:
+    All potentials in the cell are the same.
+    There is no point in going on.
+ComponentAnalyticField::Prepare:
+    The cell does not meet the requirements.
+ComponentAnalyticField::GetVoltageRange: Cell not set up.
+ViewCell::Plot: Component is not ready.
+ViewCell::Plot2d: Error creating plot.
+Info in <TCanvas::Print>: pdf file HeedNewTrackModel_chamber.pdf has been created
+CreateCellView()
+ComponentAnalyticField::CellCheck:
+    Moved the 's' wire at (0.25, 5.72212e+241) to the basic x period.
+    This should not affect the results.
+ComponentAnalyticField::CellCheck:
+    All potentials in the cell are the same.
+    There is no point in going on.
+ComponentAnalyticField::Prepare:
+    The cell does not meet the requirements.
+ViewField::PlotLimits:
+    Cell boundaries are not defined.
+    Please set the plot limits explicitly (SetArea).
+Info in <TCanvas::Print>: pdf file HeedNewTrackModel_efield.pdf has been created
+MediumMagboltz::SetComposition: Kr/CH4 (90/10)
+MediumMagboltz::Mixer:
+    4000 linear energy steps between 0 and 40 eV.
+    KRYPTON 2013  ANISOTROPIC@ƒ£\
+      mass: 83.798 amu
+      ionisation threshold: 13.9996 eV
+      51 inelastic terms (51 excitations, 0 superelastic, 0 other)
+     CH4 2015  ANISOTROPIC   @ƒ£\
+      mass: 16.0426 amu
+      ionisation threshold: 12.65 eV
+      34 inelastic terms (25 excitations, 2 superelastic, 7 other)
+MediumMagboltz::Mixer:
+    Lowest ionisation threshold in the mixture: 12.65 eV (CH4)
+MediumMagboltz::Mixer:
+    Energy [eV]    Collision Rate [ns-1]
+          2.50               1448.83
+          7.50               5753.67
+         12.50              10598.56
+         17.50              13872.77
+         22.50              15408.83
+         27.50              15951.02
+         32.50              15900.79
+         37.50              16159.42
+MediumMagboltz::Mixer: Resetting transfer probabilities.
+    Global: 0
+    Component 0: 0
+    Component 1: 0
+    Component 2: 0
+    Component 3: 0
+    Component 4: 0
+    Component 5: 0
+
+ComponentAnalyticField::CellCheck:
+    Moved the 's' wire at (-0.25, 5.72212e+241) to the basic x period.
+    This should not affect the results.
+    The 's' wire at (0.25, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 's' wire at (0, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'c' wire at (-0.125, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'c' wire at (0.125, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (-0.1875, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (-0.0625, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (0.0625, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+    The 'g' wire at (0.1875, 5.72212e+241) is located outside the planes.
+    This wire is removed.
+ComponentAnalyticField::CellCheck:
+    All potentials in the cell are the same.
+    There is no point in going on.
+ComponentAnalyticField::Prepare:
+    The cell does not meet the requirements.
+ComponentAnalyticField::GetVoltageRange: Cell not set up.
+ViewCell::Plot: Component is not ready.
+ViewCell::Plot2d: Error creating plot.
+Info in <TCanvas::Print>: pdf file HeedDeltaElectronModel_chamber.pdf has been created
+CreateCellView()
+ComponentAnalyticField::CellCheck:
+    Moved the 's' wire at (0.25, 5.72212e+241) to the basic x period.
+    This should not affect the results.
+ComponentAnalyticField::CellCheck:
+    All potentials in the cell are the same.
+    There is no point in going on.
+ComponentAnalyticField::Prepare:
+    The cell does not meet the requirements.
+ViewField::PlotLimits:
+    Cell boundaries are not defined.
+    Please set the plot limits explicitly (SetArea).
+Info in <TCanvas::Print>: pdf file HeedDeltaElectronModel_efield.pdf has been created
+### Birks coefficients used in run time
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to B+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to B-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to B0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to Bc+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to Bc-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to Bs0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to D+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to D-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to D0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to Ds+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to Ds-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to GenericIon
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to He3
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to J/psi
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to Upsilon
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to alpha
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_B0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_Bs0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_D0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_He3
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_alpha
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_deuteron
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_doublehyperH4
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_doublehyperdoubleneutron
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_hyperH4
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_hyperHe5
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_hyperalpha
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_hypertriton
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_kaon0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_lambda
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_lambda_b
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_lambda_c+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_neutron
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_nu_e
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_nu_mu
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_nu_tau
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_omega-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_omega_b-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_omega_c0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_proton
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma_b+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma_b-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma_b0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma_c+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma_c++
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_sigma_c0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_triton
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_xi-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_xi0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_xi_b-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_xi_b0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_xi_c+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to anti_xi_c0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to chargedgeantino
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to deuteron
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to doublehyperH4
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to doublehyperdoubleneutron
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to e+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to e-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to eta
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to eta_prime
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to etac
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to gamma
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to geantino
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to hyperH4
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to hyperHe5
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to hyperalpha
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to hypertriton
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to kaon+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to kaon-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to kaon0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to kaon0L
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to kaon0S
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to lambda
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to lambda_b
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to lambda_c+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to mu+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to mu-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to neutron
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to nu_e
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to nu_mu
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to nu_tau
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to omega-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to omega_b-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to omega_c0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for OpBoundary to opticalphoton
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to pi+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to pi-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to pi0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to proton
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma_b+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma_b-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma_b0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma_c+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma_c++
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to sigma_c0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to tau+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to tau-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to triton
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to xi-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to xi0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to xi_b-
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to xi_b0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to xi_c+
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+
+-------- WWWW ------- G4Exception-START -------- WWWW -------
+*** G4Exception : ProcMan114
+      issued by : G4ProcessManager::SetProcessOrderingToLast()
+Set Ordering Last is invoked twice for Scintillation to xi_c0
+*** This is just a warning message. ***
+-------- WWWW -------- G4Exception-END --------- WWWW -------
+
+Visualization verbosity is now all (6)
+Default graphics system is: OGL (based on build flags).
+Default window size hint is: 600x600-0+0 (based on G4VisManager initialisation).
+Note: Parameters specified on the command line will override these defaults.
+      Use "vis/open" without parameters to get these defaults.
+G4VisManager::SetCurrentGraphicsSystem: system now OpenGLStoredQt
+Graphics system set to OpenGLStoredQt (OGLSQt)
+New scene handler "scene-handler-0" created.
+G4VisManager::CreateViewer: new viewer created.
+ view parameters are:
+  View parameters and options:
+  Drawing style: wireframe
+  Number of cloud points: 10000
+  Auxiliary edges: invisible
+  Culling: on
+  Culling invisible objects: on
+  Density culling: off
+  Culling daughters covered by opaque mothers: off
+  Colour by density: inactive
+  Section flag: false
+  No cutaway planes
+  Explode factor: 1 about centre: (0,0,0)
+  No. of sides used in circle polygon approximation: 24
+  Viewpoint direction:  (0,0,1)
+  Up vector:            (0,1,0)
+  Field half angle:     0
+  Zoom factor:          1
+  Scale factor:         (1,1,1)
+  Current target point: (0,0,0)
+  Dolly distance:       0
+  Light does not move with camera
+  Relative lightpoint direction: (1,1,1)
+  Actual lightpoint direction: (1,1,1)
+  Derived parameters for standard view of object of unit radius:
+    Camera distance:   1
+    Near distance:     1e-06
+    Far distance:      2
+    Front half height: 1
+  Default VisAttributes:
+  G4VisAttributes: visible, daughters visible, colour: (1,1,1,1) (white)
+  linestyle: solid, line width: 1, min line segments per circle: 3
+  drawing style: not forced, auxiliary edge visibility: not forced
+  line segments per circle: not forced.
+  time range: (-1e+100,1e+100)
+  G4AttValue pointer is zero, G4AttDef pointer is zero
+  Default TextVisAttributes:
+  G4VisAttributes: visible, daughters visible, colour: (0,0,1,1) (blue)
+  linestyle: solid, line width: 1, min line segments per circle: 3
+  drawing style: not forced, auxiliary edge visibility: not forced
+  line segments per circle: not forced.
+  time range: (-1e+100,1e+100)
+  G4AttValue pointer is zero, G4AttDef pointer is zero
+  Default marker:
+    G4VMarker: position: (0,0,0), world size: 0, screen size: 5, fill style: no fill
+    G4Visible: No Visualization Attributes
+  Global marker scale: 1
+  Global lineWidth scale: 1
+  Marker not hidden by surfaces.
+  Window size hint: 600x600
+  X geometry string: 600x600-0+0
+  X geometry mask: 0x1f
+  Auto refresh: true
+  Background colour: (0,0,0,1) (black)
+  Picking requested: false
+  Rotation style: constrainUpDirection (conventional HEP view)
+Vis attributes modifiers: None
+Time window parameters:
+  Start time:  -1e+100 ns
+  End time:    1e+100 ns
+  Fade factor: 0
+  Head time display not requested.
+  Light front display not requested.
+Special Mesh Rendering: off
+NOTE: objects with visibility flag set to "false" will not be drawn!
+  "/vis/viewer/set/culling global false" to Draw such objects.
+  Also see other "/vis/viewer/set" commands.
+New viewer "viewer-0 (OpenGLStoredQt)" created.
+NOTE: SceneHandler "scene-handler-0", to which viewer "viewer-0"
+  is attached, has no scene - "/vis/scene/create" and "/vis/sceneHandler/attach"
+  (or use compound command "/vis/drawVolume").
+New empty scene "scene-0" created.
+"WorldPhysical", copy no. 0,
+  found in searched volume "WorldPhysical" at depth 0,
+  base path: " TOP",
+  with a requested depth of further descent of <0 (unlimited),
+  has been added to scene "scene-0".
+Scene "scene-0" attached to scene handler "scene-handler-0.
+  (You may have to refresh with "/vis/viewer/flush" if view is not "auto-refresh".)
+NOTE: For systems which are not "auto-refresh" you will need to
+  issue "/vis/viewer/refresh" or "/vis/viewer/flush".
+Axes of length 10 cm have been added to scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Viewer "viewer-0 (OpenGLStoredQt)" of scene handler "scene-handler-0"
+  refreshed at request of scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Attributes available for modeling and filtering with
+  "/vis/modeling/trajectories/create/drawByAttribute" and
+  "/vis/filtering/trajectories/create/attributeFilter" commands:
+G4TrajectoriesModel:
+  Event ID (EventID): G4int
+  Run ID (RunID): G4int
+G4SmoothTrajectory:
+  Charge (Ch): unit: e+ (G4double)
+  Track ID (ID): G4int
+  Initial kinetic energy (IKE): G4BestUnit (G4double)
+  Initial momentum magnitude (IMag): G4BestUnit (G4double)
+  Initial momentum (IMom): G4BestUnit (G4ThreeVector)
+  No. of points (NTP): G4int
+  PDG Encoding (PDG): G4int
+  Parent ID (PID): G4int
+  Particle Name (PN): G4String
+G4SmoothTrajectoryPoint:
+  Auxiliary Point Position (Aux): G4BestUnit (G4ThreeVector)
+  Step Position (Pos): G4BestUnit (G4ThreeVector)
+Default trajectory type G4SmoothTrajectory
+  will be used to store trajectories for scene "scene-0".
+WARNING: Trajectory storing has been requested.  This action may be
+  reversed with "/tracking/storeTrajectory 0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Viewer "viewer-0 (OpenGLStoredQt)" of scene handler "scene-handler-0"
+  refreshed at request of scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Hits, if any, will be drawn at end of run in scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Viewer "viewer-0 (OpenGLStoredQt)" of scene handler "scene-handler-0"
+  refreshed at request of scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+G4VisManager::NotifyHandler() called.
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Viewer "viewer-0 (OpenGLStoredQt)" of scene handler "scene-handler-0"
+  refreshed at request of scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+G4VisManager::NotifyHandler() called.
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Viewer "viewer-0 (OpenGLStoredQt)" of scene handler "scene-handler-0"
+  refreshed at request of scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+End of event action set to "accumulate".
+  Maximum number of events to be kept: 100 (unlimited if negative).
+  This may be changed with, e.g., "/vis/scene/endOfEventAction accumulate 1000".
+WARNING: The vis manager will keep up to 100 events.
+  This may use a lot of memory.
+  It may be changed with, e.g., "/vis/scene/endOfEventAction accumulate 10".
+ Changing export format to "jpg"
+Traversing scene data...
+(This could happen more than once - in fact, up to three times
+per rebuild, for opaque, transparent and non-hidden markers.)
+Numbers of touchables by depth in model "G4PhysicalVolumeModel WorldPhysical:0 BasePath: TOP":
+  Depth 0: 1
+  Depth 1: 2
+  Total number of touchables: 3
+Traversing scene data...
+Numbers of touchables by depth in model "G4PhysicalVolumeModel WorldPhysical:0 BasePath: TOP":
+  Depth 0: 1
+  Depth 1: 2
+  Total number of touchables: 3
+Traversing scene data...
+Numbers of touchables by depth in model "G4PhysicalVolumeModel WorldPhysical:0 BasePath: TOP":
+  Depth 0: 1
+  Depth 1: 2
+  Total number of touchables: 3
+=======================================================================
+======                 Electromagnetic Physics Parameters      ========
+=======================================================================
+LPM effect enabled                                 1
+Enable creation and use of sampling tables         0
+Apply cuts on all EM processes                     0
+Use combined TransportationWithMsc                 Disabled
+Use general process                                0
+Enable linear polarisation for gamma               0
+Enable photoeffect sampling below K-shell          1
+Enable sampling of quantum entanglement            0
+X-section factor for integral approach             0.8
+Min kinetic energy for tables                      100 eV 
+Max kinetic energy for tables                      100 TeV
+Number of bins per decade of a table               20
+Verbose level                                      1
+Verbose level for worker thread                    0
+Bremsstrahlung energy threshold above which 
+  primary e+- is added to the list of secondary    100 TeV
+Bremsstrahlung energy threshold above which primary
+  muon/hadron is added to the list of secondary    100 TeV
+Positron annihilation at rest model                AllisonPositronium
+Enable 3 gamma annihilation on fly                 0
+Lowest triplet kinetic energy                      1 MeV
+Enable sampling of gamma linear polarisation       0
+5D gamma conversion model type                     0
+5D gamma conversion model on isolated ion          0
+Use Ricardo-Gerardo pair production model          0
+Livermore data directory                           epics_2017
+=======================================================================
+======                 Ionisation Parameters                   ========
+=======================================================================
+Step function for e+-                              (0.2, 0.01 mm)
+Step function for muons/hadrons                    (0.1, 0.05 mm)
+Step function for light ions                       (0.1, 0.02 mm)
+Step function for general ions                     (0.1, 0.001 mm)
+Lowest e+e- kinetic energy                         100 eV 
+Lowest muon/hadron kinetic energy                  1 keV
+Use ICRU90 data                                    1
+Fluctuations of dE/dx are enabled                  1
+Type of fluctuation model for leptons and hadrons  Urban
+Use built-in Birks satuaration                     1
+Build CSDA range enabled                           0
+Use cut as a final range enabled                   0
+Enable angular generator interface                 1
+Max kinetic energy for CSDA tables                 1 GeV
+Max kinetic energy for NIEL computation            1 MeV
+Linear loss limit                                  0.01
+Read data from file for e+e- pair production by mu 0
+=======================================================================
+======                 Multiple Scattering Parameters          ========
+=======================================================================
+Type of msc step limit algorithm for e+-           2
+Type of msc step limit algorithm for muons/hadrons 0
+Msc lateral displacement for e+- enabled           1
+Msc lateral displacement for muons and hadrons     1
+Urban msc model lateral displacement alg96         1
+Range factor for msc step limit for e+-            0.08
+Range factor for msc step limit for muons/hadrons  0.2
+Geometry factor for msc step limitation of e+-     2.5
+Safety factor for msc step limit for e+-           0.6
+Skin parameter for msc step limitation of e+-      3
+Lambda limit for msc step limit for e+-            1 mm
+Use Mott correction for e- scattering              1
+Factor used for dynamic computation of angular 
+  limit between single and multiple scattering     1
+Fixed angular limit between single 
+  and multiple scattering                          3.1416 rad
+Upper energy limit for e+- multiple scattering     100 MeV
+Type of electron single scattering model           0
+Type of nuclear form-factor                        1
+Screening factor                                   1
+=======================================================================
+======                 Atomic Deexcitation Parameters          ========
+=======================================================================
+Fluorescence enabled                               1
+Directory in G4LEDATA for fluorescence data files  fluor
+Auger electron cascade enabled                     1
+PIXE atomic de-excitation enabled                  0
+De-excitation module ignores cuts                  1
+Type of PIXE cross section for hadrons             Empirical
+Type of PIXE cross section for e+-                 Livermore
+=======================================================================
+
+### ===  Deexcitation model UAtomDeexcitation is activated for 2 regions:
+          DefaultRegionForTheWorld  1  1  0
+          GasRegion  1  1  0
+### ===  Auger flag: 1
+### ===  Ignore cuts flag:   1
+
+phot:  for gamma SubType=12 BuildTable=0
+      LambdaPrime table from 200 keV to 100 TeV in 174 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+ LivermorePhElectric : Emin=    0 eV  Emax=  100 TeV  SauterGavrila Fluo
+
+compt:  for gamma SubType=13 BuildTable=1
+      Lambda table from 100 eV  to 1 MeV, 20 bins/decade, spline: 1
+      LambdaPrime table from 1 MeV to 100 TeV in 160 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+    LivermoreCompton : Emin=    0 eV  Emax=    1 GeV Fluo
+        KleinNishina : Emin=    1 GeV Emax=  100 TeV Fluo
+
+conv:  for gamma SubType=14 BuildTable=1
+      Lambda table from 1.022 MeV to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+Livermore5DConversion : Emin=    0 eV  Emax=  100 TeV  ModifiedTsai
+
+Rayl:  for gamma SubType=11 BuildTable=1
+      Lambda table from 100 eV  to 150 keV, 20 bins/decade, spline: 0
+      LambdaPrime table from 150 keV to 100 TeV in 176 bins 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   LivermoreRayleigh : Emin=    0 eV  Emax=  100 TeV  CullenGenerator
+
+msc:  for e-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  GoudsmitSaunderson : Emin=    0 eV  Emax=  100 MeV Nbins=120 100 eV  - 100 MeV
+          StepLim=SafetyPlus Rfact=0.08 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+        WentzelVIUni : Emin=  100 MeV Emax=  100 TeV Nbins=120 100 MeV - 100 TeV
+          StepLim=SafetyPlus Rfact=0.08 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+eIoni:  for e-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.2, 0.01 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+       LowEnergyIoni : Emin=    0 eV  Emax=  100 keV  deltaVI
+        MollerBhabha : Emin=  100 keV Emax=  100 TeV  deltaVI
+
+eBrem:  for e-  XStype:4  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      LPM flag: 1 for E > 1 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    0 eV  Emax=    1 GeV  AngularGen2BS
+            eBremLPM : Emin=    1 GeV Emax=  100 TeV  AngularGen2BS
+
+ePairProd:  for e-  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 0
+      Sampling table 25x1001; from 0.1 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           ePairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for e- XStype:1 SubType=1 BuildTable=1
+      Lambda table from 100 MeV to 100 TeV, 20 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=  100 MeV Emax=  100 TeV
+
+msc:  for e+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  GoudsmitSaunderson : Emin=    0 eV  Emax=  100 MeV Nbins=120 100 eV  - 100 MeV
+          StepLim=SafetyPlus Rfact=0.08 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+        WentzelVIUni : Emin=  100 MeV Emax=  100 TeV Nbins=120 100 MeV - 100 TeV
+          StepLim=SafetyPlus Rfact=0.08 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+eIoni:  for e+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.2, 0.01 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        MollerBhabha : Emin=    0 eV  Emax=  100 TeV  deltaVI
+
+eBrem:  for e+  XStype:4  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      LPM flag: 1 for E > 1 GeV,  VertexHighEnergyTh(GeV)= 100000
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+             eBremSB : Emin=    0 eV  Emax=    1 GeV  AngularGen2BS
+            eBremLPM : Emin=    1 GeV Emax=  100 TeV  AngularGen2BS
+
+ePairProd:  for e+  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 0
+      Sampling table 25x1001; from 0.1 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           ePairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+annihil:  for e+ XStype:2 SubType=5 AtRestModel:Allison BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            eplus2gg : Emin=    0 eV  Emax=  100 TeV
+
+CoulombScat:  for e+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from 100 MeV to 100 TeV, 20 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=  100 MeV Emax=  100 TeV
+
+msc:  for proton  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+hIoni:  for proton  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=    2 MeV  deltaVI
+          BetheBloch : Emin=    2 MeV Emax=  100 TeV  deltaVI
+
+hBrems:  for proton  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for proton  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 17x1001; from 7.50618 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for proton XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 20 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+nuclearStopping:  for proton SubType=8 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   ICRU49NucStopping : Emin=    0 eV  Emax=    1 MeV
+
+msc:  for GenericIon  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+ionIoni:  for GenericIon  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.001 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+    LindhardSorensen : Emin=    0 eV  Emax=  100 TeV  deltaVI
+
+nuclearStopping:  for GenericIon SubType=8 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   ICRU49NucStopping : Emin=    0 eV  Emax=    1 MeV
+======================================================================
+======          Radioactive Decay Physics Parameters           =======
+======================================================================
+min MeanLife (from G4NuclideTable)                1 ns 
+Max life time (from G4DeexPrecoParameters)        1000 ps 
+Internal e- conversion flag                       1
+Stored internal conversion coefficients           1
+Enabled atomic relaxation mode                    1
+Enable correlated gamma emission                  0
+Max 2J for sampling of angular correlations       10
+Atomic de-excitation enabled                      1
+Auger electron emission enabled                   1
+Check EM cuts disabled for atomic de-excitation   1
+Use Bearden atomic level energies                 0
+Use ANSTO fluorescence model                      0
+Threshold for very long decay time at rest        1 y  
+======================================================================
+
+====================================================================
+                  HADRONIC PROCESSES SUMMARY (verbose level 1)
+-------------------------------------------------------------------------
+                           Hadronic Processes for GenericIon
+  Process: RadioactiveDecay
+
+msc:  for alpha  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            UrbanMsc : Emin=    0 eV  Emax=  100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+ionIoni:  for alpha  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.02 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            BraggIon : Emin=    0 eV  Emax=7.9452 MeV  deltaVI
+          BetheBloch : Emin=7.9452 MeV Emax=  100 TeV  deltaVI
+
+nuclearStopping:  for alpha SubType=8 BuildTable=0
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+   ICRU49NucStopping : Emin=    0 eV  Emax=    1 MeV
+
+msc:  for anti_proton  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+hIoni:  for anti_proton  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=    2 MeV  deltaVI
+          BetheBloch : Emin=    2 MeV Emax=  100 TeV  deltaVI
+
+hBrems:  for anti_proton  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for anti_proton  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 17x1001; from 7.50618 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for anti_proton XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 20 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for kaon+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+hIoni:  for kaon+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=1.05231 MeV  deltaVI
+          BetheBloch : Emin=1.05231 MeV Emax=  100 TeV  deltaVI
+
+hBrems:  for kaon+  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for kaon+  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 18x1001; from 3.94942 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for kaon+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 20 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for kaon-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+hIoni:  for kaon-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=1.05231 MeV  deltaVI
+          BetheBloch : Emin=1.05231 MeV Emax=  100 TeV  deltaVI
+
+hBrems:  for kaon-  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for kaon-  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 18x1001; from 3.94942 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for kaon- XStype:1 SubType=1 BuildTable=1
+      Used Lambda table of kaon+
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for mu+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+muIoni:  for mu+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=  200 keV  deltaVI
+        MuBetheBloch : Emin=  200 keV Emax=  100 TeV  deltaVI
+
+muBrems:  for mu+  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+muPairProd:  for mu+  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 21x1001; from 0.85 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for mu+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 20 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for mu-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+muIoni:  for mu-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=  200 keV  deltaVI
+        MuBetheBloch : Emin=  200 keV Emax=  100 TeV  deltaVI
+
+muBrems:  for mu-  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+              MuBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+muPairProd:  for mu-  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 21x1001; from 0.85 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+          muPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for mu- XStype:1 SubType=1 BuildTable=1
+      Used Lambda table of mu+
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for pi+  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+hIoni:  for pi+  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               Bragg : Emin=    0 eV  Emax=297.505 keV  deltaVI
+          BetheBloch : Emin=297.505 keV Emax=  100 TeV  deltaVI
+
+hBrems:  for pi+  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for pi+  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 20x1001; from 1.11656 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for pi+ XStype:1 SubType=1 BuildTable=1
+      Lambda table from threshold  to 100 TeV, 20 bins/decade, spline: 0
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+msc:  for pi-  SubType= 10
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+        WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=240 100 eV  - 100 TeV
+          StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=3 Llim=1 mm
+
+hIoni:  for pi-  XStype:3  SubType=2
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      StepFunction=(0.1, 0.05 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+            ICRU73QO : Emin=    0 eV  Emax=297.505 keV  deltaVI
+          BetheBloch : Emin=297.505 keV Emax=  100 TeV  deltaVI
+
+hBrems:  for pi-  XStype:1  SubType=3
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+               hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+hPairProd:  for pi-  XStype:1  SubType=4
+      dE/dx and range tables from 100 eV  to 100 TeV in 240 bins
+      Lambda tables from threshold to 100 TeV, 20 bins/decade, spline: 1
+      Sampling table 20x1001; from 1.11656 GeV to 100 TeV 
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+           hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
+
+CoulombScat:  for pi- XStype:1 SubType=1 BuildTable=1
+      Used Lambda table of pi+
+      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ===== EM models for the G4Region  DefaultRegionForTheWorld ======
+  eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
+
+========= Table of registered couples ============================
+
+Index : 0     used in the geometry : Yes
+ Material : G4_Galactic
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes
+ Material : G4_Al
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  34.1013 keV    e+  33.7203 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes
+ Material : KrCH4_90_10
+ Range cuts        :  gamma  1 um     e-  1 um     e+  1 um  proton 0 fm 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 0 eV 
+ Region(s) which use this couple : 
+    GasRegion
+
+==================================================================
+
+G4VisManager::GeometryHasChanged() called.
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+Traversing scene data...
+Numbers of touchables by depth in model "G4PhysicalVolumeModel WorldPhysical:0 BasePath: TOP":
+  Depth 0: 1
+  Depth 1: 2
+  Total number of touchables: 3
+Traversing scene data...
+Numbers of touchables by depth in model "G4PhysicalVolumeModel WorldPhysical:0 BasePath: TOP":
+  Depth 0: 1
+  Depth 1: 2
+  Total number of touchables: 3
+Traversing scene data...
+Numbers of touchables by depth in model "G4PhysicalVolumeModel WorldPhysical:0 BasePath: TOP":
+  Depth 0: 1
+  Depth 1: 2
+  Total number of touchables: 3
+Viewer "viewer-0 (OpenGLStoredQt)" of scene handler "scene-handler-0"
+  refreshed at request of scene "scene-0".
+G4VisManager::SetCurrentViewer: viewer now viewer-0 (OpenGLStoredQt)
+G4VisManager::SetCurrentSceneHandler: scene handler now "scene-handler-0"
+### Run 0 starts.
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 740022998, 775178938
+----------------------------------------
+Starting run 0
+Time: Thu Apr 17 15:41:10 2025
+
+... set ntuple merging row mode : row-wise - done
+... create file : output.root - done
+... open analysis file : output.root - done
+... open analysis file : output.root - done
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-31.4642(mm),0.0113897(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+ Run terminated.
+Run Summary
+  Number of events processed : 1
+  User=0.040000s Real=0.032837s Sys=0.000000s
+... write file : output.root - done
+... close file : output.root - done
+... delete empty file : output.root - done
+End of run OK!
+Simulation finished.
+Time: Thu Apr 17 15:41:10 2025
+
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1921275079, 1298156319
+----------------------------------------
+1 event has been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review one by one.
+  To see accumulated, "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild".
+
+========= Table of registered couples ============================
+
+Index : 0     used in the geometry : Yes
+ Material : G4_Galactic
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes
+ Material : G4_Al
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  34.1013 keV    e+  33.7203 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes
+ Material : KrCH4_90_10
+ Range cuts        :  gamma  1 um     e-  1 um     e+  1 um  proton 0 fm 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 0 eV 
+ Region(s) which use this couple : 
+    GasRegion
+
+==================================================================
+
+### Run 1 starts.
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1921275079, 1298156319
+----------------------------------------
+Starting run 1
+Time: Thu Apr 17 15:41:20 2025
+
+... create file : output.root - done
+... open analysis file : output.root - done
+... open analysis file : output.root - done
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-13.9853(mm),0.344172(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+ Run terminated.
+Run Summary
+  Number of events processed : 1
+  User=0.030000s Real=0.036590s Sys=0.020000s
+... write file : output.root - done
+... close file : output.root - done
+... delete empty file : output.root - done
+End of run OK!
+Simulation finished.
+Time: Thu Apr 17 15:41:20 2025
+
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 668347174, 1448336686
+----------------------------------------
+1 event has been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review one by one.
+  To see accumulated, "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild".
+
+========= Table of registered couples ============================
+
+Index : 0     used in the geometry : Yes
+ Material : G4_Galactic
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes
+ Material : G4_Al
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  34.1013 keV    e+  33.7203 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes
+ Material : KrCH4_90_10
+ Range cuts        :  gamma  1 um     e-  1 um     e+  1 um  proton 0 fm 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 0 eV 
+ Region(s) which use this couple : 
+    GasRegion
+
+==================================================================
+
+### Run 2 starts.
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 668347174, 1448336686
+----------------------------------------
+Starting run 2
+Time: Thu Apr 17 15:41:21 2025
+
+... create file : output.root - done
+... open analysis file : output.root - done
+... open analysis file : output.root - done
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-31.1824(mm),0.84323(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0.000220786
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.00124018
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+ Run terminated.
+Run Summary
+  Number of events processed : 1
+  User=0.030000s Real=0.035419s Sys=0.010000s
+... write file : output.root - done
+... close file : output.root - done
+... delete empty file : output.root - done
+End of run OK!
+Simulation finished.
+Time: Thu Apr 17 15:41:21 2025
+
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 504556899, 1732336869
+----------------------------------------
+1 event has been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review one by one.
+  To see accumulated, "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild".
+
+========= Table of registered couples ============================
+
+Index : 0     used in the geometry : Yes
+ Material : G4_Galactic
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes
+ Material : G4_Al
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  34.1013 keV    e+  33.7203 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes
+ Material : KrCH4_90_10
+ Range cuts        :  gamma  1 um     e-  1 um     e+  1 um  proton 0 fm 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 0 eV 
+ Region(s) which use this couple : 
+    GasRegion
+
+==================================================================
+
+### Run 3 starts.
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 504556899, 1732336869
+----------------------------------------
+Starting run 3
+Time: Thu Apr 17 15:41:21 2025
+
+... create file : output.root - done
+... open analysis file : output.root - done
+... open analysis file : output.root - done
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-7.7786(mm),0.374891(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+ Run terminated.
+Run Summary
+  Number of events processed : 1
+  User=0.040000s Real=0.030222s Sys=0.010000s
+... write file : output.root - done
+... close file : output.root - done
+... delete empty file : output.root - done
+End of run OK!
+Simulation finished.
+Time: Thu Apr 17 15:41:21 2025
+
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1780554772, 2143352318
+----------------------------------------
+1 event has been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review one by one.
+  To see accumulated, "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild".
+
+========= Table of registered couples ============================
+
+Index : 0     used in the geometry : Yes
+ Material : G4_Galactic
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes
+ Material : G4_Al
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  34.1013 keV    e+  33.7203 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes
+ Material : KrCH4_90_10
+ Range cuts        :  gamma  1 um     e-  1 um     e+  1 um  proton 0 fm 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 0 eV 
+ Region(s) which use this couple : 
+    GasRegion
+
+==================================================================
+
+### Run 4 starts.
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1780554772, 2143352318
+----------------------------------------
+Starting run 4
+Time: Thu Apr 17 15:41:21 2025
+
+... create file : output.root - done
+... open analysis file : output.root - done
+... open analysis file : output.root - done
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-27.8293(mm),0.415718(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+ Run terminated.
+Run Summary
+  Number of events processed : 1
+  User=0.030000s Real=0.029552s Sys=0.000000s
+... write file : output.root - done
+... close file : output.root - done
+... delete empty file : output.root - done
+End of run OK!
+Simulation finished.
+Time: Thu Apr 17 15:41:21 2025
+
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1108584274, 629986728
+----------------------------------------
+1 event has been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review one by one.
+  To see accumulated, "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild".
+
+========= Table of registered couples ============================
+
+Index : 0     used in the geometry : Yes
+ Material : G4_Galactic
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes
+ Material : G4_Al
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  34.1013 keV    e+  33.7203 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes
+ Material : KrCH4_90_10
+ Range cuts        :  gamma  1 um     e-  1 um     e+  1 um  proton 0 fm 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 0 eV 
+ Region(s) which use this couple : 
+    GasRegion
+
+==================================================================
+
+### Run 5 starts.
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1108584274, 629986728
+----------------------------------------
+Starting run 5
+Time: Thu Apr 17 15:41:21 2025
+
+... create file : output.root - done
+... open analysis file : output.root - done
+... open analysis file : output.root - done
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-10.6702(mm),0.15309(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+ Run terminated.
+Run Summary
+  Number of events processed : 1
+  User=0.040000s Real=0.032976s Sys=0.020000s
+... write file : output.root - done
+... close file : output.root - done
+... delete empty file : output.root - done
+End of run OK!
+Simulation finished.
+Time: Thu Apr 17 15:41:21 2025
+
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1181377134, 787397076
+----------------------------------------
+1 event has been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review one by one.
+  To see accumulated, "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild".
+
+========= Table of registered couples ============================
+
+Index : 0     used in the geometry : Yes
+ Material : G4_Galactic
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 1     used in the geometry : Yes
+ Material : G4_Al
+ Range cuts        :  gamma  10 um     e-  10 um     e+  10 um  proton 10 um 
+ Energy thresholds :  gamma  1 keV    e-  34.1013 keV    e+  33.7203 keV proton 1 keV
+ Region(s) which use this couple : 
+    DefaultRegionForTheWorld
+
+Index : 2     used in the geometry : Yes
+ Material : KrCH4_90_10
+ Range cuts        :  gamma  1 um     e-  1 um     e+  1 um  proton 0 fm 
+ Energy thresholds :  gamma  1 keV    e-  1 keV    e+  1 keV proton 0 eV 
+ Region(s) which use this couple : 
+    GasRegion
+
+==================================================================
+
+### Run 6 starts.
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1181377134, 787397076
+----------------------------------------
+Starting run 6
+Time: Thu Apr 17 15:41:30 2025
+
+... create file : output.root - done
+... open analysis file : output.root - done
+... open analysis file : output.root - done
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-23.7184(mm),0.72506(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.088e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.088e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0.0014687
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 7
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 7
+Energy loss through gas: 6.57e-05
+Track (trackID 7, parentID 3) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 2.816e-05
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 2.816e-05
+Track (trackID 6, parentID 3) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 2.84624e-05
+Track (trackID 5, parentID 3) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.00167319
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-5.58804(mm),1.03727(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-23.2973(mm),1.00882(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-15.133(mm),1.69189(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-19.5008(mm),1.26136(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-12.8068(mm),0.951644(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-16.7562(mm),0.870888(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-5.70261(mm),0.964859(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0
+Track (trackID 14, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0
+Track (trackID 13, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 12
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 12
+Energy electron: 0
+Track (trackID 12, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 11
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 11
+Energy electron: 0
+Track (trackID 11, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 10
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 10
+Energy electron: 0
+Track (trackID 10, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+Track (trackID 9, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0.00148544
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0.000870683
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+Track (trackID 8, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+Track (trackID 7, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0.00127129
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0.000967914
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+Track (trackID 6, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0.00013355
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+Track (trackID 5, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+Track (trackID 4, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.0104236
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00871589
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.0077278
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00716096
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00624556
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00596191
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00475752
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00433778
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.0042775
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.0034314
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00297572
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00260998
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00250998
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00196258
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.000629003
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.000424245
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0.00150875
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0.00133769
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0.000238495
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0
+Track (trackID 15, parentID 3) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0148699
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0135008
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0122715
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0111923
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00955302
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00825558
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00673239
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00551989
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00472243
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00448946
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00425054
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00405103
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00250094
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00201942
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.000914561
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.000691765
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.000410698
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00026185
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+Track (trackID 2, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 18
+Energy electron: 0.000987578
+GasBox Hit!!
+Particle ID: 18
+Energy electron: 0.000442439
+GasBox Hit!!
+Particle ID: 18
+Energy electron: 0.000419363
+GasBox Hit!!
+Particle ID: 18
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 18
+Energy electron: 0
+Track (trackID 18, parentID 2) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 17
+Energy electron: 0.00105953
+GasBox Hit!!
+Particle ID: 17
+Energy electron: 0.000600057
+GasBox Hit!!
+Particle ID: 17
+Energy electron: 0.000536295
+GasBox Hit!!
+Particle ID: 17
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 17
+Energy electron: 0
+Track (trackID 17, parentID 2) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0.00101944
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0.000897468
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0.00045385
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0.000376078
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0.000117968
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0
+Track (trackID 16, parentID 2) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-16.0565(mm),0.0311823(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-22.424(mm),0.442707(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.616e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.616e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 2.37032e-05
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.00198014
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-5.52318(mm),1.29405(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-31.0831(mm),1.20547(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.041e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.041e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.000643143
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-12.9567(mm),1.6384(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-10.5987(mm),-0.0860579(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-6.18578(mm),1.47899(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-22.2878(mm),1.35588(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 6.57e-05
+Track (trackID 6, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 2.816e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 2.816e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0.000138373
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.0010378
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-38.3724(mm),1.70952(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+Track (trackID 4, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00015538
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0297072
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0297043
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0297043
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0297043
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0297043
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0297043
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-38.3793(mm),0.0281009(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.616e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.616e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.000558742
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-3.7391(mm),1.10125(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-35.3543(mm),-0.0899702(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-6.27378(mm),0.3397(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-36.4282(mm),0.0722985(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.000669308
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 1.9347e-05
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-33.5343(mm),0.0686073(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 9.873e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 9.873e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.00128807
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-11.1175(mm),1.00317(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-25.0408(mm),1.11449(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-4.37348(mm),0.128785(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-8.09129(mm),0.919765(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-3.72409(mm),0.608566(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-26.4649(mm),0.540352(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+Track (trackID 8, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+Track (trackID 7, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+Track (trackID 6, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+Track (trackID 5, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.00131632
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.000804827
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.000616155
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Track (trackID 3, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0139613
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0129658
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0109082
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0102229
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00855508
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00814279
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00717725
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00625537
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00428711
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00388077
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00339529
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0031276
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00251149
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00242908
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00182905
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00143887
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00141367
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.000239957
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+Track (trackID 2, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0.00104338
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0.000967602
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0.000967602
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0.000440597
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0.00016099
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+Track (trackID 9, parentID 2) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-20.1032(mm),1.23917(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-24.9366(mm),0.164035(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 6.57e-05
+Track (trackID 6, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.041e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.041e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 2.816e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 2.816e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.000961499
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-12.3505(mm),1.01278(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-12.5941(mm),1.16749(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-27.8215(mm),1.8972(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0.00146917
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 6.617e-05
+Silicon Wall Hit!!
+Particle ID: 6
+Energy loss through gas: 6.617e-05
+Track (trackID 6, parentID 3) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 2.01727e-05
+Track (trackID 5, parentID 3) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.00122269
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-21.5782(mm),1.20269(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-20.6271(mm),0.454033(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-16.4406(mm),1.88618(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+Track (trackID 5, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+Track (trackID 4, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00124194
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00103918
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.000902486
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0266471
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0254199
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.023994
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0198923
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0186431
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.016267
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0140835
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.011051
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0100729
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00811468
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00688709
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00485843
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00400605
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00275452
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00250453
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00194994
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00182278
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00178564
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.000901833
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00018166
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+Track (trackID 2, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0.00243078
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0.00163827
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0.00152525
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0.00144294
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+Track (trackID 7, parentID 2) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0.00129038
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0.00079048
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0.000500275
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0.000286408
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+Track (trackID 6, parentID 2) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-17.4645(mm),1.03057(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-36.0659(mm),0.104043(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.57e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 2.56684e-05
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.00221472
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-8.59786(mm),0.662052(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 12
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 12
+Energy electron: 0
+Track (trackID 12, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 11
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 11
+Energy electron: 0
+Track (trackID 11, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 10
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 10
+Energy electron: 0
+Track (trackID 10, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+Track (trackID 9, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0.00010026
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+Track (trackID 8, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+Track (trackID 7, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+Track (trackID 6, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0.000879352
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0.000245234
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+Track (trackID 5, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.00141783
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.00130313
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.000809873
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.000382577
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.000225553
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+Track (trackID 4, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.0102095
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00921163
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00601925
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00261638
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00152342
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.000551944
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.00252182
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.00158904
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.00155081
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.00124941
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.000980809
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.000529053
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.000367097
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0.000170618
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 14
+Energy electron: 0
+Track (trackID 14, parentID 3) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0.00118368
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0.000905696
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0
+Track (trackID 13, parentID 3) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0142484
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.012966
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0111003
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0106715
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0106289
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0101112
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00948531
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00764943
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00671281
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00582084
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00548835
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00512091
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00470309
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00433582
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00322867
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00276325
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00244776
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00222079
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00184232
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.000993345
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.000211948
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+Track (trackID 2, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0.00111335
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 16
+Energy electron: 0
+Track (trackID 16, parentID 2) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0.00113319
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0.000126021
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 15
+Energy electron: 0
+Track (trackID 15, parentID 2) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-5.69048(mm),0.169591(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-36.265(mm),1.59196(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-24.9219(mm),0.58895(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Silicon Wall Hit!!
+Particle ID: 5
+Energy loss through gas: 6.57e-05
+Track (trackID 5, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.616e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.616e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 0.000188016
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.000831738
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-29.0477(mm),0.417143(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0.03
+Track (trackID 1, parentID 0) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.569e-05
+Silicon Wall Hit!!
+Particle ID: 4
+Energy loss through gas: 6.569e-05
+Track (trackID 4, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 2.816e-05
+Silicon Wall Hit!!
+Particle ID: 3
+Energy loss through gas: 2.816e-05
+Track (trackID 3, parentID 1) is processed with stopping code 2
+Silicon Wall Hit!!
+Particle ID: 2
+Energy loss through gas: 0.000244332
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-8.54404(mm),1.52749(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-37.7875(mm),-0.0961823(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-14.336(mm),0.566238(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 12
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 12
+Energy electron: 0
+Track (trackID 12, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 11
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 11
+Energy electron: 0
+Track (trackID 11, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 10
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 10
+Energy electron: 0
+Track (trackID 10, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 9
+Energy electron: 0
+Track (trackID 9, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 8
+Energy electron: 0
+Track (trackID 8, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 7
+Energy electron: 0
+Track (trackID 7, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 6
+Energy electron: 0
+Track (trackID 6, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0.00129806
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0.000929272
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0.000792614
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0.000740626
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 5
+Energy electron: 0
+Track (trackID 5, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.00160373
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.00154211
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.00133251
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.000516765
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0.000469503
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 4
+Energy electron: 0
+Track (trackID 4, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.0105458
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00882931
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00579508
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00539292
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.0049985
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00387819
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00298741
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00267476
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00210898
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00162165
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.00155588
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.000930344
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0.000666132
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 3
+Energy electron: 0
+Track (trackID 3, parentID 1) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0.00221697
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0.00205409
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0.00185913
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0.00171873
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0.00104121
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 13
+Energy electron: 0
+Track (trackID 13, parentID 3) is processed with stopping code 2
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0146672
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0137697
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0104672
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.0085757
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00590549
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00509757
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00437204
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00427376
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00408091
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00371441
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00257684
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00253403
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00245235
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00198973
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00145559
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0.00104771
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+GasBox Hit!!
+Particle ID: 2
+Energy electron: 0
+Track (trackID 2, parentID 1) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-6.27466(mm),0.975504(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-35.5405(mm),1.36287(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+=====================================
+  G4EventManager::ProcessOneEvent()  
+=====================================
+GasBoxSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+G4PrimaryTransformer::PrimaryVertex (-38.427(mm),1.27174(mm),102.27(mm),0(nsec))
+1 primary tracks are passed to the stack.
+!!!!!!! Now start processing an event !!!!!!!
+Silicon Wall Hit!!
+Particle ID: 1
+Energy loss through gas: 0
+Track (trackID 1, parentID 0) is processed with stopping code 2
+NULL returned from G4StackManager.
+Terminate current event processing.
+Number of Electrons: 0
+ Run terminated.
+Run Summary
+  Number of events processed : 50
+  User=0.540000s Real=0.720162s Sys=0.300000s
+... write file : output.root - done
+... close file : output.root - done
+... delete empty file : output.root - done
+End of run OK!
+Simulation finished.
+Time: Thu Apr 17 15:41:31 2025
+
+
+--------- Ranecu engine status ---------
+ Initial seed (index) = 0
+ Current couple of seeds = 1421137502, 837588637
+----------------------------------------
+50 events have been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review one by one.
+  To see accumulated, "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild".
+
+G4VisManager::SetCurrentViewer: current viewer pointer zeroed 
+Graphics systems deleted.
+Visualization Manager deleting...
+Deleting PhysicsListMessenger
+Deleting PhysicsList
+Deleting RunAction
+Deleting PrimaryGeneratorAction
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Maximum number of tracks in the urgent stack : 13
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Deleting EventAction
+================== Deleting memory pools ===================
+Number of memory pools allocated: 16; of which, static: 0
+Dynamic pools deleted: 16 / Total memory freed: 0.11 MB
+============================================================

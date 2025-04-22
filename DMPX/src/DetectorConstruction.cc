@@ -13,7 +13,6 @@
 #include "G4LogicalBorderSurface.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4OpticalSurface.hh"
-#include "G4Trd.hh"
 #include "G4Threading.hh"
 #include "G4RegionStore.hh"
 #include "G4UniformMagField.hh"
@@ -27,11 +26,11 @@
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
     :
     fGasModelParameters(gmp),
-    checkOverlaps(0),
-    worldHalfLength(1.*m), //World volume is a cube with side length = 3m;
-    gasPressure(1.*bar), // Pressure inside the gas
-    temperature(273.15*kelvin), // temperature
-    kryptonPercentage(90), // mixture settings
+    checkOverlaps(1),
+    worldHalfLength(0.2*m),        // World volume is a cube with side length = 3m;
+    gasPressure(1.*atmosphere),   // Pressure inside the gas
+    temperature(273.15 *kelvin),  // temperature
+    kryptonPercentage(90),        // mixture settings in molar percentage
     ch4Percentage(10)
 {
   detectorMessenger = new DetectorMessenger(this);
@@ -44,10 +43,51 @@ DetectorConstruction::~DetectorConstruction() {
 
 G4VPhysicalVolume* DetectorConstruction::Construct(){
 
+    //Colors for visualization
+    G4VisAttributes* red = new G4VisAttributes(G4Colour(1., 0., 0.));
+    G4VisAttributes* green = new G4VisAttributes(G4Colour(0., 1., 0.));
+    G4VisAttributes* blue = new G4VisAttributes(G4Colour(0., 0., 1.));
+    G4VisAttributes* yellow = new G4VisAttributes(G4Colour(1.0, 1.0, 0.));
+    G4VisAttributes* purple = new G4VisAttributes(G4Colour(1.0, 0., 1.0));
+
+    /*
+    #################################
+    ########### WORLD VOLUME ########
+    #################################
+    */
+
     G4NistManager* man = G4NistManager::Instance();
     man->SetVerbose(1);
 
-    // Defining the gas elements, He, Kr and CH4
+    G4Material* worldMat = man->FindOrBuildMaterial("G4_Galactic");
+    G4VSolid* worldSolid = new G4Box("worldSolid", worldHalfLength, worldHalfLength, worldHalfLength);
+    G4LogicalVolume* worldLogical = new G4LogicalVolume(worldSolid, worldMat, "WorldLogical");
+    G4VPhysicalVolume* worldPhysical = new G4PVPlacement(
+      nullptr,                        // no rotation
+      G4ThreeVector(0, 0, 0),         // placement position
+      worldLogical,                   // logical volume to place
+      "WorldPhysical",                // name
+      nullptr,                        // mother volume
+      false,                          // no boolean operations
+      0,                              // copy number
+      checkOverlaps                   // check for overlaps
+    );
+
+    /*
+    #################################
+    ########### MATERIALS ###########
+    #################################
+    */
+
+    /*First: build materials
+        First cylinder: He
+        Second cylinder: Kr + CH4 at a certain flux
+        Third cylinder: Kr + CH4 at a certain flux
+        Gas: mixture of Kr and CH4
+        Anodes: Silicon 
+    */
+
+    // Defining the gas elements: He, Kr and CH4
     G4Material* Helium = man->FindOrBuildMaterial("G4_He");
     G4Material* Krypton = man->FindOrBuildMaterial("G4_Kr");
     G4Material* Methane = man->FindOrBuildMaterial("G4_METHANE");
@@ -73,64 +113,83 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     KrCH4_90_10->AddMaterial(Krypton, 0.973); // 97.3% by mass (90% molar)
     KrCH4_90_10->AddMaterial(Methane, 0.027); // 2.7% by mass (10% molar)
 
-    G4GDMLParser parser; 
-    parser.SetOverlapCheck(true);
-    parser.Read("../../DMPX/World.gdml", false);
-    G4VPhysicalVolume* worldPhys = parser.GetWorldVolume();
-
-    /*First: build materials
-        First cylinder: He
-        Second cylinder: Kr + CH4 at a certain flux
-        Third cylinder: Kr + CH4 at a certain flux
-        Gas: mixture of Kr and CH4
-        Anodes: Silicon 
+    /*
+    #################################
+    ########### DETECTOR GEOMETRY####
+    #################################
     */
-    
-    //Colors for visualization
-    G4VisAttributes* red = new G4VisAttributes(G4Colour(1., 0., 0.));
-    G4VisAttributes* green = new G4VisAttributes(G4Colour(0., 1., 0.));
-    G4VisAttributes* blue = new G4VisAttributes(G4Colour(0., 0., 1.));
-    G4VisAttributes* yellow = new G4VisAttributes(G4Colour(1.0, 1.0, 0.));
-    G4VisAttributes* purple = new G4VisAttributes(G4Colour(1.0, 0., 1.0));
 
-    // Dimensions of the Helium gas cylinder
-    gasboxR = 0.04*m;
-    gasboxH = 0.1*m;
-    G4RotationMatrix* myRotation = new G4RotationMatrix();
-    myRotation->rotateX(0.*deg);
-    myRotation->rotateY(0.*deg);
-    myRotation->rotateZ(0.*rad);
-    G4Tubs* KrCH4GasBox = new G4Tubs("_gasbox_tube",0,gasboxR,gasboxH*0.5, 0., twopi);
-    logicGasBox = new G4LogicalVolume(KrCH4GasBox, KrCH4_90_10, "solidGasBox");
+    G4GDMLParser parser; 
+    parser.Read("../../DMPX/World.gdml");
+    G4LogicalVolume* cadObjectsLogical = parser.GetVolume("__vol__11_");
+    
+    if (!cadObjectsLogical) {
+        G4cerr << "Error: Logical volume 'Detector_1' not found!" << G4endl;
+        return nullptr;
+    }
+
+    // Placing the CAD objects inside our existing world
+    new G4PVPlacement(
+      nullptr,                         // no rotation
+      G4ThreeVector(0,0,0),            // placement position
+      cadObjectsLogical,               // logical volume to place
+      "cadObjectsPhys",                // name
+      worldLogical,                    // mother volume
+      false,                           // no boolean operations
+      0,                               // copy number
+      true                             // check for overlaps
+    );
+    
+
+    /*
+    #################################
+    ########### GAS VOLUME ##########
+    #################################
+    */
+
+    G4double gasbox_x = 32*mm; // Dimensions in absolute length of the gas box in X, Y and Z (from Camenen's thesis)
+    G4double gasbox_y = 8*mm;
+    G4double gasbox_z = 130*mm;
+
+    G4Box* KrCH4GasBox = new G4Box("GasBox", gasbox_x/2, gasbox_y/2, gasbox_z/2);
+    logicGasBox = new G4LogicalVolume(KrCH4GasBox, KrCH4_90_10, "GasBoxLogical");
 
     G4VisAttributes* gasVis = new G4VisAttributes(G4Colour(0.0, 0.0, 1.0, 0.3)); // RGBA: Blue with 30% opacity
     gasVis->SetForceSolid(true);  // Makes sure the volume is drawn as a surface
     logicGasBox->SetVisAttributes(gasVis);
-
-    // Get logical volume of the GDML world
-    G4LogicalVolume* logicWorld = worldPhys->GetLogicalVolume();
-
-    // Place your gas volume inside the GDML world
-    new G4PVPlacement(
-        myRotation,
-        G4ThreeVector(0., 0., 100.), // Adjust position if needed
-        logicGasBox,
-        "physGasBox",
-        logicWorld,
-        false,
-        0,
-        true
-    );
-
     G4Region* gasRegion = new G4Region("GasRegion");
     gasRegion->AddRootLogicalVolume(logicGasBox);
 
-     return worldPhys; 
+    // Placing our gas volume inside the world
+    new G4PVPlacement(
+        0,                            // no rotation
+        G4ThreeVector(-21*mm, 0.9*mm, (65+16)*mm),  // Placement position
+        logicGasBox,                    // logical volume to place
+        "physGasBox",                 // name
+        worldLogical,                 // mother volume       
+        false,                        // no boolean operations
+        0,                            // copy number
+        true                          // check for overlaps
+    );
+
+
+    /*
+    #################################
+    ########### ELECTRIC FIELD ######
+    #################################
+    */
+
+    auto globalField = new G4UniformMagField(G4ThreeVector(0., 0., -0.3076*1e6 * volt/m)); // Setting up a constant electric field of 0.3076 MV/m
+    auto fieldManager = new G4FieldManager(globalField);
+    worldLogical->SetFieldManager(fieldManager, true);
+
+
+    return worldPhysical; 
 }
 
 void DetectorConstruction::ConstructSDandField(){
 
-  G4LogicalVolume* logicGasBox = G4LogicalVolumeStore::GetInstance()->GetVolume("solidGasBox");
+  G4LogicalVolume* logicGasBox = G4LogicalVolumeStore::GetInstance()->GetVolume("GasBoxLogical");
   if (!logicGasBox) {
       G4cerr << "Error: Logical volume 'solidGasBox' not found!" << G4endl;
       return;
@@ -142,12 +201,18 @@ void DetectorConstruction::ConstructSDandField(){
   SDManager->AddNewDetector(myGasBoxSD);
   SetSensitiveDetector(logicGasBox,myGasBoxSD);
 
+  // Check the logical volume store
+  // auto store = G4LogicalVolumeStore::GetInstance();
+  // G4cout << "=== Logical Volumes in Store ===" << G4endl;
+  // for (auto vol : *store) {
+  //     G4cout << " - " << vol->GetName() << G4endl;
+  // }
+
 
   // Attaching the volume of the detector to the class SiliconSD
   G4String SiliconSDname = "interface/SiliconSD";
   SiliconSD* mySiliconSD = new SiliconSD(SiliconSDname);
   G4SDManager::GetSDMpointer()->AddNewDetector(mySiliconSD);
-  
   G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
   SetSensitiveDetector(logicDetector, mySiliconSD);
 

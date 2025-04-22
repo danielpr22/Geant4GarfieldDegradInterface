@@ -127,8 +127,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   G4double photonEnergyPMT[]={6.26*eV,6.31*eV,6.38*eV,6.42*eV,6.45*eV,6.49*eV,6.52*eV,6.55*eV,6.59*eV,6.61*eV,6.66*eV,6.70*eV,6.75*eV,6.81*eV,6.85*eV,6.89*eV,6.95*eV,6.98*eV,7.02*eV,7.08*eV,7.15*eV,7.21*eV,7.30*eV,7.37*eV,7.43*eV,7.50*eV,7.56*eV,7.60*eV,7.68*eV,7.73*eV,7.77*eV,7.86*eV,7.95*eV,8.04*eV,8.10*eV,8.14*eV};
   
   
-  
-  
   G4double photocath_EFF[]=
   {3.96,5.20,6.63,7.96,8.99,9.85,10.46,11.46,12.18,12.94,14.17,14.61,16.00,17.01,18.07,18.63,19.79,20.40,21.68,21.68,23.04,23.04,23.75,25.24,26.01,26.01,27.64,28.49,29.37,29.37,30.28,32.17,33.17,35.24,36.33,37.45}; //Enables 'detection' of photons
   
@@ -141,7 +139,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   assert(sizeof(reflectivityPhotocathode) == sizeof(photonEnergyPMT));
   
   
-
   gasboxR = 3.5*cm;
   gasboxH = 25.*mm;
 
