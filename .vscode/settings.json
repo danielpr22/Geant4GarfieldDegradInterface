@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.icc": "cpp"
+    },
+    "cmake.additionalCompilerSearchDirs": [
+        "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX-with_comments"
+    ]
+}

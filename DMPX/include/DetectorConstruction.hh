@@ -18,9 +18,9 @@
 #include "G4VisAttributes.hh"
 #include "G4RunManager.hh"
 #include "G4FieldManager.hh"
-#include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
-#include "G4UniformMagField.hh"
+#include "G4UniformElectricField.hh"
+#include "G4EqMagElectricField.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4UnionSolid.hh"
 #include "G4Polycone.hh"
@@ -32,17 +32,17 @@
 class G4VSolid;
 class G4LogicalVolume;
 class G4VPhysicalVolume;
-class G4UniformMagField;
+class G4UniformElectricField;
 
-
-
-using namespace std;
 /*! \class  DetectorConstruction*/
 /*! \brief class derived from G4VUserDetectorConstruction*/
 
 class DetectorConstruction : public G4VUserDetectorConstruction {
  public:
+  // Initializing an instance of the DetectorConstruction class
   DetectorConstruction(GasModelParameters*);
+  
+  // Destructor of the DetectorConstruction class
   virtual ~DetectorConstruction();
 
   // Mandatory methods
@@ -69,7 +69,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   inline G4double GetKryptonPercentage(){return kryptonPercentage;};
   inline G4double GetCH4Percentage(){return ch4Percentage;};
     
-  
+ // Variables only accessible by the class itself or related classes
  private:
   DetectorMessenger* detectorMessenger;
   G4LogicalVolume* logicGasBox;
@@ -86,5 +86,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   G4double addmixturePercentage;
   G4double kryptonPercentage;
   G4double ch4Percentage;
+  G4UniformElectricField* pEMfield; // Pointer to the electric field
+  G4EqMagElectricField* pEquation;  // Pointer to the equation of motion
+  G4ChordFinder* pChordFinder;      // Pointer to the chord finder
 };
-#endif
+
+#endif // DetectorConstruction_hh

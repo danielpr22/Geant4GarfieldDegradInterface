@@ -13,15 +13,15 @@
 
 
 # The HeedNewTrack model simulates high energy charged particles in relatively thin gas absorbers as it does not take into account Coulomb scattering
-/gasModelParameters/heed/heednewtrack/addparticle e- 20. 1000. keV
+/gasModelParameters/heed/heednewtrack/addparticle e- 20. 100000. keV
 /gasModelParameters/heed/heednewtrack/addparticle proton 40. 1000. keV
 
 
 # Setting the gasModelParameters 
-/gasModelParameters/heed/drift 1
+/gasModelParameters/heed/drift 0
 /gasModelParameters/heed/driftRKF 0
 /gasModelParameters/heed/trackmicroscopic 0
-/gasModelParameters/heed/createAval 0
+/gasModelParameters/heed/createAval 1
 /gasModelParameters/heed/visualizechamber 1
 /gasModelParameters/heed/visualizesignals 0
 /gasModelParameters/heed/visualizefield 1
@@ -34,7 +34,7 @@
 
 /run/numberOfThreads 1
 /control/cout/ignoreThreadsExcept 0
-#/DMPX/phys/setLowLimitE 1. eV
+/DMPX/phys/setLowLimitE 1. eV
 /DMPX/phys/InitializePhysics emlivermore
 /DMPX/phys/AddParametrisation
 /process/em/AddPAIRegion all GasRegion PAIphoton

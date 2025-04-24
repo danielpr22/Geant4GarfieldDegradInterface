@@ -28,11 +28,6 @@
 #include "G4DormandPrince745.hh"
 #include "G4ChordFinder.hh"
 
-// For the definition of the electric field
-G4ElectricField*        pEMfield;
-G4EqMagElectricField*   pEquation;
-G4ChordFinder*          pChordFinder ;
-
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
     :
@@ -183,67 +178,56 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
         true                          // check for overlaps
     );
 
-
-    /*
-    #################################
-    ########### ELECTRIC FIELD ######
-    #################################
-    */
-
-    pEMfield = new G4UniformElectricField(
-                  G4ThreeVector(0.0, 0.0, -0.3076*1e8 * volt/m));
-  
-    // Create an equation of motion for this field
-    pEquation = new G4EqMagElectricField(pEMfield);
-  
-    G4int nvar = 8;
-  
-    // Create the Runge-Kutta 'stepper' using the efficient 'DoPri5' method
-    auto pStepper = new G4DormandPrince745( pEquation, nvar );
-  
-    // Get the global field manager
-    auto fieldManager= G4TransportationManager::GetTransportationManager()->
-          GetFieldManager();
-    // Set this field to the global field manager
-    fieldManager->SetDetectorField( pEMfield );
-  
-    G4double minStep     = 0.010*mm ; // minimal step of 10 microns
-  
-    // The driver will ensure that integration is control to give
-    //   acceptable integration error
-    auto pIntgrationDriver =
-        new G4IntegrationDriver<G4DormandPrince745>(minStep,
-                                                    pStepper,
-                                                    nvar);
-  
-    pChordFinder = new G4ChordFinder(pIntgrationDriver);
-    fieldManager->SetChordFinder( pChordFinder );
-    
-    worldLogical->SetFieldManager(fieldManager, true);
-
-    // Test for visualizing the field
-    G4ThreeVector testPoint(0., 0., 0.); // any point in your gas volume
-    G4double xyz[4] = { testPoint.x(), testPoint.y(), testPoint.z(), 0. };
-    G4double fieldVal[6] = {0., 0., 0., 0., 0., 0.};
-
-    pEMfield->GetFieldValue(xyz, fieldVal);
-
-    G4cout << "Electric field at (0,0,0): "
-          << fieldVal[0]/(volt/m) << " "
-          << fieldVal[1]/(volt/m) << " "
-          << fieldVal[2]/(volt/m) << " V/m" << G4endl;
-
-
     return worldPhysical; 
 }
 
 void DetectorConstruction::ConstructSDandField(){
+
+  /*
+  #################################
+  ########### ELECTRIC FIELD ######
+  #################################
+  */
+
+  // Define a constant electric field
+  G4ThreeVector fieldVector(0.0, -100.0 * kilovolt / cm, 0.0); // Example: 1 kV/cm in the Z direction
+  pEMfield = new G4UniformElectricField(fieldVector);
+
+  // Create an equation of motion for the field
+  pEquation = new G4EqMagElectricField(pEMfield);
+
+  // Create a Runge-Kutta stepper
+  G4int nvar = 8; // Number of variables for integration
+  auto pStepper = new G4DormandPrince745(pEquation, nvar);
+
+  // Create an integration driver
+  G4double minStep = 0.01 * mm; // Minimum step size
+  auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
+
+  // Create a chord finder
+  pChordFinder = new G4ChordFinder(pIntegrationDriver);
+
+  // Get the global field manager
+  auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
+
+  // Set the field and chord finder in the field manager
+  fieldManager->SetDetectorField(pEMfield);
+  fieldManager->SetChordFinder(pChordFinder);
+
+  // Attach the field manager to the world logical volume
+  G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
+  if (worldLogical) {
+      worldLogical->SetFieldManager(fieldManager, true);
+  } else {
+      G4cerr << "Error: World logical volume not found!" << G4endl;
+  }
 
   G4LogicalVolume* logicGasBox = G4LogicalVolumeStore::GetInstance()->GetVolume("GasBoxLogical");
   if (!logicGasBox) {
       G4cerr << "Error: Logical volume 'solidGasBox' not found!" << G4endl;
       return;
   }
+
   G4SDManager* SDManager = G4SDManager::GetSDMpointer();
   G4String GasBoxSDname = "interface/GasBoxSD";
   GasBoxSD* myGasBoxSD = new GasBoxSD(GasBoxSDname);
@@ -258,15 +242,15 @@ void DetectorConstruction::ConstructSDandField(){
   //     G4cout << " - " << vol->GetName() << G4endl;
   // }
 
-
   // Attaching the volume of the detector to the class SiliconSD
+  G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
   G4String SiliconSDname = "interface/SiliconSD";
   SiliconSD* mySiliconSD = new SiliconSD(SiliconSDname);
-  G4SDManager::GetSDMpointer()->AddNewDetector(mySiliconSD);
-  G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
+  SDManager->SetVerboseLevel(1);
+  SDManager->AddNewDetector(mySiliconSD);
   SetSensitiveDetector(logicDetector, mySiliconSD);
 
-  //These commands generate the four gas models and connect it to the GasRegion
+  //These commands generate two out of the four gas models and connect them to the GasRegion
   G4Region* GasRegion = G4RegionStore::GetInstance()->GetRegion("GasRegion");
   new HeedNewTrackModel(fGasModelParameters,"HeedNewTrackModel",GasRegion,this,myGasBoxSD);
   new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",GasRegion,this,myGasBoxSD);
