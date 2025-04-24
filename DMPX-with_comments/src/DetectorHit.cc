@@ -1,4 +1,4 @@
-#include "SiliconHit.hh"
+#include "DetectorHit.hh"
 #include "G4UnitsTable.hh"
 #include "G4VVisManager.hh"
 #include "G4Circle.hh"

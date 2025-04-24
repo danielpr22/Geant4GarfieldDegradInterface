@@ -4,7 +4,7 @@
 #include "G4VSensitiveDetector.hh"
 #include "G4String.hh"
 #include "G4Region.hh"
-#include "SiliconHit.hh"
+#include "DetectorHit.hh"
 
 
 class G4Step;

@@ -1,4 +1,4 @@
-#include "SiliconSD.hh"
+#include "DetectorSD.hh"
 #include "G4Region.hh"
 #include "G4String.hh"
 #include "G4Track.hh"

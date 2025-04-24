@@ -57,6 +57,35 @@ class HeedModel : public G4VFastSimulationModel {
   G4bool FindParticleName(G4String name);
   G4bool FindParticleNameEnergy(G4String name,double ekin_keV);
 
+
+  /*
+  Example of use of the access specifier "protected":
+
+  class Base {
+  protected:
+      int protectedValue;
+
+  public:
+      Base() : protectedValue(42) {}
+  };
+
+  class Derived : public Base {
+  public:
+      void PrintValue() {
+          // Accessing the protected member from the base class
+          std::cout << "Protected value: " << protectedValue << std::endl;
+      }
+  };
+
+  int main() {
+      Derived obj;
+      obj.PrintValue(); // Outputs: Protected value: 42
+
+      // obj.protectedValue = 10; // Error: protectedValue is not accessible from outside
+      return 0;
+  }
+  */
+
  protected:
   void InitialisePhysics();
   virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm, double y_cm, double z_cm, double dx, double dy, double dz) = 0;
@@ -104,7 +133,6 @@ class HeedModel : public G4VFastSimulationModel {
 
   Garfield::MediumMagboltz* fMediumMagboltz;
   Garfield::Sensor* fSensor;
-//  Garfield::TrackHeed* fTrackHeed;
   Garfield::GeometrySimple* geo;
   Garfield::SolidBox* box;
   Garfield::ComponentVoxel* voxfield;

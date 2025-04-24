@@ -1,7 +1,7 @@
 #include "../include/DetectorConstruction.hh"
 #include "../include/DetectorMessenger.hh"
 #include "../include/GasBoxSD.hh"
-#include "../include/SiliconSD.hh"
+#include "../include/DetectorSD.hh"
 #include "../include/HeedDeltaElectronModel.hh"
 #include "../include/HeedNewTrackModel.hh"
 
