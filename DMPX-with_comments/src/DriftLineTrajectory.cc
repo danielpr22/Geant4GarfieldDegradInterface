@@ -45,7 +45,6 @@ DriftLineTrajectory::DriftLineTrajectory()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right)
   :G4Trajectory(right)

@@ -1,10 +1,9 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "../include/HeedModel.hh"
-#include "../include/DetectorConstruction.hh"
-#include "../include/DriftLineTrajectory.hh"
-#include "Garfield/SolidBox.hh" // Ensure the correct header for SolidBox is included
+#include "HeedModel.hh"
+#include "DetectorConstruction.hh"
+#include "DriftLineTrajectory.hh"
 
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
@@ -16,10 +15,16 @@
 #include "G4VVisManager.hh"
 #include "G4AutoLock.hh"
 
+/* 
+A mutex is a synchronization primitive used to protect shared resources 
+from concurrent access by multiple threads.
+
+This construct is used to ensure thread safety in a multithreaded environment
+*/
+
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 const static G4double torr = 1. / 760. * atmosphere;
-
 
 HeedModel::HeedModel(G4String modelName, G4Region* envelope,DetectorConstruction* dc,GasBoxSD* sd)
 : G4VFastSimulationModel(modelName, envelope), detCon(dc), fGasBoxSD(sd)	{}

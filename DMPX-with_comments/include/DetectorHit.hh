@@ -1,21 +1,21 @@
-#ifndef SiliconHit_HH
-#define SiliconHit_HH
+#ifndef DetectorHit_HH
+#define DetectorHit_HH
 
 #include "G4VHit.hh"
 #include "G4THitsCollection.hh"
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
 
-class SiliconHit : public G4VHit {
+class DetectorHit : public G4VHit {
     
     
 public:
-    SiliconHit();
-    virtual ~SiliconHit();
-    SiliconHit(const SiliconHit &);
+    DetectorHit();
+    virtual ~DetectorHit();
+    DetectorHit(const DetectorHit &);
     
-    const SiliconHit& operator=(const SiliconHit&);
-    G4int operator==(const SiliconHit&) const;
+    const DetectorHit& operator=(const DetectorHit&);
+    G4int operator==(const DetectorHit&) const;
     
     inline void* operator new(size_t);
     inline void  operator delete(void*);
@@ -35,19 +35,19 @@ private:
     G4ThreeVector fPos;
 };
 
-using SiliconHitsCollection=G4THitsCollection<SiliconHit>;
+using DetectorHitsCollection=G4THitsCollection<DetectorHit>;
 
-extern G4ThreadLocal G4Allocator<SiliconHit>* SiliconHitAllocator;
+extern G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator;
 
-inline void* SiliconHit::operator new(size_t){
-  if (!SiliconHitAllocator) {
-         SiliconHitAllocator = new G4Allocator<SiliconHit>;
+inline void* DetectorHit::operator new(size_t){
+  if (!DetectorHitAllocator) {
+         DetectorHitAllocator = new G4Allocator<DetectorHit>;
   }
-  return (void*)SiliconHitAllocator->MallocSingle();
+  return (void*)DetectorHitAllocator->MallocSingle();
 }
 
-inline void SiliconHit::operator delete(void *aHit){
-    SiliconHitAllocator->FreeSingle((SiliconHit*) aHit);
+inline void DetectorHit::operator delete(void *aHit){
+    DetectorHitAllocator->FreeSingle((DetectorHit*) aHit);
 }
 
 #endif

@@ -1,9 +1,9 @@
-#include "../include/DetectorConstruction.hh"
-#include "../include/DetectorMessenger.hh"
-#include "../include/GasBoxSD.hh"
-#include "../include/DetectorSD.hh"
-#include "../include/HeedDeltaElectronModel.hh"
-#include "../include/HeedNewTrackModel.hh"
+#include "DetectorConstruction.hh"
+#include "DetectorMessenger.hh"
+#include "GasBoxSD.hh"
+#include "DetectorSD.hh"
+#include "HeedDeltaElectronModel.hh"
+#include "HeedNewTrackModel.hh"
 
 #include "G4GDMLParser.hh"
 #include "G4PVParameterised.hh"
@@ -42,6 +42,7 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
     GasBoxLengthY(8*mm),  // Length of the gas box in the Y direction
     GasBoxLengthZ(130*mm) // Length of the gas box in the Z direction
 {
+  // "This" is a pointer that is conceptually equivalent to the "self" in Python
   detectorMessenger = new DetectorMessenger(this);
 }
 
@@ -93,7 +94,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
         Second cylinder: Kr + CH4 at a certain flux
         Third cylinder: Kr + CH4 at a certain flux
         Gas: mixture of Kr and CH4
-        Anodes: Silicon 
+        Anodes: Ask Oulfa for the exact material 
     */
 
     // Defining the gas elements: He, Kr and CH4
@@ -133,7 +134,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     G4LogicalVolume* cadObjectsLogical = parser.GetVolume("__vol__11_");
     
     if (!cadObjectsLogical) {
-        G4cerr << "Error: Logical volume 'Detector_1' not found!" << G4endl;
+        G4cerr << "Error: Logical volume '__vol_11_' not found!" << G4endl;
         return nullptr;
     }
 
@@ -156,11 +157,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     #################################
     */
 
-    G4double gasbox_x = 32*mm; // Dimensions in absolute length of the gas box in X, Y and Z (from Camenen's thesis)
-    G4double gasbox_y = 8*mm;
-    G4double gasbox_z = 130*mm;
-
-    G4Box* KrCH4GasBox = new G4Box("GasBox", gasbox_x/2, gasbox_y/2, gasbox_z/2);
+    G4Box* KrCH4GasBox = new G4Box("GasBox", GasBoxLengthX/2, GasBoxLengthY/2, GasBoxLengthZ/2);
     logicGasBox = new G4LogicalVolume(KrCH4GasBox, KrCH4_90_10, "GasBoxLogical");
 
     G4VisAttributes* gasVis = new G4VisAttributes(G4Colour(0.0, 0.0, 1.0, 0.3)); // RGBA: Blue with 30% opacity
@@ -172,13 +169,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     // Placing our gas volume inside the world
     new G4PVPlacement(
         0,                            // no rotation
-        G4ThreeVector(-21*mm, 0.9*mm, (65+17)*mm),  // Placement position
+        G4ThreeVector(-21*mm, 0.9*mm, (65+17)*mm),  // Placement position (centered on the slit's position)
         logicGasBox,                    // logical volume to place
         "physGasBox",                 // name
         worldLogical,                 // mother volume       
         false,                        // no boolean operations
         0,                            // copy number
-        true                          // check for overlaps
+        checkOverlaps                 // check for overlaps
     );
 
     return worldPhysical; 
@@ -193,37 +190,37 @@ void DetectorConstruction::ConstructSDandField(){
   */
 
   // Define a constant electric field
-  // G4ThreeVector fieldVector(0.0, -100.0 * kilovolt / cm, 0.0); // Example: 1 kV/cm in the Z direction
-  // pEMfield = new G4UniformElectricField(fieldVector);
+  G4ThreeVector fieldVector(0.0, 0.0, 0.3076*1e6*volt/m); // Example: 1 kV/cm in the Z direction
+  pEMfield = new G4UniformElectricField(fieldVector);
 
   // Create an equation of motion for the field
-  // pEquation = new G4EqMagElectricField(pEMfield);
+  pEquation = new G4EqMagElectricField(pEMfield);
 
   // Create a Runge-Kutta stepper
-  // G4int nvar = 8; // Number of variables for integration
-  // auto pStepper = new G4DormandPrince745(pEquation, nvar);
+  G4int nvar = 8; // Number of variables for integration
+  auto pStepper = new G4DormandPrince745(pEquation, nvar);
 
   // Create an integration driver
-  // G4double minStep = 0.01 * mm; // Minimum step size
-  // auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
+  G4double minStep = 0.01 * mm; // Minimum step size
+  auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
 
   // Create a chord finder
-  // pChordFinder = new G4ChordFinder(pIntegrationDriver);
+  pChordFinder = new G4ChordFinder(pIntegrationDriver);
 
   // Get the global field manager
-  // auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
+  auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
 
   // Set the field and chord finder in the field manager
-  // fieldManager->SetDetectorField(pEMfield);
-  // fieldManager->SetChordFinder(pChordFinder);
+  fieldManager->SetDetectorField(pEMfield);
+  fieldManager->SetChordFinder(pChordFinder);
 
   // Attach the field manager to the world logical volume
-  // G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
-  // if (worldLogical) {
-  //     worldLogical->SetFieldManager(fieldManager, true);
-  // } else {
-  //     G4cerr << "Error: World logical volume not found!" << G4endl;
-  // }
+  G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
+  if (worldLogical) {
+      worldLogical->SetFieldManager(fieldManager, true);
+  } else {
+      G4cerr << "Error: World logical volume not found!" << G4endl;
+  }
 
   G4LogicalVolume* logicGasBox = G4LogicalVolumeStore::GetInstance()->GetVolume("GasBoxLogical");
   if (!logicGasBox) {
@@ -245,12 +242,12 @@ void DetectorConstruction::ConstructSDandField(){
   //     G4cout << " - " << vol->GetName() << G4endl;
   // }
 
-  // Attaching the volume of the detector to the class SiliconSD
-  G4String SiliconSDname = "interface/SiliconSD";
-  SiliconSD* mySiliconSD = new SiliconSD(SiliconSDname);
-  G4SDManager::GetSDMpointer()->AddNewDetector(mySiliconSD);
+  // Attaching the volume of the detector to the class DetectorSD
+  G4String DetectorSDname = "interface/DetectorSD";
+  DetectorSD* myDetectorSD = new DetectorSD(DetectorSDname);
+  G4SDManager::GetSDMpointer()->AddNewDetector(myDetectorSD);
   G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
-  SetSensitiveDetector(logicDetector, mySiliconSD);
+  SetSensitiveDetector(logicDetector, myDetectorSD);
 
   //These commands generate the four gas models and connect it to the GasRegion
   G4Region* GasRegion = G4RegionStore::GetInstance()->GetRegion("GasRegion");

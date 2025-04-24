@@ -1,5 +1,5 @@
-#ifndef SiliconSD_hh
-#define SiliconSD_hh
+#ifndef DetectorSD_hh
+#define DetectorSD_hh
 
 #include "G4VSensitiveDetector.hh"
 #include "G4String.hh"
@@ -12,11 +12,11 @@ class G4HCofThisEvent;
 class G4TouchableHistory;
 
 
-class SiliconSD : public G4VSensitiveDetector{
+class DetectorSD : public G4VSensitiveDetector{
 	public:
 	
-	SiliconSD(G4String);
-	~SiliconSD();
+	DetectorSD(G4String);
+	~DetectorSD();
 	
 	virtual void 	Initialize (G4HCofThisEvent *);
 	virtual void 	EndOfEvent (G4HCofThisEvent *);
@@ -24,7 +24,7 @@ class SiliconSD : public G4VSensitiveDetector{
 	
 	private:
 	
-    SiliconHitsCollection* fSiliconHitsCollection;
+    DetectorHitsCollection* fDetectorHitsCollection;
     G4int SHCID;
     
 	

@@ -5,29 +5,29 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 
-G4ThreadLocal G4Allocator<SiliconHit>* SiliconHitAllocator;
+G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator;
 
-SiliconHit::SiliconHit() : G4VHit(), fTime(-1),
+DetectorHit::DetectorHit() : G4VHit(), fTime(-1),
    fPos(G4ThreeVector()){}
 
-SiliconHit::~SiliconHit(){}
+DetectorHit::~DetectorHit(){}
 
-SiliconHit::SiliconHit(const SiliconHit& rhs) : G4VHit() {
+DetectorHit::DetectorHit(const DetectorHit& rhs) : G4VHit() {
     fPos= rhs.fPos;
     fTime=rhs.fTime;
 }
 
-const SiliconHit& SiliconHit::operator=(const SiliconHit& rhs){
+const DetectorHit& DetectorHit::operator=(const DetectorHit& rhs){
     fPos= rhs.fPos;
     fTime=rhs.fTime;
     return *this;
 }
 
-G4int SiliconHit::operator==(const SiliconHit& rhs) const{
+G4int DetectorHit::operator==(const DetectorHit& rhs) const{
     return (this==&rhs) ? 1 : 0;
 }
 
-void SiliconHit::Draw()
+void DetectorHit::Draw()
 {
   G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
   if(pVVisManager)
@@ -44,6 +44,6 @@ void SiliconHit::Draw()
   }
 }
 
-void SiliconHit::Print(){
+void DetectorHit::Print(){
     G4cout << "Printing hits" << G4endl;
 }

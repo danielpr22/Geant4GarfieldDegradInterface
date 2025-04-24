@@ -11,30 +11,30 @@
 #include "DetectorConstruction.hh"
 #include "G4VPhysicalVolume.hh"
 
-SiliconSD::SiliconSD(G4String name) : G4VSensitiveDetector(name), fSiliconHitsCollection(NULL){
+DetectorSD::DetectorSD(G4String name) : G4VSensitiveDetector(name), fDetectorHitsCollection(NULL){
     collectionName.insert("SHC");
     SHCID=-1;
 }
 
-SiliconSD::~SiliconSD(){}
+DetectorSD::~DetectorSD(){}
 
 
-void SiliconSD::Initialize(G4HCofThisEvent * HCE){
-    fSiliconHitsCollection = new SiliconHitsCollection(SensitiveDetectorName, collectionName[0]);
+void DetectorSD::Initialize(G4HCofThisEvent * HCE){
+    fDetectorHitsCollection = new DetectorHitsCollection(SensitiveDetectorName, collectionName[0]);
     if(SHCID==-1){
         SHCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
     }
-    HCE->AddHitsCollection(SHCID,fSiliconHitsCollection);
+    HCE->AddHitsCollection(SHCID,fDetectorHitsCollection);
 
-    G4cout << "SiliconSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << G4endl;
+    G4cout << "DetectorSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << G4endl;
 }
 
-G4bool SiliconSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
+G4bool DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
     G4Track* aTrack = aStep->GetTrack();
     G4StepPoint* thePostPoint = aStep->GetPostStepPoint();
 
     if(aStep->IsFirstStepInVolume()){
-        G4cout << "Silicon Wall Hit!!" << G4endl;
+        G4cout << "Detector Wall Hit!!" << G4endl;
         G4cout << "Particle ID: " << aTrack->GetTrackID() << G4endl;
         G4cout << "Energy loss through gas: " << aTrack->GetVertexKineticEnergy() - aTrack->GetKineticEnergy() << G4endl;
         return true;
@@ -42,6 +42,6 @@ G4bool SiliconSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
     return false;      
 }
 
-void SiliconSD::EndOfEvent (G4HCofThisEvent * hce){
+void DetectorSD::EndOfEvent (G4HCofThisEvent * hce){
    
 }
