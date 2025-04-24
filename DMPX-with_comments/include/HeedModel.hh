@@ -8,7 +8,7 @@
 #ifndef HEEDMODEL_H_
 #define HEEDMODEL_H_
 
-#include "SolidTube.hh"      //Geometry
+#include "SolidBox.hh"      //Geometry
 #include "ComponentAnalyticField.hh"  //Garfield field
 #include "Sensor.hh"
 #include "G4ThreeVector.hh"
@@ -106,7 +106,7 @@ class HeedModel : public G4VFastSimulationModel {
   Garfield::Sensor* fSensor;
 //  Garfield::TrackHeed* fTrackHeed;
   Garfield::GeometrySimple* geo;
-  Garfield::SolidTube* box;
+  Garfield::SolidBox* box;
   Garfield::ComponentVoxel* voxfield;
   Garfield::ComponentAnalyticField* comp;
   Garfield::AvalancheMC* fDrift;

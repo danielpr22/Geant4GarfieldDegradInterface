@@ -37,7 +37,10 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
     gasPressure(1.*atmosphere),   // Pressure inside the gas
     temperature(273.15 *kelvin),  // temperature
     kryptonPercentage(90),        // mixture settings in molar percentage
-    ch4Percentage(10)
+    ch4Percentage(10),
+    GasBoxLengthX(32*mm), // Length of the gas box in the X direction
+    GasBoxLengthY(8*mm),  // Length of the gas box in the Y direction
+    GasBoxLengthZ(130*mm) // Length of the gas box in the Z direction
 {
   detectorMessenger = new DetectorMessenger(this);
 }
@@ -190,37 +193,37 @@ void DetectorConstruction::ConstructSDandField(){
   */
 
   // Define a constant electric field
-  G4ThreeVector fieldVector(0.0, -100.0 * kilovolt / cm, 0.0); // Example: 1 kV/cm in the Z direction
-  pEMfield = new G4UniformElectricField(fieldVector);
+  // G4ThreeVector fieldVector(0.0, -100.0 * kilovolt / cm, 0.0); // Example: 1 kV/cm in the Z direction
+  // pEMfield = new G4UniformElectricField(fieldVector);
 
   // Create an equation of motion for the field
-  pEquation = new G4EqMagElectricField(pEMfield);
+  // pEquation = new G4EqMagElectricField(pEMfield);
 
   // Create a Runge-Kutta stepper
-  G4int nvar = 8; // Number of variables for integration
-  auto pStepper = new G4DormandPrince745(pEquation, nvar);
+  // G4int nvar = 8; // Number of variables for integration
+  // auto pStepper = new G4DormandPrince745(pEquation, nvar);
 
   // Create an integration driver
-  G4double minStep = 0.01 * mm; // Minimum step size
-  auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
+  // G4double minStep = 0.01 * mm; // Minimum step size
+  // auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
 
   // Create a chord finder
-  pChordFinder = new G4ChordFinder(pIntegrationDriver);
+  // pChordFinder = new G4ChordFinder(pIntegrationDriver);
 
   // Get the global field manager
-  auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
+  // auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
 
   // Set the field and chord finder in the field manager
-  fieldManager->SetDetectorField(pEMfield);
-  fieldManager->SetChordFinder(pChordFinder);
+  // fieldManager->SetDetectorField(pEMfield);
+  // fieldManager->SetChordFinder(pChordFinder);
 
   // Attach the field manager to the world logical volume
-  G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
-  if (worldLogical) {
-      worldLogical->SetFieldManager(fieldManager, true);
-  } else {
-      G4cerr << "Error: World logical volume not found!" << G4endl;
-  }
+  // G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
+  // if (worldLogical) {
+  //     worldLogical->SetFieldManager(fieldManager, true);
+  // } else {
+  //     G4cerr << "Error: World logical volume not found!" << G4endl;
+  // }
 
   G4LogicalVolume* logicGasBox = G4LogicalVolumeStore::GetInstance()->GetVolume("GasBoxLogical");
   if (!logicGasBox) {

@@ -4,6 +4,7 @@
 #include "../include/HeedModel.hh"
 #include "../include/DetectorConstruction.hh"
 #include "../include/DriftLineTrajectory.hh"
+#include "Garfield/SolidBox.hh" // Ensure the correct header for SolidBox is included
 
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
@@ -127,9 +128,10 @@ void HeedModel::makeGas(){
 //Geometry (see Garfield++ documentation)
 void HeedModel::buildBox(){
   geo = new Garfield::GeometrySimple();
-
-  box = new Garfield::SolidTube(0.,0., 0.,0.,(detCon->GetGasBoxR())/CLHEP::cm,(detCon->GetGasBoxH()*0.5)/CLHEP::cm,0.,1.,0.);
+  
+  box = new Garfield::SolidBox(0., 0., 0., (detCon->GetGasBoxLengthX() * 0.5)/ CLHEP::cm, (detCon->GetGasBoxLengthY() * 0.5) / CLHEP::cm, (detCon->GetGasBoxLengthZ() * 0.5) / CLHEP::cm);
   geo->AddSolid(box, fMediumMagboltz);
+
   
 }
 
@@ -163,18 +165,18 @@ void HeedModel::BuildCompField(){
     
     comp->SetPeriodicityX(nRep * period);
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire((i - 1) * period, (detCon->GetGasBoxH()*0.5)/CLHEP::cm - ys, dSens, vAnodeWires, "s");
+        comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - ys, dSens, vAnodeWires, "s");
     }
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxH()*0.5)/CLHEP::cm - yc, dCath, vCathodeWires, "c");
+        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - yc, dCath, vCathodeWires, "c");
     }
     for (int i = 0; i < nRep * 2; ++i) {
         const double xg = dg * (i - 1.5);
-        comp->AddWire(xg,(detCon->GetGasBoxH()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
+        comp->AddWire(xg,(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
     }
     // Add the planes.
-    comp->AddPlaneY((detCon->GetGasBoxH()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
-    comp->AddPlaneY(-(detCon->GetGasBoxH()*0.5)/CLHEP::cm, vPlaneHV, "HV");
+    comp->AddPlaneY((detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
+    comp->AddPlaneY(-(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneHV, "HV");
     
     // Set the magnetic field [T].
     comp->SetMagneticField(0, 0.5, 0);

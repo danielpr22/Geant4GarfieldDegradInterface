@@ -63,6 +63,8 @@ class DriftLineTrajectoryPoint : public G4TrajectoryPoint {
 
     inline void *operator new(size_t);
     inline void operator delete(void *aTrajectoryPoint);
+
+    // The identifier "right" is the name of the reference.
     inline int operator==(const DriftLineTrajectoryPoint& right) const
     { return (this==&right); };
 
