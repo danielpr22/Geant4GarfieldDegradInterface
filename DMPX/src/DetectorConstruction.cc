@@ -15,12 +15,23 @@
 #include "G4OpticalSurface.hh"
 #include "G4Threading.hh"
 #include "G4RegionStore.hh"
-#include "G4UniformMagField.hh"
+#include "G4UniformElectricField.hh"
 #include "G4FieldManager.hh"
 #include "G4Cons.hh"
 #include "G4IntersectionSolid.hh"
 #include "G4Trd.hh"
 #include "G4SDManager.hh"
+
+// For the definition of the electric field
+#include "G4EqMagElectricField.hh"
+#include "G4UniformElectricField.hh"
+#include "G4DormandPrince745.hh"
+#include "G4ChordFinder.hh"
+
+// For the definition of the electric field
+G4ElectricField*        pEMfield;
+G4EqMagElectricField*   pEquation;
+G4ChordFinder*          pChordFinder ;
 
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
@@ -163,7 +174,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     // Placing our gas volume inside the world
     new G4PVPlacement(
         0,                            // no rotation
-        G4ThreeVector(-21*mm, 0.9*mm, (65+16)*mm),  // Placement position
+        G4ThreeVector(-21*mm, 0.9*mm, (65+17)*mm),  // Placement position
         logicGasBox,                    // logical volume to place
         "physGasBox",                 // name
         worldLogical,                 // mother volume       
@@ -179,9 +190,48 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     #################################
     */
 
-    auto globalField = new G4UniformMagField(G4ThreeVector(0., 0., -0.3076*1e6 * volt/m)); // Setting up a constant electric field of 0.3076 MV/m
-    auto fieldManager = new G4FieldManager(globalField);
+    pEMfield = new G4UniformElectricField(
+                  G4ThreeVector(0.0, 0.0, -0.3076*1e8 * volt/m));
+  
+    // Create an equation of motion for this field
+    pEquation = new G4EqMagElectricField(pEMfield);
+  
+    G4int nvar = 8;
+  
+    // Create the Runge-Kutta 'stepper' using the efficient 'DoPri5' method
+    auto pStepper = new G4DormandPrince745( pEquation, nvar );
+  
+    // Get the global field manager
+    auto fieldManager= G4TransportationManager::GetTransportationManager()->
+          GetFieldManager();
+    // Set this field to the global field manager
+    fieldManager->SetDetectorField( pEMfield );
+  
+    G4double minStep     = 0.010*mm ; // minimal step of 10 microns
+  
+    // The driver will ensure that integration is control to give
+    //   acceptable integration error
+    auto pIntgrationDriver =
+        new G4IntegrationDriver<G4DormandPrince745>(minStep,
+                                                    pStepper,
+                                                    nvar);
+  
+    pChordFinder = new G4ChordFinder(pIntgrationDriver);
+    fieldManager->SetChordFinder( pChordFinder );
+    
     worldLogical->SetFieldManager(fieldManager, true);
+
+    // Test for visualizing the field
+    G4ThreeVector testPoint(0., 0., 0.); // any point in your gas volume
+    G4double xyz[4] = { testPoint.x(), testPoint.y(), testPoint.z(), 0. };
+    G4double fieldVal[6] = {0., 0., 0., 0., 0., 0.};
+
+    pEMfield->GetFieldValue(xyz, fieldVal);
+
+    G4cout << "Electric field at (0,0,0): "
+          << fieldVal[0]/(volt/m) << " "
+          << fieldVal[1]/(volt/m) << " "
+          << fieldVal[2]/(volt/m) << " V/m" << G4endl;
 
 
     return worldPhysical; 

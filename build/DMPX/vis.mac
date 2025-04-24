@@ -5,18 +5,23 @@
 # Setting the gas pressure at 1 bar
 /DMPX/geometry/SetGasPressure 1. bar
 
-# The HeedDeltaElectron model simulates the transport and ionization of low-energy electrons and photons
-/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.001 100 keV
-/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 3 30 keV
 
-# The HeedNewTrack model simulates the primary ionization caused by charged particles entering a gas volume.
-/gasModelParameters/heed/heednewtrack/addparticle e-  0.001 30 keV
+# The HeedDeltaElectron model simulates the transport and ionization of low-energy electrons and photons. It does take into account Coulomb scattering.
+# For electrons, this model should not be triggered for energies above a few tens of keV, if not the simulated energy deposition by the primary particle will be off.
+/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 20 keV
+/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 3. 50 keV
+
+
+# The HeedNewTrack model simulates high energy charged particles in relatively thin gas absorbers as it does not take into account Coulomb scattering
+/gasModelParameters/heed/heednewtrack/addparticle e- 20. 1000. keV
+/gasModelParameters/heed/heednewtrack/addparticle proton 40. 1000. keV
+
 
 # Setting the gasModelParameters 
-/gasModelParameters/heed/drift 0
-/gasModelParameters/heed/driftRKF 1
+/gasModelParameters/heed/drift 1
+/gasModelParameters/heed/driftRKF 0
 /gasModelParameters/heed/trackmicroscopic 0
-/gasModelParameters/heed/createAval 1
+/gasModelParameters/heed/createAval 0
 /gasModelParameters/heed/visualizechamber 1
 /gasModelParameters/heed/visualizesignals 0
 /gasModelParameters/heed/visualizefield 1
@@ -29,7 +34,7 @@
 
 /run/numberOfThreads 1
 /control/cout/ignoreThreadsExcept 0
-/DMPX/phys/setLowLimitE 1 eV
+#/DMPX/phys/setLowLimitE 1. eV
 /DMPX/phys/InitializePhysics emlivermore
 /DMPX/phys/AddParametrisation
 /process/em/AddPAIRegion all GasRegion PAIphoton
@@ -56,9 +61,11 @@
 /vis/scene/add/trajectories smooth
 /vis/scene/add/hits
 
-/vis/modeling/trajectories/create/drawByCharge
-/vis/modeling/trajectories/drawByCharge-0/set +0 yellow
-/vis/modeling/trajectories/drawByCharge-1/set -1 red
+# Gamma rays appear in yellow
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/set e- red
+/vis/modeling/trajectories/drawByParticleID-0/set gamma yellow
+
 
 # When running an event, accumulate N events (in this case, up to 100) for visualization
 /vis/scene/endOfEventAction accumulate 100
@@ -74,6 +81,7 @@
 /gps/particle gamma
 /gps/ene/type Mono
 /gps/ene/mono 30 keV
+
 
 
 
