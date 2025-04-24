@@ -77,6 +77,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   inline void SetGasBoxLengthX(G4double d){GasBoxLengthX=d;};
   inline void SetGasBoxLengthY(G4double d){GasBoxLengthY=d;};
   inline void SetGasBoxLengthZ(G4double d){GasBoxLengthZ=d;};
+  inline void SetGasBoxCenterPositionX(G4double d){GasBoxCenterPositionX=d;};
+  inline void SetGasBoxCenterPositionY(G4double d){GasBoxCenterPositionY=d;};
+  inline void SetGasBoxCenterPositionZ(G4double d){GasBoxCenterPositionZ=d;};
   //Getters for the dimensions and environment variables of the setup
   inline G4double GetWorldHalfLength(){return worldHalfLength;};
   inline G4double GetGasPressure(){return gasPressure;};
@@ -86,6 +89,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   inline G4double GetGasBoxLengthX(){return GasBoxLengthX;};
   inline G4double GetGasBoxLengthY(){return GasBoxLengthY;};
   inline G4double GetGasBoxLengthZ(){return GasBoxLengthZ;};
+  inline G4double GetGasBoxCenterPositionX(){return GasBoxCenterPositionX;};
+  inline G4double GetGasBoxCenterPositionY(){return GasBoxCenterPositionY;};
+  inline G4double GetGasBoxCenterPositionZ(){return GasBoxCenterPositionZ;};
 
   /*
   What is an inline function? Example:
@@ -110,6 +116,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   G4double GasBoxLengthX; // Length of the gas box in the X direction   
   G4double GasBoxLengthY; // Length of the gas box in the Y direction
   G4double GasBoxLengthZ; // Length of the gas box in the Z direction
+  G4double GasBoxCenterPositionX; // X position of the gas box center
+  G4double GasBoxCenterPositionY; // Y position of the gas box center 
+  G4double GasBoxCenterPositionZ; // Z position of the gas box center
   G4UniformElectricField* pEMfield; // Pointer to the electric field
   G4EqMagElectricField* pEquation;  // Pointer to the equation of motion
   G4ChordFinder* pChordFinder;      // Pointer to the chord finder

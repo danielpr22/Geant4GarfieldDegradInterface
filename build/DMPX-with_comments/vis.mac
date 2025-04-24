@@ -20,10 +20,10 @@
 
 
 # Setting the gasModelParameters 
-/gasModelParameters/heed/drift 0
+/gasModelParameters/heed/drift 1
 /gasModelParameters/heed/driftRKF 0
 /gasModelParameters/heed/trackmicroscopic 0
-/gasModelParameters/heed/createAval 1
+/gasModelParameters/heed/createAval 0
 /gasModelParameters/heed/visualizechamber 1
 /gasModelParameters/heed/visualizesignals 0
 /gasModelParameters/heed/visualizefield 1

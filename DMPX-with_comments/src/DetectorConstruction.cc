@@ -40,7 +40,10 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
     ch4Percentage(10),
     GasBoxLengthX(32*mm), // Length of the gas box in the X direction
     GasBoxLengthY(8*mm),  // Length of the gas box in the Y direction
-    GasBoxLengthZ(130*mm) // Length of the gas box in the Z direction
+    GasBoxLengthZ(130*mm), // Length of the gas box in the Z direction
+    GasBoxCenterPositionX(-21*mm), // X position of the gas box center
+    GasBoxCenterPositionY(0.9*mm), // Y position of the gas box center
+    GasBoxCenterPositionZ(82*mm) // Z position of the gas box center
 {
   // "This" is a pointer that is conceptually equivalent to the "self" in Python
   detectorMessenger = new DetectorMessenger(this);
@@ -169,7 +172,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     // Placing our gas volume inside the world
     new G4PVPlacement(
         0,                            // no rotation
-        G4ThreeVector(-21*mm, 0.9*mm, (65+17)*mm),  // Placement position (centered on the slit's position)
+        G4ThreeVector(GasBoxCenterPositionX, GasBoxCenterPositionY, GasBoxCenterPositionZ),  // Placement position (centered on the slit's position)
         logicGasBox,                    // logical volume to place
         "physGasBox",                 // name
         worldLogical,                 // mother volume       

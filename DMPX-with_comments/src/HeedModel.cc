@@ -45,7 +45,7 @@ G4bool HeedModel::ModelTrigger(const G4FastTrack& fastTrack) {
   return FindParticleNameEnergy(particleName, ekin / keV);
 }
 
-//Implementation of the general model, the Run method, calles at the end is specifically implemented for the daughter classes
+//Implementation of the general model, the Run method, called at the end is specifically implemented for the daughter classes
 void HeedModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
 
   G4ThreeVector dir = fastTrack.GetPrimaryTrack()->GetMomentumDirection();
@@ -134,10 +134,12 @@ void HeedModel::makeGas(){
 void HeedModel::buildBox(){
   geo = new Garfield::GeometrySimple();
   
-  box = new Garfield::SolidBox(0., 0., 0., (detCon->GetGasBoxLengthX() * 0.5)/ CLHEP::cm, (detCon->GetGasBoxLengthY() * 0.5) / CLHEP::cm, (detCon->GetGasBoxLengthZ() * 0.5) / CLHEP::cm);
-  geo->AddSolid(box, fMediumMagboltz);
+  // We build the gas box for the DMPX
+  box = new Garfield::SolidBox(detCon->GetGasBoxCenterPositionX(), detCon->GetGasBoxCenterPositionY(),
+  detCon->GetGasBoxCenterPositionZ(), (detCon->GetGasBoxLengthX() * 0.5)/ CLHEP::cm, 
+  (detCon->GetGasBoxLengthY() * 0.5) / CLHEP::cm, (detCon->GetGasBoxLengthZ() * 0.5) / CLHEP::cm);
 
-  
+  geo->AddSolid(box, fMediumMagboltz);
 }
 
 //Construction of the electric field (see Garfield++ documentation)
@@ -183,8 +185,8 @@ void HeedModel::BuildCompField(){
     comp->AddPlaneY((detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
     comp->AddPlaneY(-(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneHV, "HV");
     
-    // Set the magnetic field [T].
-    comp->SetMagneticField(0, 0.5, 0);
+    // Set a magnetic field [T].
+    comp->SetMagneticField(0.0, 0.0, 0.0);
     
   
 }
@@ -247,7 +249,6 @@ void HeedModel::CreateChamberView(){
   else if(trackMicro) fAvalanche->EnablePlotting(viewDrift);
   else fDrift->EnablePlotting(viewDrift);
   fTrackHeed->EnablePlotting(viewDrift);
-
 }
 
 //Signal plotting (see Garfield++ documentation)
@@ -259,7 +260,6 @@ void HeedModel::CreateSignalView(){
   viewSignal = new Garfield::ViewSignal();
   viewSignal->SetSensor(fSensor);
   viewSignal->SetCanvas(fSignal);
-
 }
 
 //Electric field plotting (see Garfield++ documentation)
