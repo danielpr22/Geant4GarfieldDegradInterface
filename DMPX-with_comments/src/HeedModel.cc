@@ -14,6 +14,7 @@
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
 #include "G4AutoLock.hh"
+#include "TSystem.h" // Include ROOT's TSystem for gSystem
 
 /* 
 A mutex is a synchronization primitive used to protect shared resources 
@@ -135,26 +136,26 @@ void HeedModel::buildBox(){
   geo = new Garfield::GeometrySimple();
   
   // We build the gas box for the DMPX
-  box = new Garfield::SolidBox(detCon->GetGasBoxCenterPositionX(), detCon->GetGasBoxCenterPositionY(),
-  detCon->GetGasBoxCenterPositionZ(), (detCon->GetGasBoxLengthX() * 0.5)/ CLHEP::cm, 
-  (detCon->GetGasBoxLengthY() * 0.5) / CLHEP::cm, (detCon->GetGasBoxLengthZ() * 0.5) / CLHEP::cm);
+  box = new Garfield::SolidBox((detCon->GetGasBoxCenterPositionX())/CLHEP::mm, (detCon->GetGasBoxCenterPositionY())/CLHEP::mm,
+  (detCon->GetGasBoxCenterPositionZ())/CLHEP::mm, (detCon->GetGasBoxLengthX() * 0.5)/ CLHEP::mm, 
+  (detCon->GetGasBoxLengthY() * 0.5) / CLHEP::mm, (detCon->GetGasBoxLengthZ() * 0.5) / CLHEP::mm);
 
+  G4cout << "GasBoxLengthX: " << detCon->GetGasBoxLengthX() << G4endl;
   geo->AddSolid(box, fMediumMagboltz);
 }
 
 //Construction of the electric field (see Garfield++ documentation)
 void HeedModel::BuildCompField(){
-    // Switch between IROC and OROC.
-    const bool iroc = false;
-    // Switch gating on or off.
-    bool gating = false;
+
     // y-axis gap between rows of wires [cm]
-    const double gap = iroc ? 0.2 : 0.3;
+    // Equivalent to: condition ? value_if_true : value_if_false;
+    const double gap = 0.2;
     
     // y coordinates of the wires [cm]
     const double ys = gap;            // anode wires
     const double yc = 2. * gap;       // cathode
     const double yg = 2. * gap + 0.3; // gate
+
     // Periodicity (wire spacing)
     const double period = 0.25;
     const int nRep = 2;
@@ -171,23 +172,22 @@ void HeedModel::BuildCompField(){
     comp->SetGeometry(geo);
     
     comp->SetPeriodicityX(nRep * period);
+    // For the anodes
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - ys, dSens, vAnodeWires, "s");
+        comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - ys, dSens, vAnodeWires, "s");
     }
+    // For the cathodes
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - yc, dCath, vCathodeWires, "c");
+        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - yc, dCath, vCathodeWires, "c");
     }
+    // For the gate wires
     for (int i = 0; i < nRep * 2; ++i) {
         const double xg = dg * (i - 1.5);
         comp->AddWire(xg,(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
     }
     // Add the planes.
     comp->AddPlaneY((detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
-    comp->AddPlaneY(-(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneHV, "HV");
-    
-    // Set a magnetic field [T].
-    comp->SetMagneticField(0.0, 0.0, 0.0);
-    
+    comp->AddPlaneY(-(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneHV, "HV");    
   
 }
 
@@ -195,7 +195,6 @@ void HeedModel::BuildCompField(){
 void HeedModel::BuildSensor(){
   fSensor = new Garfield::Sensor();
   fSensor->AddComponent(comp);
-  //fSensor->SetTimeWindow(0.,fBinWidth,fNbins); //Lowest time [ns], time bins [ns], number of bins
 }
 
 //Set which tracking mechanism to be used: Runge-kutta, Monte-Carlo or Microscopic (see Garfield++ documentation)
@@ -222,7 +221,6 @@ void HeedModel::SetTracking(){
   fTrackHeed->SetSensor(fSensor);
   fTrackHeed->SetParticle("e-");
   fTrackHeed->EnableDeltaElectronTransport();
-
 }
 
 // Set some visualization variables to see tracks and drift lines (see Garfield++ documentation)
@@ -240,7 +238,7 @@ void HeedModel::CreateChamberView(){
   strcpy(str2,name);
   strcat(str2,"_chamber.pdf");
   fChamber->Print(str2);
-//  gSystem->ProcessEvents();
+  gSystem->ProcessEvents();
   std::cout << "CreateCellView()" << std::endl;
   
   viewDrift = new Garfield::ViewDrift();

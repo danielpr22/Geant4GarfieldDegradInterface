@@ -20,23 +20,23 @@
 
 
 # Setting the gasModelParameters 
-/gasModelParameters/heed/drift 1
+/gasModelParameters/heed/drift 0
 /gasModelParameters/heed/driftRKF 0
 /gasModelParameters/heed/trackmicroscopic 0
-/gasModelParameters/heed/createAval 0
+/gasModelParameters/heed/createAval 1
 /gasModelParameters/heed/visualizechamber 1
-/gasModelParameters/heed/visualizesignals 0
+/gasModelParameters/heed/visualizesignals 1
 /gasModelParameters/heed/visualizefield 1
-#/gasModelParameters/heed/voltageplanehv -100
-#/gasModelParameters/heed/voltageplanelow 0
-#/gasModelParameters/heed/voltageanodewire 1500.
-#/gasModelParameters/heed/voltagecathodewire 0.
-#/gasModelParameters/heed/voltagegate -70.
-#/gasModelParameters/heed/voltagedeltagate 90.
+/gasModelParameters/heed/voltageplanehv -100
+/gasModelParameters/heed/voltageplanelow 0
+/gasModelParameters/heed/voltageanodewire 1500.
+/gasModelParameters/heed/voltagecathodewire 0.
+/gasModelParameters/heed/voltagegate -70.
+/gasModelParameters/heed/voltagedeltagate 90.
 
 /run/numberOfThreads 1
 /control/cout/ignoreThreadsExcept 0
-/DMPX/phys/setLowLimitE 1. eV
+/DMPX/phys/setLowLimitE 0.001 eV
 /DMPX/phys/InitializePhysics emlivermore
 /DMPX/phys/AddParametrisation
 /process/em/AddPAIRegion all GasRegion PAIphoton
@@ -79,10 +79,13 @@
 /gps/pos/halfx 10 mm
 /gps/pos/halfy 2.0 mm
 
+# To see where the GPS is
+/vis/scene/add/gps
+
 # Energy and direction of the particles being shot
 /gps/direction 0. 0. -1.
 /gps/particle gamma
-/gps/energy 30 keV
+/gps/energy 70 keV
 
 
 
