@@ -1,4 +1,8 @@
-#include "GasModelParametersMessenger.hh"
+#include "../include/GasModelParametersMessenger.hh"
+#include "../include/GasModelParameters.hh"
+#include "../include/HeedDeltaElectronModel.hh"
+#include "../include/HeedNewTrackModel.hh"
+#include "../include/HeedModel.hh"
 
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
@@ -10,12 +14,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4UIparameter.hh"
-#include "GasModelParameters.hh"
-#include "HeedDeltaElectronModel.hh"
-#include "HeedNewTrackModel.hh"
-#include "HeedModel.hh"
 #include "G4Tokenizer.hh"
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -57,9 +56,9 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   addParticleHeedNewTrackCmd = new G4UIcommand("/gasModelParameters/heed/heednewtrack/addparticle",this);
   addParticleHeedNewTrackCmd->SetGuidance("Set properties of the particle to be included");
   addParticleHeedNewTrackCmd->SetGuidance("[usage] /gasModelParameters/heed/heednewtrack/addparticle P Emin Emax");
-  addParticleHeedNewTrackCmd->SetGuidance("        P:(String) particle name (e-, e+, p, mu+, mu-, mu, pi,...");
-  addParticleHeedNewTrackCmd->SetGuidance("        Emin:(double) Minimum energy for the model to be activated");
-  addParticleHeedNewTrackCmd->SetGuidance("        Emax:(double Maximum energy for the model to be activated");
+  addParticleHeedNewTrackCmd->SetGuidance("P:(String) particle name (e-, e+, p, mu+, mu-, mu, pi,...");
+  addParticleHeedNewTrackCmd->SetGuidance("Emin:(double) Minimum energy for the model to be activated");
+  addParticleHeedNewTrackCmd->SetGuidance("Emax:(double Maximum energy for the model to be activated");
 
   G4UIparameter* paramHNT;
   paramHNT = new G4UIparameter("P",'s',false);
@@ -118,6 +117,7 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   voltageDeltaGateCmd->SetGuidance("Set the voltage difference of the gate wires with respect to the centroid: v + dv, v-dv");
   
 }
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 GasModelParametersMessenger::~GasModelParametersMessenger() {
@@ -199,17 +199,23 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
 	  }
 }
 
-void GasModelParametersMessenger::AddParticleHeedDeltaElectronCommand(G4String newValues){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void GasModelParametersMessenger::AddParticleHeedDeltaElectronCommand(G4String newValues) {
 	ConvertParameters(newValues);
 	fGasModelParameters->AddParticleNameHeedDeltaElectron(fParticleName,fEmin/keV,fEmax/keV);
 }
 
-void GasModelParametersMessenger::AddParticleHeedNewTrackCommand(G4String newValues){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void GasModelParametersMessenger::AddParticleHeedNewTrackCommand(G4String newValues) {
 	ConvertParameters(newValues);
 	fGasModelParameters->AddParticleNameHeedNewTrack(fParticleName,fEmin/keV,fEmax/keV);
 }
 
-void GasModelParametersMessenger::ConvertParameters(G4String newValues){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void GasModelParametersMessenger::ConvertParameters(G4String newValues) {
 	G4Tokenizer next( newValues );
 	fParticleName = next();
 	G4String Semin = next();

@@ -1,5 +1,8 @@
-#include "PhysicsList.hh"
-#include "PhysicsListMessenger.hh"
+#include "../include/PhysicsList.hh"
+#include "../include/PhysicsListMessenger.hh"
+#include "../include/PhysListEmStandard.hh"
+#include "../include/HeedNewTrackModel.hh"
+#include "../include/HeedDeltaElectronModel.hh"
 
 #include "G4EmStandardPhysics.hh"
 #include "G4EmStandardPhysics_option1.hh"
@@ -7,7 +10,6 @@
 #include "G4EmStandardPhysics_option3.hh"
 #include "G4EmLivermorePhysics.hh"
 #include "G4EmPenelopePhysics.hh"
-
 #include "G4DecayPhysics.hh"
 #include "G4RadioactiveDecayPhysics.hh"
 #include "G4StepLimiterPhysics.hh"
@@ -16,48 +18,34 @@
 #include "G4HadronHElasticPhysics.hh"
 #include "G4HadronInelasticQBBC.hh"
 #include "G4IonBinaryCascadePhysics.hh"
-
 #include "G4LossTableManager.hh"
 #include "G4EmConfigurator.hh"
 #include "G4UnitsTable.hh"
-
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
-
 #include "G4ProcessManager.hh"
 #include "G4Decay.hh"
 #include "G4RadioactiveDecay.hh"
 #include "G4OpticalPhysics.hh"
-//#include "G4OpticalProcessIndex.hh"
-
 #include "G4IonFluctuations.hh"
 #include "G4IonParametrisedLossModel.hh"
 #include "G4UniversalFluctuation.hh"
-
 #include "G4BraggIonGasModel.hh"
 #include "G4BetheBlochIonGasModel.hh"
-
-#include "PhysListEmStandard.hh"
 #include "G4FastSimulationManagerProcess.hh"
 #include "G4PAIPhotModel.hh"
 #include "G4PAIModel.hh"
-
 #include "G4StepLimiter.hh"
 #include "G4ProductionCuts.hh"
 #include "G4RegionStore.hh"
-
 #include "G4IonConstructor.hh"
 #include "G4LeptonConstructor.hh"
 #include "G4ShortLivedConstructor.hh"
 #include "G4BaryonConstructor.hh"
 #include "G4MesonConstructor.hh"
 #include "G4BosonConstructor.hh"
-
 #include "G4FastSimulationPhysics.hh"
 #include "G4GlobalFastSimulationManager.hh"
-
-#include "HeedNewTrackModel.hh"
-#include "HeedDeltaElectronModel.hh"
 
 #ifdef theParticleIterator
 #undef theParticleIterator
@@ -65,21 +53,16 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PhysicsList::PhysicsList()
-    : G4VModularPhysicsList(), lowE(-1){
+PhysicsList::PhysicsList(): G4VModularPhysicsList(), lowE(-1) {
   G4LossTableManager::Instance();
   defaultCutValue = 10. * um;
   cutForGamma = defaultCutValue;
   cutForElectron = defaultCutValue;
   cutForPositron = defaultCutValue;
-
   pMessenger = new PhysicsListMessenger(this);
+  SetVerboseLevel(1);
 
-
-  SetVerboseLevel(0);
-
-// EM physics
-  
+  // EM physics
   RegisterPhysics(new G4EmLivermorePhysics(1));
 
   // Add General Decay
@@ -95,24 +78,20 @@ PhysicsList::PhysicsList()
   RegisterPhysics(fastSimulationPhysics);
 
   RegisterPhysics(new G4OpticalPhysics());
-
-  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PhysicsList::~PhysicsList() {
   delete pMessenger;
-  G4cout << "Deleting PhysicsList" << G4endl;
+  G4cout << "(Debug: PhysicsList.cc) Deleting PhysicsList..." << G4endl;
 }
-
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsList::InitializePhysicsList(const G4String& name) {
   if (verboseLevel > 1) {
-    G4cout << "PhysicsList::AddPhysicsList: <" << name << ">" << G4endl;
+    G4cout << "(Debug: PhysicsList.cc) PhysicsList::AddPhysicsList: <" << name << ">" << G4endl;
   }
 
   if (name == "local") {
@@ -139,8 +118,8 @@ void PhysicsList::InitializePhysicsList(const G4String& name) {
 
 void PhysicsList::SetCuts() {
   if (verboseLevel > 0) {
-    G4cout << "PhysicsList::SetCuts:";
-    G4cout << "CutLength : " << G4BestUnit(defaultCutValue, "Length") << G4endl;
+    G4cout << "(Debug: PhysicsList.cc) PhysicsList::SetCuts, " << "CutLength : " 
+    << G4BestUnit(defaultCutValue, "Length") << G4endl;
   }
   // set cut values for gamma at first and for e- second and next for e+,
   // because some processes for e+/e- need cut values for gamma
@@ -168,7 +147,7 @@ void PhysicsList::SetCuts() {
 
 void PhysicsList::SetCutForGamma(G4double cut) {
   cutForGamma = cut;
-  G4cout << "Setting cut for gamma " << G4BestUnit(cut, "Length") << G4endl;
+  G4cout << "(Debug: PhysicsList.cc) Setting cut for gamma: " << G4BestUnit(cut, "Length") << G4endl;
   SetParticleCuts(cutForGamma, G4Gamma::Gamma());
 }
 
@@ -176,14 +155,15 @@ void PhysicsList::SetCutForGamma(G4double cut) {
 
 void PhysicsList::SetCutForElectron(G4double cut) {
   cutForElectron = cut;
-  G4cout << "Setting cut for electron " << G4BestUnit(cut, "Length") << G4endl;
+  G4cout << "(Debug: PhysicsList.cc) Setting cut for electron: " << G4BestUnit(cut, "Length") << G4endl;
   SetParticleCuts(cutForElectron, G4Electron::Electron());
 }
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsList::SetCutForPositron(G4double cut) {
   cutForPositron = cut;
-  G4cout << "Setting cut for positron " << G4BestUnit(cut, "Length") << G4endl;
+  G4cout << "(Debug: PhysicsList.cc) Setting cut for positron: " << G4BestUnit(cut, "Length") << G4endl;
   SetParticleCuts(cutForPositron, G4Positron::Positron());
 }
 
@@ -209,6 +189,8 @@ void PhysicsList::AddIonGasModels() {
   }
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 //This activates the G4FastSimulationPhysics for all particles and should be called by the user in the macro before '/run/initialize' (command: '/ALICE/phys/AddParametrisation')
 void PhysicsList::AddParametrisation() {   
     theParticleTable->GetIterator()->reset();
@@ -217,7 +199,3 @@ void PhysicsList::AddParametrisation() {
         fastSimulationPhysics->ActivateFastSimulation(particleName);
     }
 }
-
-
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

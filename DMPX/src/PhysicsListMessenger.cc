@@ -1,12 +1,11 @@
-#include "PhysicsListMessenger.hh"
-#include "PhysicsList.hh"
-#include "G4UIcmdWithoutParameter.hh"
+#include "../include/PhysicsListMessenger.hh"
+#include "../include/PhysicsList.hh"
 
+#include "G4UIcmdWithoutParameter.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys)
-    : pPhysicsList(pPhys) {
+PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys): pPhysicsList(pPhys) {
   physDir = new G4UIdirectory("/DMPX/phys/");
   physDir->SetGuidance("DMPX physics list commands");
 
@@ -55,7 +54,6 @@ PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys)
   lowLimitECmd->SetParameterName("Energy", false);
   lowLimitECmd->SetDefaultUnit("eV");
   lowLimitECmd->SetUnitCandidates("eV keV MeV GeV TeV");
-//  lowLimitECmd->SetRange("limit>10.0");
   lowLimitECmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
@@ -70,13 +68,12 @@ PhysicsListMessenger::~PhysicsListMessenger() {
   delete lowLimitECmd;  
   delete physDir;
   delete addParamCmd;
-  G4cout << "Deleting PhysicsListMessenger" << G4endl;
+  G4cout << "(Debug: PhysicsListMessenger.cc) Deleting PhysicsListMessenger..." << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void PhysicsListMessenger::SetNewValue(G4UIcommand* command,
-                                       G4String newValue) {
+void PhysicsListMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
   if (command == gammaCutCmd) {
     pPhysicsList->SetCutForGamma(gammaCutCmd->GetNewDoubleValue(newValue));
   }
@@ -107,5 +104,3 @@ void PhysicsListMessenger::SetNewValue(G4UIcommand* command,
     pPhysicsList->AddParametrisation();
   }
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

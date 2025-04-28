@@ -5,14 +5,15 @@
  *      Author: dpfeiffe
  */
 #include <iostream>
-#include "HeedNewTrackModel.hh"
+#include "../include/HeedNewTrackModel.hh"
+#include "../include/GasModelParameters.hh"
+#include "../include/GasBoxSD.hh"
+#include "../include/GasBoxHit.hh"
+
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
-#include "GasModelParameters.hh"
-#include "GasBoxSD.hh"
-#include "GasBoxHit.hh"
 #include "G4SDManager.hh"
 #include "G4Navigator.hh"
 #include "G4TransportationManager.hh"
@@ -24,15 +25,20 @@
 #include "G4FastTrack.hh"
 #include "G4AutoLock.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 // HeedNewTrackModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables
-HeedNewTrackModel::HeedNewTrackModel(GasModelParameters* gmp,G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
+HeedNewTrackModel::HeedNewTrackModel(GasModelParameters* gmp,G4String modelName, 
+    G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : HeedModel(modelName, envelope,dc,sd)	{
-        G4cout << "Copying the particle map" << G4endl;
+        G4cout << "(Debug: HeedNewTrackModel.cc) Copying the particle map..." << G4endl;
         G4cout << gmp->GetParticleNamesHeedNewTrack().size() << G4endl;
         fMapParticlesEnergy = gmp->GetParticleNamesHeedNewTrack();
-        G4cout << "set the gas file" << G4endl;
+        G4cout << "(Debug: HeedNewTrackModel.cc) Setting the gas file..." << G4endl;
         gasFile = gmp->GetGasFile();
         ionMobFile = gmp->GetIonMobilityFile();
         driftElectrons = gmp->GetDriftElectrons();
@@ -52,11 +58,15 @@ HeedNewTrackModel::HeedNewTrackModel(GasModelParameters* gmp,G4String modelName,
         InitialisePhysics();
     }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 HeedNewTrackModel::~HeedNewTrackModel() {}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 //This method is called in the DoIt-method in parent class HeedModel
 void HeedNewTrackModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm,
-            double y_cm, double z_cm, double dx, double dy, double dz){
+            double y_cm, double z_cm, double dx, double dy, double dz) {
     double ekin_eV = ekin_keV * 1000;
     fTrackHeed->EnableDebugging();
     fTrackHeed->SetParticle(particleName);
@@ -110,12 +120,10 @@ void HeedNewTrackModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G
     std::cout << "Particle Tracked out of the gas volume" << std::endl;
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+void HeedNewTrackModel::ProcessEvent() {}
 
-void HeedNewTrackModel::ProcessEvent(){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-}
-
-void HeedNewTrackModel::Reset(){
-
-}
+void HeedNewTrackModel::Reset() {}

@@ -1,32 +1,46 @@
-#include "DetectorHit.hh"
+#include "../include/DetectorHit.hh"
+
 #include "G4UnitsTable.hh"
 #include "G4VVisManager.hh"
 #include "G4Circle.hh"
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator;
 
-DetectorHit::DetectorHit() : G4VHit(), fTime(-1), fPos(G4ThreeVector()){}
+DetectorHit::DetectorHit() : G4VHit(), fTime(-1), fPos(G4ThreeVector()) {}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorHit::~DetectorHit(){}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorHit::DetectorHit(const DetectorHit& rhs) : G4VHit() {
     fPos= rhs.fPos;
     fTime=rhs.fTime;
 }
 
-const DetectorHit& DetectorHit::operator=(const DetectorHit& rhs){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+const DetectorHit& DetectorHit::operator=(const DetectorHit& rhs) {
     fPos= rhs.fPos;
     fTime=rhs.fTime;
     return *this;
 }
 
-G4int DetectorHit::operator==(const DetectorHit& rhs) const{
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+G4int DetectorHit::operator==(const DetectorHit& rhs) const {
     return (this==&rhs) ? 1 : 0;
 }
 
-void DetectorHit::Draw(){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void DetectorHit::Draw() {
 
   G4cout << "(Debug: DetectorHit.cc) Drawing detector hit at " << fPos.getY() << G4endl;
   G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
@@ -42,6 +56,8 @@ void DetectorHit::Draw(){
   }
 }
 
-void DetectorHit::Print(){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void DetectorHit::Print() {
     G4cout << "(Debug: DetectorHit.cc) Printing hits..." << G4endl;
 }

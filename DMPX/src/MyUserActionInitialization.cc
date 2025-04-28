@@ -1,15 +1,22 @@
-#include "MyUserActionInitialization.hh"
-#include "DetectorConstruction.hh"
-#include "RunAction.hh"
-#include "PrimaryGeneratorAction.hh"
-#include "EventAction.hh"
+#include "../include/MyUserActionInitialization.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/RunAction.hh"
+#include "../include/PrimaryGeneratorAction.hh"
+#include "../include/EventAction.hh"
+#include "../include/GasBoxSD.hh"
+#include "../include/SteppingAction.hh"
+
 #include "G4SDManager.hh"
-#include "GasBoxSD.hh"
-#include "SteppingAction.hh"
 
-MyUserActionInitialization::MyUserActionInitialization(){}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MyUserActionInitialization::~MyUserActionInitialization(){}
+MyUserActionInitialization::MyUserActionInitialization() {}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+MyUserActionInitialization::~MyUserActionInitialization() {}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void MyUserActionInitialization::Build() const {
 	PrimaryGeneratorAction* primary = new PrimaryGeneratorAction();
@@ -20,6 +27,8 @@ void MyUserActionInitialization::Build() const {
 	SetUserAction(evt);
 	SetUserAction(new RunAction());
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void MyUserActionInitialization::BuildForMaster() const {
 	SetUserAction(new RunAction());

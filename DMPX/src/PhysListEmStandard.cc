@@ -26,55 +26,44 @@
 // $Id: PhysListEmStandard.cc,v 1.24 2009-11-15 22:10:03 maire Exp $
 // GEANT4 tag $Name: not supported by cvs2svn $
 //
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#include "PhysListEmStandard.hh"
+#include "../include/PhysListEmStandard.hh"
+
 #include "G4ParticleDefinition.hh"
 #include "G4ProcessManager.hh"
 #include "G4PhysicsListHelper.hh"
 #include "G4SystemOfUnits.hh"
-
 #include "G4ComptonScattering.hh"
 #include "G4GammaConversion.hh"
 #include "G4PhotoElectricEffect.hh"
 #include "G4RayleighScattering.hh"
 #include "G4KleinNishinaModel.hh"
-
 #include "G4eMultipleScattering.hh"
 #include "G4eIonisation.hh"
 #include "G4eBremsstrahlung.hh"
 #include "G4eplusAnnihilation.hh"
-
 #include "G4MuMultipleScattering.hh"
 #include "G4MuIonisation.hh"
 #include "G4MuBremsstrahlung.hh"
 #include "G4MuPairProduction.hh"
-
 #include "G4hMultipleScattering.hh"
 #include "G4hIonisation.hh"
 #include "G4hBremsstrahlung.hh"
 #include "G4hPairProduction.hh"
-
 #include "G4ionIonisation.hh"
 #include "G4IonParametrisedLossModel.hh"
 #include "G4NuclearStopping.hh"
-
 #include "G4EmParameters.hh"
 #include "G4MscStepLimitType.hh"
-
 #include "G4LossTableManager.hh"
 #include "G4UAtomicDeexcitation.hh"
 #include "G4SystemOfUnits.hh"
-
 #include "G4EmModelActivator.hh"
-
 #include "G4FastSimulationManagerProcess.hh"
 
 #ifdef theParticleIterator
 #undef theParticleIterator
 #endif
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -91,7 +80,7 @@ void PhysListEmStandard::ConstructProcess() {
     G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();
     
     // Add standard EM Processes
-    //
+    
     G4ParticleTable::G4PTblDicIterator* theParticleIterator = theParticleTable->GetIterator();
     theParticleIterator->reset();
     while ((*theParticleIterator)() ) {
@@ -188,5 +177,4 @@ void PhysListEmStandard::ConstructProcess() {
     
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

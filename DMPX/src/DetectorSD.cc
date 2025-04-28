@@ -1,25 +1,31 @@
-#include "DetectorSD.hh"
+#include "../include/DetectorSD.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/GasBoxHit.hh"
+
 #include "G4Region.hh"
 #include "G4String.hh"
 #include "G4Track.hh"
-#include "GasBoxHit.hh"
 #include "G4Step.hh"
 #include "G4HCofThisEvent.hh"
 #include "G4TouchableHistory.hh"
 #include "G4SDManager.hh"
 #include "G4VProcess.hh"
-#include "DetectorConstruction.hh"
 #include "G4VPhysicalVolume.hh"
 
-DetectorSD::DetectorSD(G4String name) : G4VSensitiveDetector(name), fDetectorHitsCollection(NULL){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+DetectorSD::DetectorSD(G4String name) : G4VSensitiveDetector(name), fDetectorHitsCollection(NULL) {
     collectionName.insert("SHC");
     SHCID=-1;
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 DetectorSD::~DetectorSD(){}
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void DetectorSD::Initialize(G4HCofThisEvent * HCE){
+void DetectorSD::Initialize(G4HCofThisEvent * HCE) {
     fDetectorHitsCollection = new DetectorHitsCollection(SensitiveDetectorName, collectionName[0]);
     if(SHCID==-1){
         SHCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
@@ -29,7 +35,9 @@ void DetectorSD::Initialize(G4HCofThisEvent * HCE){
     G4cout << "(Debug: DetectorSD.cc) DetectorSD Intialized!" << G4endl;
 }
 
-G4bool DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+G4bool DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist) {
     G4Track* aTrack = aStep->GetTrack();
     G4StepPoint* thePostPoint = aStep->GetPostStepPoint();
 
@@ -42,6 +50,6 @@ G4bool DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
     return false;      
 }
 
-void DetectorSD::EndOfEvent (G4HCofThisEvent * hce){
-   
-}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void DetectorSD::EndOfEvent (G4HCofThisEvent * hce) {}

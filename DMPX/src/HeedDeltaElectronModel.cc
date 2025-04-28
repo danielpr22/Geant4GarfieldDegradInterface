@@ -5,18 +5,21 @@
  *      Author: dpfeiffe
  */
 #include <iostream>
-#include "HeedDeltaElectronModel.hh"
+#include "../include/HeedDeltaElectronModel.hh"
+#include "../include/GasModelParameters.hh"
+#include "../include/GasBoxSD.hh"
+
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
-#include "GasModelParameters.hh"
-#include "GasBoxSD.hh"
 #include "G4VVisManager.hh"
 #include "G4FastStep.hh"
 #include "G4FastTrack.hh"
-
 #include "G4AutoLock.hh"
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 // HeedDeltaElectronModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables
@@ -42,15 +45,20 @@ HeedDeltaElectronModel::HeedDeltaElectronModel(GasModelParameters* gmp,G4String 
         InitialisePhysics();
     }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 HeedDeltaElectronModel::~HeedDeltaElectronModel() {}
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 //This method is called in the DoIt-method in parent class HeedModel
-void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm,
-            double y_cm, double z_cm, double dx, double dy, double dz){
+void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, 
+    G4String particleName, double ekin_keV, double t, double x_cm,
+    double y_cm, double z_cm, double dx, double dy, double dz) {
     double eKin_eV = ekin_keV * 1000;
     int nc = 0, ni=0;
-    G4cout << "Run Interface" << G4endl;
-    G4cout << "Electron energy(in eV): " << eKin_eV << G4endl;
+    G4cout << "(Debug: HeedDeltaElectronModel.cc) Running interface..." << G4endl;
+    G4cout << "(Debug: HeedDeltaElectronModel.cc) Electron energy(in eV): " << eKin_eV << G4endl;
     if(particleName == "e-"){
         G4AutoLock lock(&aMutex);
         fTrackHeed->TransportDeltaElectron(x_cm, y_cm, z_cm, t, eKin_eV, dx, dy,
@@ -79,12 +87,12 @@ void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTra
 
 }
 
-void HeedDeltaElectronModel::ProcessEvent(){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-}
+void HeedDeltaElectronModel::ProcessEvent() {}
 
-void HeedDeltaElectronModel::Reset(){
-  
-}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void HeedDeltaElectronModel::Reset() {}
 
 

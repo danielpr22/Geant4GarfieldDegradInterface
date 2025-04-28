@@ -28,6 +28,7 @@
 #include "G4DormandPrince745.hh"
 #include "G4ChordFinder.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
     fGasModelParameters(gmp),
@@ -48,10 +49,13 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
   detectorMessenger = new DetectorMessenger(this);
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::~DetectorConstruction() {
   delete detectorMessenger;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4VPhysicalVolume* DetectorConstruction::Construct(){
 
@@ -189,6 +193,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
 
     return worldPhysical; 
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DetectorConstruction::ConstructSDandField(){
 

@@ -71,12 +71,12 @@ target_include_directories(DMPX PRIVATE
 # Copy all scripts to the build directory. This is so that we can run the executable 
 # directly because it relies on these scripts being in the current working directory.
 
-set(DMPX-with_comments_SCRIPTS
+set(DMPX_SCRIPTS
   vis.mac
   run1.mac
 )
 
-foreach(_script ${DMPX-with_comments_SCRIPTS})
+foreach(_script ${DMPX_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}
