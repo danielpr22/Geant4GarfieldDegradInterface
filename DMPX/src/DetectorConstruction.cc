@@ -132,7 +132,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     */
 
     G4GDMLParser parser; 
-    parser.Read("../../DMPX-with_comments/World.gdml");
+    parser.Read("../../DMPX/World.gdml");
     
     G4LogicalVolume* cadObjectsLogical = parser.GetVolume("__vol__11_");
     

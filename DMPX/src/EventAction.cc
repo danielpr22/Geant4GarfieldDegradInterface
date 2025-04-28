@@ -15,22 +15,24 @@
 
 auto analysisManager = G4AnalysisManager::Instance();
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
-
-EventAction::EventAction() {
+EventAction::EventAction() 
+{
   
 }
 
-EventAction::~EventAction() {
+EventAction::~EventAction() 
+{
 	G4cout << "Deleting EventAction" << G4endl;
 }
 
 
-void EventAction::BeginOfEventAction(const G4Event *ev) {
-}
-
-void EventAction::EndOfEventAction(const G4Event *evt) {
+void EventAction::BeginOfEventAction(const G4Event *ev) 
+{
 
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void EventAction::EndOfEventAction(const G4Event *evt) 
+{
+
+}
+

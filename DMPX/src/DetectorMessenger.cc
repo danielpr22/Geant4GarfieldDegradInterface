@@ -13,24 +13,21 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DetectorMessenger::DetectorMessenger(DetectorConstruction* HPGeDet)
-    : detector(HPGeDet) {
-    miniDir = new G4UIdirectory("/DMPX/");
-    miniDir->SetGuidance("DMPX specific controls");
+DetectorMessenger::DetectorMessenger(DetectorConstruction* HPGeDet): detector(HPGeDet) {
+  
+  G4cout << "(Debug: DetectorMessenger.cc) Creating DetectorMessenger..." << G4endl;
 
-    ////////////////////
-    geometryDir = new G4UIdirectory("/DMPX/geometry/");
-    geometryDir->SetGuidance("DMPX geometry specific controls");
+  miniDir = new G4UIdirectory("/DMPX/");
+  miniDir->SetGuidance("DMPX specific controls");
 
+  geometryDir = new G4UIdirectory("/DMPX/geometry/");
+  geometryDir->SetGuidance("DMPX geometry specific controls");
 
-    ////////////////////
-    setGasPressCmd =
-      new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/SetGasPressure", this);
-
-    setGasPressCmd->SetGuidance("Set gas pressure.");
-    setGasPressCmd->SetUnitCategory("Pressure");
-    setGasPressCmd->SetDefaultValue(1.0 * bar);
-    setGasPressCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+  setGasPressCmd = new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/SetGasPressure", this);
+  setGasPressCmd->SetGuidance("Set gas pressure.");
+  setGasPressCmd->SetUnitCategory("Pressure");
+  setGasPressCmd->SetDefaultValue(1.0 * bar);
+  setGasPressCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -43,6 +40,11 @@ DetectorMessenger::~DetectorMessenger() {
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DetectorMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
-  if (command == setGasPressCmd)
-    detector->SetGasPressure(setGasPressCmd->GetNewDoubleValue(newValues));
+  if (command == setGasPressCmd){
+    G4cout << "(Debug: DetectorMessenger.cc) Setting gas pressure to " << newValues << G4endl;
+  }
+
+  detector->SetGasPressure(setGasPressCmd->GetNewDoubleValue(newValues));
 }
+
+

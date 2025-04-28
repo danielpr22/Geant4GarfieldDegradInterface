@@ -30,14 +30,7 @@ if(NOT ROOT_FOUND)
 endif()
 include(${ROOT_USE_FILE})
 
-# Setup Geant4 include directories and compile definitions
-include_directories(${PROJECT_SOURCE_DIR}/include)
 
-# Setup GARFIELD++ include directories
-include_directories($ENV{GARFIELD_DIR})
-include_directories($ENV{GEANT4_DIR}/)
-include_directories($ENV{GARFIELD_HOME}/include)
-include_directories($ENV{GARFIELD_HOME}/share/Heed)
 
 # Add additional libraries needed for GARFIELD++
 link_directories($ENV{GARFIELD_LIB})
@@ -63,6 +56,16 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 add_executable(DMPX DMPX.cc ${sources} ${headers})
 target_link_libraries(DMPX -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
+
+# Setup GARFIELD++ include directories in the private scope to avoid confilcts with other targets
+target_include_directories(DMPX PRIVATE
+    ${PROJECT_SOURCE_DIR}/include
+    $ENV{GARFIELD_DIR}
+    $ENV{GEANT4_DIR}
+    $ENV{GARFIELD_HOME}/include
+    $ENV{GARFIELD_HOME}/share/Heed
+    ${Geant4_INCLUDE_DIRS}
+)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory. This is so that we can run the executable 

@@ -34,20 +34,19 @@
 #include "G4ParticleTypes.hh"
 #include "DriftLineTrajectoryPoint.hh"
 #include "G4VProcess.hh"
+
+
 G4ThreadLocal G4Allocator<DriftLineTrajectory>* DriftLineTrajectoryAllocator = 0;
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DriftLineTrajectory::DriftLineTrajectory()
 {
   fpPointsContainer = new DriftLineTrajectoryPointContainer();
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 
-DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right)
-  :G4Trajectory(right)
+DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right): G4Trajectory(right)
 {
   fpPointsContainer = new DriftLineTrajectoryPointContainer();
   for(size_t i=0;i<right.fpPointsContainer->size();++i) {
@@ -57,9 +56,8 @@ DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right)
   }
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-DriftLineTrajectory::~DriftLineTrajectory() {
+DriftLineTrajectory::~DriftLineTrajectory()
+{
 	for(size_t i=0;i<fpPointsContainer->size();++i){
 		delete  (*fpPointsContainer)[i];
 	}
@@ -69,6 +67,7 @@ DriftLineTrajectory::~DriftLineTrajectory() {
 }
 
 
-void DriftLineTrajectory::AppendStep(G4ThreeVector pos, G4double t){
+void DriftLineTrajectory::AppendStep(G4ThreeVector pos, G4double t)
+{
 		fpPointsContainer->push_back(new DriftLineTrajectoryPoint(pos,t));
 }

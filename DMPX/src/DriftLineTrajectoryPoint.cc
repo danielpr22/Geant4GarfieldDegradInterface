@@ -41,19 +41,19 @@
 
 G4ThreadLocal G4Allocator<DriftLineTrajectoryPoint>* DriftLineTrajectoryPointAllocator=0;
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DriftLineTrajectoryPoint::DriftLineTrajectoryPoint()
-      : fTime(0) { }
+DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(): fTime(0)
+{
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(G4ThreeVector pos, G4double t)
-      : G4TrajectoryPoint(pos), fTime(t){}
+}
 
 
+DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(G4ThreeVector pos, 
+  G4double t): G4TrajectoryPoint(pos), fTime(t)
+{
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+}
+
 
 DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(const DriftLineTrajectoryPoint &right)
     : G4TrajectoryPoint(right)
@@ -61,11 +61,12 @@ DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(const DriftLineTrajectoryPoin
      fTime = right.fTime;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DriftLineTrajectoryPoint::~DriftLineTrajectoryPoint() { }
+DriftLineTrajectoryPoint::~DriftLineTrajectoryPoint() 
+{
+  
+}
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 std::vector<G4AttValue>* DriftLineTrajectoryPoint::CreateAttValues() const
 {

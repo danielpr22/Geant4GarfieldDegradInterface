@@ -17,7 +17,8 @@
 			"target_link_libraries",
 			"set_target_properties",
 			"find_package",
-			"include_directories"
+			"include_directories",
+			"target_include_directories"
 		],
 		"files" : 
 		[
@@ -34,13 +35,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 64,
+				"line" : 57,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 87,
+				"line" : 90,
 				"parent" : 0
 			},
 			{
@@ -62,13 +63,13 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 43,
+				"line" : 36,
 				"parent" : 0
 			},
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 65,
+				"line" : 58,
 				"parent" : 0
 			},
 			{
@@ -122,33 +123,9 @@
 				"parent" : 4
 			},
 			{
-				"command" : 7,
+				"command" : 8,
 				"file" : 0,
-				"line" : 34,
-				"parent" : 0
-			},
-			{
-				"command" : 7,
-				"file" : 0,
-				"line" : 37,
-				"parent" : 0
-			},
-			{
-				"command" : 7,
-				"file" : 0,
-				"line" : 39,
-				"parent" : 0
-			},
-			{
-				"command" : 7,
-				"file" : 0,
-				"line" : 40,
-				"parent" : 0
-			},
-			{
-				"command" : 7,
-				"file" : 0,
-				"line" : 38,
+				"line" : 61,
 				"parent" : 0
 			}
 		]
@@ -232,19 +209,19 @@
 					"path" : "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX/include"
 				},
 				{
-					"backtrace" : 18,
+					"backtrace" : 17,
 					"path" : "/home/Daniel/garfield_install/include/Garfield"
 				},
 				{
-					"backtrace" : 19,
+					"backtrace" : 17,
 					"path" : "/home/Daniel/garfield_install/include"
 				},
 				{
-					"backtrace" : 20,
+					"backtrace" : 17,
 					"path" : "/home/Daniel/garfield_install/share/Heed"
 				},
 				{
-					"backtrace" : 21,
+					"backtrace" : 17,
 					"isSystem" : true,
 					"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/include/Geant4"
 				},

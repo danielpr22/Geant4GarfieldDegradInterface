@@ -26,7 +26,7 @@ void DetectorSD::Initialize(G4HCofThisEvent * HCE){
     }
     HCE->AddHitsCollection(SHCID,fDetectorHitsCollection);
 
-    G4cout << "DetectorSD Intialized!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << G4endl;
+    G4cout << "(Debug: DetectorSD.cc) DetectorSD Intialized!" << G4endl;
 }
 
 G4bool DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
@@ -34,9 +34,9 @@ G4bool DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
     G4StepPoint* thePostPoint = aStep->GetPostStepPoint();
 
     if(aStep->IsFirstStepInVolume()){
-        G4cout << "Detector Wall Hit!!" << G4endl;
-        G4cout << "Particle ID: " << aTrack->GetTrackID() << G4endl;
-        G4cout << "Energy loss through gas: " << aTrack->GetVertexKineticEnergy() - aTrack->GetKineticEnergy() << G4endl;
+        G4cout << "(Debug: DetectorSD.cc) Detector Wall Hit!" << G4endl;
+        G4cout << "(Debug: DetectorSD.cc) Particle ID: " << aTrack->GetTrackID() << G4endl;
+        G4cout << "(Debug: DetectorSD.cc) Energy loss through gas: " << aTrack->GetVertexKineticEnergy() - aTrack->GetKineticEnergy() << G4endl;
         return true;
     }
     return false;      

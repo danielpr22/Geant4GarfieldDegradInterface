@@ -7,8 +7,7 @@
 
 G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator;
 
-DetectorHit::DetectorHit() : G4VHit(), fTime(-1),
-   fPos(G4ThreeVector()){}
+DetectorHit::DetectorHit() : G4VHit(), fTime(-1), fPos(G4ThreeVector()){}
 
 DetectorHit::~DetectorHit(){}
 
@@ -27,8 +26,9 @@ G4int DetectorHit::operator==(const DetectorHit& rhs) const{
     return (this==&rhs) ? 1 : 0;
 }
 
-void DetectorHit::Draw()
-{
+void DetectorHit::Draw(){
+
+  G4cout << "(Debug: DetectorHit.cc) Drawing detector hit at " << fPos.getY() << G4endl;
   G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
   if(pVVisManager)
   {
@@ -39,11 +39,9 @@ void DetectorHit::Draw()
     G4VisAttributes attribs(colour);
     circle.SetVisAttributes(attribs);
     pVVisManager->Draw(circle);
-    
-    //G4cout<<"DRAWING "<<fPos.getY()<<G4endl;
   }
 }
 
 void DetectorHit::Print(){
-    G4cout << "Printing hits" << G4endl;
+    G4cout << "(Debug: DetectorHit.cc) Printing hits..." << G4endl;
 }

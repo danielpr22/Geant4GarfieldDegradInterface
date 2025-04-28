@@ -7,8 +7,7 @@
 
 G4ThreadLocal G4Allocator<GasBoxHit>* GasBoxHitAllocator;
 
-GasBoxHit::GasBoxHit() : G4VHit(), fTime(-1),
-   fPos(G4ThreeVector()){}
+GasBoxHit::GasBoxHit(): G4VHit(), fTime(-1), fPos(G4ThreeVector()){}
 
 GasBoxHit::~GasBoxHit(){}
 
@@ -27,9 +26,9 @@ G4int GasBoxHit::operator==(const GasBoxHit& rhs) const{
     return (this==&rhs) ? 1 : 0;
 }
 
-void GasBoxHit::Draw()
-{
+void GasBoxHit::Draw(){
   G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
+  G4cout << "(Debug: GasBoxHit.cc) Drawing detector hit at " << fPos.getY() << G4endl;
   if(pVVisManager)
   {
     G4Circle circle(fPos);
@@ -39,11 +38,9 @@ void GasBoxHit::Draw()
     G4VisAttributes attribs(colour);
     circle.SetVisAttributes(attribs);
     pVVisManager->Draw(circle);
-    
-    //G4cout<<"DRAWING "<<fPos.getY()<<G4endl;
   }
 }
 
 void GasBoxHit::Print(){
-    G4cout << "Printing hits" << G4endl;
+    G4cout << "(Debug: GasBoxHit.cc) Printing hits..." << G4endl;
 }

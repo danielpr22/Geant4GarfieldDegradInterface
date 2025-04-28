@@ -26,8 +26,7 @@ Using an initializer list is often more efficient than assigning values in the
 constructor body. "gm" is a pointer to an instance of the GasModelParameters class.
 */
 
-GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
-    : fGasModelParameters(gm) {
+GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm): fGasModelParameters(gm) {
   GasModelParametersDir = new G4UIdirectory("/gasModelParameters/");
   GasModelParametersDir->SetGuidance("GasModelParameters specific controls");
   HeedDir = new G4UIdirectory("/gasModelParameters/heed/");

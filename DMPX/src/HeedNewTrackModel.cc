@@ -22,9 +22,8 @@
 #include "G4PathFinder.hh"
 #include "G4FastStep.hh"
 #include "G4FastTrack.hh"
-
-
 #include "G4AutoLock.hh"
+
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 // HeedNewTrackModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables

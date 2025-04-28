@@ -26,7 +26,7 @@
 				{
 					"build" : "DMPX",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-DMPX-Debug-1a0708f83c6f24d4bc7e.json",
+					"jsonFile" : "directory-DMPX-Debug-6caa534374e45b941069.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.10"
@@ -76,7 +76,7 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "DMPX::@a84215849a9530372c72",
-					"jsonFile" : "target-DMPX-Debug-9c3e91e45c8d280309de.json",
+					"jsonFile" : "target-DMPX-Debug-9da6fc6094c71cd5ffb4.json",
 					"name" : "DMPX",
 					"projectIndex" : 1
 				},
