@@ -14,7 +14,6 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include <time.h>
 
 #include "G4RunManager.hh"
-#include "G4MTRunManager.hh"
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
@@ -30,15 +29,9 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 
 int main(int argc, char** argv) {
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
-#ifdef G4MULTITHREADED
-  G4MTRunManager* runManager = new G4MTRunManager();
-//  runManager->SetNumberOfThreads(2);
-#else
+
   G4RunManager* runManager = new G4RunManager();
-#endif
-//  G4cout << "Creation of G4RunManager" << G4endl;
-//  G4RunManager* runManager = new G4RunManager();
-  
+  G4cout << "Creation of G4RunManager" << G4endl;
   
   G4int randseed = atoi(argv[2]);
   G4Random::setTheSeed(randseed);
@@ -67,15 +60,10 @@ int main(int argc, char** argv) {
 
   if (argc == 1)  //! define UI terminal for interactive mode:
   {
-    //#ifdef G4UI_USE
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-    //#ifdef G4VIS_USE
     UImanager->ApplyCommand("/control/execute vis.mac");
-    //#endif
-
     ui->SessionStart();
     delete ui;
-    //#endif
   } else  //! batch mode:
   {
     G4String command = "/control/execute ";
@@ -91,10 +79,8 @@ int main(int argc, char** argv) {
     double duration = difftime(time(0),start);
     std::cout << "Simulation Time: " << duration << std::endl;
   }
-  //#ifdef G4VIS_USE
+
   delete visManager;
-  //#endif
- 
   delete runManager;
   return 0;
 }

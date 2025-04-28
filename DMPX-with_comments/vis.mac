@@ -41,6 +41,8 @@
 /DMPX/phys/AddParametrisation
 /process/em/AddPAIRegion all GasRegion PAIphoton
 
+# Setting the seed and initializing the run
+#/random/setSeeds 0 0
 /run/initialize
 
 ####################################

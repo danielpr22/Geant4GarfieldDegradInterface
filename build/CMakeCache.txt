@@ -14,15 +14,6 @@
 # EXTERNAL cache entries
 ########################
 
-//Value Computed by CMake
-ALICE_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/ALICE
-
-//Value Computed by CMake
-ALICE_IS_TOP_LEVEL:STATIC=OFF
-
-//Value Computed by CMake
-ALICE_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/ALICE
-
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -228,15 +219,6 @@ DMPX-with_comments_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
 DMPX-with_comments_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX-with_comments
-
-//Value Computed by CMake
-DMPX_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX
-
-//Value Computed by CMake
-DMPX_IS_TOP_LEVEL:STATIC=OFF
-
-//Value Computed by CMake
-DMPX_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX
 
 //Path to a file.
 EXPAT_INCLUDE_DIR:PATH=/usr/include
@@ -980,7 +962,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
