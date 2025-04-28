@@ -13,7 +13,11 @@ class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithoutParameter;
 class G4UIcmdWithADouble;
 class G4UIcmdWithAnInteger;
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
 /*! \class GasModelParametersMessenger*/
 /*! class derived from G4UImessenger*/
 /*! List of available commands*/

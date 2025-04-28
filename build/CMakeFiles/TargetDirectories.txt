@@ -5,10 +5,10 @@
 /home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/CMakeFiles/install.dir
 /home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/CMakeFiles/install/local.dir
 /home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/CMakeFiles/install/strip.dir
-/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX-with_comments/CMakeFiles/DMPX-with_comments.dir
-/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX-with_comments/CMakeFiles/edit_cache.dir
-/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX-with_comments/CMakeFiles/rebuild_cache.dir
-/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX-with_comments/CMakeFiles/list_install_components.dir
-/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX-with_comments/CMakeFiles/install.dir
-/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX-with_comments/CMakeFiles/install/local.dir
-/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX-with_comments/CMakeFiles/install/strip.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/DMPX.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/edit_cache.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/rebuild_cache.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/list_install_components.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/install.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/install/local.dir
+/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/install/strip.dir

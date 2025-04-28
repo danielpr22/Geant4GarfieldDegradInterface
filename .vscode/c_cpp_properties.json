@@ -8,7 +8,7 @@
                 "${env:GARFIELD_HOME}/**",
                 "${env:GEANT4_DIR}/**",
                 "${env:ROOTSYS}/**",
-                "${env:G4LIB}",
+                "${env:G4LIB}/**",
                 "${env:GARFIELD_LIB}/**",
                 "${env:LD_LIBRARY_PATH}/**"
             ],

@@ -22,6 +22,7 @@ class PhysicsList : public G4VModularPhysicsList {
   void SetCutForGamma(G4double);
   void SetCutForElectron(G4double);
   void SetCutForPositron(G4double);
+
   void SetLowerProductionLimit(G4double e){lowE=e;};
 
   void InitializePhysicsList(const G4String& name);

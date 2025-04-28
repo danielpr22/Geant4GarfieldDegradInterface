@@ -34,9 +34,12 @@ class G4UIcmdWith3Vector;
 /*!/DMPX/geometry/BuildLowerScint*/
 /*!/DMPX/geometry/update */
 
+// The DetectorMessenger is a class that inherits from the Geant4 class G4UImessenger
 class DetectorMessenger : public G4UImessenger {
  public:
   DetectorMessenger(DetectorConstruction*);
+
+  // This is the destructor of the class, that cleans up any allocated ressources for the class.
   ~DetectorMessenger();
 
   void SetNewValue(G4UIcommand*, G4String);

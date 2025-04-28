@@ -15,7 +15,7 @@ void GasModelParameters::AddParticleNameHeedNewTrack(const G4String particleName
     }
     fMapParticlesEnergyHeedNewTrack.insert(
                                 std::make_pair(particleName, std::make_pair(ekin_min_keV, ekin_max_keV)));
-    G4cout << "HeedNewTrack: Particle added: " << ekin_min_keV << " " << ekin_max_keV << G4endl;
+    G4cout << "HeedNewTrack: Particle added: " << particleName << " " << ekin_min_keV << " " << ekin_max_keV << G4endl;
 }
 //Add particles (with energy range) to be included in the HeedDeltaElectron Model
 void GasModelParameters::AddParticleNameHeedDeltaElectron(const G4String particleName,double ekin_min_keV,double ekin_max_keV){
@@ -24,5 +24,5 @@ void GasModelParameters::AddParticleNameHeedDeltaElectron(const G4String particl
     }
     fMapParticlesEnergyHeedDeltaElectron.insert(
                                 std::make_pair(particleName, std::make_pair(ekin_min_keV, ekin_max_keV)));
-    G4cout << "HeedDeltaElectron: Particle added: " << ekin_min_keV << " " << ekin_max_keV << G4endl;
+    G4cout << "HeedDeltaElectron: Particle added: " << particleName << " " << ekin_min_keV << " " << ekin_max_keV << G4endl;
 }

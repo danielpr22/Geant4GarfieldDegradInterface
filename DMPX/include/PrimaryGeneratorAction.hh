@@ -1,6 +1,6 @@
 //
 //  PrimaryGeneratorAction.hh
-//  ALICE (adapted for DMPX)
+//  ALICE (adapted for DMPX by Daniel Perales Rios)
 //
 //  Created by Lennert De Keukeleere on 25/10/2018.
 //

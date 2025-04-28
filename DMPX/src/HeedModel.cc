@@ -1,9 +1,9 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "../include/HeedModel.hh"
-#include "../include/DetectorConstruction.hh"
-#include "../include/DriftLineTrajectory.hh"
+#include "HeedModel.hh"
+#include "DetectorConstruction.hh"
+#include "DriftLineTrajectory.hh"
 
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
@@ -14,11 +14,18 @@
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
 #include "G4AutoLock.hh"
+#include "TSystem.h" // Include ROOT's TSystem for gSystem
+
+/* 
+A mutex is a synchronization primitive used to protect shared resources 
+from concurrent access by multiple threads.
+
+This construct is used to ensure thread safety in a multithreaded environment
+*/
 
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 const static G4double torr = 1. / 760. * atmosphere;
-
 
 HeedModel::HeedModel(G4String modelName, G4Region* envelope,DetectorConstruction* dc,GasBoxSD* sd)
 : G4VFastSimulationModel(modelName, envelope), detCon(dc), fGasBoxSD(sd)	{}
@@ -39,7 +46,7 @@ G4bool HeedModel::ModelTrigger(const G4FastTrack& fastTrack) {
   return FindParticleNameEnergy(particleName, ekin / keV);
 }
 
-//Implementation of the general model, the Run method, calles at the end is specifically implemented for the daughter classes
+//Implementation of the general model, the Run method, called at the end is specifically implemented for the daughter classes
 void HeedModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
 
   G4ThreeVector dir = fastTrack.GetPrimaryTrack()->GetMomentumDirection();
@@ -51,6 +58,7 @@ void HeedModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
   G4String particleName =
       fastTrack.GetPrimaryTrack()->GetParticleDefinition()->GetParticleName();
 
+  // The syntax "CLHEP::cm" converts the normal units in Geant4 (mm) to cm, thus dividing the result by 10
   Run(fastStep, fastTrack, particleName, ekin/keV, time, worldPosition.x() / CLHEP::cm,
       worldPosition.y() / CLHEP::cm, worldPosition.z() / CLHEP::cm,
       dir.x(), dir.y(), dir.z());
@@ -84,7 +92,10 @@ G4bool HeedModel::FindParticleNameEnergy(G4String name,
 
 //Initialize the Garfield++ related geometries and physics/tracking mechanisms, this is specific for each use and should be re-implemented entirely
 void HeedModel::InitialisePhysics(){
+  // This condition evaluates whether the simulation is running in a worker thread (in a multithreaded environment) or in a sequential mode (single-threaded environment).
   if(G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::workerRM || G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::sequentialRM){
+    G4cout << "(Debug: HeedModel.cc) Initializing the physics of the Heed model..." << G4endl;
+    
     makeGas();
       
     buildBox();
@@ -127,25 +138,37 @@ void HeedModel::makeGas(){
 //Geometry (see Garfield++ documentation)
 void HeedModel::buildBox(){
   geo = new Garfield::GeometrySimple();
-
-  box = new Garfield::SolidTube(0.,0., 0.,0.,(detCon->GetGasBoxR())/CLHEP::cm,(detCon->GetGasBoxH()*0.5)/CLHEP::cm,0.,1.,0.);
-  geo->AddSolid(box, fMediumMagboltz);
   
+  // We build the gas box for the DMPX
+  box = new Garfield::SolidBox((detCon->GetGasBoxCenterPositionX())/CLHEP::mm, (detCon->GetGasBoxCenterPositionY())/CLHEP::mm,
+  (detCon->GetGasBoxCenterPositionZ())/CLHEP::mm, (detCon->GetGasBoxLengthX() * 0.5)/ CLHEP::mm, 
+  (detCon->GetGasBoxLengthY() * 0.5) / CLHEP::mm, (detCon->GetGasBoxLengthZ() * 0.5) / CLHEP::mm);
+
+  // Debugging messages for the gas box
+  G4cout << "(Debug: HeedModel.cc) The length of the gas box in the X direction is: " << detCon->GetGasBoxLengthX() << " mm" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The length of the gas box in the Y direction is: " << detCon->GetGasBoxLengthY() << " mm" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The length of the gas box in the Z direction is: " << detCon->GetGasBoxLengthZ() << " mm" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The center position of the gas box in the X direction is: " << detCon->GetGasBoxCenterPositionX() << " mm" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The center position of the gas box in the Y direction is: " << detCon->GetGasBoxCenterPositionY() << " mm" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The center position of the gas box in the Z direction is: " << detCon->GetGasBoxCenterPositionZ() << " mm" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The pressure of the gas is: " << detCon->GetGasPressure() / torr << " torr" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The temperature of the gas is: " << detCon->GetTemperature() / kelvin << " K" << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The gas is made of " << detCon->GetKryptonPercentage() << "% Kr and " << detCon->GetCH4Percentage() << "% CH4" << G4endl;
+  geo->AddSolid(box, fMediumMagboltz);
 }
 
 //Construction of the electric field (see Garfield++ documentation)
 void HeedModel::BuildCompField(){
-    // Switch between IROC and OROC.
-    const bool iroc = false;
-    // Switch gating on or off.
-    bool gating = false;
+
     // y-axis gap between rows of wires [cm]
-    const double gap = iroc ? 0.2 : 0.3;
+    // Equivalent to: condition ? value_if_true : value_if_false;
+    const double gap = 0.2;
     
     // y coordinates of the wires [cm]
     const double ys = gap;            // anode wires
     const double yc = 2. * gap;       // cathode
     const double yg = 2. * gap + 0.3; // gate
+
     // Periodicity (wire spacing)
     const double period = 0.25;
     const int nRep = 2;
@@ -162,23 +185,29 @@ void HeedModel::BuildCompField(){
     comp->SetGeometry(geo);
     
     comp->SetPeriodicityX(nRep * period);
+
+    // Debug comments for the geometry of the wires
+    G4cout << "(Debug: HeedModel.cc) The periodicity of the wires is: " << nRep * period << " cm" << G4endl;
+    G4cout << "(Debug: HeedModel.cc) The gap between the wires is: " << gap << " cm" << G4endl;
+    G4cout << "(Debug: HeedModel.cc) The y coordinate of the anode wires is: " << ys << " cm" << G4endl;
+    G4cout << "(Debug: HeedModel.cc) The y coordinate of the cathode wires is: " << yc << " cm" << G4endl;
+
+    // For the anodes
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire((i - 1) * period, (detCon->GetGasBoxH()*0.5)/CLHEP::cm - ys, dSens, vAnodeWires, "s");
+        comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - ys, dSens, vAnodeWires, "s");
     }
+    // For the cathodes
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxH()*0.5)/CLHEP::cm - yc, dCath, vCathodeWires, "c");
+        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - yc, dCath, vCathodeWires, "c");
     }
+    // For the gate wires
     for (int i = 0; i < nRep * 2; ++i) {
         const double xg = dg * (i - 1.5);
-        comp->AddWire(xg,(detCon->GetGasBoxH()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
+        comp->AddWire(xg,(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
     }
     // Add the planes.
-    comp->AddPlaneY((detCon->GetGasBoxH()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
-    comp->AddPlaneY(-(detCon->GetGasBoxH()*0.5)/CLHEP::cm, vPlaneHV, "HV");
-    
-    // Set the magnetic field [T].
-    comp->SetMagneticField(0, 0.5, 0);
-    
+    comp->AddPlaneY((detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
+    comp->AddPlaneY(-(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneHV, "HV");    
   
 }
 
@@ -186,7 +215,6 @@ void HeedModel::BuildCompField(){
 void HeedModel::BuildSensor(){
   fSensor = new Garfield::Sensor();
   fSensor->AddComponent(comp);
-  //fSensor->SetTimeWindow(0.,fBinWidth,fNbins); //Lowest time [ns], time bins [ns], number of bins
 }
 
 //Set which tracking mechanism to be used: Runge-kutta, Monte-Carlo or Microscopic (see Garfield++ documentation)
@@ -213,7 +241,6 @@ void HeedModel::SetTracking(){
   fTrackHeed->SetSensor(fSensor);
   fTrackHeed->SetParticle("e-");
   fTrackHeed->EnableDeltaElectronTransport();
-
 }
 
 // Set some visualization variables to see tracks and drift lines (see Garfield++ documentation)
@@ -231,8 +258,8 @@ void HeedModel::CreateChamberView(){
   strcpy(str2,name);
   strcat(str2,"_chamber.pdf");
   fChamber->Print(str2);
-//  gSystem->ProcessEvents();
-  cout << "CreateCellView()" << endl;
+  gSystem->ProcessEvents();
+  std::cout << "CreateCellView()" << std::endl;
   
   viewDrift = new Garfield::ViewDrift();
   viewDrift->SetCanvas(fChamber);
@@ -240,7 +267,6 @@ void HeedModel::CreateChamberView(){
   else if(trackMicro) fAvalanche->EnablePlotting(viewDrift);
   else fDrift->EnablePlotting(viewDrift);
   fTrackHeed->EnablePlotting(viewDrift);
-
 }
 
 //Signal plotting (see Garfield++ documentation)
@@ -252,7 +278,6 @@ void HeedModel::CreateSignalView(){
   viewSignal = new Garfield::ViewSignal();
   viewSignal->SetSensor(fSensor);
   viewSignal->SetCanvas(fSignal);
-
 }
 
 //Electric field plotting (see Garfield++ documentation)
@@ -323,7 +348,7 @@ void HeedModel::Drift(double x, double y, double z, double t) {
 // Plot the track, only called when visualization is turned on by the user
 void HeedModel::PlotTrack(){
     if(fVisualizeChamber){
-      G4cout << "PlotTrack" << G4endl;
+      G4cout << "(Debug: HeedModel.cc) Plotting with PlotTrack..." << G4endl;
       viewDrift->Plot(true,false);
       fChamber->Update();
       fChamber->Print("PrimaryTrack.pdf");

@@ -14,11 +14,17 @@
 #include "HeedDeltaElectronModel.hh"
 #include "HeedNewTrackModel.hh"
 #include "HeedModel.hh"
-
 #include "G4Tokenizer.hh"
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+/* 
+The syntax ": fGasModelParameters(gm)"" is called an initializer list. It is used to 
+initialize member variables before the body of the constructor is executed.
+Using an initializer list is often more efficient than assigning values in the 
+constructor body. "gm" is a pointer to an instance of the GasModelParameters class.
+*/
 
 GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
     : fGasModelParameters(gm) {
@@ -80,7 +86,7 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   driftRKFCmd->SetGuidance("true if runge kutta is used for the drift");
 
   createAvalCmd = new G4UIcmdWithABool("/gasModelParameters/heed/createAval",this);
-  createAvalCmd->SetGuidance("true if monte carlo simulation of an avalanches is to be used");
+  createAvalCmd->SetGuidance("true if Monte Carlo simulation of avalanches is to be used");
 
   trackMicroCmd = new G4UIcmdWithABool("/gasModelParameters/heed/trackmicroscopic",this);
   trackMicroCmd->SetGuidance("true if microscopic tracking of the drift electrons/ions and avalanche is to be used");

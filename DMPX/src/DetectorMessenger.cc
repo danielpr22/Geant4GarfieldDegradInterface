@@ -1,5 +1,5 @@
-#include "../include/DetectorMessenger.hh"
-#include "../include/DetectorConstruction.hh"
+#include "DetectorMessenger.hh"
+#include "DetectorConstruction.hh"
 
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
@@ -29,7 +29,7 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* HPGeDet)
 
     setGasPressCmd->SetGuidance("Set gas pressure.");
     setGasPressCmd->SetUnitCategory("Pressure");
-    setGasPressCmd->SetDefaultValue(0.3 * bar);
+    setGasPressCmd->SetDefaultValue(1.0 * bar);
     setGasPressCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 

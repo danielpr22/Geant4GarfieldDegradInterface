@@ -11,6 +11,10 @@ class GasModelParametersMessenger;
 class DetectorConstruction;
 class G4String;
 
+/*
+A std::pair is a standard C++ template class that holds two values, 
+which can be of the same or different types.
+*/ 
 typedef std::pair<double, double> EnergyRange_keV;
 typedef std::multimap<const G4String, EnergyRange_keV> MapParticlesEnergy;
 

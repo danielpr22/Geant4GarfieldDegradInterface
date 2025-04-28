@@ -29,6 +29,7 @@ if(NOT ROOT_FOUND)
   return()
 endif()
 include(${ROOT_USE_FILE})
+
 # Setup Geant4 include directories and compile definitions
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -37,6 +38,7 @@ include_directories($ENV{GARFIELD_DIR})
 include_directories($ENV{GEANT4_DIR}/)
 include_directories($ENV{GARFIELD_HOME}/include)
 include_directories($ENV{GARFIELD_HOME}/share/Heed)
+
 # Add additional libraries needed for GARFIELD++
 link_directories($ENV{GARFIELD_LIB})
 
@@ -45,12 +47,6 @@ IF(APPLE)
     # Fix linking on 10.14+. See https://stackoverflow.com/questions/54068035
     LINK_DIRECTORIES(/usr/local/lib)
 ENDIF()
-#---------------------------------------------------------------------------
-#include the macro for generating dictionaries
-
-
-#--------------------------------------------------------------------------
-#Create a shared library with the generated dictionary
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
@@ -67,18 +63,17 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 add_executable(DMPX DMPX.cc ${sources} ${headers})
 target_link_libraries(DMPX -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
-#----------------------------------------------------------------------------
-# Copy all scripts to the build directory, i.e. the directory in which we
-# build B1. This is so that we can run the executable directly because it
-# relies on these scripts being in the current working directory.
-#
 
-set(DMPX_SCRIPTS
+#----------------------------------------------------------------------------
+# Copy all scripts to the build directory. This is so that we can run the executable 
+# directly because it relies on these scripts being in the current working directory.
+
+set(DMPX-with_comments_SCRIPTS
   vis.mac
   run1.mac
 )
 
-foreach(_script ${DMPX_SCRIPTS})
+foreach(_script ${DMPX-with_comments_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}

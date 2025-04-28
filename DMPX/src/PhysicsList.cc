@@ -11,11 +11,9 @@
 #include "G4DecayPhysics.hh"
 #include "G4RadioactiveDecayPhysics.hh"
 #include "G4StepLimiterPhysics.hh"
-//#include "G4QStoppingPhysics.hh"//not in g4 10
 #include "G4HadronElasticPhysics.hh"
 #include "G4HadronDElasticPhysics.hh"
 #include "G4HadronHElasticPhysics.hh"
-//#include "G4HadronQElasticPhysics.hh"	//not in g4 10
 #include "G4HadronInelasticQBBC.hh"
 #include "G4IonBinaryCascadePhysics.hh"
 
@@ -211,7 +209,7 @@ void PhysicsList::AddIonGasModels() {
   }
 }
 
-//This activates the G4FastSimulationPhysics for all particles and should be called by the user in the macro before '/run/initialize' (command: '/DMPX/phys/AddParametrisation')
+//This activates the G4FastSimulationPhysics for all particles and should be called by the user in the macro before '/run/initialize' (command: '/ALICE/phys/AddParametrisation')
 void PhysicsList::AddParametrisation() {   
     theParticleTable->GetIterator()->reset();
     while ((*theParticleTable->GetIterator())()) {

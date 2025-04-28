@@ -15,7 +15,7 @@ RunAction::RunAction(){
   G4cout << "Creating AnalysisManager" << G4endl;
   auto analysisManager = G4AnalysisManager::Instance();
 //  analysisManager->SetNtupleMerging(true,0,0,10000000);
-  analysisManager->SetVerboseLevel(1);
+  analysisManager->SetVerboseLevel(0);
   analysisManager->SetActivation(true);  
   analysisManager->SetFileName("output.root"); 
   analysisManager->SetHistoDirectoryName("histo");

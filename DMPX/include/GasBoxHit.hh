@@ -14,6 +14,14 @@ public:
     virtual ~GasBoxHit();
     GasBoxHit(const GasBoxHit &);
     
+    /*
+    The copy assignment operator is invoked when an existing object is 
+    assigned the values of another object of the same class. For example:
+    
+    GasBoxHit hit1;
+    GasBoxHit hit2;
+    hit2 = hit1; // Calls the copy assignment operator
+    */
     const GasBoxHit& operator=(const GasBoxHit&);
     G4int operator==(const GasBoxHit&) const;
     

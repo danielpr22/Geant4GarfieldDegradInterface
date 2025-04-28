@@ -48,6 +48,14 @@ class DriftLineTrajectory : public G4Trajectory
   public:
 
     DriftLineTrajectory();
+
+    /*
+    The "&" represents a reference to an object of the DriftLineTrajectory 
+    class in C++. A reference is an alias for an existing object, meaning 
+    it does not create a new object but instead provides another name for 
+    the same memory location. The & symbol indicates that this is a reference type.
+    */
+
     DriftLineTrajectory(DriftLineTrajectory &);
     virtual ~DriftLineTrajectory();
     virtual void AppendStep(const G4Step* aStep){}; 
@@ -62,10 +70,22 @@ class DriftLineTrajectory : public G4Trajectory
      { return (*fpPointsContainer)[i]; };
     inline G4double GetCharge() const
    { return +2.*eplus; }
+
+
   private:
     DriftLineTrajectoryPointContainer* fpPointsContainer;
 };
 
+/*
+The extern keyword indicates that the variable DriftLineTrajectoryAllocator is 
+defined elsewhere, likely in a corresponding .cc file. This allows multiple 
+translation units (source files) to share the same allocator without redefining 
+it in each file.
+
+This declaration is part of the Geant4 memory management system, which uses 
+allocators to efficiently handle the creation and destruction of frequently 
+used objects, such as trajectories, during simulations.
+*/
 extern G4ThreadLocal G4Allocator<DriftLineTrajectory>* DriftLineTrajectoryAllocator;
 
 inline void* DriftLineTrajectory::operator new(size_t)
