@@ -10,7 +10,8 @@
                 "${env:ROOTSYS}/**",
                 "${env:G4LIB}/**",
                 "${env:GARFIELD_LIB}/**",
-                "${env:LD_LIBRARY_PATH}/**"
+                "${env:LD_LIBRARY_PATH}/**",
+                "${env:DEGRAD_HOME}/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -6,8 +6,9 @@
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class DetectorHit : public G4VHit {
-    
     
 public:
     DetectorHit();
@@ -35,16 +36,20 @@ private:
     G4ThreeVector fPos;
 };
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 using DetectorHitsCollection=G4THitsCollection<DetectorHit>;
 
 extern G4ThreadLocal G4Allocator<DetectorHit>* DetectorHitAllocator;
 
-inline void* DetectorHit::operator new(size_t){
+inline void* DetectorHit::operator new(size_t) {
   if (!DetectorHitAllocator) {
          DetectorHitAllocator = new G4Allocator<DetectorHit>;
   }
   return (void*)DetectorHitAllocator->MallocSingle();
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 inline void DetectorHit::operator delete(void *aHit){
     DetectorHitAllocator->FreeSingle((DetectorHit*) aHit);

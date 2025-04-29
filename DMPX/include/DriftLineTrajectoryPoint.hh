@@ -30,7 +30,6 @@
 //
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #ifndef WLSTrajectoryPoint_h_seen
 #define WLSTrajectoryPoint_h_seen 1
@@ -42,17 +41,15 @@
 #include "G4TrajectoryPoint.hh"
 #include "G4StepStatus.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class G4Track;
 class G4Step;
 class G4VProcess;
 
 class DriftLineTrajectoryPoint : public G4TrajectoryPoint {
 
-//--------
-  public: // without description
-//--------
-
-// Constructor/Destructor
+  public: 
 
     DriftLineTrajectoryPoint();
     DriftLineTrajectoryPoint(G4ThreeVector, G4double);
@@ -71,26 +68,28 @@ class DriftLineTrajectoryPoint : public G4TrajectoryPoint {
     virtual std::vector<G4AttValue>* CreateAttValues() const;
 
     inline G4double GetTime() const { return fTime; };
-//---------
+    
   private:
-//---------
 
     G4double fTime;
 };
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 extern G4ThreadLocal G4Allocator<DriftLineTrajectoryPoint>* DriftLineTrajectoryPointAllocator;
 
-inline void* DriftLineTrajectoryPoint::operator new(size_t)
-{
+inline void* DriftLineTrajectoryPoint::operator new(size_t) {
     if(!DriftLineTrajectoryPointAllocator)
       DriftLineTrajectoryPointAllocator = new G4Allocator<DriftLineTrajectoryPoint>;
     return (void *) DriftLineTrajectoryPointAllocator->MallocSingle();
 }
 
-inline void DriftLineTrajectoryPoint::operator delete(void *aTrajectoryPoint)
-{
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline void DriftLineTrajectoryPoint::operator delete(void *aTrajectoryPoint) {
     DriftLineTrajectoryPointAllocator->FreeSingle(
         (DriftLineTrajectoryPoint *) aTrajectoryPoint);
 }
+
 
 #endif

@@ -22,12 +22,13 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "G4VSteppingVerbose.hh"
 #include "Randomize.hh" 
 
-#include "DetectorConstruction.hh"
-#include "PhysicsList.hh"
-#include "MyUserActionInitialization.hh"
-#include "GasModelParameters.hh"
+#include "include/DetectorConstruction.hh"
+#include "include/PhysicsList.hh"
+#include "include/MyUserActionInitialization.hh"
+#include "include/GasModelParameters.hh"
 
 int main(int argc, char** argv) {
+  G4cout << "(Debug: DMPX.cc) Hola caracola" << G4endl; 
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
   G4RunManager* runManager = new G4RunManager();
@@ -55,8 +56,6 @@ int main(int argc, char** argv) {
 
   G4VisManager* visManager = new G4VisExecutive();
   visManager->Initialize();
-
-  //runManager->Initialize();
 
   if (argc == 1)  //! define UI terminal for interactive mode:
   {

@@ -4,6 +4,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UImessenger.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class G4UIcommand;
 class GasModelParameters;
 class G4UIdirectory;
@@ -13,10 +15,6 @@ class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithoutParameter;
 class G4UIcmdWithADouble;
 class G4UIcmdWithAnInteger;
-
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 
 /*! \class GasModelParametersMessenger*/
 /*! class derived from G4UImessenger*/
@@ -63,7 +61,6 @@ class GasModelParametersMessenger : public G4UImessenger {
   G4String fParticleName;
   G4double fEmin;
   G4double fEmax;
-  
 };
 
 #endif

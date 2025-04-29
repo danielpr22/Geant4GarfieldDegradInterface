@@ -29,6 +29,8 @@
 #include "G4Region.hh"
 #include "G4Orb.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class G4VSolid;
 class G4LogicalVolume;
 class G4VPhysicalVolume;
@@ -36,6 +38,8 @@ class G4UniformElectricField;
 
 /*! \class  DetectorConstruction*/
 /*! \brief class derived from G4VUserDetectorConstruction*/
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class DetectorConstruction : public G4VUserDetectorConstruction {
  public:

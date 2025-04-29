@@ -7,6 +7,7 @@
 #include "TH1F.h"
 #include "TFile.h"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class PhysicsList;
 class EventAction;
@@ -15,6 +16,7 @@ class EventAction;
 // simulation of number of primaries.
 // Begins with /run/beamOn command and finishes with tracking of last secondary
 // to zero energy:
+
 class RunAction : public G4UserRunAction {
  public:
   // Run action class needs a pointer of the detector construction class in
@@ -26,8 +28,8 @@ class RunAction : public G4UserRunAction {
   void BeginOfRunAction(const G4Run *);
   void EndOfRunAction(const G4Run *);
 
-
  private:
 
 };
+
 #endif

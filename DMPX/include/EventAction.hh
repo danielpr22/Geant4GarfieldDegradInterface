@@ -5,6 +5,8 @@
 #include "G4ThreeVector.hh"
 #include <vector>
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class G4VPhysicalVolume;
 class SteppingAction;
 class G4Event;
@@ -23,7 +25,5 @@ class EventAction : public G4UserEventAction {
  private:
 	
 };
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

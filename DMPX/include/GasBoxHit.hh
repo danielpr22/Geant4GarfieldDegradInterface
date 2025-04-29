@@ -6,8 +6,9 @@
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class GasBoxHit : public G4VHit {
-    
     
 public:
     GasBoxHit();
@@ -43,18 +44,22 @@ private:
     G4ThreeVector fPos;
 };
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 using GasBoxHitsCollection=G4THitsCollection<GasBoxHit>;
 
 extern G4ThreadLocal G4Allocator<GasBoxHit>* GasBoxHitAllocator;
 
-inline void* GasBoxHit::operator new(size_t){
+inline void* GasBoxHit::operator new(size_t) {
   if (!GasBoxHitAllocator) {
          GasBoxHitAllocator = new G4Allocator<GasBoxHit>;
   }
   return (void*)GasBoxHitAllocator->MallocSingle();
 }
 
-inline void GasBoxHit::operator delete(void *aHit){
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline void GasBoxHit::operator delete(void *aHit) {
     GasBoxHitAllocator->FreeSingle((GasBoxHit*) aHit);
 }
 

@@ -23,6 +23,7 @@
 #include "G4VFastSimulationModel.hh"
 #include "HeedModel.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4VPhysicalVolume;
 class DetectorConstruction;
@@ -32,15 +33,11 @@ class GasBoxSD;
 class G4FastStep;
 class G4FastTrack;
 
-
 typedef std::pair<double, double> EnergyRange_keV;
 typedef std::multimap<const G4String, EnergyRange_keV> MapParticlesEnergy;
 
 class HeedNewTrackModel : public HeedModel {
  public:
-  //-------------------------
-  // Constructor, destructor
-  //-------------------------
   HeedNewTrackModel(GasModelParameters*,G4String, G4Region*,DetectorConstruction*, GasBoxSD*);
   ~HeedNewTrackModel();
   
@@ -59,8 +56,6 @@ class HeedNewTrackModel : public HeedModel {
     virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, 
         G4String particleName, double ekin_keV, double t, double x_cm, 
         double y_cm, double z_cm, double dx, double dy, double dz);
-  
-  
 };
 
 #endif /* HeedNewTrackModel_H_ */

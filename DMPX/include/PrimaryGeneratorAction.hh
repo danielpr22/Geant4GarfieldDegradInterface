@@ -15,6 +15,8 @@
 #include "G4ParticleTable.hh"
 #include "G4GeneralParticleSource.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class G4Event;
 
 
@@ -31,9 +33,7 @@ public:
     
 private:
     
-    G4GeneralParticleSource* particleGun;
-    
-    
+    G4GeneralParticleSource* particleGun; 
 };
 
 #endif /* PrimaryGeneratorAction_h */

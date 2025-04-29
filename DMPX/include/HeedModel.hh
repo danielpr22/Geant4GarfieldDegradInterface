@@ -28,6 +28,7 @@
 #include "GasModelParameters.hh"
 #include "GasBoxSD.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4VPhysicalVolume;
 class DetectorConstruction;
@@ -37,12 +38,8 @@ class G4FastTrack;
 
 class HeedModel : public G4VFastSimulationModel {
  public:
-  //-------------------------
-  // Constructor, destructor
-  //-------------------------
   HeedModel(G4String, G4Region*,DetectorConstruction*,GasBoxSD*);
   ~HeedModel();
-
 
   virtual G4bool IsApplicable(const G4ParticleDefinition&);
   virtual G4bool ModelTrigger(const G4FastTrack&);
@@ -147,7 +144,6 @@ class HeedModel : public G4VFastSimulationModel {
   Garfield::ViewDrift* viewDrift;
   Garfield::ViewSignal* viewSignal;
   Garfield::ViewField* viewField;
-  
 };
 
 #endif /* HeedModel_H_ */

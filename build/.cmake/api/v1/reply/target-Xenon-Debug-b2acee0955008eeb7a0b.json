@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "DMPX/DMPX"
+			"path" : "Xenon/Xenon"
 		}
 	],
 	"backtrace" : 1,
@@ -22,7 +22,7 @@
 		],
 		"files" : 
 		[
-			"DMPX/CMakeLists.txt",
+			"Xenon/CMakeLists.txt",
 			"/home/Daniel/root/root_install/cmake/ROOTUseFile.cmake",
 			"/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Geant4LibraryDepends.cmake",
 			"/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Geant4Config.cmake"
@@ -35,13 +35,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 57,
+				"line" : 55,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 90,
+				"line" : 89,
 				"parent" : 0
 			},
 			{
@@ -63,13 +63,13 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 36,
+				"line" : 34,
 				"parent" : 0
 			},
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 58,
+				"line" : 56,
 				"parent" : 0
 			},
 			{
@@ -125,7 +125,7 @@
 			{
 				"command" : 8,
 				"file" : 0,
-				"line" : 61,
+				"line" : 59,
 				"parent" : 0
 			}
 		]
@@ -136,7 +136,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "  -pipe -fsigned-char -pthread -std=c++11 -g -g -std=gnu++17"
+					"fragment" : "  -pipe -fsigned-char -pthread -std=c++11 -g -O0 -g -std=gnu++17"
 				},
 				{
 					"backtrace" : 7,
@@ -206,7 +206,7 @@
 				},
 				{
 					"backtrace" : 17,
-					"path" : "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX/include"
+					"path" : "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/Xenon/include"
 				},
 				{
 					"backtrace" : 17,
@@ -282,13 +282,11 @@
 				16,
 				17,
 				18,
-				19,
-				20,
-				21
+				19
 			]
 		}
 	],
-	"id" : "DMPX::@a84215849a9530372c72",
+	"id" : "Xenon::@32a9327209cd523b9533",
 	"install" : 
 	{
 		"destinations" : 
@@ -308,7 +306,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-pipe -fsigned-char -pthread -std=c++11 -g -g",
+				"fragment" : "-pipe -fsigned-char -pthread -std=c++11 -g -O0 -g",
 				"role" : "flags"
 			},
 			{
@@ -432,6 +430,16 @@
 			{
 				"backtrace" : 7,
 				"fragment" : "/home/Daniel/root/root_install/lib/libROOTVecOps.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/home/Daniel/root/root_install/lib/libGeom.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/home/Daniel/root/root_install/lib/libGdml.so",
 				"role" : "libraries"
 			},
 			{
@@ -632,12 +640,12 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "DMPX",
-	"nameOnDisk" : "DMPX",
+	"name" : "Xenon",
+	"nameOnDisk" : "Xenon",
 	"paths" : 
 	{
-		"build" : "DMPX",
-		"source" : "DMPX"
+		"build" : "Xenon",
+		"source" : "Xenon"
 	},
 	"sourceGroups" : 
 	[
@@ -664,15 +672,15 @@
 				16,
 				17,
 				18,
-				19,
-				20,
-				21
+				19
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
+				20,
+				21,
 				22,
 				23,
 				24,
@@ -690,11 +698,7 @@
 				36,
 				37,
 				38,
-				39,
-				40,
-				41,
-				42,
-				43
+				39
 			]
 		}
 	],
@@ -703,243 +707,221 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/DMPX.cc",
+			"path" : "Xenon/Xenon.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/DetectorConstruction.cc",
+			"path" : "Xenon/src/DegradModel.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/DetectorHit.cc",
+			"path" : "Xenon/src/DetectorConstruction.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/DetectorMessenger.cc",
+			"path" : "Xenon/src/DetectorMessenger.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/DetectorSD.cc",
+			"path" : "Xenon/src/DriftLineTrajectory.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/DriftLineTrajectory.cc",
+			"path" : "Xenon/src/DriftLineTrajectoryPoint.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/DriftLineTrajectoryPoint.cc",
+			"path" : "Xenon/src/EventAction.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/EventAction.cc",
+			"path" : "Xenon/src/GarfieldExcitationHit.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/GasBoxHit.cc",
+			"path" : "Xenon/src/GarfieldVUVPhotonModel.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/GasBoxSD.cc",
+			"path" : "Xenon/src/GasBoxSD.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/GasModelParameters.cc",
+			"path" : "Xenon/src/GasModelParameters.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/GasModelParametersMessenger.cc",
+			"path" : "Xenon/src/GasModelParametersMessenger.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/HeedDeltaElectronModel.cc",
+			"path" : "Xenon/src/MyUserActionInitialization.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/HeedModel.cc",
+			"path" : "Xenon/src/PhysListEmStandard.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/HeedNewTrackModel.cc",
+			"path" : "Xenon/src/PhysicsList.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/MyUserActionInitialization.cc",
+			"path" : "Xenon/src/PhysicsListMessenger.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/PhysListEmStandard.cc",
+			"path" : "Xenon/src/PrimaryGeneratorAction.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/PhysicsList.cc",
+			"path" : "Xenon/src/RunAction.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/PhysicsListMessenger.cc",
+			"path" : "Xenon/src/SteppingAction.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/PrimaryGeneratorAction.cc",
+			"path" : "Xenon/src/XenonHit.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/RunAction.cc",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "DMPX/src/SteppingAction.cc",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "DMPX/include/Analysis.hh",
+			"path" : "Xenon/include/Analysis.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/DetectorConstruction.hh",
+			"path" : "Xenon/include/DegradModel.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/DetectorHit.hh",
+			"path" : "Xenon/include/DetectorConstruction.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/DetectorMessenger.hh",
+			"path" : "Xenon/include/DetectorMessenger.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/DetectorSD.hh",
+			"path" : "Xenon/include/DriftLineTrajectory.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/DriftLineTrajectory.hh",
+			"path" : "Xenon/include/DriftLineTrajectoryPoint.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/DriftLineTrajectoryPoint.hh",
+			"path" : "Xenon/include/EventAction.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/EventAction.hh",
+			"path" : "Xenon/include/GarfieldExcitationHit.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/GasBoxHit.hh",
+			"path" : "Xenon/include/GarfieldVUVPhotonModel.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/GasBoxSD.hh",
+			"path" : "Xenon/include/GasBoxSD.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/GasModelParameters.hh",
+			"path" : "Xenon/include/GasModelParameters.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/GasModelParametersMessenger.hh",
+			"path" : "Xenon/include/GasModelParametersMessenger.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/HeedDeltaElectronModel.hh",
+			"path" : "Xenon/include/MyUserActionInitialization.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/HeedModel.hh",
+			"path" : "Xenon/include/PhysListEmStandard.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/HeedNewTrackModel.hh",
+			"path" : "Xenon/include/PhysicsList.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/MyUserActionInitialization.hh",
+			"path" : "Xenon/include/PhysicsListMessenger.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/PhysListEmStandard.hh",
+			"path" : "Xenon/include/PrimaryGeneratorAction.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/PhysicsList.hh",
+			"path" : "Xenon/include/RunAction.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/PhysicsListMessenger.hh",
+			"path" : "Xenon/include/SteppingAction.hh",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "DMPX/include/PrimaryGeneratorAction.hh",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "DMPX/include/RunAction.hh",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "DMPX/include/SteppingAction.hh",
+			"path" : "Xenon/include/XenonHit.hh",
 			"sourceGroupIndex" : 1
 		}
 	],

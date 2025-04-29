@@ -4,6 +4,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UImessenger.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class DetectorConstruction;
 class G4UIcommand;
 class G4UIdirectory;
@@ -52,9 +54,6 @@ class DetectorMessenger : public G4UImessenger {
 
   G4UIcmdWithADoubleAndUnit* setGasPressCmd;
   G4UIcmdWithAString* setupNameCmd;
-    
-    
-    
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

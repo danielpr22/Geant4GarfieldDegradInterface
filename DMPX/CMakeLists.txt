@@ -30,8 +30,6 @@ if(NOT ROOT_FOUND)
 endif()
 include(${ROOT_USE_FILE})
 
-
-
 # Add additional libraries needed for GARFIELD++
 link_directories($ENV{GARFIELD_LIB})
 
@@ -46,25 +44,26 @@ ENDIF()
 # NB: headers are included so they will show up in IDEs
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
-#file(GLOB headers $ENV{GARFIELD_HOME}/include/*.hh)
-#file(GLOB headers $ENV{GARFIELD_HOME}/heed/*.hh)
+file(GLOB project_headers ${PROJECT_SOURCE_DIR}/include/*.hh)
+file(GLOB garfield_headers $ENV{GARFIELD_HOME}/include/*.hh)
+file(GLOB heed_headers $ENV{GARFIELD_HOME}/heed/*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 and GARFIELD++ libraries
-#
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
-add_executable(DMPX DMPX.cc ${sources} ${headers})
-target_link_libraries(DMPX -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
+find_package(Garfield REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -O0")
+add_executable(DMPX DMPX.cc ${sources} ${project_headers} ${garfield_headers} ${heed_headers})
+target_link_libraries(DMPX -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Garfield_LIBRARIES})
 
 # Setup GARFIELD++ include directories in the private scope to avoid confilcts with other targets
 target_include_directories(DMPX PRIVATE
-    ${PROJECT_SOURCE_DIR}/include
-    $ENV{GARFIELD_DIR}
-    $ENV{GEANT4_DIR}
-    $ENV{GARFIELD_HOME}/include
-    $ENV{GARFIELD_HOME}/share/Heed
-    ${Geant4_INCLUDE_DIRS}
+  ${Garfield_INCLUDE_DIRS}
+  ${PROJECT_SOURCE_DIR}/include
+  $ENV{GARFIELD_DIR}
+  $ENV{GEANT4_DIR}
+  $ENV{GARFIELD_HOME}/include
+  $ENV{GARFIELD_HOME}/share/Heed
+  ${Geant4_INCLUDE_DIRS}
 )
 
 #----------------------------------------------------------------------------

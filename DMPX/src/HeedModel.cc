@@ -6,6 +6,7 @@
 #include "../include/DriftLineTrajectory.hh"
 
 #include "G4VPhysicalVolume.hh"
+#include "ComponentAnalyticField.hh"
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
@@ -161,9 +162,14 @@ void HeedModel::buildBox() {
   geo = new Garfield::GeometrySimple();
   
   // We build the gas box for the DMPX
-  box = new Garfield::SolidBox((detCon->GetGasBoxCenterPositionX())/CLHEP::mm, (detCon->GetGasBoxCenterPositionY())/CLHEP::mm,
-  (detCon->GetGasBoxCenterPositionZ())/CLHEP::mm, (detCon->GetGasBoxLengthX() * 0.5)/ CLHEP::mm, 
-  (detCon->GetGasBoxLengthY() * 0.5) / CLHEP::mm, (detCon->GetGasBoxLengthZ() * 0.5) / CLHEP::mm);
+  box = new Garfield::SolidBox(
+    detCon->GetGasBoxCenterPositionX()/CLHEP::mm,
+    detCon->GetGasBoxCenterPositionY()/CLHEP::mm, 
+    detCon->GetGasBoxCenterPositionZ()/CLHEP::mm,
+    detCon->GetGasBoxLengthX() * 0.5/ CLHEP::mm,
+    detCon->GetGasBoxLengthY() * 0.5 / CLHEP::mm,
+    detCon->GetGasBoxLengthZ() * 0.5 / CLHEP::mm
+  );
 
   // Debugging messages for the gas box
   G4cout << "(Debug: HeedModel.cc) The length of the gas box in the X direction is: " << detCon->GetGasBoxLengthX() << " mm" << G4endl;
@@ -175,6 +181,7 @@ void HeedModel::buildBox() {
   G4cout << "(Debug: HeedModel.cc) The pressure of the gas is: " << detCon->GetGasPressure() / torr << " torr" << G4endl;
   G4cout << "(Debug: HeedModel.cc) The temperature of the gas is: " << detCon->GetTemperature() / kelvin << " K" << G4endl;
   G4cout << "(Debug: HeedModel.cc) The gas is made of " << detCon->GetKryptonPercentage() << "% Kr and " << detCon->GetCH4Percentage() << "% CH4" << G4endl;
+  
   geo->AddSolid(box, fMediumMagboltz);
 }
 
@@ -183,54 +190,55 @@ void HeedModel::buildBox() {
 //Construction of the electric field (see Garfield++ documentation)
 void HeedModel::BuildCompField() {
 
-  // y-axis gap between rows of wires [cm]
-  // Equivalent to: condition ? value_if_true : value_if_false;
-  const double gap = 0.2;
+  // // y-axis gap between rows of wires [cm]
+  // // Equivalent to: condition ? value_if_true : value_if_false;
+  // // const double gap = 0.2;
   
-  // y coordinates of the wires [cm]
-  const double ys = gap;            // anode wires
-  const double yc = 2. * gap;       // cathode
-  const double yg = 2. * gap + 0.3; // gate
+  // // y coordinates of the wires [cm]
+  // // const double ys = gap;            // anode wires
+  // // const double yc = 2. * gap;       // cathode
+  // // const double yg = 2. * gap + 0.3; // gate
 
-  // Periodicity (wire spacing)
-  const double period = 0.25;
-  const int nRep = 2;
+  // // Periodicity (wire spacing)
+  // // const double period = 0.25;
+  // // const int nRep = 2;
   
-  const double dc = period;
-  const double dg = period / 2;
+  // // const double dc = period;
+  // // const double dg = period / 2;
   
-  // Wire diameters [cm]
-  const double dSens = 0.0020;
-  const double dCath = 0.0075;
-  const double dGate = 0.0075;
+  // // Wire diameters [cm]
+  // // const double dSens = 0.0020;
+  // // const double dCath = 0.0075;
+  // // const double dGate = 0.0075;
   
   comp = new Garfield::ComponentAnalyticField();
-  comp->SetGeometry(geo);
-  
-  comp->SetPeriodicityX(nRep * period);
+  comp->SetGeometry(geo);  
+  // comp->SetPeriodicityX(nRep * period);
 
   // Debug comments for the geometry of the wires
-  G4cout << "(Debug: HeedModel.cc) The periodicity of the wires is: " << nRep * period << " cm" << G4endl;
-  G4cout << "(Debug: HeedModel.cc) The gap between the wires is: " << gap << " cm" << G4endl;
-  G4cout << "(Debug: HeedModel.cc) The y coordinate of the anode wires is: " << ys << " cm" << G4endl;
-  G4cout << "(Debug: HeedModel.cc) The y coordinate of the cathode wires is: " << yc << " cm" << G4endl;
+  // G4cout << "(Debug: HeedModel.cc) The periodicity of the wires is: " << nRep * period << " cm" << G4endl;
+  // G4cout << "(Debug: HeedModel.cc) The gap between the wires is: " << gap << " cm" << G4endl;
+  // G4cout << "(Debug: HeedModel.cc) The y coordinate of the anode wires is: " << ys << " cm" << G4endl;
+  // G4cout << "(Debug: HeedModel.cc) The y coordinate of the cathode wires is: " << yc << " cm" << G4endl;
 
-  // For the anodes
-  for (int i = 0; i < nRep; ++i) {
-      comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - ys, dSens, vAnodeWires, "s");
-  }
-  // For the cathodes
-  for (int i = 0; i < nRep; ++i) {
-      comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - yc, dCath, vCathodeWires, "c");
-  }
-  // For the gate wires
-  for (int i = 0; i < nRep * 2; ++i) {
-      const double xg = dg * (i - 1.5);
-      comp->AddWire(xg,(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
-  }
+  // // For the anodes
+  // for (int i = 0; i < nRep; ++i) {
+  //     comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - ys, dSens, vAnodeWires, "s");
+  // }
+  // // For the cathodes
+  // for (int i = 0; i < nRep; ++i) {
+  //     comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::mm - yc, dCath, vCathodeWires, "c");
+  // }
+  // // For the gate wires
+  // for (int i = 0; i < nRep * 2; ++i) {
+  //     const double xg = dg * (i - 1.5);
+  //     comp->AddWire(xg,(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
+  // }
   // Add the planes.
-  comp->AddPlaneY((detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
-  comp->AddPlaneY(-(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneHV, "HV");    
+
+  // AddPlaneY: Plane at constant y (therefore, the XZ plane)
+  comp->AddPlaneX((detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
+  comp->AddPlaneX(-(detCon->GetGasBoxLengthZ()*0.5)/CLHEP::cm, vPlaneHV, "HV");    
   
 }
 
@@ -319,7 +327,7 @@ void HeedModel::CreateFieldView() {
   strcpy(str,name);
   strcat(str,"_efield");
   fField = new TCanvas(name, "Electric field", 700, 700);
-  viewField = new Garfield::ViewField();
+  viewField = new Garfield::ViewField(); 
   viewField->SetCanvas(fField);
   viewField->SetComponent(comp);
   viewField->SetNumberOfContours(40);
@@ -329,12 +337,39 @@ void HeedModel::CreateFieldView() {
   strcpy(str2,name);
   strcat(str2,"_efield.pdf");
   fField->Print(str2);
+  
+  // Output the electric field strength at a specific point (e.g., the center of the gas box)
+  // double ex = 0.0, ey = 0.0, ez = 0.0, v = 0.0;
+  // double x = 0.0; // X-coordinate in cm
+  // double y = 0.0; // Y-coordinate in cm
+  // double z = 0.0; // Z-coordinate in cm
+  // Medium* medium = nullptr; // Pointer to the medium at the specified point
+  // int status = 0; // Status of the field query
+
+  // Query the electric field at the specified point
+  // comp->ElectricField(x, y, z, ex, ey, ez, v, medium, status);
+
+  // Check the status and output the results
+  // if (status == 0) {
+  //     double fieldStrength = sqrt(ex * ex + ey * ey + ez * ez); // Magnitude of the electric field
+  //     G4cout << "(Debug: HeedModel.cc) Electric field strength at (" << x << ", " << y << ", " << z
+  //           << ") cm: " << fieldStrength << " V/cm" << G4endl;
+  //     if (medium) {
+  //         G4cout << "(Debug: HeedModel.cc) Medium at this point: " << medium->GetName() << G4endl;
+  //     } else {
+  //         G4cout << "(Debug: HeedModel.cc) No medium found at this point." << G4endl;
+  //     }
+  // } else {
+  //     G4cout << "(Debug: HeedModel.cc) Failed to query the electric field at (" << x << ", " << y
+  //           << ", " << z << ") cm. Status: " << status << G4endl;
+  // }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // Drift the electrons from point of creation towards the electrodes (This is common for both models, i.e. HeedDeltaElectron and HeedModel) (see Garfield++ documentation)
 void HeedModel::Drift(double x, double y, double z, double t) {
+  G4cout << "(Debug: HeedModel.cc) Now drifting an electron..." << G4endl; 
   if (driftElectrons) {
       DriftLineTrajectory* dlt = new DriftLineTrajectory();
       G4TrackingManager* fpTrackingManager = G4EventManager::GetEventManager()->GetTrackingManager();

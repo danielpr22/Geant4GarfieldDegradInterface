@@ -5,6 +5,8 @@
 #include "G4String.hh"
 #include <map>
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class HeedDeltaElectronModel;
 class HeedNewTrackModel;
 class GasModelParametersMessenger;
@@ -18,7 +20,7 @@ which can be of the same or different types.
 typedef std::pair<double, double> EnergyRange_keV;
 typedef std::multimap<const G4String, EnergyRange_keV> MapParticlesEnergy;
 
-class GasModelParameters{
+class GasModelParameters {
 	public:
 	
 	GasModelParameters();

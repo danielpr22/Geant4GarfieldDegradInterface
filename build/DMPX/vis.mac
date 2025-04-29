@@ -9,21 +9,21 @@
 # The HeedDeltaElectron model simulates the transport and ionization of low-energy electrons and photons. It does take into account Coulomb scattering.
 # For electrons, this model should not be triggered for energies above a few tens of keV, if not the simulated energy deposition by the primary particle will be off.
 # The energies for the gasModelParameters are in keV
-/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 0.001
-/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 10. 1000000.
+/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 10.
+/gasModelParameters/heed/heeddeltaelectron/addparticle gamma 1. 1000000.
 
 
 # The HeedNewTrack model simulates high energy charged particles in relatively thin gas absorbers as it does not take into account Coulomb scattering
 # (The energies are in keV)
-/gasModelParameters/heed/heednewtrack/addparticle e- 0.1 1000.
+/gasModelParameters/heed/heednewtrack/addparticle e- 20. 1000.
 /gasModelParameters/heed/heednewtrack/addparticle proton 40. 1000.
 
 
 # Setting the gasModelParameters 
-/gasModelParameters/heed/drift 0
+/gasModelParameters/heed/drift 1
 /gasModelParameters/heed/driftRKF 0
 /gasModelParameters/heed/trackmicroscopic 0
-/gasModelParameters/heed/createAval 1
+/gasModelParameters/heed/createAval 0
 /gasModelParameters/heed/visualizechamber 1
 /gasModelParameters/heed/visualizesignals 1
 /gasModelParameters/heed/visualizefield 1
@@ -34,25 +34,28 @@
 /gasModelParameters/heed/voltagegate -70.
 /gasModelParameters/heed/voltagedeltagate 90.
 
+
 /run/numberOfThreads 1
 /control/cout/ignoreThreadsExcept 0
-/DMPX/phys/setLowLimitE 0.001 eV
-/DMPX/phys/InitializePhysics emlivermore
+#/DMPX/phys/setLowLimitE 1. eV
+/DMPX/phys/InitializePhysics emstandard_opt1
+#/DMPX/phys/InitializePhysics emlivermore
 /DMPX/phys/AddParametrisation
-/process/em/AddPAIRegion all GasRegion PAIphoton
+#/process/em/AddPAIRegion all GasRegion PAIphoton
 
 # Setting the seed and initializing the run
-#/random/setSeeds 0 0
+/random/setSeeds 0 0
 /run/initialize
+
 
 ####################################
 ############ Verbosities ###########
 ####################################
 
-/tracking/verbose 0
-/run/verbose 0
-/event/verbose 0
-/vis/verbose 0
+/tracking/verbose 1
+/run/verbose 1
+/event/verbose 1
+/vis/verbose 1
 
 ####################################
 ########### Visualization ##########
@@ -87,7 +90,7 @@
 # Energy and direction of the particles being shot
 /gps/direction 0. 0. -1.
 /gps/particle gamma
-/gps/energy 70 keV
+/gps/energy 15 keV
 
 
 

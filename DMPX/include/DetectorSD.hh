@@ -6,13 +6,13 @@
 #include "G4Region.hh"
 #include "DetectorHit.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4Step;
 class G4HCofThisEvent;
 class G4TouchableHistory;
 
-
-class DetectorSD : public G4VSensitiveDetector{
+class DetectorSD : public G4VSensitiveDetector {
 	public:
 	
 	DetectorSD(G4String);
@@ -26,8 +26,6 @@ class DetectorSD : public G4VSensitiveDetector{
 	
     DetectorHitsCollection* fDetectorHitsCollection;
     G4int SHCID;
-    
-	
 };
 
 #endif

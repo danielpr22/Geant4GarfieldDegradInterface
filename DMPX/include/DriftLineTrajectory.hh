@@ -31,20 +31,21 @@
 #ifndef DriftLineTrajectory_h
 #define DriftLineTrajectory_h 1
 
+#include "globals.hh"
 #include "G4Trajectory.hh"
 #include "G4Allocator.hh"
 #include "G4ios.hh"
-#include "globals.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4TrajectoryPoint.hh"
 #include "G4Track.hh"
 #include "G4Step.hh"
 #include "G4SystemOfUnits.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 typedef std::vector<G4VTrajectoryPoint*> DriftLineTrajectoryPointContainer;
 
-class DriftLineTrajectory : public G4Trajectory
-{
+class DriftLineTrajectory : public G4Trajectory {
   public:
 
     DriftLineTrajectory();
@@ -76,6 +77,8 @@ class DriftLineTrajectory : public G4Trajectory
     DriftLineTrajectoryPointContainer* fpPointsContainer;
 };
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 /*
 The extern keyword indicates that the variable DriftLineTrajectoryAllocator is 
 defined elsewhere, likely in a corresponding .cc file. This allows multiple 
@@ -88,15 +91,15 @@ used objects, such as trajectories, during simulations.
 */
 extern G4ThreadLocal G4Allocator<DriftLineTrajectory>* DriftLineTrajectoryAllocator;
 
-inline void* DriftLineTrajectory::operator new(size_t)
-{
+inline void* DriftLineTrajectory::operator new(size_t) {
   if(!DriftLineTrajectoryAllocator)
       DriftLineTrajectoryAllocator = new G4Allocator<DriftLineTrajectory>;
   return (void*)DriftLineTrajectoryAllocator->MallocSingle();
 }
 
-inline void DriftLineTrajectory::operator delete(void* aTrajectory)
-{
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline void DriftLineTrajectory::operator delete(void* aTrajectory) {
   DriftLineTrajectoryAllocator->FreeSingle((DriftLineTrajectory*)aTrajectory);
 }
 

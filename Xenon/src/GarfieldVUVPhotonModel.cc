@@ -81,7 +81,7 @@ void GarfieldVUVPhotonModel::GenerateVUVPhotons(const G4FastTrack& fastTrack, G4
 	garfExcHitsCol = new GarfieldExcitationHitsCollection();
 	fAvalanche->AvalancheElectron(x0,y0,z0,t0, e0, 0., 0., 0.);
 
-	G4int nElastic, nIonising, nAttachment, nInelastic, nExcitation, nSuperelastic;
+	unsigned int nElastic, nIonising, nAttachment, nInelastic, nExcitation, nSuperelastic;
 	fMediumMagboltz->GetNumberOfElectronCollisions(nElastic, nIonising, nAttachment, nInelastic, nExcitation, nSuperelastic);
 	
 	G4cout<<"NExcitation "<<nExcitation<<G4endl;	

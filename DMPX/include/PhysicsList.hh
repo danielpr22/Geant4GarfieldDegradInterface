@@ -1,17 +1,15 @@
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 #ifndef PhysicsList_h
 #define PhysicsList_h 1
 
 #include "G4VModularPhysicsList.hh"
 #include "G4SystemOfUnits.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class G4VPhysicsConstructor;
 class PhysicsListMessenger;
 class DetectorConstruction;
 class G4FastSimulationPhysics;
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class PhysicsList : public G4VModularPhysicsList {
  public:
@@ -41,7 +39,5 @@ class PhysicsList : public G4VModularPhysicsList {
   G4FastSimulationPhysics* fastSimulationPhysics;
 
 };
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

@@ -7,7 +7,7 @@
 		],
 		"files" : 
 		[
-			"DMPX/CMakeLists.txt"
+			"Xenon/CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -17,7 +17,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 90,
+				"line" : 89,
 				"parent" : 0
 			}
 		]
@@ -30,10 +30,10 @@
 			"destination" : "bin",
 			"paths" : 
 			[
-				"DMPX/DMPX"
+				"Xenon/Xenon"
 			],
-			"targetId" : "DMPX::@a84215849a9530372c72",
-			"targetIndex" : 0,
+			"targetId" : "Xenon::@32a9327209cd523b9533",
+			"targetIndex" : 1,
 			"type" : "target"
 		},
 		{
@@ -41,8 +41,8 @@
 			"component" : "Unspecified",
 			"cxxModuleBmiTarget" : 
 			{
-				"id" : "DMPX::@a84215849a9530372c72",
-				"index" : 0
+				"id" : "Xenon::@32a9327209cd523b9533",
+				"index" : 1
 			},
 			"destination" : "bin",
 			"type" : "cxxModuleBmi"
@@ -50,7 +50,7 @@
 	],
 	"paths" : 
 	{
-		"build" : "DMPX",
-		"source" : "DMPX"
+		"build" : "Xenon",
+		"source" : "Xenon"
 	}
 }

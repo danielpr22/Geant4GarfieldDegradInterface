@@ -3,6 +3,8 @@
 
 #include "G4VUserActionInitialization.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class DetectorConstruction;
 class PhysicsList;
 

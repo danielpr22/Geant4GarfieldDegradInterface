@@ -10,6 +10,7 @@
 
 #include "HeedModel.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4VPhysicalVolume;
 class DetectorConstruction;
@@ -24,11 +25,8 @@ typedef std::multimap<const G4String, EnergyRange_keV> MapParticlesEnergy;
 
 class HeedDeltaElectronModel : public HeedModel {
  public:
-  //-------------------------
-  // Constructor, destructor
-  //-------------------------
     HeedDeltaElectronModel(GasModelParameters *,G4String, G4Region*,DetectorConstruction*, GasBoxSD*);
-  ~HeedDeltaElectronModel();
+    ~HeedDeltaElectronModel();
   
 
   /*The following public methods are user-dependent*/
@@ -43,9 +41,6 @@ class HeedDeltaElectronModel : public HeedModel {
  private:
   virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm,
             double y_cm, double z_cm, double dx, double dy, double dz);
-  
-
-  
 };
 
 #endif /* HeedDeltaElectronModel_H_ */

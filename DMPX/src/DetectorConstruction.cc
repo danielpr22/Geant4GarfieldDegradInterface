@@ -40,10 +40,12 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
     ch4Percentage(10),
     GasBoxLengthX(32*mm), // Length of the gas box in the X direction
     GasBoxLengthY(8*mm),  // Length of the gas box in the Y direction
-    GasBoxLengthZ(130*mm), // Length of the gas box in the Z direction
+    //GasBoxLengthZ(130*mm), // Length of the gas box in the Z direction
+    GasBoxLengthZ(65*mm), // Length of the gas box in the Z direction
     GasBoxCenterPositionX(-21*mm), // X position of the gas box center
     GasBoxCenterPositionY(0.9*mm), // Y position of the gas box center
-    GasBoxCenterPositionZ(82*mm) // Z position of the gas box center
+    GasBoxCenterPositionZ(30*mm) // Z position of the gas box center
+    //GasBoxCenterPositionZ(82*mm) // Z position of the gas box center
 {
   // "This" is a pointer that is conceptually equivalent to the "self" in Python
   detectorMessenger = new DetectorMessenger(this);
@@ -57,7 +59,7 @@ DetectorConstruction::~DetectorConstruction() {
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-G4VPhysicalVolume* DetectorConstruction::Construct(){
+G4VPhysicalVolume* DetectorConstruction::Construct() {
 
     //Colors for visualization
     G4VisAttributes* red = new G4VisAttributes(G4Colour(1., 0., 0.));
@@ -135,6 +137,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     #################################
     */
 
+    G4cout << "(Debug: DetectorConstruction.cc) Now the detector is not placed..." << G4endl;
+
     G4GDMLParser parser; 
     parser.Read("../../DMPX/World.gdml");
     
@@ -204,38 +208,40 @@ void DetectorConstruction::ConstructSDandField(){
   #################################
   */
 
-  // Define a constant electric field
-  G4ThreeVector fieldVector(0.0, 0.0, 0.3076*1e6*volt/m); // Example: 1 kV/cm in the Z direction
-  pEMfield = new G4UniformElectricField(fieldVector);
+  G4cout << "(Debug: DetectorConstruction.cc) The electric field now comes purely from GARFIELD++..." << G4endl;
 
-  // Create an equation of motion for the field
-  pEquation = new G4EqMagElectricField(pEMfield);
+  // // Define a constant electric field
+  // G4ThreeVector fieldVector(0.0, 0.0, 0.3076*1e6*volt/m); // Example: 1 kV/cm in the Z direction
+  // pEMfield = new G4UniformElectricField(fieldVector);
+
+  // // Create an equation of motion for the field
+  // pEquation = new G4EqMagElectricField(pEMfield);
 
   // Create a Runge-Kutta stepper
-  G4int nvar = 8; // Number of variables for integration
-  auto pStepper = new G4DormandPrince745(pEquation, nvar);
+  // G4int nvar = 8; // Number of variables for integration
+  // auto pStepper = new G4DormandPrince745(pEquation, nvar);
 
-  // Create an integration driver
-  G4double minStep = 0.01 * mm; // Minimum step size
-  auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
+  // // Create an integration driver
+  // G4double minStep = 0.01 * mm; // Minimum step size
+  // auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
 
-  // Create a chord finder
-  pChordFinder = new G4ChordFinder(pIntegrationDriver);
+  // // Create a chord finder
+  // pChordFinder = new G4ChordFinder(pIntegrationDriver);
 
-  // Get the global field manager
-  auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
+  // // Get the global field manager
+  // auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
 
-  // Set the field and chord finder in the field manager
-  fieldManager->SetDetectorField(pEMfield);
-  fieldManager->SetChordFinder(pChordFinder);
+  // // Set the field and chord finder in the field manager
+  // fieldManager->SetDetectorField(pEMfield);
+  // fieldManager->SetChordFinder(pChordFinder);
 
-  // Attach the field manager to the world logical volume
-  G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
-  if (worldLogical) {
-      worldLogical->SetFieldManager(fieldManager, true);
-  } else {
-      G4cerr << "(Error: DetectorConstruction.cc) World logical volume not found!" << G4endl;
-  }
+  // // Attach the field manager to the world logical volume
+  // G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
+  // if (worldLogical) {
+  //     worldLogical->SetFieldManager(fieldManager, true);
+  // } else {
+  //     G4cerr << "(Error: DetectorConstruction.cc) World logical volume not found!" << G4endl;
+  // }
 
   G4LogicalVolume* logicGasBox = G4LogicalVolumeStore::GetInstance()->GetVolume("GasBoxLogical");
   if (!logicGasBox) {
@@ -251,22 +257,25 @@ void DetectorConstruction::ConstructSDandField(){
   SetSensitiveDetector(logicGasBox,myGasBoxSD);
 
   // Check the logical volume store
-  // auto store = G4LogicalVolumeStore::GetInstance();
-  // G4cout << "=== Logical Volumes in Store ===" << G4endl;
-  // for (auto vol : *store) {
-  //     G4cout << " - " << vol->GetName() << G4endl;
-  // }
+  auto store = G4LogicalVolumeStore::GetInstance();
+  G4cout << "(Debug: DetectorConstruction.cc) === Logical Volumes in Store ===" << G4endl;
+  for (auto vol : *store) {
+      G4cout << " - " << vol->GetName() << G4endl;
+  }
 
-  // Attaching the volume of the detector to the class DetectorSD
-  G4String DetectorSDname = "interface/DetectorSD";
-  DetectorSD* myDetectorSD = new DetectorSD(DetectorSDname);
-  G4SDManager::GetSDMpointer()->AddNewDetector(myDetectorSD);
-  G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
-  SetSensitiveDetector(logicDetector, myDetectorSD);
+  // // Attaching the volume of the detector to the class DetectorSD
+  // G4String DetectorSDname = "interface/DetectorSD";
+  // DetectorSD* myDetectorSD = new DetectorSD(DetectorSDname);
+  // G4SDManager::GetSDMpointer()->AddNewDetector(myDetectorSD);
+  // G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
+  // SetSensitiveDetector(logicDetector, myDetectorSD);
 
   //These commands generate the four gas models and connect it to the GasRegion
   G4Region* GasRegion = G4RegionStore::GetInstance()->GetRegion("GasRegion");
   new HeedNewTrackModel(fGasModelParameters,"HeedNewTrackModel",GasRegion,this,myGasBoxSD);
+  G4cout << "(Debug: DetectorConstruction.cc) Gas region connected with HeedNewTrackModel..." << G4endl;
+
   new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",GasRegion,this,myGasBoxSD);
+  G4cout << "(Debug: DetectorConstruction.cc) Gas region connected with HeedDeltaElectronModel..." << G4endl;
 }
 

@@ -6,12 +6,14 @@
 #include "G4Region.hh"
 #include "GasBoxHit.hh"
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 class G4Step;
 class G4HCofThisEvent;
 class G4TouchableHistory;
 
 
-class GasBoxSD : public G4VSensitiveDetector{
+class GasBoxSD : public G4VSensitiveDetector {
 	public:
 	
 	GasBoxSD(G4String);
