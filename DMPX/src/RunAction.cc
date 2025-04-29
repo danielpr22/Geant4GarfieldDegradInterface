@@ -3,8 +3,8 @@
 #include "../include/Analysis.hh"
 #include "../include/EventAction.hh"
 #include "../include/GasBoxSD.hh"
-#include "Randomize.hh"
 
+#include "Randomize.hh"
 #include "G4Run.hh"
 #include "G4AnalysisManager.hh"
 #include "G4SDManager.hh"
@@ -16,7 +16,7 @@ RunAction::RunAction() {
   G4cout << "(Debug: RunAction.cc) Creating AnalysisManager..." << G4endl;
   auto analysisManager = G4AnalysisManager::Instance();
 //  analysisManager->SetNtupleMerging(true,0,0,10000000);
-  analysisManager->SetVerboseLevel(0);
+  analysisManager->SetVerboseLevel(1);
   analysisManager->SetActivation(true);  
   analysisManager->SetFileName("output.root"); 
   analysisManager->SetHistoDirectoryName("histo");

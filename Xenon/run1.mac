@@ -16,7 +16,7 @@
 #/param/InActivateModel DegradModel
 #/param/InActivateModel GarfieldVUVPhotonModel
 
-/analysis/setFileName test
+#/analysis/setFileName output.root
 
 ####################################
 ############ Verbosities ###########

@@ -16,7 +16,7 @@
 #/param/InActivateModel DegradModel
 #/param/InActivateModel GarfieldVUVPhotonModel
 
-/analysis/setFileName test
+/analysis/setFileName output.root
 
 ####################################
 ############ Verbosities ###########
@@ -50,9 +50,8 @@
 #/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
 #/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 6
 
-/vis/scene/endOfEventAction accumulate 1
-#/vis/scene/endOfRunAction accumulate
-/vis/geometry/set/forceWireframe collimatorLogical -1 1
+/vis/scene/endOfEventAction accumulate 500
+/vis/geometry/set/surface collimatorLogical -1 1
 /vis/geometry/set/forceWireframe collimatorLogical2 -1 1
 /vis/geometry/set/forceWireframe windowLogical -1 1
 /vis/geometry/set/forceWireframe detectorLogical -1 1
@@ -65,6 +64,3 @@
 /gps/particle gamma
 /gps/ene/type Mono
 /gps/ene/mono 6.9 keV
-
-/run/beamOn 1
-

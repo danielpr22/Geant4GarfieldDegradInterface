@@ -139,7 +139,7 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degr
                 
                 G4String solidName=myVolume->GetName();
                 
-                if (solidName.contains("detectorPhysical")){//AROUCA: APENAS PARA LIMITAR O NUMERO DE ELECTROES EM TESTES
+                if (G4StrUtil::contains(solidName, "detectorPhysical")){//AROUCA: APENAS PARA LIMITAR O NUMERO DE ELECTROES EM TESTES
                     //G4cout<<"INSIDE"<<G4endl;
                     
                     //AROUCA: METER AQUI O ESPECTRO DE EMISSAO DO XENON

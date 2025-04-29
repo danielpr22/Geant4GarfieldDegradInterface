@@ -64,6 +64,7 @@ target_include_directories(Xenon PRIVATE
   $ENV{GARFIELD_HOME}/include
   $ENV{GARFIELD_HOME}/share/Heed
   ${Geant4_INCLUDE_DIRS}
+  $ENV{DEGRAD_HOME}
 )
 
 #----------------------------------------------------------------------------
@@ -73,6 +74,7 @@ target_include_directories(Xenon PRIVATE
 set(Xenon_SCRIPTS
   vis.mac
   run1.mac
+  convertDegradFile.py
 )
 
 foreach(_script ${Xenon_SCRIPTS})

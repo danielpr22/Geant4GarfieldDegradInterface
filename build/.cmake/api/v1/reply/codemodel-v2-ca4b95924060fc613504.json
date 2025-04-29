@@ -26,7 +26,7 @@
 				{
 					"build" : "Xenon",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-Xenon-Debug-84b133f38cf2a5d9cd15.json",
+					"jsonFile" : "directory-Xenon-Debug-617fe8c688c4b5e66621.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.10"
@@ -83,7 +83,7 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "Xenon::@32a9327209cd523b9533",
-					"jsonFile" : "target-Xenon-Debug-b2acee0955008eeb7a0b.json",
+					"jsonFile" : "target-Xenon-Debug-63bc02b2cf4900ad0ecc.json",
 					"name" : "Xenon",
 					"projectIndex" : 1
 				}

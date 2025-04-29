@@ -1,12 +1,13 @@
 //Runaction
-#include "RunAction.hh"
+#include "../include/RunAction.hh"
+#include "../include/PrimaryGeneratorAction.hh"
+#include "../include/Analysis.hh"
+#include "../include/EventAction.hh"
+#include "../include/GasBoxSD.hh"
+
 #include "G4Run.hh"
 #include "Randomize.hh"
-#include "PrimaryGeneratorAction.hh"
-#include "Analysis.hh"
-#include "EventAction.hh"
-
-#include "GasBoxSD.hh"
+#include "G4AnalysisManager.hh"
 #include "G4SDManager.hh"
 #include "G4RunManager.hh"
 
@@ -42,9 +43,7 @@ void RunAction::BeginOfRunAction(const G4Run* aRun) {
   G4cout << "Time: " << asctime(ptm) << G4endl;
 
   auto analysisManager = G4AnalysisManager::Instance();
-  analysisManager->OpenFile();
-  
-  
+  analysisManager->OpenFile("output.root");  
 }
 
 void RunAction::EndOfRunAction(const G4Run* aRun) {

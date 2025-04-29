@@ -733,6 +733,9 @@
 		},
 		{
 			"path" : "Xenon/run1.mac"
+		},
+		{
+			"path" : "Xenon/convertDegradFile.py"
 		}
 	],
 	"kind" : "cmakeFiles",

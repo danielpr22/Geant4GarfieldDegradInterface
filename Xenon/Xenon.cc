@@ -35,10 +35,8 @@ int main(int argc, char** argv) {
 #else
   G4RunManager* runManager = new G4RunManager();
 #endif
-//  G4cout << "Creation of G4RunManager" << G4endl;
-//  G4RunManager* runManager = new G4RunManager();
-  
-  
+  G4cout << "(Debug: Xenon.cc) G4RunManager is being created..." << G4endl;
+    
   G4int randseed = atoi(argv[2]);
   G4Random::setTheSeed(randseed);
   G4cout << "Setting the Random seed: " << randseed << G4endl;

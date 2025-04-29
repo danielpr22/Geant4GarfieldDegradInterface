@@ -1,35 +1,40 @@
 #!/usr/bin/env python
+#!/usr/bin/env python3
 import os
-import re
 
-
+# Get the current working directory
 WORKING_DIRECTORY = os.getcwd()
-print WORKING_DIRECTORY
-for files in os.listdir(WORKING_DIRECTORY):
-    if files.endswith(".OUT"):
-        # replace all space characters by tab
-        infile = open(files, "r")
-        outfile = open("tempFile.dat", "w")
+print(f"Working directory: {WORKING_DIRECTORY}")
+
+# Process all .OUT files in the working directory
+for file_name in os.listdir(WORKING_DIRECTORY):
+    if file_name.endswith(".OUT"):
+        print(f"Processing file: {file_name}")
+
+        # Replace all spaces with tabs
+        temp_file = "tempFile.dat"
         replacements = {' ': '\t'}
-        print files
-        print "replacing lines..."
-        for line in infile:
-            for src, target in replacements.iteritems():
-                line = line.replace(src, target)
-            outfile.write(line)
-        infile.close()
-        outfile.close()
-        # replace all double tab by tab
-        infile = open("tempFile.dat", "r")
-        outfile = open(files, "w")
-        replacements = {'\t\t': '\t'}
-        for line in infile:
-            while '\t\t' in line:
-                for src, target in replacements.iteritems():
-                    line = line.replace(src, target)
-            line = line[1:]  # remove o primeiro caracter de cada linha
-            outfile.write(line)
-        infile.close()
-        outfile.close()
-        os.system("rm tempFile.dat")
-print "Replacing Finished"
+        try:
+            with open(file_name, "r") as infile, open(temp_file, "w") as outfile:
+                print("Replacing spaces with tabs...")
+                for line in infile:
+                    for src, target in replacements.items():
+                        line = line.replace(src, target)
+                    outfile.write(line)
+
+            # Replace all double tabs with single tabs
+            with open(temp_file, "r") as infile, open(file_name, "w") as outfile:
+                print("Replacing double tabs with single tabs...")
+                for line in infile:
+                    while '\t\t' in line:
+                        line = line.replace('\t\t', '\t')
+                    outfile.write(line)
+
+            # Clean up temporary file
+            os.remove(temp_file)
+            print(f"Finished processing file: {file_name}")
+
+        except Exception as e:
+            print(f"Error processing file {file_name}: {e}")
+
+print("All files processed successfully.")
