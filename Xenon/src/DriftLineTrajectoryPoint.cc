@@ -29,7 +29,7 @@
 /// \brief Implementation of the WLSTrajectoryPoint class
 //
 //
-#include "DriftLineTrajectoryPoint.hh"
+#include "../include/DriftLineTrajectoryPoint.hh"
 
 #include "G4Step.hh"
 #include "G4Track.hh"
@@ -43,32 +43,27 @@ G4ThreadLocal G4Allocator<DriftLineTrajectoryPoint>* DriftLineTrajectoryPointAll
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DriftLineTrajectoryPoint::DriftLineTrajectoryPoint()
-      : fTime(0) { }
+DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(): fTime(0) {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(G4ThreeVector pos, G4double t)
-      : G4TrajectoryPoint(pos), fTime(t){}
-
-
+      : G4TrajectoryPoint(pos), fTime(t) {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DriftLineTrajectoryPoint::DriftLineTrajectoryPoint(const DriftLineTrajectoryPoint &right)
-    : G4TrajectoryPoint(right)
-{
+    : G4TrajectoryPoint(right) {
      fTime = right.fTime;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DriftLineTrajectoryPoint::~DriftLineTrajectoryPoint() { }
+DriftLineTrajectoryPoint::~DriftLineTrajectoryPoint() {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-std::vector<G4AttValue>* DriftLineTrajectoryPoint::CreateAttValues() const
-{
+std::vector<G4AttValue>* DriftLineTrajectoryPoint::CreateAttValues() const {
   std::vector<G4AttValue>* values = new std::vector<G4AttValue>;
   values->push_back(G4AttValue("Pos",G4BestUnit(GetPosition(),"Length"),""));
   values->push_back

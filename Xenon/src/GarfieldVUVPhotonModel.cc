@@ -1,13 +1,18 @@
+#include "../include/GarfieldVUVPhotonModel.hh"
+#include "../include/GarfieldExcitationHit.hh"
+#include "../include/GasModelParameters.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/GasBoxSD.hh"
+
+#include <fstream>
 #include "G4Electron.hh"
 #include "G4SystemOfUnits.hh"
-#include "GarfieldVUVPhotonModel.hh"
 #include "G4Region.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4UnitsTable.hh"
 #include "G4Track.hh"
 #include "Randomize.hh"
 #include "G4UIcommand.hh"
-#include <fstream>
 #include "G4TransportationManager.hh"
 #include "G4DynamicParticle.hh"
 #include "G4RandomDirection.hh"
@@ -20,99 +25,98 @@
 #include "Medium.hh"
 #include "SolidTube.hh"
 #include "G4OpticalPhoton.hh"
-#include "GarfieldExcitationHit.hh"
-#include "GasModelParameters.hh"
-#include "DetectorConstruction.hh"
-#include "GasBoxSD.hh"
 #include "G4ProcessManager.hh"
 
 
-const static G4double torr = 1. / 760. * atmosphere;
+const static G4double torr = 750.062 * bar;
 
-GarfieldVUVPhotonModel::GarfieldVUVPhotonModel(GasModelParameters* gmp, G4String modelName,G4Region* envelope,DetectorConstruction* dc,GasBoxSD* sd) :
-		G4VFastSimulationModel(modelName, envelope),detCon(dc),fGasBoxSD(sd) {
+GarfieldVUVPhotonModel::GarfieldVUVPhotonModel(GasModelParameters* gmp, 
+	G4String modelName,G4Region* envelope,DetectorConstruction* dc,GasBoxSD* sd) 
+	:G4VFastSimulationModel(modelName, envelope),detCon(dc),fGasBoxSD(sd) {
 	thermalE=gmp->GetThermalEnergy();
 	InitialisePhysics();
 }
 
 G4bool GarfieldVUVPhotonModel::IsApplicable(const G4ParticleDefinition& particleType) {	
-	if (particleType.GetParticleName()=="e-")
+	if (particleType.GetParticleName()=="e-") {
+		G4cout << "(Debug: GarfieldVUVPhotonModel.cc) Electron generated, the model is applicable..." << G4endl;
 		return true;
-  	return false;
-		
-		
+	}
+	return false;		
 }
 
-G4bool GarfieldVUVPhotonModel::ModelTrigger(const G4FastTrack& fastTrack){
+G4bool GarfieldVUVPhotonModel::ModelTrigger(const G4FastTrack& fastTrack) {
   G4double ekin = fastTrack.GetPrimaryTrack()->GetKineticEnergy();
   if (ekin<thermalE)
+		G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The Garfield model is triggered..." << G4endl;
 		return true;
-  return false;
-
+	return false; 
 } 
 	
 void GarfieldVUVPhotonModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) 
 {
-    
-    //G4cout<<"HELLO Garfield"<<G4endl;
+    G4cout<<"(Debug: GarfieldVUVPhotonModel.cc) Garfield++ is here..."<<G4endl;
     ////The details of the Garfield model are implemented here
-     fastStep.KillPrimaryTrack();//KILL DEGRAD TRACKS
-     garfPos =fastTrack.GetPrimaryTrack()->GetVertexPosition();
-     garfTime = fastTrack.GetPrimaryTrack()->GetGlobalTime();
-     //G4cout<<"GLOBAL TIME "<<G4BestUnit(garfTime,"Time")<<" POSITION "<<G4BestUnit(garfPos,"Length")<<G4endl;
-
-
+    fastStep.KillPrimaryTrack();//KILL DEGRAD TRACKS
+    garfPos =fastTrack.GetPrimaryTrack()->GetVertexPosition();
+    garfTime = fastTrack.GetPrimaryTrack()->GetGlobalTime();
+    G4cout << "(Debug: GarfieldVUVPhotonModel.cc) Global time: " << G4BestUnit(garfTime,"Time") << ", Position: " << G4BestUnit(garfPos,"Length") << G4endl;
     GenerateVUVPhotons(fastTrack,fastStep,garfPos,garfTime);
-    
-
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The VUV photons have been generated..." << G4endl;
 }
 
 GarfieldExcitationHitsCollection *garfExcHitsCol;
 
-void GarfieldVUVPhotonModel::GenerateVUVPhotons(const G4FastTrack& fastTrack, G4FastStep& fastStep,G4ThreeVector garfPos,G4double garfTime)
-{
+void GarfieldVUVPhotonModel::GenerateVUVPhotons(const G4FastTrack& fastTrack, G4FastStep& fastStep,
+	G4ThreeVector garfPos,G4double garfTime) {
+		G4double x0=garfPos.getX()*0.1;//Garfield length units are in cm
+		G4double y0=garfPos.getY()*0.1;
+		G4double z0=garfPos.getZ()*0.1;
+		G4double t0=garfTime;
+		G4double e0=7.;// starting energy [eV]->I have chose 7 eV because is the energy cut in Degrad
+		garfExcHitsCol = new GarfieldExcitationHitsCollection();
 
-	
-	G4double x0=garfPos.getX()*0.1;//Garfield length units are in cm
-	G4double y0=garfPos.getY()*0.1;
-	G4double z0=garfPos.getZ()*0.1;
-	G4double t0=garfTime;
-	G4double e0=7.;// starting energy [eV]->I have chose 7 eV because is the energy cut in Degrad
-	garfExcHitsCol = new GarfieldExcitationHitsCollection();
-	fAvalanche->AvalancheElectron(x0,y0,z0,t0, e0, 0., 0., 0.);
+		G4cout << "(Debug: GarfieldVUVPhotonModel.cc) Starting to calculate an avalanche..." << G4endl; 
 
-	unsigned int nElastic, nIonising, nAttachment, nInelastic, nExcitation, nSuperelastic;
-	fMediumMagboltz->GetNumberOfElectronCollisions(nElastic, nIonising, nAttachment, nInelastic, nExcitation, nSuperelastic);
-	
-	G4cout<<"NExcitation "<<nExcitation<<G4endl;	
+		fAvalanche->AvalancheElectron(x0,y0,z0,t0, e0, 0., 0., 0.);
 
-	G4int colHitsEntries=garfExcHitsCol->entries();
-	for (G4int i=0;i<colHitsEntries;i++){
-        GarfieldExcitationHit* newExcHit=new GarfieldExcitationHit();
-		newExcHit->SetPos((*garfExcHitsCol)[i]->GetPos());
-		newExcHit->SetTime((*garfExcHitsCol)[i]->GetTime());
-        fGasBoxSD->InsertGarfieldExcitationHit(newExcHit);
-		fastStep.SetNumberOfSecondaryTracks(1);	//1 photon per excitation
-		if(i % (colHitsEntries/10) == 0){
-			G4DynamicParticle VUVphoton(G4OpticalPhoton::OpticalPhotonDefinition(),G4RandomDirection(), 7.2*eV);
-			// Create photons track
-			G4Track *newTrack=fastStep.CreateSecondaryTrack(VUVphoton, (*garfExcHitsCol)[i]->GetPos(),(*garfExcHitsCol)[i]->GetTime(),false);
-		//	G4ProcessManager* pm= newTrack->GetDefinition()->GetProcessManager();
-		//	G4ProcessVectorfAtRestDoItVector = pm->GetAtRestProcessVector(typeDoIt);
-		}						
-	}
-	delete garfExcHitsCol;
+		unsigned int nElastic, nIonising, nAttachment, nInelastic, nExcitation, nSuperelastic;
+		fMediumMagboltz->GetNumberOfElectronCollisions(nElastic, nIonising, nAttachment, nInelastic, nExcitation, nSuperelastic);
+		
+		G4cout<<"NExcitation "<<nExcitation<<G4endl;	
+
+		G4int colHitsEntries=garfExcHitsCol->entries();
+		for (G4int i=0;i<colHitsEntries;i++){
+			GarfieldExcitationHit* newExcHit=new GarfieldExcitationHit();
+			newExcHit->SetPos((*garfExcHitsCol)[i]->GetPos());
+			newExcHit->SetTime((*garfExcHitsCol)[i]->GetTime());
+			fGasBoxSD->InsertGarfieldExcitationHit(newExcHit);
+			fastStep.SetNumberOfSecondaryTracks(1);	//1 photon per excitation
+			if(i % (colHitsEntries/10) == 0){
+				G4DynamicParticle VUVphoton(G4OpticalPhoton::OpticalPhotonDefinition(),G4RandomDirection(), 7.2*eV);
+				// Create photons track
+				G4Track *newTrack=fastStep.CreateSecondaryTrack(VUVphoton, (*garfExcHitsCol)[i]->GetPos(),(*garfExcHitsCol)[i]->GetTime(),false);
+			//	G4ProcessManager* pm= newTrack->GetDefinition()->GetProcessManager();
+			//	G4ProcessVectorfAtRestDoItVector = pm->GetAtRestProcessVector(typeDoIt);
+			}						
+		}
+		delete garfExcHitsCol;
 }
 // Selection of Xenon exitations and ionizations
 
 void GarfieldVUVPhotonModel::InitialisePhysics(){
 	fMediumMagboltz = new Garfield::MediumMagboltz();
-	double pressure = detCon->GetGasPressure()/torr;
-	double temperature = detCon->GetTemperature()/kelvin;
+	double pressure = detCon->GetGasPressure();
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The pressure in Garfield++ is: " << G4BestUnit(pressure, "Pressure") << G4endl;
+
+	double temperature = detCon->GetTemperature();
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The temperature in Garfield++ is: " << G4BestUnit(temperature, "Temperature") << G4endl;
 
 	fMediumMagboltz->SetTemperature(temperature);
 	fMediumMagboltz->SetPressure(pressure);
 	fMediumMagboltz->SetComposition("Xe", 100.);
+
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The composition in Garfield++ has been set..." << G4endl;
 
 	Garfield::GeometrySimple* geo = new Garfield::GeometrySimple();
 	// Make a box
@@ -124,24 +128,30 @@ void GarfieldVUVPhotonModel::InitialisePhysics(){
 	// Add the solid to the geometry, together with the medium inside
 	geo->AddSolid(tube, fMediumMagboltz);
 
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The tube has been added to the geometry..." << G4endl;
+
+
 	// Make a component with analytic electric field
 	Garfield::ComponentConstant* componentConstant = new Garfield::ComponentConstant();
 	componentConstant->SetGeometry(geo);
 	//SetElectricField(const double ex, const double ey, const double ez);
 	componentConstant->SetElectricField(0.,-3000.0,0.);
 
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The electric field has been added to the geometry..." << G4endl;
 
 	// Make a sensor
 	Garfield::Sensor* sensor = new Garfield::Sensor();
 	sensor->AddComponent(componentConstant);
 
-	fAvalanche = new Garfield::AvalancheMicroscopic();
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The sensor has been added to the geometry..." << G4endl;
 
+	fAvalanche = new Garfield::AvalancheMicroscopic();
 
 	fAvalanche->SetUserHandleInelastic(userHandle);
 		
-	fAvalanche->SetSensor(sensor);			
-  
+	fAvalanche->SetSensor(sensor);	
+
+	G4cout << "(Debug: GarfieldVUVPhotonModel.cc) The avalanche has been properly set and configured..." << G4endl;	
 }
 
 // Selection of Xenon exitations and ionizations

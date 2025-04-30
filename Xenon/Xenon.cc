@@ -22,10 +22,10 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "G4VSteppingVerbose.hh"
 #include "Randomize.hh" 
 
-#include "DetectorConstruction.hh"
-#include "PhysicsList.hh"
-#include "MyUserActionInitialization.hh"
-#include "GasModelParameters.hh"
+#include "include/DetectorConstruction.hh"
+#include "include/PhysicsList.hh"
+#include "include/MyUserActionInitialization.hh"
+#include "include/GasModelParameters.hh"
 
 int main(int argc, char** argv) {
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
@@ -39,17 +39,16 @@ int main(int argc, char** argv) {
     
   G4int randseed = atoi(argv[2]);
   G4Random::setTheSeed(randseed);
-  G4cout << "Setting the Random seed: " << randseed << G4endl;
+  G4cout << "(Debug: Xenon.cc) Setting the Random seed: " << randseed << G4endl;
   
-  G4cout << "Creation of the gas model parameter class" << G4endl;
+  G4cout << "(Debug: Xenon.cc) Creation of the gas model parameter class" << G4endl;
   GasModelParameters* gmp = new GasModelParameters();
     
-  G4cout << "Creation of DetectorConstruction" << G4endl;
+  G4cout << "(Debug: Xenon.cc) Creation of DetectorConstruction" << G4endl;
   DetectorConstruction* detector = new DetectorConstruction(gmp);
   runManager->SetUserInitialization(detector);
-
   
-  G4cout << "Creation of PhysicsList" << G4endl;
+  G4cout << "(Debug: Xenon.cc) Creation of PhysicsList" << G4endl;
   PhysicsList* physics = new PhysicsList();
   runManager->SetUserInitialization(physics);
   
@@ -79,7 +78,7 @@ int main(int argc, char** argv) {
     G4String command = "/control/execute ";
     G4String fileName = argv[1];
     if (argc < 3) {
-      G4cout << "No random seed has been provided" << G4endl;
+      G4cout << "(Debug: Xenon.cc) No random seed has been provided" << G4endl;
       delete runManager;
       return 0;
     }
@@ -87,12 +86,9 @@ int main(int argc, char** argv) {
     time_t start=time(0);
     UImanager->ApplyCommand(command + fileName);
     double duration = difftime(time(0),start);
-    cout << "Simulation Time: " << duration << endl;
+    cout << "(Debug: Xenon.cc) Simulation Time: " << duration << endl;
   }
-  //#ifdef G4VIS_USE
-  delete visManager;
-  //#endif
- 
+  delete visManager; 
   delete runManager;
   return 0;
 }

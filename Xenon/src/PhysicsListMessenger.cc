@@ -1,7 +1,6 @@
-#include "PhysicsListMessenger.hh"
-#include "PhysicsList.hh"
+#include "../include/PhysicsListMessenger.hh"
+#include "../include/PhysicsList.hh"
 #include "G4UIcmdWithoutParameter.hh"
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -70,13 +69,12 @@ PhysicsListMessenger::~PhysicsListMessenger() {
   delete lowLimitECmd;  
   delete physDir;
   delete addParamCmd;
-  G4cout << "Deleting PhysicsListMessenger" << G4endl;
+  G4cout << "(Debug: PhysicsListMessenger.cc) Deleting PhysicsListMessenger..." << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void PhysicsListMessenger::SetNewValue(G4UIcommand* command,
-                                       G4String newValue) {
+void PhysicsListMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
   if (command == gammaCutCmd) {
     pPhysicsList->SetCutForGamma(gammaCutCmd->GetNewDoubleValue(newValue));
   }
@@ -107,5 +105,3 @@ void PhysicsListMessenger::SetNewValue(G4UIcommand* command,
     pPhysicsList->AddParametrisation();
   }
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

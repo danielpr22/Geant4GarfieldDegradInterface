@@ -40,11 +40,6 @@ class DegradModel : public G4VFastSimulationModel {
   DetectorConstruction* detCon;
   GasBoxSD* fGasBoxSD;
   G4bool processOccured;
- 
-
-
-  
-  
 };
 
 #endif /* DegradModel_H_ */

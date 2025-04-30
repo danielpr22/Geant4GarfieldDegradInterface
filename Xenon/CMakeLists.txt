@@ -51,7 +51,8 @@ file(GLOB heed_headers $ENV{GARFIELD_HOME}/heed/*.hh)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 and GARFIELD++ libraries
 find_package(Garfield REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -O0")
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 add_executable(Xenon Xenon.cc ${sources} ${project_headers} ${garfield_headers} ${heed_headers})
 target_link_libraries(Xenon -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Garfield_LIBRARIES})
 

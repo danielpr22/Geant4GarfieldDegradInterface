@@ -1,6 +1,6 @@
-#include "DetectorMessenger.hh"
+#include "../include/DetectorMessenger.hh"
+#include "../include/DetectorConstruction.hh"
 
-#include "DetectorConstruction.hh"
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithAnInteger.hh"
@@ -47,4 +47,5 @@ DetectorMessenger::~DetectorMessenger() {
 void DetectorMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
   if (command == setGasPressCmd)
     detector->SetGasPressure(setGasPressCmd->GetNewDoubleValue(newValues));
+    G4cout << "(Debug: DetectorMessenger.cc) Setting gas pressure to " << setGasPressCmd->GetNewDoubleValue(newValues) << G4endl;
 }

@@ -1,11 +1,12 @@
-#include "MyUserActionInitialization.hh"
-#include "DetectorConstruction.hh"
-#include "RunAction.hh"
-#include "PrimaryGeneratorAction.hh"
-#include "EventAction.hh"
+#include "../include/MyUserActionInitialization.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/RunAction.hh"
+#include "../include/PrimaryGeneratorAction.hh"
+#include "../include/EventAction.hh"
+#include "../include/GasBoxSD.hh"
+#include "../include/SteppingAction.hh"
+
 #include "G4SDManager.hh"
-#include "GasBoxSD.hh"
-#include "SteppingAction.hh"
 
 MyUserActionInitialization::MyUserActionInitialization(){}
 

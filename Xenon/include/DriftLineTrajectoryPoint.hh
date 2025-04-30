@@ -40,7 +40,6 @@
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
 #include "G4TrajectoryPoint.hh"
-
 #include "G4StepStatus.hh"
 
 class G4Track;

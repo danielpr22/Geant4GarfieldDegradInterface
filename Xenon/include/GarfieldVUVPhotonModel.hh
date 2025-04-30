@@ -60,8 +60,6 @@ public:
 	G4ThreeVector garfPos;
 	G4double garfTime;
 	
-	
-	
 private:
 	void InitialisePhysics();
 

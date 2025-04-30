@@ -5,12 +5,13 @@
 //  Created by Lennert De Keukeleere on 25/10/2018.
 //
 
-#include "PrimaryGeneratorAction.hh"
+#include "../include/PrimaryGeneratorAction.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/RunAction.hh"
+
 #include "G4Event.hh"
 #include "G4RandomDirection.hh"
 #include "G4RunManager.hh"
-#include "DetectorConstruction.hh"
-#include "RunAction.hh"
 #include "G4ThreeVector.hh"
 #include "G4Geantino.hh"
 

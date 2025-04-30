@@ -28,13 +28,13 @@
 /// \file GarfieldExcitationHit.cc
 /// \brief Implementation of the GarfieldExcitationHit class
 
-#include "GarfieldExcitationHit.hh"
+#include "../include/GarfieldExcitationHit.hh"
+
 #include "G4UnitsTable.hh"
 #include "G4VVisManager.hh"
 #include "G4Circle.hh"
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
-
 #include <iomanip>
 
 G4ThreadLocal G4Allocator<GarfieldExcitationHit>* GarfieldExcitationHitAllocator;
@@ -92,7 +92,7 @@ void GarfieldExcitationHit::Draw()
     circle.SetVisAttributes(attribs);
     pVVisManager->Draw(circle);
     
-    //G4cout<<"DRAWING "<<fPos.getY()<<G4endl;
+    G4cout <<"(Debug: GarfieldExcitationHit.cc) Drawing "<< fPos.getY() << G4endl;
   }
 }
 
@@ -111,8 +111,8 @@ return fTime;
 
 void GarfieldExcitationHit::Print()
 {
-  G4cout<<"Garf Exc HIT"<<G4endl;
-  G4cout<<   " Time: "<< std::setw(7) << G4BestUnit(fTime,"Time")<< " Position: "<< fPos<< G4endl;
+  G4cout<<"(Debug: GarfieldExcitationHit.cc) Garf Exc HIT"<<G4endl;
+  G4cout<< "(Debug: GarfieldExcitationHit.cc) Time: "<< std::setw(7) << G4BestUnit(fTime,"Time")<< " Position: "<< fPos<< G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

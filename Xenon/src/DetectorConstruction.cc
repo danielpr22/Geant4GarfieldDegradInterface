@@ -1,4 +1,9 @@
-#include "DetectorConstruction.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/DetectorMessenger.hh"
+#include "../include/GasBoxSD.hh"
+#include "../include/DegradModel.hh"
+#include "../include/GarfieldVUVPhotonModel.hh"
+
 #include "G4PVParameterised.hh"
 #include "G4PVReplica.hh"
 #include "G4RotationMatrix.hh"
@@ -13,11 +18,9 @@
 #include "G4Cons.hh"
 #include "G4IntersectionSolid.hh"
 #include "G4Trd.hh"
-#include "DetectorMessenger.hh"
-#include "GasBoxSD.hh"
-#include "DegradModel.hh"
-#include "GarfieldVUVPhotonModel.hh"
 #include "G4SDManager.hh"
+#include "G4Element.hh"
+#include "G4Material.hh"
 
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
@@ -33,15 +36,13 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp)
     co2Percentage(9.52)
 {
   detectorMessenger = new DetectorMessenger(this);
-
-
 }
 
 DetectorConstruction::~DetectorConstruction() {
   delete detectorMessenger;
 }
 
-G4VPhysicalVolume* DetectorConstruction::Construct(){
+G4VPhysicalVolume* DetectorConstruction::Construct() {
   /* The World volume is a vacuum in which a gastube is placed with the walls made out of Aluminum. The
   endcaps are Silicon detectors, used as calorimeter 
   */
@@ -59,7 +60,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
     Gas: mixture of Helium and Isobutane or Ar and CO2
     Calorimeter: Silicon 
   */
-  
     
   //World material: vacuum
   G4NistManager* man = G4NistManager::Instance();
@@ -74,9 +74,31 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   G4Material* air = man->FindOrBuildMaterial("G4_AIR");
   G4Material* lead = man->FindOrBuildMaterial("G4_Pb");
   const static G4double Torr = 1. / 760. * atmosphere;
-  G4Material* Xenon = man->ConstructNewGasMaterial ("Xenon900Torr", "G4_Xe", 296.*kelvin, 900.*Torr, false);
+
+  /*
+  Density of the new Xenon material:  
+  ρ = (P * M) / (R * T)
+  where:
+  P = pressure in Pa
+  M = molar mass in g/mol = 131.293 g/mol for Xenon
+  R =8314 Pa·L/(K·mol)
+  T = temperature in K = 296 K
+
+  1 Torr = 133.322 Pa
+    P = 900 * 133.322 = 119989.8 Pa(8314 * 296) = 6.401 g/L = 6.401 mg/cm3
+  */ 
+
+  G4String name = "XenonGas";
+  G4String symbol = "Xe";
+  G4double z = 54.;
+  G4double a = 131.293 * g / mole;
+  G4Element* elXe = new G4Element(name, symbol, z, a);
+  G4Material* Xenon = new G4Material("Xenon900Torr", 6.401 * mg/cm3, 1, kStateGas, 296.*kelvin, 900.*Torr);
+  Xenon->AddElement(elXe, 1); 
+
   G4Material* glass= man->FindOrBuildMaterial("G4_MAGNESIUM_FLUORIDE");
   G4Material* kapton=man->FindOrBuildMaterial("G4_KAPTON");
+
   G4Material* fSteel = new G4Material("StainlessSteel", 7.80 * g/cm3, 3);
   G4Element* elFe = man->FindOrBuildElement("Fe");
   G4Element* elNi = man->FindOrBuildElement("Ni");
@@ -84,14 +106,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   fSteel->AddElement(elFe, 70 * perCent);
   fSteel->AddElement(elCr, 18 * perCent);
   fSteel->AddElement(elNi, 12 * perCent);
+
   G4Element* elAl = man->FindOrBuildElement("Al");
   G4Element* elO = man->FindOrBuildElement("O");
   G4Material* fMacor=new G4Material("ceramic", 2.52 * g/cm3, 2);
   fMacor->AddElement(elAl,2);
   fMacor->AddElement(elO,3);
   
-  G4Material* steel304=man->FindOrBuildMaterial("StainlessSteel");
-  G4Material* ceramic=man->FindOrBuildMaterial("ceramic");  //MACOR
+  G4Material* steel304 = man->FindOrBuildMaterial("StainlessSteel");
+  G4Material* ceramic = man->FindOrBuildMaterial("ceramic");  //MACOR
 
   const G4int nEntriesXenonIndex = 11;
   G4double photonEnergyXenonIndex[nEntriesXenonIndex]={6.25*eV,6.41*eV,6.58*eV,6.75*eV,6.93*eV,7.12*eV,7.32*eV,7.54*eV,7.77*eV,8.01*eV,8.27*eV};
@@ -100,8 +123,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   
   G4MaterialPropertiesTable* mptXenon= new G4MaterialPropertiesTable();
   mptXenon->AddProperty("RINDEX",photonEnergyXenonIndex,XenonRindex,nEntriesXenonIndex);
+  mptXenon->AddConstProperty("SCINTILLATIONYIELD", 0.0); // Xenon is not scintillating
+  mptXenon->AddConstProperty("RESOLUTIONSCALE", 1.0);
   Xenon->SetMaterialPropertiesTable(mptXenon);
-  
+
   //PMT GLASS Refractive index
   const G4int nEntriesMgF2Index = 9;
   G4double photonEnergyMgF2[nEntriesMgF2Index]={6.19*eV,6.44*eV,6.70*eV,6.97*eV,7.26*eV,7.55*eV,7.86*eV,8.18*eV,8.51*eV};
@@ -183,9 +208,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
                                                             false,0,checkOverlaps);
   
   
-  
-  
-  
   // colimator Window
   G4VSolid* collimatorSolid2 = new G4Tubs("collimatorWindow",rIntColimator2,rExtColimator,halfColimatorLength,0.,twopi);
   G4LogicalVolume* collimatorLogical2 = new G4LogicalVolume(collimatorSolid2,steel304,"collimatorLogical2");
@@ -246,9 +268,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
                                                             checkOverlaps);       // checking overlaps
   
   
+  G4cout << "(Debug: DetectorConstruction.cc) The gas box has been placed in the world..." << G4endl;
+
   //Macor
-  
-  
   G4VSolid* macorSolid=new  G4Tubs("macorTube",gasboxR,rExtColimator,macorHalfY,0.,twopi);
   
   ////Place macor in world
@@ -280,7 +302,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   
   G4VPhysicalVolume* pmtPhysical= new G4PVPlacement(transformPMT,pmtLogical,"pmtPhysical",worldLogical,
                                                     false,0,checkOverlaps);
-  
+                                                    
+  G4cout << "(Debug: DetectorConstruction.cc) The PMT has been placed in the world..." << G4endl;
+
   
   //OPTICAL SURFACES
   
@@ -306,6 +330,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
   //Construct a G4Region, connected to the logical volume in which you want to use the G4FastSimulationModel
   G4Region* regionGas = new G4Region("GasRegion");
   regionGas->AddRootLogicalVolume(logicGasBox);
+
+  G4cout << "(Debug: DetectorConstruction.cc) The gas region has been connected to the logical volume..." << G4endl;
     
   return physiWorld;
 
@@ -322,7 +348,9 @@ void DetectorConstruction::ConstructSDandField(){
   //These commands generate the four gas models and connect it to the GasRegion
   G4Region* region = G4RegionStore::GetInstance()->GetRegion("GasRegion");
   new DegradModel(fGasModelParameters,"DegradModel",region,this,myGasBoxSD);
-  new GarfieldVUVPhotonModel(fGasModelParameters,"GarfieldVUVPhotonModel",region,this,myGasBoxSD);
+  G4cout << "(Debug: DetectorConstruction.cc) The DegradModel has been properly configured..." << G4endl;
 
+  new GarfieldVUVPhotonModel(fGasModelParameters,"GarfieldVUVPhotonModel",region,this,myGasBoxSD);
+  G4cout << "(Debug: DetectorConstruction.cc) The Garfield++ model has been properly configured..." << G4endl;
 }
 

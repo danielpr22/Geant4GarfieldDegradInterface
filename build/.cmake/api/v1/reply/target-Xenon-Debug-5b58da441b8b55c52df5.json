@@ -35,13 +35,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 55,
+				"line" : 56,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 91,
+				"line" : 92,
 				"parent" : 0
 			},
 			{
@@ -69,7 +69,7 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 56,
+				"line" : 57,
 				"parent" : 0
 			},
 			{
@@ -125,7 +125,7 @@
 			{
 				"command" : 8,
 				"file" : 0,
-				"line" : 59,
+				"line" : 60,
 				"parent" : 0
 			}
 		]
@@ -136,7 +136,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "  -pipe -fsigned-char -pthread -std=c++11 -g -O0 -g -std=gnu++17"
+					"fragment" : "  -pipe -fsigned-char -pthread -g -g -std=gnu++17"
 				},
 				{
 					"backtrace" : 7,
@@ -219,6 +219,10 @@
 				{
 					"backtrace" : 17,
 					"path" : "/home/Daniel/garfield_install/share/Heed"
+				},
+				{
+					"backtrace" : 17,
+					"path" : "/home/Daniel/Desktop/Degrad"
 				},
 				{
 					"backtrace" : 17,
@@ -306,7 +310,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-pipe -fsigned-char -pthread -std=c++11 -g -O0 -g",
+				"fragment" : "-pipe -fsigned-char -pthread -g -g",
 				"role" : "flags"
 			},
 			{

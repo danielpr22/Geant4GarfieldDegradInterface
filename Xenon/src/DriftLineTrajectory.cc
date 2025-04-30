@@ -29,27 +29,24 @@
 /// \brief Implementation of the LXeTrajectory class
 //
 //
-#include "DriftLineTrajectory.hh"
+#include "../include/DriftLineTrajectory.hh"
+#include "../include/DriftLineTrajectoryPoint.hh"
+
 #include "G4ParticleTable.hh"
 #include "G4ParticleTypes.hh"
-#include "DriftLineTrajectoryPoint.hh"
 #include "G4VProcess.hh"
-G4ThreadLocal G4Allocator<DriftLineTrajectory>* DriftLineTrajectoryAllocator = 0;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DriftLineTrajectory::DriftLineTrajectory()
-{
+G4ThreadLocal G4Allocator<DriftLineTrajectory>* DriftLineTrajectoryAllocator = 0;
+
+DriftLineTrajectory::DriftLineTrajectory() {
   fpPointsContainer = new DriftLineTrajectoryPointContainer();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right)
-  :G4Trajectory(right)
-{
+DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right):G4Trajectory(right) {
   fpPointsContainer = new DriftLineTrajectoryPointContainer();
   for(size_t i=0;i<right.fpPointsContainer->size();++i) {
       DriftLineTrajectoryPoint* rightPoint
@@ -70,6 +67,6 @@ DriftLineTrajectory::~DriftLineTrajectory() {
 }
 
 
-void DriftLineTrajectory::AppendStep(G4ThreeVector pos, G4double t){
+void DriftLineTrajectory::AppendStep(G4ThreeVector pos, G4double t) {
 		fpPointsContainer->push_back(new DriftLineTrajectoryPoint(pos,t));
 }

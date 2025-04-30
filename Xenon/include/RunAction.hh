@@ -5,11 +5,8 @@
 
 
 #include "TROOT.h"
-#include "TROOT.h"
 #include "TH1F.h"
 #include "TFile.h"
-
-// using namespace std;         //needed for using standard libraries
 
 class PhysicsList;
 class EventAction;

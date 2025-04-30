@@ -1,4 +1,6 @@
-#include "GasModelParametersMessenger.hh"
+#include "../include/GasModelParametersMessenger.hh"
+#include "../include/GasModelParameters.hh"
+#include "../include/DegradModel.hh"
 
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
@@ -10,9 +12,6 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4UIparameter.hh"
-#include "GasModelParameters.hh"
-#include "DegradModel.hh"
-
 #include "G4Tokenizer.hh"
 
 

@@ -28,7 +28,7 @@
 /// \file XenonHit.cc
 /// \brief Implementation of the XenonHit class
 
-#include "XenonHit.hh"
+#include "../include/XenonHit.hh"
 #include "G4UnitsTable.hh"
 #include "G4VVisManager.hh"
 #include "G4Circle.hh"

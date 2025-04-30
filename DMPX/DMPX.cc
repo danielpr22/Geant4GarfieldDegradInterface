@@ -28,7 +28,6 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "include/GasModelParameters.hh"
 
 int main(int argc, char** argv) {
-  G4cout << "(Debug: DMPX.cc) Hola caracola" << G4endl; 
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
   G4RunManager* runManager = new G4RunManager();
