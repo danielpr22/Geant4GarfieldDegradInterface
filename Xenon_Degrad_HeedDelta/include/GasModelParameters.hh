@@ -69,7 +69,6 @@ class GasModelParameters{
 	
 	private:
 	GasModelParametersMessenger* fMessenger;
-	GasModelParametersMessenger* fMessenger;
     MapParticlesEnergy fMapParticlesEnergyHeedNewTrack;
     MapParticlesEnergy fMapParticlesEnergyHeedDeltaElectron;
     

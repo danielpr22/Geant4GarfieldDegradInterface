@@ -29,8 +29,8 @@
 /// \brief Implementation of the LXeTrajectory class
 //
 //
-#include "../include/DriftLineTrajectory.hh"
-#include "../include/DriftLineTrajectoryPoint.hh"
+#include "DriftLineTrajectory.hh"
+#include "DriftLineTrajectoryPoint.hh"
 
 #include "G4ParticleTable.hh"
 #include "G4ParticleTypes.hh"

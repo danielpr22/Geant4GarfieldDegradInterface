@@ -5,7 +5,7 @@
 #include "G4VSensitiveDetector.hh"
 #include "G4String.hh"
 #include "G4Region.hh"
-#include "XenonHit.hh"
+#include "GasBoxHit.hh"
 #include "GarfieldExcitationHit.hh"
 
 class G4Step;
@@ -23,15 +23,15 @@ class GasBoxSD : public G4VSensitiveDetector{
 	virtual void 	EndOfEvent (G4HCofThisEvent *);
 	virtual G4bool ProcessHits(G4Step*, G4TouchableHistory*);
 	virtual void DrawAll();
-    void InsertXenonHit(XenonHit* xh){fXenonHitsCollection->insert(xh);};
+    void InsertGasBoxHit(GasBoxHit* xh){fGasBoxHitsCollection->insert(xh);};
     void InsertGarfieldExcitationHit(GarfieldExcitationHit* geh){fGarfieldExcitationHitsCollection->insert(geh);};
     
 	private:
 	
-    XenonHitsCollection* fXenonHitsCollection;
+    GasBoxHitsCollection* fGasBoxHitsCollection;
     GarfieldExcitationHitsCollection* fGarfieldExcitationHitsCollection;
     G4int XHCID;
-    G4int GEHCID;
+    G4int GBHCID;
     
 	
 };

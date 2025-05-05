@@ -3,7 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
+                "${workspaceFolder}/Xenon_Degrad_HeedDelta/include/**",
                 "${env:GARFIELD_DIR}/**",
                 "${env:GARFIELD_HOME}/**",
                 "${env:GEANT4_DIR}/**",

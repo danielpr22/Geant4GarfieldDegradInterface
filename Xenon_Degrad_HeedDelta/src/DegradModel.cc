@@ -1,7 +1,7 @@
-#include "../include/DegradModel.hh"
-#include "../include/GasBoxSD.hh"
-#include "../include/XenonHit.hh"
-#include "../include/GasModelParameters.hh"
+#include "DegradModel.hh"
+#include "GasModelParameters.hh"
+#include "GasBoxSD.hh"
+#include "GasBoxHit.hh"
 
 #include <fstream>
 #include "G4SystemOfUnits.hh"
@@ -176,12 +176,12 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degr
                     // Just to limit the number of electrons in tests
                     G4cout << "(Debug: DegradModel.cc) Inside the solid..." << G4endl;
                     
-                    // Get the Xenon emission spectrum here
+                    // Get the GasBox emission spectrum here
                     electronNumber++;
-                    XenonHit* xh = new XenonHit();
-                    xh->SetPos(myPoint);
-                    xh->SetTime(time);
-                    fGasBoxSD->InsertXenonHit(xh);
+                    GasBoxHit* gbh = new GasBoxHit();
+                    gbh->SetPos(myPoint);
+                    gbh->SetTime(time);
+                    fGasBoxSD->InsertGasBoxHit(gbh);
                     
                     // Create secondary electron
                     if(electronNumber % 50 == 0){   

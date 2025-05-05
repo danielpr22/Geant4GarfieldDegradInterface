@@ -1,5 +1,5 @@
-#include "../include/DetectorMessenger.hh"
-#include "../include/DetectorConstruction.hh"
+#include "DetectorMessenger.hh"
+#include "DetectorConstruction.hh"
 
 #include "G4UnitsTable.hh"
 #include "G4UIdirectory.hh"

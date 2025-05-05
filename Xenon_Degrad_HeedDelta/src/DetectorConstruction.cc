@@ -2,10 +2,11 @@
 #include "DetectorConstruction.hh"
 #include "DetectorMessenger.hh"
 #include "GasBoxSD.hh"
-#include "DetectorSD.hh"
 #include "HeedDeltaElectronModel.hh"
 #include "HeedNewTrackModel.hh"
 #include "DegradModel.hh"
+#include "DetectorSD.hh"
+#include "GasModelParameters.hh"
 
 // Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4GDMLParser.hh"
@@ -103,7 +104,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
         Second cylinder: Kr + CH4 at a certain flux
         Third cylinder: Kr + CH4 at a certain flux
         Gas: mixture of Kr and CH4
-        Anodes: Ask Oulfa for the exact material 
+        Anodes: Ask Oulfa for the exact material
     */
 
     // Defining the gas elements: He, Kr and CH4
@@ -117,7 +118,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     If we have 9 mol of Kr, we have 9*83.798 = 754.182 g of Kr
     If we have 1 mol of CH4, we have 1*16.04 = 16.04 g of CH4
 
-    The mass fraction of Kr is 754.182/(754.182 + 16.04) = 0.973 
+    The mass fraction of Kr is 754.182/(754.182 + 16.04) = 0.973
     The mass fraction of CH4 is 1 - 0.973 = 0.027
 
     The density of the mixture is calculated using the formula:
@@ -142,9 +143,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     #################################
     ########### DETECTOR GEOMETRY####
     #################################
-    */    
+    */
 
-    
+
 
     /*
     #################################
@@ -169,7 +170,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
         G4ThreeVector(GasBoxCenterPositionX, GasBoxCenterPositionY, GasBoxCenterPositionZ),  // Placement position (centered on the slit's position)
         logicGasBox,                    // logical volume to place
         "physGasBox",                 // name
-        worldLogical,                 // mother volume       
+        worldLogical,                 // mother volume
         false,                        // no boolean operations
         0,                            // copy number
         checkOverlaps                 // check for overlaps
@@ -185,66 +186,36 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     worldLogical->SetVisAttributes(G4VisAttributes::GetInvisible());
 
 
-    return worldPhysical; 
+    return worldPhysical;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DetectorConstruction::ConstructSDandField(){
 
-  /*
-  #################################
-  ########### ELECTRIC FIELD ######
-  #################################
-  */
-
-  G4cout << "(Debug: DetectorConstruction.cc) The electric field now comes purely from GARFIELD++..." << G4endl;
-
-  // // Define a constant electric field
-  // G4ThreeVector fieldVector(0.0, 0.0, 0.3076*1e6*volt/m); // Example: 1 kV/cm in the Z direction
-  // pEMfield = new G4UniformElectricField(fieldVector);
-
-  // // Create an equation of motion for the field
-  // pEquation = new G4EqMagElectricField(pEMfield);
-
-  // Create a Runge-Kutta stepper
-  // G4int nvar = 8; // Number of variables for integration
-  // auto pStepper = new G4DormandPrince745(pEquation, nvar);
-
-  // // Create an integration driver
-  // G4double minStep = 0.01 * mm; // Minimum step size
-  // auto pIntegrationDriver = new G4IntegrationDriver<G4DormandPrince745>(minStep, pStepper, nvar);
-
-  // // Create a chord finder
-  // pChordFinder = new G4ChordFinder(pIntegrationDriver);
-
-  // // Get the global field manager
-  // auto fieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
-
-  // // Set the field and chord finder in the field manager
-  // fieldManager->SetDetectorField(pEMfield);
-  // fieldManager->SetChordFinder(pChordFinder);
-
-  // // Attach the field manager to the world logical volume
-  // G4LogicalVolume* worldLogical = G4LogicalVolumeStore::GetInstance()->GetVolume("WorldLogical");
-  // if (worldLogical) {
-  //     worldLogical->SetFieldManager(fieldManager, true);
-  // } else {
-  //     G4cerr << "(Error: DetectorConstruction.cc) World logical volume not found!" << G4endl;
-  // }
+  G4double thermalE = fGasModelParameters->GetThermalEnergy();
+  G4cout << "(Debug: DetectorConstruction.cc) The thermal energy has been set to: " << thermalE / eV << " eV" << G4endl;
 
   G4LogicalVolume* logicGasBox = G4LogicalVolumeStore::GetInstance()->GetVolume("GasBoxLogical");
   if (!logicGasBox) {
       G4cerr << "(Error: DetectorConstruction.cc) Logical volume '" << G4LogicalVolumeStore::GetInstance()->GetVolume("GasBoxLogical") << "' not found!" << G4endl;
       return;
   }
-
+  // Initializing the sensitive detector manager
   G4SDManager* SDManager = G4SDManager::GetSDMpointer();
-  G4String GasBoxSDname = "interface/GasBoxSD";
-  GasBoxSD* myGasBoxSD = new GasBoxSD(GasBoxSDname);
-  SDManager->SetVerboseLevel(0);
-  SDManager->AddNewDetector(myGasBoxSD);
-  SetSensitiveDetector(logicGasBox,myGasBoxSD);
+  SDManager->SetVerboseLevel(0); // Set silent
+
+  // Defining the gas box as a sensitive detector
+  G4String KrCH4GasBoxSDname = "interface/KrCH4GasBoxSD";
+  GasBoxSD* KrCH4GasBoxSD = new GasBoxSD(KrCH4GasBoxSDname); // GasBoxSD of type G4SensitiveDetector
+  SDManager->AddNewDetector(KrCH4GasBoxSD);
+  SetSensitiveDetector(logicGasBox,KrCH4GasBoxSD);
+
+  // Defining the anodes as sensitive detectors for the HeedDeltaElectronModel
+  G4String AnodesSDname = "interface/AnodesSD";
+  GasBoxSD* AnodesSD = new GasBoxSD(AnodesSDname); // GasBoxSD of type G4SensitiveDetector
+  SDManager->AddNewDetector(AnodesSD);
+  SetSensitiveDetector(logicAnodes,AnodesSD);
 
   // Check the logical volume store
   auto store = G4LogicalVolumeStore::GetInstance();
@@ -253,19 +224,25 @@ void DetectorConstruction::ConstructSDandField(){
       G4cout << " - " << vol->GetName() << G4endl;
   }
 
-  // Attaching the volume of the detector to the class DetectorSD
-  G4String DetectorSDname = "interface/DetectorSD";
-  DetectorSD* myDetectorSD = new DetectorSD(DetectorSDname);
-  G4SDManager::GetSDMpointer()->AddNewDetector(myDetectorSD);
-  G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
-  SetSensitiveDetector(logicDetector, myDetectorSD);
+  // Defining the anodes as sensitive detectors
+  // G4String anodesSDname = "interface/anodesSD";
+  // DetectorSD* anodesSD = new DetectorSD(anodesSDname); // DetectorSD of type G4SensitiveDetector
+  // G4SDManager::GetSDMpointer()->AddNewDetector(anodesSD);
+  // G4LogicalVolume* logicDetector = G4LogicalVolumeStore::GetInstance()->GetVolume("__vol__11_");
+  // SetSensitiveDetector(logicDetector, anodesSD);
 
-  //These commands generate the two gas models (Degrad and Heed) and connect them to the GasRegion
+  // These commands generate the two gas models (Degrad and HeedeltaElectron) and connect them to the GasRegion
   G4Region* GasRegion = G4RegionStore::GetInstance()->GetRegion("GasRegion");
-  new DegradModel(fGasModelParameters,"DegradModel",GasRegion,this,myGasBoxSD);
+  new DegradModel(fGasModelParameters,"DegradModel",GasRegion,this,KrCH4GasBoxSD);
   G4cout << "(Debug: DetectorConstruction.cc) Gas region connected with DegradModel..." << G4endl;
 
-  new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",GasRegion,this,myGasBoxSD);
+  // Attaching the HeedDeltaElectronModel to the gas region, for the drift
+  new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",GasRegion,this,KrCH4GasBoxSD);
   G4cout << "(Debug: DetectorConstruction.cc) Gas region connected with HeedDeltaElectronModel..." << G4endl;
+
+  // Attaching the HeedDeltaElectronModel to the anodes, for the signal calculation
+  new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",GasRegion,this,KrCH4GasBoxSD);
+  G4cout << "(Debug: DetectorConstruction.cc) Gas region connected with HeedDeltaElectronModel..." << G4endl;
+
 }
 

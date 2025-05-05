@@ -1,8 +1,7 @@
-#include "../include/PhysicsList.hh"
-#include "../include/PhysicsListMessenger.hh"
-#include "../include/DegradModel.hh"
-#include "../include/GarfieldVUVPhotonModel.hh"
-#include "../include/PhysListEmStandard.hh"
+#include "PhysicsList.hh"
+#include "PhysicsListMessenger.hh"
+#include "DegradModel.hh"
+#include "PhysListEmStandard.hh"
 
 #include "G4EmStandardPhysics.hh"
 #include "G4EmStandardPhysics_option1.hh"

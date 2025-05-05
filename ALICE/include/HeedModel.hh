@@ -43,7 +43,6 @@ class HeedModel : public G4VFastSimulationModel {
   HeedModel(G4String, G4Region*,DetectorConstruction*,GasBoxSD*);
   ~HeedModel();
 
-
   virtual G4bool IsApplicable(const G4ParticleDefinition&);
   virtual G4bool ModelTrigger(const G4FastTrack&);
   virtual void DoIt(const G4FastTrack&, G4FastStep&);

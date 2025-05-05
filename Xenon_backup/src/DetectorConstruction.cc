@@ -1,8 +1,8 @@
-#include "../include/DetectorConstruction.hh"
-#include "../include/DetectorMessenger.hh"
-#include "../include/GasBoxSD.hh"
-#include "../include/DegradModel.hh"
-#include "../include/GarfieldVUVPhotonModel.hh"
+#include "DetectorConstruction.hh"
+#include "DetectorMessenger.hh"
+#include "GasBoxSD.hh"
+#include "DegradModel.hh"
+#include "GarfieldVUVPhotonModel.hh"
 
 #include "G4PVParameterised.hh"
 #include "G4PVReplica.hh"

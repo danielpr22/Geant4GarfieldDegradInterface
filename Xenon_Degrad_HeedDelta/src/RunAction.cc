@@ -1,9 +1,9 @@
 //Runaction
-#include "../include/RunAction.hh"
-#include "../include/PrimaryGeneratorAction.hh"
-#include "../include/Analysis.hh"
-#include "../include/EventAction.hh"
-#include "../include/GasBoxSD.hh"
+#include "RunAction.hh"
+#include "PrimaryGeneratorAction.hh"
+#include "Analysis.hh"
+#include "EventAction.hh"
+#include "GasBoxSD.hh"
 
 #include "G4Run.hh"
 #include "Randomize.hh"

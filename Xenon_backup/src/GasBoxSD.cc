@@ -1,5 +1,5 @@
-#include "../include/GasBoxSD.hh"
-#include "../include/DetectorConstruction.hh"
+#include "GasBoxSD.hh"
+#include "DetectorConstruction.hh"
 
 #include "G4Region.hh"
 #include "G4String.hh"

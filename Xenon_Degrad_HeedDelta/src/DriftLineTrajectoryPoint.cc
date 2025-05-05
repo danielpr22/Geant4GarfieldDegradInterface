@@ -29,7 +29,7 @@
 /// \brief Implementation of the WLSTrajectoryPoint class
 //
 //
-#include "../include/DriftLineTrajectoryPoint.hh"
+#include "DriftLineTrajectoryPoint.hh"
 
 #include "G4Step.hh"
 #include "G4Track.hh"

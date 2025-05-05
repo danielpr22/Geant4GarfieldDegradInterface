@@ -4,9 +4,9 @@
  *  Created on: Apr 9, 2014
  *      Author: dpfeiffe
  */
-#include "../include/HeedDeltaElectronModel.hh"
-#include "../include/GasModelParameters.hh"
-#include "../include/GasBoxSD.hh"
+#include "HeedDeltaElectronModel.hh"
+#include "GasModelParameters.hh"
+#include "GasBoxSD.hh"
 
 #include <iostream>
 #include "G4VPhysicalVolume.hh"
@@ -19,6 +19,7 @@
 
 #include "G4AutoLock.hh"
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
+
 
 // HeedDeltaElectronModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables
 HeedDeltaElectronModel::HeedDeltaElectronModel(GasModelParameters* gmp,G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)

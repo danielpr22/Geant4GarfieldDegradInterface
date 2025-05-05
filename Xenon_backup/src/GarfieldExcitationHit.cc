@@ -28,7 +28,7 @@
 /// \file GarfieldExcitationHit.cc
 /// \brief Implementation of the GarfieldExcitationHit class
 
-#include "../include/GarfieldExcitationHit.hh"
+#include "GarfieldExcitationHit.hh"
 
 #include "G4UnitsTable.hh"
 #include "G4VVisManager.hh"

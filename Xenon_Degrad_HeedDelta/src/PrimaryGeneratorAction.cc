@@ -5,9 +5,9 @@
 //  Created by Lennert De Keukeleere on 25/10/2018.
 //
 
-#include "../include/PrimaryGeneratorAction.hh"
-#include "../include/DetectorConstruction.hh"
-#include "../include/RunAction.hh"
+#include "PrimaryGeneratorAction.hh"
+#include "DetectorConstruction.hh"
+#include "RunAction.hh"
 
 #include "G4Event.hh"
 #include "G4RandomDirection.hh"

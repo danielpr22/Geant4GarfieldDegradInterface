@@ -13,7 +13,7 @@
 #include "GasBoxSD.hh"
 
 // Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
-#include "SolidTube.hh"                 //Geometry
+#include "SolidBox.hh"                 //Geometry
 #include "ComponentAnalyticField.hh"    //Garfield field
 #include "ViewCell.hh"                  //Visualization
 #include "Sensor.hh"
@@ -109,7 +109,7 @@ class HeedModel : public G4VFastSimulationModel {
   Garfield::Sensor* fSensor;
 //  Garfield::TrackHeed* fTrackHeed;
   Garfield::GeometrySimple* geo;
-  Garfield::SolidTube* box;
+  Garfield::SolidBox* box;
   Garfield::ComponentVoxel* voxfield;
   Garfield::ComponentAnalyticField* comp;
   Garfield::AvalancheMC* fDrift;

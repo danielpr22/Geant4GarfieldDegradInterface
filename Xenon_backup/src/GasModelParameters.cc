@@ -1,7 +1,7 @@
-#include "../include/GasModelParameters.hh"
-#include "../include/DegradModel.hh"
-#include "../include/GasModelParametersMessenger.hh"
-#include "../include/DetectorConstruction.hh"
+#include "GasModelParameters.hh"
+#include "DegradModel.hh"
+#include "GasModelParametersMessenger.hh"
+#include "DetectorConstruction.hh"
 
 GasModelParameters::GasModelParameters(){
 	fMessenger = new GasModelParametersMessenger(this);

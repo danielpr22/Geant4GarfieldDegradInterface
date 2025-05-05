@@ -1,17 +1,17 @@
-#include <iostream>
-#include "../include/HeedModel.hh"
+#include "HeedModel.hh"
+#include "DetectorConstruction.hh"
+#include "DriftLineTrajectory.hh"
+
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
-#include "../include/DetectorConstruction.hh"
 #include "G4RunManager.hh"
-#include <stdio.h>
-#include "../include/DriftLineTrajectory.hh"
 #include "G4TrackingManager.hh"
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
 #include "G4AutoLock.hh"
+
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 const static G4double torr = 1. / 760. * atmosphere;
@@ -126,7 +126,7 @@ void HeedModel::makeGas(){
 void HeedModel::buildBox(){
   geo = new Garfield::GeometrySimple();
 
-  box = new Garfield::SolidTube(0.,0., 0.,0.,(detCon->GetGasBoxR())/CLHEP::cm,(detCon->GetGasBoxH()*0.5)/CLHEP::cm,0.,1.,0.);
+  box = new Garfield::SolidBox(0.,0., 0.,0.,(detCon->GetGasBoxR())/CLHEP::cm,(detCon->GetGasBoxH()*0.5)/CLHEP::cm,0.,1.,0.);
   geo->AddSolid(box, fMediumMagboltz);
   
 }

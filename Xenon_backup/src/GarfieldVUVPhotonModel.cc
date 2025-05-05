@@ -1,8 +1,8 @@
-#include "../include/GarfieldVUVPhotonModel.hh"
-#include "../include/GarfieldExcitationHit.hh"
-#include "../include/GasModelParameters.hh"
-#include "../include/DetectorConstruction.hh"
-#include "../include/GasBoxSD.hh"
+#include "GarfieldVUVPhotonModel.hh"
+#include "GarfieldExcitationHit.hh"
+#include "GasModelParameters.hh"
+#include "DetectorConstruction.hh"
+#include "GasBoxSD.hh"
 
 #include <fstream>
 #include "G4Electron.hh"

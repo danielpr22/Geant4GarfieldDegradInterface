@@ -1,5 +1,5 @@
-#include "../include/PhysicsListMessenger.hh"
-#include "../include/PhysicsList.hh"
+#include "PhysicsListMessenger.hh"
+#include "PhysicsList.hh"
 #include "G4UIcmdWithoutParameter.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

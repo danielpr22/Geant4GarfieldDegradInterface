@@ -11,7 +11,7 @@
 #include "G4TrackingManager.hh"
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
-
+#include "SolidBox.hh" // Include the header for SolidBox
 #include "G4AutoLock.hh"
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
@@ -104,8 +104,8 @@ void HeedModel::makeGas(){
   fMediumMagboltz = new Garfield::MediumMagboltz();
   double pressure = detCon->GetGasPressure()/torr;
   double temperature = detCon->GetTemperature()/kelvin;
-  double neonPerc = detCon->GetNeonPercentage();
-  double co2Perc = detCon->GetCO2Percentage();
+  double neonPerc = detCon->GetKryptonPercentage();
+  double co2Perc = detCon->GetCH4Percentage();
   double n2Perc = 1-neonPerc-co2Perc;
   fMediumMagboltz->SetComposition("ne", neonPerc, "co2", co2Perc, "n2", n2Perc);
   fMediumMagboltz->SetTemperature(temperature);
@@ -127,9 +127,14 @@ void HeedModel::makeGas(){
 void HeedModel::buildBox(){
   geo = new Garfield::GeometrySimple();
 
-  box = new Garfield::SolidTube(0.,0., 0.,0.,(detCon->GetGasBoxR())/CLHEP::cm,(detCon->GetGasBoxH()*0.5)/CLHEP::cm,0.,1.,0.);
+  box = new Garfield::SolidBox(detCon->GetGasBoxCenterPositionX()/CLHEP::cm, 
+  detCon->GetGasBoxCenterPositionY()/CLHEP::cm, 
+  detCon->GetGasBoxCenterPositionZ()/CLHEP::cm, 
+  detCon->GetGasBoxLengthX()*0.5/CLHEP::cm,
+  detCon->GetGasBoxLengthY()*0.5/CLHEP::cm,
+  detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm);
+
   geo->AddSolid(box, fMediumMagboltz);
-  
 }
 
 //Construction of the electric field (see Garfield++ documentation)
@@ -162,18 +167,18 @@ void HeedModel::BuildCompField(){
     
     comp->SetPeriodicityX(nRep * period);
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire((i - 1) * period, (detCon->GetGasBoxH()*0.5)/CLHEP::cm - ys, dSens, vAnodeWires, "s");
+        comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm - ys, dSens, vAnodeWires, "s");
     }
     for (int i = 0; i < nRep; ++i) {
-        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxH()*0.5)/CLHEP::cm - yc, dCath, vCathodeWires, "c");
+        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm - yc, dCath, vCathodeWires, "c");
     }
     for (int i = 0; i < nRep * 2; ++i) {
         const double xg = dg * (i - 1.5);
-        comp->AddWire(xg,(detCon->GetGasBoxH()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
+        comp->AddWire(xg,(detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
     }
     // Add the planes.
-    comp->AddPlaneY((detCon->GetGasBoxH()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
-    comp->AddPlaneY(-(detCon->GetGasBoxH()*0.5)/CLHEP::cm, vPlaneHV, "HV");
+    comp->AddPlaneY((detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
+    comp->AddPlaneY(-(detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm, vPlaneHV, "HV");
     
     // Set the magnetic field [T].
     comp->SetMagneticField(0, 0.5, 0);
