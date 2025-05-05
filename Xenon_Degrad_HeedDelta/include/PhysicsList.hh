@@ -1,8 +1,7 @@
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 #ifndef PhysicsList_h
 #define PhysicsList_h 1
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4VModularPhysicsList.hh"
 #include "G4SystemOfUnits.hh"
 
@@ -41,7 +40,5 @@ class PhysicsList : public G4VModularPhysicsList {
   G4FastSimulationPhysics* fastSimulationPhysics;
 
 };
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

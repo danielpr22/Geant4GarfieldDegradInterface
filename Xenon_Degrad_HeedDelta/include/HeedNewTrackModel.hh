@@ -8,22 +8,23 @@
 #ifndef HEEDONLYMODEL_H_
 #define HEEDONLYMODEL_H_
 
-#include "../include/HeedModel.hh"
+// Included from the current project
+#include "HeedModel.hh"
 
-#include "SolidBox.hh"      //Geometry
-#include "ComponentAnalyticField.hh"  //Garfield field
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
+#include "SolidBox.hh"                  // Geometry
+#include "ComponentAnalyticField.hh"    // Garfield field
+#include "ViewCell.hh"                  // Visualization
 #include "G4ThreeVector.hh"
 #include "ComponentVoxel.hh"
 #include "AvalancheMicroscopic.hh"
 #include "AvalancheMC.hh"
 #include "DriftLineRKF.hh"
-#include "ViewCell.hh"      //Visualization
 #include "TCanvas.h"
 #include "ViewDrift.hh"
 #include "ViewSignal.hh"
 #include "ViewField.hh"
 #include "G4VFastSimulationModel.hh"
-
 
 class G4VPhysicalVolume;
 class DetectorConstruction;
@@ -58,8 +59,6 @@ class HeedNewTrackModel : public HeedModel {
 
  private:
     virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm, double y_cm, double z_cm, double dx, double dy, double dz);
-  
-  
 };
 
 #endif /* HeedNewTrackModel_H_ */

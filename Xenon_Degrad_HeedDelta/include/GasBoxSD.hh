@@ -1,6 +1,7 @@
 #ifndef GasBoxSD_hh
 #define GasBoxSD_hh
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4VSensitiveDetector.hh"
 #include "G4String.hh"
 #include "G4Region.hh"

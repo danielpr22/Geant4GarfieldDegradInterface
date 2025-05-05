@@ -1,17 +1,16 @@
 #include <iostream>
-#include "HeedModel.hh"
+#include "../include/HeedModel.hh"
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
-#include "DetectorConstruction.hh"
+#include "../include/DetectorConstruction.hh"
 #include "G4RunManager.hh"
 #include <stdio.h>
-#include "DriftLineTrajectory.hh"
+#include "../include/DriftLineTrajectory.hh"
 #include "G4TrackingManager.hh"
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
-
 #include "G4AutoLock.hh"
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 

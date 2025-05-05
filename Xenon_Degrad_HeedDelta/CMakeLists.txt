@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 cmake_minimum_required(VERSION 3.10)
-project(Xenon)
+project(Xenon_Degrad_HeedDelta)
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -20,19 +20,19 @@ endif()
 #
 include(${Geant4_USE_FILE})
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 #----------------------------------------------------------------------------
 # Find ROOT (required package)
 #
 find_package(ROOT QUIET REQUIRED COMPONENTS RIO Net)
 if(NOT ROOT_FOUND)
-  message(STATUS "Xenon: ROOT package not found. --> Xenon disabled")  
+  message(STATUS "Xenon_Degrad_HeedDelta: ROOT package not found. --> Xenon_Degrad_HeedDelta disabled")  
   return()
 endif()
 include(${ROOT_USE_FILE})
 
 # Add additional libraries needed for GARFIELD++
 link_directories($ENV{GARFIELD_LIB})
-
 
 IF(APPLE)
     # Fix linking on 10.14+. See https://stackoverflow.com/questions/54068035
@@ -53,11 +53,11 @@ file(GLOB heed_headers $ENV{GARFIELD_HOME}/heed/*.hh)
 find_package(Garfield REQUIRED)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-add_executable(Xenon Xenon.cc ${sources} ${project_headers} ${garfield_headers} ${heed_headers})
-target_link_libraries(Xenon -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Garfield_LIBRARIES})
+add_executable(Xenon_Degrad_HeedDelta Xenon_Degrad_HeedDelta.cc ${sources} ${project_headers} ${garfield_headers} ${heed_headers})
+target_link_libraries(Xenon_Degrad_HeedDelta -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Garfield_LIBRARIES})
 
 # Setup GARFIELD++ include directories in the private scope to avoid confilcts with other targets
-target_include_directories(Xenon PRIVATE
+target_include_directories(Xenon_Degrad_HeedDelta PRIVATE
   ${Garfield_INCLUDE_DIRS}
   ${PROJECT_SOURCE_DIR}/include
   $ENV{GARFIELD_DIR}
@@ -72,13 +72,13 @@ target_include_directories(Xenon PRIVATE
 # Copy all scripts to the build directory. This is so that we can run the executable 
 # directly because it relies on these scripts being in the current working directory.
 
-set(Xenon_SCRIPTS
+set(Xenon_Degrad_HeedDelta_SCRIPTS
   vis.mac
   run1.mac
   convertDegradFile.py
 )
 
-foreach(_script ${Xenon_SCRIPTS})
+foreach(_script ${Xenon_Degrad_HeedDelta_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}
@@ -89,4 +89,4 @@ endforeach()
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS Xenon DESTINATION bin)
+install(TARGETS Xenon_Degrad_HeedDelta DESTINATION bin)

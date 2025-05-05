@@ -1,6 +1,7 @@
 #ifndef MyUserActionInitialization_hh
 #define MyUserActionInitialization_hh
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4VUserActionInitialization.hh"
 
 class DetectorConstruction;

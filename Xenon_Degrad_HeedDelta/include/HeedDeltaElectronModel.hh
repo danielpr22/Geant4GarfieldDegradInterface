@@ -8,7 +8,8 @@
 #ifndef HEEDINTERFACEMODEL_H_
 #define HEEDINTERFACEMODEL_H_
 
-#include "../include/HeedModel.hh"
+// Included from the current project
+#include "HeedModel.hh"
 
 class G4VPhysicalVolume;
 class DetectorConstruction;
@@ -42,9 +43,6 @@ class HeedDeltaElectronModel : public HeedModel {
  private:
   virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm,
             double y_cm, double z_cm, double dx, double dy, double dz);
-  
-
-  
 };
 
 #endif /* HeedDeltaElectronModel_H_ */

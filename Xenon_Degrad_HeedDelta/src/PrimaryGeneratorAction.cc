@@ -21,8 +21,8 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(){
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction() {
     delete particleGun;
-    G4cout << "Deleting PrimaryGeneratorAction" << G4endl;
-}
+    G4cout << "(Debug: PrimaryGeneratorAction.cc) Deleting PrimaryGeneratorAction" << G4endl;
+} 
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     particleGun->GeneratePrimaryVertex(anEvent);

@@ -1,6 +1,7 @@
 #ifndef DetectorMessenger_h
 #define DetectorMessenger_h 1
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4SystemOfUnits.hh"
 #include "G4UImessenger.hh"
 
@@ -46,6 +47,7 @@ class DetectorMessenger : public G4UImessenger {
   G4UIdirectory* miniDir;      // /Xenon/
   G4UIdirectory* geometryDir;  // /Xenon/geometry/
   G4UIcmdWithADoubleAndUnit* setGasPressCmd;
+  G4UIcmdWithAString* setupNameCmd;
 };
 
 #endif

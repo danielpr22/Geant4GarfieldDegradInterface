@@ -1,6 +1,7 @@
 #ifndef EventAction_hh
 #define EventAction_hh 1
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4UserEventAction.hh"
 #include "G4ThreeVector.hh"
 #include <vector>

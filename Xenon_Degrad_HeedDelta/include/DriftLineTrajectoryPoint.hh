@@ -30,13 +30,12 @@
 //
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #ifndef WLSTrajectoryPoint_h_seen
 #define WLSTrajectoryPoint_h_seen 1
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "globals.hh"
-
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
 #include "G4TrajectoryPoint.hh"
@@ -47,33 +46,25 @@ class G4Step;
 class G4VProcess;
 
 class DriftLineTrajectoryPoint : public G4TrajectoryPoint {
+	public:
+		// Constructor/Destructor
+		DriftLineTrajectoryPoint();
+		DriftLineTrajectoryPoint(G4ThreeVector, G4double);
+		DriftLineTrajectoryPoint(const DriftLineTrajectoryPoint &right);
+		virtual ~DriftLineTrajectoryPoint();
 
-//--------
-  public: // without description
-//--------
+		// Operators
+		inline void *operator new(size_t);
+		inline void operator delete(void *aTrajectoryPoint);
+		inline int operator==(const DriftLineTrajectoryPoint& right) const
+		{ return (this==&right); };
 
-// Constructor/Destructor
+		virtual std::vector<G4AttValue>* CreateAttValues() const;
 
-    DriftLineTrajectoryPoint();
-    DriftLineTrajectoryPoint(G4ThreeVector, G4double);
-    DriftLineTrajectoryPoint(const DriftLineTrajectoryPoint &right);
-    virtual ~DriftLineTrajectoryPoint();
+		inline G4double GetTime() const { return fTime; };
 
-// Operators
-
-    inline void *operator new(size_t);
-    inline void operator delete(void *aTrajectoryPoint);
-    inline int operator==(const DriftLineTrajectoryPoint& right) const
-    { return (this==&right); };
-
-    virtual std::vector<G4AttValue>* CreateAttValues() const;
-
-    inline G4double GetTime() const { return fTime; };
-//---------
-  private:
-//---------
-
-    G4double fTime;
+	private:
+    	G4double fTime;
 };
 
 extern G4ThreadLocal G4Allocator<DriftLineTrajectoryPoint>* DriftLineTrajectoryPointAllocator;
@@ -81,7 +72,7 @@ extern G4ThreadLocal G4Allocator<DriftLineTrajectoryPoint>* DriftLineTrajectoryP
 inline void* DriftLineTrajectoryPoint::operator new(size_t)
 {
     if(!DriftLineTrajectoryPointAllocator)
-      DriftLineTrajectoryPointAllocator = new G4Allocator<DriftLineTrajectoryPoint>;
+    	DriftLineTrajectoryPointAllocator = new G4Allocator<DriftLineTrajectoryPoint>;
     return (void *) DriftLineTrajectoryPointAllocator->MallocSingle();
 }
 

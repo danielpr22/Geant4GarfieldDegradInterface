@@ -1,6 +1,7 @@
 #ifndef GasModelParameters_hh
 #define GasModelParameters_hh
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4SystemOfUnits.hh"
 #include "G4String.hh"
 #include <map>

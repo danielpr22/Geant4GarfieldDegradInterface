@@ -8,17 +8,20 @@
 #ifndef HEEDMODEL_H_
 #define HEEDMODEL_H_
 
-#include "../include/GasModelParameters.hh"
-#include "../include/GasBoxSD.hh"
-#include "SolidTube.hh"      //Geometry
-#include "ComponentAnalyticField.hh"  //Garfield field
+// Included from the current project
+#include "GasModelParameters.hh"
+#include "GasBoxSD.hh"
+
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
+#include "SolidTube.hh"                 //Geometry
+#include "ComponentAnalyticField.hh"    //Garfield field
+#include "ViewCell.hh"                  //Visualization
 #include "Sensor.hh"
 #include "G4ThreeVector.hh"
 #include "ComponentVoxel.hh"
 #include "AvalancheMicroscopic.hh"
 #include "AvalancheMC.hh"
 #include "DriftLineRKF.hh"
-#include "ViewCell.hh"      //Visualization
 #include "TCanvas.h"
 #include "ViewDrift.hh"
 #include "ViewSignal.hh"
@@ -119,7 +122,6 @@ class HeedModel : public G4VFastSimulationModel {
   Garfield::ViewDrift* viewDrift;
   Garfield::ViewSignal* viewSignal;
   Garfield::ViewField* viewField;
-  
 };
 
 #endif /* HeedModel_H_ */

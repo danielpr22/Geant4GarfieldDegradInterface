@@ -1,6 +1,7 @@
 #ifndef GasModelParametersMessenger_h
 #define GasModelParametersMessenger_h 1
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4SystemOfUnits.hh"
 #include "G4UImessenger.hh"
 
