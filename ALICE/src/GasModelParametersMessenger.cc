@@ -1,4 +1,4 @@
-#include "GasModelParametersMessenger.hh"
+#include "../include/GasModelParametersMessenger.hh"
 
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
@@ -10,10 +10,10 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4UIparameter.hh"
-#include "GasModelParameters.hh"
-#include "HeedDeltaElectronModel.hh"
-#include "HeedNewTrackModel.hh"
-#include "HeedModel.hh"
+#include "../include/GasModelParameters.hh"
+#include "../include/HeedDeltaElectronModel.hh"
+#include "../include/HeedNewTrackModel.hh"
+#include "../include/HeedModel.hh"
 
 #include "G4Tokenizer.hh"
 

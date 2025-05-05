@@ -879,6 +879,15 @@ Xenon_IS_TOP_LEVEL:STATIC=OFF
 //Value Computed by CMake
 Xenon_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/Xenon
 
+//Value Computed by CMake
+Xenon_backup_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/Xenon_backup
+
+//Value Computed by CMake
+Xenon_backup_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Xenon_backup_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/Xenon_backup
+
 //Xerces-C++ include directory
 XercesC_INCLUDE_DIR:PATH=/usr/include
 

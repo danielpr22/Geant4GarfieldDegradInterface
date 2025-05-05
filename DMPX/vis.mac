@@ -7,7 +7,7 @@
 
 
 # The HeedDeltaElectron model simulates the transport and ionization of low-energy electrons and photons. It does take into account Coulomb scattering.
-# For electrons, this model should not be triggered for energies above a few tens of keV, if not the simulated energy deposition by the primary particle will be off.
+# For electrons, this model must not be triggered for energies above 100 keV, if not the simulated energy deposition by the primary particle will be off.
 # The energies for the gasModelParameters are in keV
 /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 10.
 /gasModelParameters/heed/heeddeltaelectron/addparticle gamma 1. 1000000.
@@ -15,7 +15,7 @@
 
 # The HeedNewTrack model simulates high energy charged particles in relatively thin gas absorbers as it does not take into account Coulomb scattering
 # (The energies are in keV)
-/gasModelParameters/heed/heednewtrack/addparticle e- 20. 1000.
+/gasModelParameters/heed/heednewtrack/addparticle e- 1000. 10000.
 /gasModelParameters/heed/heednewtrack/addparticle proton 40. 1000.
 
 
