@@ -2,8 +2,7 @@
 #include "../include/DegradModel.hh"
 #include "../include/GasModelParametersMessenger.hh"
 #include "../include/DetectorConstruction.hh"
-#include "../include/HeedDeltaElectronModelGas.hh"
-#include "../include/HeedDeltaElectronModelAnodes.hh"
+#include "../include/HeedDeltaElectronModel.hh"
 
 
 GasModelParameters::GasModelParameters(){
@@ -17,11 +16,8 @@ void GasModelParameters::AddParticleNameHeedDeltaElectron(const G4String particl
         return;
     }
 
-    fMapParticlesEnergyHeedDeltaElectronGas.insert(
+    fMapParticlesEnergyHeedDeltaElectron.insert(
                                 std::make_pair(particleName, std::make_pair(ekin_min_keV, ekin_max_keV)));
     
-    fMapParticlesEnergyHeedDeltaElectronAnodes.insert(
-                                    std::make_pair(particleName, std::make_pair(ekin_min_keV, ekin_max_keV)));
-
     G4cout << "(Debug: GasModelParameters.cc) HeedDeltaElectronGas/Anodes: Particle added: " << ekin_min_keV << " " << ekin_max_keV << G4endl;
 }

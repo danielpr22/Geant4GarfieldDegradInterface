@@ -2,8 +2,7 @@
 #include "../include/DetectorConstruction.hh"
 #include "../include/DetectorMessenger.hh"
 #include "../include/GasBoxSD.hh"
-#include "../include/HeedDeltaElectronModelGas.hh"
-#include "../include/HeedDeltaElectronModelAnodes.hh"
+#include "../include/HeedDeltaElectronModel.hh"
 #include "../include/DegradModel.hh"
 #include "../include/AnodesSD.hh"
 #include "../include/GasModelParameters.hh"
@@ -39,7 +38,7 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
     ch4Percentage(10),
     GasBoxLengthX(130*mm), // Length of the gas box in the X direction
     GasBoxLengthY(32*mm),  // Length of the gas box in the Y direction
-    GasBoxLengthZ(8*mm), // Length of the gas box in the Z direction
+    GasBoxLengthZ(50*mm), // Length of the gas box in the Z direction
     GasBoxCenterPositionX(0.*mm), // X position of the gas box center
     GasBoxCenterPositionY(0.*mm), // Y position of the gas box center
     GasBoxCenterPositionZ(0.*mm) // Z position of the gas box center
@@ -134,47 +133,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
 
     // Defining the gas density and mixture by fractional mass
     G4double density = (massFractionKr * densityKr +  massFractionCH4 * densityCH4); // g/cm3
-    G4Material* KrCH4_90_10 = new G4Material("KrCH4_90_10", density, 2, kStateGas, temperature, gasPressure);
+    G4Material* KrCH4_90_10 = new G4Material("KrCH4_90_10", 1 *g/cm3, 2, kStateGas, temperature, gasPressure);
     KrCH4_90_10->AddMaterial(Krypton, massFractionKr);  // 97.3% by mass (90% molar)
     KrCH4_90_10->AddMaterial(Methane, massFractionCH4); // 2.7% by mass (10% molar)
-
-    /*
-    #################################
-    ########### ANODES ##############
-    #################################
-    */
-
-    G4Material* anodesMat = man->FindOrBuildMaterial("G4_Au"); // e_ionisation = 790 eV | density = 19.32 g/cm3
-    G4double anodesLengthX = 32*mm;
-    G4double anodesR = 0.1*mm; // 20 micrometers in diameter (thus 10 in radius)
-    G4double anodesSpacing = 2*mm; // 2 mm spacing between the anodes
-    G4int nbOfAnodes = 64; 
-
-    G4VSolid* anodeSolid = new G4Tubs("AnodeSolid", 0, anodesR, anodesLengthX, 0, twopi);
-    G4LogicalVolume* anodeLogical = new G4LogicalVolume(anodeSolid, anodesMat, "AnodeLogical");
-
-    G4Region* anodesRegion = new G4Region("AnodesRegion");
-    anodesRegion->AddRootLogicalVolume(anodeLogical); // Adding the anodes to ROOT to process them with Garfield++
-
-    G4RotationMatrix* rotAnodes = new G4RotationMatrix();
-    rotAnodes->rotateX(90*deg); // Rotate the anodes to be perpendicular to the gas box
-
-    for (G4int i = 0; i < nbOfAnodes; i++) {
-        G4double xPos = anodesSpacing * (i - nbOfAnodes/2); 
-        G4double yPos = 0;
-        G4double zPos = 5*mm;
-        new G4PVPlacement(
-            rotAnodes,                        // rotation perpendicular to the gas box
-            G4ThreeVector(xPos, yPos, zPos), // placement position
-            anodeLogical,                   // logical volume to place
-            "AnodePhysical",                // name
-            worldLogical,                        // mother volume
-            false,                          // no boolean operations
-            i,                              // copy number
-            checkOverlaps                   // check for overlaps
-        );
-    }
-  
 
     /*
     #################################
@@ -185,8 +146,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     G4Box* KrCH4GasBox = new G4Box("GasBox", GasBoxLengthX/2, GasBoxLengthY/2, GasBoxLengthZ/2);
     logicGasBox = new G4LogicalVolume(KrCH4GasBox, KrCH4_90_10, "GasBoxLogical");
 
-    G4Region* gasRegion = new G4Region("GasRegion");
-    gasRegion->AddRootLogicalVolume(logicGasBox);
+    G4Region* gasAndAnodesRegion = new G4Region("GasAndAnodesRegion");
+    logicGasBox->SetRegion(gasAndAnodesRegion); // We set the region for the gas box
+    gasAndAnodesRegion->AddRootLogicalVolume(logicGasBox); // We add the gas box to the root logical volume 
 
     G4cout << "(Debug: DetectorConstruction.cc) The gas box is made of " << logicGasBox->GetMaterial()->GetName() << G4endl;
 
@@ -205,7 +167,43 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
 
     /*
     #################################
-    ########### VISUALIZATION########
+    ########### ANODES ##############
+    #################################
+    */
+
+    G4Material* anodesMat = man->FindOrBuildMaterial("G4_Au"); // e_ionisation = 790 eV | density = 19.32 g/cm3
+    G4double anodesLengthX = 32*mm;
+    G4double anodesR = 0.1*mm; // 20 micrometers in diameter (thus 10 in radius)
+    G4double anodesSpacing = 2*mm; // 2 mm spacing between the anodes
+    G4int nbOfAnodes = 64; 
+
+    G4VSolid* anodeSolid = new G4Tubs("AnodeSolid", 0, anodesR, anodesLengthX, 0, twopi);
+    G4LogicalVolume* anodeLogical = new G4LogicalVolume(anodeSolid, anodesMat, "AnodeLogical");
+
+    G4RotationMatrix* rotAnodes = new G4RotationMatrix();
+    rotAnodes->rotateX(90*deg); // Rotate the anodes to be perpendicular to the gas box
+
+    for (G4int i = 0; i < nbOfAnodes; i++) {
+        G4double xPos = anodesSpacing * (i - nbOfAnodes/2); 
+        G4double yPos = 0;
+        G4double zPos = 0*mm;
+        new G4PVPlacement(
+            rotAnodes,                        // rotation perpendicular to the gas box
+            G4ThreeVector(xPos, yPos, zPos), // placement position
+            anodeLogical,                   // logical volume to place
+            "AnodePhysical",                // name
+            logicGasBox,                    // The mother volume is the gas region
+            false,                          // no boolean operations
+            i,                              // copy number
+            checkOverlaps                   // check for overlaps
+        );
+        anodeLogical->SetRegion(gasAndAnodesRegion); 
+        gasAndAnodesRegion->AddRootLogicalVolume(anodeLogical); // We add the anodes to the root logical volume
+    }
+
+    /*
+    #################################
+    ########### VISUALIZATION #######
     #################################
     */
 
@@ -214,7 +212,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     gasVis->SetForceSolid(true);  // Makes sure the volume is drawn as a surface
     logicGasBox->SetVisAttributes(gasVis);
     anodeLogical->SetVisAttributes(red);
-
 
     return worldPhysical;
 }
@@ -251,9 +248,9 @@ void DetectorConstruction::ConstructSDandField(){
 
   // Defining the anodes as sensitive detectors for the HeedDeltaElectronModel
   G4String AnodesSDname = "interface/AnodesSD";
-  AnodesSD* AnodesSD = new AnodesSD(AnodesSDname); // AnodesSD of type G4SensitiveDetector
-  SDManager->AddNewDetector(AnodesSD);
-  SetSensitiveDetector(logicAnodes,AnodesSD);
+  AnodesSD* myAnodesSD = new AnodesSD(AnodesSDname); // AnodesSD of type G4SensitiveDetector
+  SDManager->AddNewDetector(myAnodesSD);
+  SetSensitiveDetector(logicAnodes,myAnodesSD); // We attach the Anode detector class to the logical volume of the anodes
 
   // Check the logical volume store for debugging
   auto store = G4LogicalVolumeStore::GetInstance();
@@ -262,24 +259,22 @@ void DetectorConstruction::ConstructSDandField(){
       G4cout << " - " << vol->GetName() << G4endl;
   }
 
-  // These commands generate the two gas models (Degrad and HeedeltaElectron) and connect them 
-  // to the GasRegion and the AnodesRegion
-  G4Region* GasRegion = G4RegionStore::GetInstance()->GetRegion("GasRegion");
-  G4Region* AnodesRegion = G4RegionStore::GetInstance()->GetRegion("AnodesRegion");
+  // Check the region store for debugging
+  auto reg_store = G4RegionStore::GetInstance();
+  G4cout << "(Debug: DetectorConstruction.cc) === Regions in Store ===" << G4endl;
+  for (auto reg : *reg_store) {
+    G4cout << " - " << reg->GetName() << G4endl;
+  }
+
+  G4Region* gasAndAnodesRegion = G4RegionStore::GetInstance()->GetRegion("GasAndAnodesRegion");
   
-  new DegradModel(fGasModelParameters,"DegradModel",GasRegion,this,KrCH4GasBoxSD);
+  // These commands generate the two gas models (Degrad and HeedeltaElectron) and connect them 
+  // to the region formed by the fas and the anodes
+  new DegradModel(fGasModelParameters,"DegradModel",gasAndAnodesRegion,this,KrCH4GasBoxSD);
   G4cout << "(Debug: DetectorConstruction.cc) Gas region connected with DegradModel..." << G4endl;
 
-
-  // Attaching the HeedDeltaElectronModel to the anodes, for the signal calculation
-  new HeedDeltaElectronModelAnodes(fGasModelParameters,"HeedDeltaElectronModelAnodes",AnodesRegion,this,AnodesSD);
+  // // Attaching the HeedDeltaElectronModel to the anodes, for the signal calculation
+  new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",gasAndAnodesRegion,this,KrCH4GasBoxSD);
   G4cout << "(Debug: DetectorConstruction.cc) Anode region connected with HeedDeltaElectronModel..." << G4endl;
-  
-  // Attaching the HeedDeltaElectronModel to the gas region, for the drift
-  new HeedDeltaElectronModelGas(fGasModelParameters,"HeedDeltaElectronModelGas",GasRegion,this,KrCH4GasBoxSD);
-  G4cout << "(Debug: DetectorConstruction.cc) Gas region connected with HeedDeltaElectronModel..." << G4endl;
-
-
-
 }
 

@@ -10,7 +10,7 @@
 
 // Included from the current project
 #include "GasModelParameters.hh"
-#include "GenericSD.hh"
+#include "GasBoxSD.hh"
 
 // Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "SolidBox.hh"                 //Geometry
@@ -26,6 +26,7 @@
 #include "ViewDrift.hh"
 #include "ViewSignal.hh"
 #include "ViewField.hh"
+#include "ViewGeometry.hh"
 #include "G4VFastSimulationModel.hh"
 #include "MediumMagboltz.hh"
 #include "TrackHeed.hh"
@@ -43,7 +44,7 @@ class HeedModel : public G4VFastSimulationModel {
   //-------------------------
   // Constructor, destructor
   //-------------------------
-  HeedModel(G4String, G4Region*,DetectorConstruction*,GenericSD*);
+  HeedModel(G4String, G4Region*,DetectorConstruction*,GasBoxSD*);
   ~HeedModel();
 
 
@@ -89,7 +90,7 @@ class HeedModel : public G4VFastSimulationModel {
   double vDeltaGate;
 
   Garfield::TrackHeed* fTrackHeed;
-  GenericSD* fGenericSD;
+  GasBoxSD* fGasBoxSD;
 
   const char* name;
   
@@ -122,6 +123,7 @@ class HeedModel : public G4VFastSimulationModel {
   Garfield::ViewDrift* viewDrift;
   Garfield::ViewSignal* viewSignal;
   Garfield::ViewField* viewField;
+  Garfield::ViewGeometry* geoView; 
 };
 
 #endif /* HeedModel_H_ */

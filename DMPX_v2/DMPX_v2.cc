@@ -21,13 +21,19 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "G4UItcsh.hh"
 #include "G4VSteppingVerbose.hh"
 #include "Randomize.hh" 
+#include "TApplication.h" 
 
 #include "include/DetectorConstruction.hh"
 #include "include/PhysicsList.hh"
 #include "include/MyUserActionInitialization.hh"
 #include "include/GasModelParameters.hh"
 
+// Added for visualizing ROOT
+TApplication* rootApp = nullptr; 
+
 int main(int argc, char** argv) {
+  rootApp = new TApplication("ROOT Application", &argc, argv);
+
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 #ifdef G4MULTITHREADED
   G4MTRunManager* runManager = new G4MTRunManager();
@@ -88,7 +94,11 @@ int main(int argc, char** argv) {
     double duration = difftime(time(0),start);
     cout << "(Debug: Xenon.cc) Simulation Time: " << duration << endl;
   }
+
+  rootApp->Run();
+
   delete visManager; 
   delete runManager;
+  delete rootApp; 
   return 0;
 }

@@ -67,8 +67,7 @@ set(sources
 	${PROJECT_SOURCE_DIR}/src/GasBoxSD.cc
 	${PROJECT_SOURCE_DIR}/src/GasModelParameters.cc
 	${PROJECT_SOURCE_DIR}/src/GasModelParametersMessenger.cc
-	${PROJECT_SOURCE_DIR}/src/HeedDeltaElectronModelGas.cc
-	${PROJECT_SOURCE_DIR}/src/HeedDeltaElectronModelAnodes.cc
+	${PROJECT_SOURCE_DIR}/src/HeedDeltaElectronModel.cc
 	${PROJECT_SOURCE_DIR}/src/HeedModel.cc
 	${PROJECT_SOURCE_DIR}/src/MyUserActionInitialization.cc
 	${PROJECT_SOURCE_DIR}/src/PhysicsList.cc
@@ -91,8 +90,7 @@ set(headers
 	${PROJECT_SOURCE_DIR}/include/GasBoxSD.hh
 	${PROJECT_SOURCE_DIR}/include/GasModelParameters.hh
 	${PROJECT_SOURCE_DIR}/include/GasModelParametersMessenger.hh
-	${PROJECT_SOURCE_DIR}/include/HeedDeltaElectronModelGas.hh
-	${PROJECT_SOURCE_DIR}/include/HeedDeltaElectronModelAnodes.hh
+	${PROJECT_SOURCE_DIR}/include/HeedDeltaElectronModel.hh
 	${PROJECT_SOURCE_DIR}/include/HeedModel.hh
 	${PROJECT_SOURCE_DIR}/include/MyUserActionInitialization.hh
 	${PROJECT_SOURCE_DIR}/include/PhysicsList.hh
@@ -125,6 +123,7 @@ target_include_directories(DMPX_v2 PRIVATE
 set(DMPX_v2_SCRIPTS
   vis.mac
   run1.mac
+  ar_93_co2_7.gas
   convertDegradFile.py
 )
 

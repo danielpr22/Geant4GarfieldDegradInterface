@@ -143,7 +143,7 @@ void PhysicsList::SetCuts() {
   if(lowE>0)
       G4ProductionCutsTable::GetProductionCutsTable()->SetEnergyRange(lowE, 100. * MeV);
   
-  G4Region* region = G4RegionStore::GetInstance()->GetRegion("GasRegion");
+  G4Region* region = G4RegionStore::GetInstance()->GetRegion("GasAndAnodesRegion");
   G4ProductionCuts* cuts = new G4ProductionCuts();
   cuts->SetProductionCut(1 * um, G4ProductionCuts::GetIndex("gamma"));
   cuts->SetProductionCut(1 * um, G4ProductionCuts::GetIndex("e-"));

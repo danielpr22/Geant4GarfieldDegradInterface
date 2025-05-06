@@ -1,93 +1,129 @@
-# Setting the gas pressure
-/Xenon/geometry/SetGasPressure 1. bar
+########################
+##### GAS PRESSURE #####
+########################
 
-# Thermal energy for the DegradModel. Below this energy, the HeedDeltaElectronModel will be activated
-/gasModelParameters/degrad/thermalenergy 10 eV
+    /Xenon/geometry/SetGasPressure 1. bar
 
-# Adding the energy ranges in keV for which the HeedDeltaElectronModel will be activated
-/gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 0.01
+##########################################
+##### PARAMETERS FOR DEGRAD AND HEED #####
+##########################################
+ 
+    # Thermal energy for the DegradModel. Below this energy, the HeedDeltaElectronModel will be activated
+    /gasModelParameters/degrad/thermalenergy 10 eV
 
-#/gasModelParameters/heed/gasfile Ne_90_CO2_10_N2_5_with_mg.gas
-#/gasModelParameters/heed/ionmobilityfile IonMobility_Ne+_Ne.txt
-/gasModelParameters/heed/drift 1
-/gasModelParameters/heed/driftRKF 0
-/gasModelParameters/heed/trackmicroscopic 0
-/gasModelParameters/heed/createAval 0
-/gasModelParameters/heed/visualizechamber 1
-/gasModelParameters/heed/visualizesignals 0
-/gasModelParameters/heed/visualizefield 1
-/gasModelParameters/heed/voltageplanehv -100000
-/gasModelParameters/heed/voltageplanelow 0
-/gasModelParameters/heed/voltageanodewire 1460.
-/gasModelParameters/heed/voltagecathodewire 0.
-/gasModelParameters/heed/voltagegate -70.
-/gasModelParameters/heed/voltagedeltagate 90.
+    # Adding the energy ranges in keV for which the HeedDeltaElectronModel will be activated
+    /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0. 0.01
 
-/run/numberOfThreads 1 # Since Heed is not yet multi-thread safe, we must put 1 here
-/control/cout/ignoreThreadsExcept 0
-/control/cout/setCoutFile output.dmp
+    /gasModelParameters/heed/gasfile ar_93_co2_7.gas
+    #/gasModelParameters/heed/ionmobilityfile IonMobility_Ne+_Ne.txt
+    /gasModelParameters/heed/drift 1
+    /gasModelParameters/heed/driftRKF 0
+    /gasModelParameters/heed/trackmicroscopic 0
+    /gasModelParameters/heed/createAval 1
+    /gasModelParameters/heed/visualizechamber 1
+    /gasModelParameters/heed/visualizesignals 1
+    /gasModelParameters/heed/visualizefield 1
+    /gasModelParameters/heed/voltageplanehv -100000
+    /gasModelParameters/heed/voltageplanelow 0
+    /gasModelParameters/heed/voltageanodewire 1460.
+    /gasModelParameters/heed/voltagecathodewire 0.
+    /gasModelParameters/heed/voltagegate -70.
+    /gasModelParameters/heed/voltagedeltagate 90.
 
-# Below 1 eV, the particles will no longer be tracked. They will either exit the volume, or 
-# give their energy to another particle, that will just store it, after a collision
-/Xenon/phys/setLowLimitE 1. eV 
-/Xenon/phys/InitializePhysics emlivermore
-/Xenon/phys/AddParametrisation
-/process/em/AddPAIRegion all GasRegion PAIphoton
 
-#/random/setSeeds 0 0
-/run/initialize
+####################################################
+##### OUTPUT, MODEL AND ENERGY PARAMETRISATION #####
+####################################################
 
-#/param/InActivateModel DegradModel
-/param/InActivateModel HeedDeltaElectronModel
+    /run/numberOfThreads 1 # Since Heed is not yet multi-thread safe, we must put 1 here
+    /control/cout/ignoreThreadsExcept 0
+    /control/cout/setCoutFile output.dmp
 
-/analysis/setFileName output.root
+    # Below 1 eV, the particles will no longer be tracked. They will either exit the volume, or 
+    # give their energy to another particle, that will just store it, after a collision
+    /Xenon/phys/setLowLimitE 1. eV 
+    /Xenon/phys/InitializePhysics emlivermore
+    /Xenon/phys/AddParametrisation
+    /process/em/AddPAIRegion all GasAndAnodesRegion PAIphoton
+
+    #/random/setSeeds 0 0
+    /run/initialize
+
+    #/param/InActivateModel DegradModel
+    #/param/InActivateModel HeedDeltaElectronModel
+
+    /analysis/setFileName output.root
 
 ####################################
 ############ Verbosities ###########
 ####################################
-/tracking/verbose 1
-/run/verbose 1
-/event/verbose 1
-/vis/verbose 1
+    
+    /tracking/verbose 1
+    /run/verbose 1
+    /event/verbose 1
+    /vis/verbose 1
 
 ####################################
 ########### Visualization ##########
 ####################################
 
-# Different visualization options. Choose based on installed drivers and visualization purposes.
-#/vis/open VRML2FILE
-/vis/open OGL 600x600-0+0
-#/vis/open OGLSX
+    # Different visualization options. Choose based on installed drivers and visualization purposes.
+    #/vis/open VRML2FILE
+    /vis/open OGL 600x600-0+0
+    #/vis/open OGLSX
 
-# Draw geometry:
-/vis/drawVolume
-/vis/scene/add/trajectories smooth
-/vis/scene/add/hits
-/vis/viewer/set/lightsThetaPhi 90. 0.
-/vis/viewer/set/viewpointThetaPhi 150. 90.
-/vis/viewer/set/style surface
-/vis/viewer/set/hiddenEdge true
+    # Draw geometry:
+    /vis/drawVolume
+    /vis/scene/add/trajectories smooth
+    /vis/scene/add/hits
+    /vis/viewer/set/lightsThetaPhi 90. 0.
+    /vis/viewer/set/viewpointThetaPhi 150. 90.
+    /vis/viewer/set/style surface
+    /vis/viewer/set/hiddenEdge true
+    /vis/scene/add/axes 0 0 0 3 cm
+
+
+###################################
+###### PLOTTING TRAJECTORIES ######
+###################################
+
 # Draw smooth trajectories at end of event.
-# Gamma-rays represented in red.
-#/vis/modeling/trajectories/create/drawByParticleID
-#/vis/modeling/trajectories/drawByParticleID-0/set e- green
-#/vis/modeling/trajectories/drawByParticleID-0/verbose 1
+# Gamma-rays represented in green, electrons in red.
 
-/vis/modeling/trajectories/create/drawByCharge
-/vis/modeling/trajectories/drawByCharge-0/set -1 green
-/vis/modeling/trajectories/drawByCharge-0/set +1 yellow
+    # For plotting depending on the name of the particle
+    #/vis/modeling/trajectories/create/drawByParticleID
+    #/vis/modeling/trajectories/drawByParticleID-0/set e- green
+    #/vis/modeling/trajectories/drawByParticleID-0/verbose 1
 
-/vis/modeling/trajectories/drawByCharge-0/verbose 1
-/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
-/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 6
+    # For plotitng following the charge of the particle
+    /vis/modeling/trajectories/create/drawByCharge drawByCharge-0
+    /vis/modeling/trajectories/drawByCharge-0/set 0 green
+    /vis/modeling/trajectories/drawByCharge-0/set 1 blue
+    /vis/modeling/trajectories/drawByCharge-0/set -1 red
+    /vis/modeling/trajectories/drawByCharge-0/verbose 1
+    /vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+    /vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 6
 
-/vis/scene/endOfEventAction accumulate 100
+    /vis/scene/endOfEventAction accumulate 100
 
-/tracking/storeTrajectory 1
+    /tracking/storeTrajectory 1
 
-/gps/position 0. 0. 0. cm
-/gps/direction 0. 0. 1. 
-/gps/particle gamma
-/gps/ene/type Mono
-/gps/ene/mono 15. keV
+#########################################
+##### GENERAL PARTICLE SOURCE (GPS) #####
+#########################################
+
+    # The particles are shot from a rectangular plane situated at the position of the slit, in the positive z direction
+    /gps/pos/type Plane
+    /gps/pos/shape Rectangle
+    /gps/pos/centre -21. 0.9 -102.27 mm
+    /gps/pos/halfx 10 mm
+    /gps/pos/halfy 2.0 mm
+
+    # To see where the GPS is
+    /vis/scene/add/gps
+
+    /gps/direction 0. 0. 1. 
+    /gps/particle gamma
+    /gps/ene/type Mono
+    /gps/ene/mono 15. keV
 

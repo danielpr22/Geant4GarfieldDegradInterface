@@ -21,7 +21,7 @@
 DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : G4VFastSimulationModel(modelName, envelope),detCon(dc), fGasBoxSD(sd) {
         thermalE=gmp->GetThermalEnergy();
-        G4cout << "(Debug: DegradModel.cc) Now setting the thermal energy of the Degrad model: " << thermalE / eV << "eV" << G4endl;
+        G4cout << "(Debug: DegradModel.cc) Now setting the thermal energy of the Degrad model: " << thermalE / eV << " eV" << G4endl;
         processOccured = false;
         nbOfSecondaries = 0; 
     }
@@ -37,10 +37,12 @@ G4bool DegradModel::IsApplicable(const G4ParticleDefinition& particleType) {
 
 G4bool DegradModel::ModelTrigger(const G4FastTrack& fastTrack) {
   G4int id = fastTrack.GetPrimaryTrack()->GetParentID();
+  G4ThreeVector currentPos = fastTrack.GetPrimaryTrack()->GetVertexPosition();
     if (id == 1){ // If it's the first ionization, Degrad is triggered
         G4cout << "(Debug: DegradModel.cc) The Degrad model is triggered for the first ionization..." << G4endl;
         nbOfSecondaries++;
         G4cout << "(Debug: DegradModel.cc) Number of secondaries created: " << nbOfSecondaries << G4endl;
+        G4cout << "The position of the primary track is: " << G4BestUnit(currentPos,"Length") << G4endl;
         return true;
     }
   return false;

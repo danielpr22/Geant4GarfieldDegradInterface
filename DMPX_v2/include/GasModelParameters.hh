@@ -61,13 +61,11 @@ class GasModelParameters{
 	inline void SetThermalEnergy(G4double d){thermalE=d;}
 	inline G4double GetThermalEnergy(){return thermalE;};
     
-    inline MapParticlesEnergy GetParticleNamesHeedDeltaElectronGas(){return fMapParticlesEnergyHeedDeltaElectronGas;};
-    inline MapParticlesEnergy GetParticleNamesHeedDeltaElectronAnodes(){return fMapParticlesEnergyHeedDeltaElectronAnodes;};
+    inline MapParticlesEnergy GetParticleNamesHeedDeltaElectron(){return fMapParticlesEnergyHeedDeltaElectron;};
 
 	private:
 	GasModelParametersMessenger* fMessenger;
-    MapParticlesEnergy fMapParticlesEnergyHeedDeltaElectronGas; // The particle map for the gas and the anodes will be the same
-    MapParticlesEnergy fMapParticlesEnergyHeedDeltaElectronAnodes; // The particle map for the gas and the anodes will be the same
+    MapParticlesEnergy fMapParticlesEnergyHeedDeltaElectron; // The particle map for the gas and the anodes will be the same
 
     G4String gasFile;
     G4String ionMobFile;

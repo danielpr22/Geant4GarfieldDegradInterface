@@ -14,7 +14,11 @@
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
 #include "SolidBox.hh" // Include the header for SolidBox
+#include "Garfield/ViewGeometry.hh" // Include the correct header for Garfield::ViewGeometry
 #include "G4AutoLock.hh"
+#include "MediumMagboltz.hh"
+#include "SolidHole.hh"
+#include <TSystem.h> // Include ROOT's TSystem header for gSystem
 
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
@@ -71,7 +75,6 @@ G4bool HeedModel::FindParticleName(G4String name) {
 G4bool HeedModel::FindParticleNameEnergy(G4String name,
                                              double ekin_keV) {
   MapParticlesEnergy::iterator it;
-//  it = fMapParticlesEnergy->find(name);
   for (it=fMapParticlesEnergy.begin(); it!=fMapParticlesEnergy.end();++it) {
     if(it->first == name){
       EnergyRange_keV range = it->second;
@@ -83,7 +86,8 @@ G4bool HeedModel::FindParticleNameEnergy(G4String name,
   return false;
 }
 
-//Initialize the Garfield++ related geometries and physics/tracking mechanisms, this is specific for each use and should be re-implemented entirely
+// Initialize the Garfield++ related geometries and physics/tracking mechanisms, this is specific for each use and should be re-implemented entirely
+// These functions should mimick teh situation represented by Geant4
 void HeedModel::InitialisePhysics(){
   if(G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::workerRM || G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::sequentialRM){
     makeGas();
@@ -107,37 +111,43 @@ void HeedModel::makeGas(){
   fMediumMagboltz = new Garfield::MediumMagboltz();
   double pressure = detCon->GetGasPressure()/torr;
   double temperature = detCon->GetTemperature()/kelvin;
-  double neonPerc = detCon->GetKryptonPercentage();
-  double co2Perc = detCon->GetCH4Percentage();
-  double n2Perc = 1-neonPerc-co2Perc;
-  fMediumMagboltz->SetComposition("ne", neonPerc, "co2", co2Perc, "n2", n2Perc);
+  double krPerc = detCon->GetKryptonPercentage();
+  double ch4Perc = detCon->GetCH4Percentage();
+  fMediumMagboltz->SetComposition("kr", krPerc, "ch4", ch4Perc);
   fMediumMagboltz->SetTemperature(temperature);
   fMediumMagboltz->SetPressure(pressure); 
   fMediumMagboltz->EnableDebugging();
   fMediumMagboltz->Initialise(true);
   fMediumMagboltz->DisableDebugging();
 
-  G4cout << gasFile << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The gas file is: " << gasFile << G4endl;
   const std::string path = getenv("GARFIELD_HOME");
   G4AutoLock lock(&aMutex);
   if(ionMobFile!="")
     fMediumMagboltz->LoadIonMobility(path + "/Data/" + ionMobFile);
+    G4cout << "(Debug: HeedModel.cc) The ion mobility file is searched in the Garfield database: " << ionMobFile << G4endl;
   if(gasFile!="")
-      fMediumMagboltz->LoadGasFile(gasFile.c_str());
+    G4cout << "(Debug: HeedModel.cc) The gas file is searched in the Garfield database: " << ionMobFile << G4endl;
+    fMediumMagboltz->LoadGasFile(gasFile.c_str());
 }
   
 //Geometry (see Garfield++ documentation)
 void HeedModel::buildBox(){
+
   geo = new Garfield::GeometrySimple();
 
-  box = new Garfield::SolidBox(detCon->GetGasBoxCenterPositionX()/CLHEP::cm, 
-  detCon->GetGasBoxCenterPositionY()/CLHEP::cm, 
-  detCon->GetGasBoxCenterPositionZ()/CLHEP::cm, 
-  detCon->GetGasBoxLengthX()*0.5/CLHEP::cm,
-  detCon->GetGasBoxLengthY()*0.5/CLHEP::cm,
-  detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm);
+  box = new Garfield::SolidBox(0.0, 0.0, 0.0, // Center coordinates (x, y, z)
+                               detCon->GetGasBoxLengthX()*0.5/CLHEP::cm,
+                               detCon->GetGasBoxLengthY()*0.5/CLHEP::cm,
+                               detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm);
+
+  G4cout << "(Debug: HeedModel.cc) Added gas box to Garfield geometry." << G4endl;
 
   geo->AddSolid(box, fMediumMagboltz);
+
+  geoView = new Garfield::ViewGeometry(geo);
+  geoView->Plot3d();
+  gSystem->ProcessEvents(); // To properly keep on processing the events
 }
 
 //Construction of the electric field (see Garfield++ documentation)
@@ -183,9 +193,6 @@ void HeedModel::BuildCompField(){
     comp->AddPlaneY((detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
     comp->AddPlaneY(-(detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm, vPlaneHV, "HV");
     
-    // Set the magnetic field [T].
-    comp->SetMagneticField(0, 0.5, 0);
-    
   
 }
 
@@ -213,6 +220,7 @@ void HeedModel::SetTracking(){
     fDrift->SetSensor(fSensor);
     fDrift->EnableSignalCalculation();
     fDrift->SetDistanceSteps(2.e-3);
+    G4cout << "(Debug: HeedModel.cc) The avalanche is being created..." << G4endl;
     if(createAval) fDrift->EnableAttachment();
     else fDrift->DisableAttachment();
   }
@@ -233,13 +241,12 @@ void HeedModel::CreateChamberView(){
   cellView->SetCanvas(fChamber);
   cellView->Plot2d();
   fChamber->Update();
+  gSystem->ProcessEvents(); // Ensure the ROOT GUI processes events
   char str2[30];
   strcpy(str2,name);
   strcat(str2,"_chamber.pdf");
   fChamber->Print(str2);
-//  gSystem->ProcessEvents();
-  G4cout << "CreateCellView()" << G4endl;
-  
+  G4cout << "(Debug: HeedModel.cc) Creating chamber view..." << G4endl;
   viewDrift = new Garfield::ViewDrift();
   viewDrift->SetCanvas(fChamber);
   if(driftRKF) fDriftRKF->EnablePlotting(viewDrift);
@@ -258,7 +265,6 @@ void HeedModel::CreateSignalView(){
   viewSignal = new Garfield::ViewSignal();
   viewSignal->SetSensor(fSensor);
   viewSignal->SetCanvas(fSignal);
-
 }
 
 //Electric field plotting (see Garfield++ documentation)
@@ -329,7 +335,7 @@ void HeedModel::Drift(double x, double y, double z, double t) {
 // Plot the track, only called when visualization is turned on by the user
 void HeedModel::PlotTrack(){
     if(fVisualizeChamber){
-      G4cout << "PlotTrack" << G4endl;
+      G4cout << "(Debug: HeedModel.cc) Plotting track..." << G4endl;
       viewDrift->Plot(true,false);
       fChamber->Update();
       fChamber->Print("PrimaryTrack.pdf");

@@ -4,7 +4,7 @@
  *  Created on: Apr 9, 2014
  *      Author: dpfeiffe
  */
-#include "../include/HeedDeltaElectronModelGas.hh"
+#include "../include/HeedDeltaElectronModel.hh"
 #include "../include/GasModelParameters.hh"
 #include "../include/GasBoxSD.hh"
 #include "../include/GasBoxHit.hh"
@@ -12,6 +12,7 @@
 #include <iostream>
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"
+#include "G4UnitsTable.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4VVisManager.hh"
@@ -22,10 +23,10 @@
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 
-// HeedDeltaElectronModelGas derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables
-HeedDeltaElectronModelGas::HeedDeltaElectronModelGas(GasModelParameters* gmp,G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
+// HeedDeltaElectronModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables
+HeedDeltaElectronModel::HeedDeltaElectronModel(GasModelParameters* gmp,G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : HeedModel(modelName, envelope,dc,sd) {
-        fMapParticlesEnergy = gmp->GetParticleNamesHeedDeltaElectronGas();
+        fMapParticlesEnergy = gmp->GetParticleNamesHeedDeltaElectron();
         gasFile = gmp->GetGasFile();
         ionMobFile = gmp->GetIonMobilityFile();
         driftElectrons = gmp->GetDriftElectrons();
@@ -45,15 +46,15 @@ HeedDeltaElectronModelGas::HeedDeltaElectronModelGas(GasModelParameters* gmp,G4S
         InitialisePhysics();
     }
 
-HeedDeltaElectronModelGas::~HeedDeltaElectronModelGas() {}
+HeedDeltaElectronModel::~HeedDeltaElectronModel() {}
 
 //This method is called in the DoIt-method in parent class HeedModel
-void HeedDeltaElectronModelGas::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm,
+void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm,
             double y_cm, double z_cm, double dx, double dy, double dz){
     double eKin_eV = ekin_keV * 1000;
     int nc = 0, ni=0;
-    G4cout << "Run Interface" << G4endl;
-    G4cout << "Electron energy(in eV): " << eKin_eV << G4endl;
+    G4cout << "(Debug: HeedDeltaElectronModel.cc) Running interface..." << G4endl;
+    G4cout << "(Debug: HeedDeltaElectronMode) Electron energy(in eV): " << G4BestUnit(eKin_eV, "Energy") << G4endl;
     if(particleName == "e-"){
         G4AutoLock lock(&aMutex);
         fTrackHeed->TransportDeltaElectron(x_cm, y_cm, z_cm, t, eKin_eV, dx, dy,
@@ -82,11 +83,11 @@ void HeedDeltaElectronModelGas::Run(G4FastStep& fastStep,const G4FastTrack& fast
 
 }
 
-void HeedDeltaElectronModelGas::ProcessEvent(){
+void HeedDeltaElectronModel::ProcessEvent(){
 
 }
 
-void HeedDeltaElectronModelGas::Reset(){
+void HeedDeltaElectronModel::Reset(){
   
 }
 

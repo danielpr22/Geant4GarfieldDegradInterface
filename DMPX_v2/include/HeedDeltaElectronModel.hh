@@ -22,14 +22,14 @@ class G4FastTrack;
 typedef std::pair<double, double> EnergyRange_keV;
 typedef std::multimap<const G4String, EnergyRange_keV> MapParticlesEnergy;
 
-class HeedDeltaElectronModelGas : public HeedModel {
+class HeedDeltaElectronModel : public HeedModel {
  public:
   //-------------------------
   // Constructor, destructor
   //-------------------------
-    HeedDeltaElectronModelGas(GasModelParameters *,G4String, G4Region*,DetectorConstruction*, GasBoxSD*);
-  ~HeedDeltaElectronModelGas();
-  
+  HeedDeltaElectronModel(GasModelParameters *,G4String, G4Region*,DetectorConstruction*, GasBoxSD*);
+  ~HeedDeltaElectronModel();
+
 
   /*The following public methods are user-dependent*/
 

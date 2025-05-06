@@ -611,6 +611,9 @@
 			"path" : "DMPX_v2/run1.mac"
 		},
 		{
+			"path" : "DMPX_v2/ar_93_co2_7.gas"
+		},
+		{
 			"path" : "DMPX_v2/convertDegradFile.py"
 		}
 	],
