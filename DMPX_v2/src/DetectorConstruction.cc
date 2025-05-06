@@ -251,7 +251,7 @@ void DetectorConstruction::ConstructSDandField(){
 
   // Defining the anodes as sensitive detectors for the HeedDeltaElectronModel
   G4String AnodesSDname = "interface/AnodesSD";
-  AnodeSD* AnodesSD = new AnodeSD(AnodesSDname); // AnodesSD of type G4SensitiveDetector
+  AnodesSD* AnodesSD = new AnodesSD(AnodesSDname); // AnodesSD of type G4SensitiveDetector
   SDManager->AddNewDetector(AnodesSD);
   SetSensitiveDetector(logicAnodes,AnodesSD);
 

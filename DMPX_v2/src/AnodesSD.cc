@@ -12,44 +12,37 @@
 #include "G4VProcess.hh"
 #include "G4VPhysicalVolume.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-AnodeSD::AnodeSD(G4String name) : G4VSensitiveDetector(name), fAnodeHitsCollection(NULL) {
-    collectionName.insert("SHC");
-    AWHCID=-1;
+AnodesSD::AnodesSD(G4String name) : G4VSensitiveDetector(name), fAnodesHitsCollection(NULL){
+    collectionName.insert("AHC");
+    AHCID=-1;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+AnodesSD::~AnodesSD(){}
 
-AnodeSD::~AnodeSD(){}
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void AnodeSD::Initialize(G4HCofThisEvent * HCE) {
-    fAnodeHitsCollection = new GasBoxHitsCollection(SensitiveDetectorName, collectionName[0]);
-    if(AWHCID==-1){
-        AWHCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
+void AnodesSD::Initialize(G4HCofThisEvent * HCE){
+    fAnodesHitsCollection = new AnodesHitsCollection(SensitiveDetectorName, collectionName[0]);
+    if(AHCID==-1){
+        AHCID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
     }
-    HCE->AddHitsCollection(AWHCID,fAnodeHitsCollection);
+    HCE->AddHitsCollection(AHCID,fAnodesHitsCollection);
 
-    G4cout << "(Debug: AnodesSD.cc) AnodeSD Intialized!" << G4endl;
+    G4cout << "(Debug: AnodesSD.cc) AnodesSD Intialized!" << G4endl;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-G4bool AnodeSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist) {
+G4bool AnodesSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
     G4Track* aTrack = aStep->GetTrack();
     G4StepPoint* thePostPoint = aStep->GetPostStepPoint();
 
     if(aStep->IsFirstStepInVolume()){
-        G4cout << "(Debug: AnodeSD.cc) Anode Wall Hit!" << G4endl;
-        G4cout << "(Debug: AnodeSD.cc) Particle ID: " << aTrack->GetTrackID() << G4endl;
-        G4cout << "(Debug: AnodeSD.cc) Energy loss through gas: " << aTrack->GetVertexKineticEnergy() - aTrack->GetKineticEnergy() << G4endl;
+        G4cout << "(Debug: AnodesSD.cc) Anodes Wall Hit!" << G4endl;
+        G4cout << "(Debug: AnodesSD.cc) Particle ID: " << aTrack->GetTrackID() << G4endl;
+        G4cout << "(Debug: AnodesSD.cc) Energy loss through gas: " << aTrack->GetVertexKineticEnergy() - aTrack->GetKineticEnergy() << G4endl;
         return true;
     }
     return false;      
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void AnodeSD::EndOfEvent (G4HCofThisEvent * hce) {}
+void AnodesSD::EndOfEvent (G4HCofThisEvent * hce){
+   
+}

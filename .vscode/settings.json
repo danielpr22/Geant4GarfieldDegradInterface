@@ -1,8 +1,12 @@
 {
     "files.associations": {
+        "*.c": "c",
         "*.icc": "cpp",
         "mesh": "cpp",
-        "vec4": "cpp"
+        "vec4": "cpp",
+        "line": "cpp",
+        "group": "cpp",
+        "regex": "cpp"
     },
     "cmake.additionalCompilerSearchDirs": [
         "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX-with_comments"

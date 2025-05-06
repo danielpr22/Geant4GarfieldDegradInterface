@@ -1,22 +1,22 @@
-#ifndef DetectorSD_hh
-#define DetectorSD_hh
+#ifndef AnodesSD_hh
+#define AnodesSD_hh
 
-#include "GenericSD.hh"
+#include "G4VSensitiveDetector.hh"
 #include "G4String.hh"
 #include "G4Region.hh"
-#include "GasBoxHit.hh"
+#include "AnodesHit.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4Step;
 class G4HCofThisEvent;
 class G4TouchableHistory;
 
-class AnodeSD : public GenericSD {
+
+class AnodesSD : public G4VSensitiveDetector{
 	public:
 	
-	AnodeSD(G4String);
-	~AnodeSD();
+	AnodesSD(G4String);
+	~AnodesSD();
 	
 	virtual void 	Initialize (G4HCofThisEvent *);
 	virtual void 	EndOfEvent (G4HCofThisEvent *);
@@ -24,9 +24,10 @@ class AnodeSD : public GenericSD {
 	
 	private:
 	
-    GasBoxHitsCollection* fAnodeHitsCollection;
-    G4int AWHCID;
+    AnodesHitsCollection* fAnodesHitsCollection;
+    G4int AHCID;
+    
+	
 };
 
 #endif
-

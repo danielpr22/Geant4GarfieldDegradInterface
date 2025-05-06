@@ -1,19 +1,17 @@
 #ifndef GasBoxSD_hh
 #define GasBoxSD_hh
 
-// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
-#include "GenericSD.hh"
+#include "G4VSensitiveDetector.hh"
 #include "G4String.hh"
 #include "G4Region.hh"
-#include "GasBoxHit.hh"
-#include "GarfieldExcitationHit.hh"
+#include "../include/GasBoxHit.hh"
 
 class G4Step;
 class G4HCofThisEvent;
 class G4TouchableHistory;
 
 
-class GasBoxSD : public GenericSD {
+class GasBoxSD : public G4VSensitiveDetector{
 	public:
 	
 	GasBoxSD(G4String);
@@ -23,14 +21,14 @@ class GasBoxSD : public GenericSD {
 	virtual void 	EndOfEvent (G4HCofThisEvent *);
 	virtual G4bool ProcessHits(G4Step*, G4TouchableHistory*);
 	virtual void DrawAll();
-    void InsertGasBoxHit(const G4ThreeVector& position, double time) override {fGasBoxHitsCollection->insert(xh);};
-    void InsertGarfieldExcitationHit(GarfieldExcitationHit* geh){fGarfieldExcitationHitsCollection->insert(geh);};
-    
+    void InsertGasBoxHit(GasBoxHit* gbh){fGasBoxHitsCollection->insert(gbh);};
+	
 	private:
+	
+	using GasBoxHitsCollection = G4THitsCollection<GasBoxHit>;
     GasBoxHitsCollection* fGasBoxHitsCollection;
-    GarfieldExcitationHitsCollection* fGarfieldExcitationHitsCollection;
-    G4int GBHCID; // For Gas Box Hits Collection ID
+    G4int GBHCID;
+	
 };
 
 #endif
-

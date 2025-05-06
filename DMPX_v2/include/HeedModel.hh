@@ -89,7 +89,7 @@ class HeedModel : public G4VFastSimulationModel {
   double vDeltaGate;
 
   Garfield::TrackHeed* fTrackHeed;
-  GasBoxSD* fGasBoxSD;
+  GenericSD* fGenericSD;
 
   const char* name;
   

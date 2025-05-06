@@ -7,6 +7,7 @@
 #include "../include/HeedDeltaElectronModelGas.hh"
 #include "../include/GasModelParameters.hh"
 #include "../include/GasBoxSD.hh"
+#include "../include/GasBoxHit.hh"
 
 #include <iostream>
 #include "G4VPhysicalVolume.hh"
