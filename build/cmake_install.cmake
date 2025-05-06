@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/Xenon_Degrad_HeedDelta/cmake_install.cmake")
+  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX_v2/cmake_install.cmake")
 
 endif()
 
