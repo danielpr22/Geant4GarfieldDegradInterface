@@ -3,6 +3,7 @@
 #include "../include/GasBoxHit.hh"
 
 #include "G4Region.hh"
+#include "G4UnitsTable.hh"
 #include "G4String.hh"
 #include "G4Track.hh"
 #include "G4Step.hh"
@@ -43,18 +44,16 @@ G4bool GasBoxSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
         return true;
     }
 
-    return false;
-    
-    
+    return false;  
 }
 
 void GasBoxSD::EndOfEvent (G4HCofThisEvent * hce){
     auto HC = static_cast<GasBoxHitsCollection*>(hce->GetHC(GBHCID));
     int entries = HC->entries();
-    G4cout << "Number of Electrons: " << entries << G4endl;
+    G4cout << "(GasBoxSD.cc) Number of Electrons: " << entries << G4endl;
     for(int i=0;i<entries;i++){
         auto hit = (*HC)[i];
-        G4cout << hit->GetPos() << " " << hit->GetTime() << G4endl;
+        G4cout << "(Debug: GasBoxSD.cc) Hit position: " << G4BestUnit(hit->GetPos(), "Length") << ", Time: " << G4BestUnit(hit->GetTime(), "Time") << G4endl;
     }
     DrawAll();
 }

@@ -9,54 +9,68 @@
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4UnitsTable.hh"
 #include "G4RunManager.hh"
 #include "G4TrackingManager.hh"
 #include "G4EventManager.hh"
 #include "G4VVisManager.hh"
-#include "SolidBox.hh" // Include the header for SolidBox
+#include "SolidBox.hh"
+#include "SolidTube.hh"
 #include "Garfield/ViewGeometry.hh" // Include the correct header for Garfield::ViewGeometry
 #include "G4AutoLock.hh"
 #include "MediumMagboltz.hh"
-#include "SolidHole.hh"
 #include <TSystem.h> // Include ROOT's TSystem header for gSystem
 
 namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 const static G4double torr = 1. / 760. * atmosphere;
 
-
-HeedModel::HeedModel(G4String modelName, G4Region* envelope,DetectorConstruction* dc,GasBoxSD* sd)
-: G4VFastSimulationModel(modelName, envelope), detCon(dc), fGasBoxSD(sd)	{}
+HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope,DetectorConstruction* dc,GasBoxSD* sd)
+: G4VFastSimulationModel(modelName, envelope), detCon(dc), fGasBoxSD(sd) {
+  thermalE=gmp->GetThermalEnergy();
+}
 
 HeedModel::~HeedModel() {}
 
 //Method called when a particle is created, checks if the model is applicable for this particle
 G4bool HeedModel::IsApplicable(const G4ParticleDefinition& particleType) {
-  G4String particleName = particleType.GetParticleName();
-  return FindParticleName(particleName);
+  if (particleType.GetParticleName()=="e-") {
+		G4cout << "(Debug: HeedModel.cc) Electron generated, the model is applicable..." << G4endl;
+		return true;
+	}
+	return false;	
 }
 
 //Method called in every step: checks if the conditions of the particle are met. If true the DoIt-method is called
 G4bool HeedModel::ModelTrigger(const G4FastTrack& fastTrack) {
+  G4cout << "(Debug: HeedModel.cc) Inside the ModelTrigger method..." << G4endl;
   G4double ekin = fastTrack.GetPrimaryTrack()->GetKineticEnergy();
-  G4String particleName =
-      fastTrack.GetPrimaryTrack()->GetParticleDefinition()->GetParticleName();
-  return FindParticleNameEnergy(particleName, ekin / keV);
+  G4cout << "(Debug: HeedModel.cc) The kinetic energy of the particle is: " << G4BestUnit(ekin, "Energy") << G4endl;
+  if (ekin<thermalE) {
+		G4cout << "(Debug: HeedModel.cc) Triggered! The Garfield model is triggered below energies of " <<  G4BestUnit(thermalE, "Energy") << G4endl;
+		return true;
+  }
+  else {return false;} 
 }
 
-//Implementation of the general model, the Run method, calles at the end is specifically implemented for the daughter classes
+//Implementation of the general model, the Run method, called at the end, is specifically implemented for the daughter classes
 void HeedModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
+
+  G4cout << "(Debug: HeedModel.cc) Inside the DoIt method of HeedModel..." << G4endl; 
 
   G4ThreeVector dir = fastTrack.GetPrimaryTrack()->GetMomentumDirection();
 
   G4ThreeVector worldPosition = fastTrack.GetPrimaryTrack()->GetPosition();
+  G4cout << "(Debug: HeedModel.cc) The position of the particle before drift is: " << G4BestUnit(worldPosition, "Length") << G4endl; 
 
   G4double ekin = fastTrack.GetPrimaryTrack()->GetKineticEnergy();
   G4double time = fastTrack.GetPrimaryTrack()->GetGlobalTime();
   G4String particleName =
       fastTrack.GetPrimaryTrack()->GetParticleDefinition()->GetParticleName();
 
-  Run(fastStep, fastTrack, particleName, ekin/keV, time, worldPosition.x() / CLHEP::cm,
+  G4cout << "(Debug: HeedModel.cc) Value of ekin: " << G4BestUnit(ekin, "Energy") << G4endl; 
+
+  Run(fastStep, fastTrack, particleName, ekin, time, worldPosition.x() / CLHEP::cm,
       worldPosition.y() / CLHEP::cm, worldPosition.z() / CLHEP::cm,
       dir.x(), dir.y(), dir.z());
 }
@@ -72,11 +86,10 @@ G4bool HeedModel::FindParticleName(G4String name) {
 }
 
 //Checks if the energy condition of the particle is in the list of conditions for which the model shoould be triggered (called by ModelTrigger)
-G4bool HeedModel::FindParticleNameEnergy(G4String name,
-                                             double ekin_keV) {
+G4bool HeedModel::FindParticleNameEnergy(G4String name, double ekin_keV) {
   MapParticlesEnergy::iterator it;
   for (it=fMapParticlesEnergy.begin(); it!=fMapParticlesEnergy.end();++it) {
-    if(it->first == name){
+    if(it->first == name) {
       EnergyRange_keV range = it->second;
       if (range.first <= ekin_keV && range.second >= ekin_keV) {
         return true;
@@ -87,15 +100,13 @@ G4bool HeedModel::FindParticleNameEnergy(G4String name,
 }
 
 // Initialize the Garfield++ related geometries and physics/tracking mechanisms, this is specific for each use and should be re-implemented entirely
-// These functions should mimick teh situation represented by Geant4
+// These functions should mimick the situation represented by Geant4
 void HeedModel::InitialisePhysics(){
   if(G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::workerRM || G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::sequentialRM){
     makeGas();
       
-    buildBox();
-    
-    BuildCompField();
-    
+    buildBoxAndField();
+        
     BuildSensor();
     
     SetTracking();
@@ -103,6 +114,8 @@ void HeedModel::InitialisePhysics(){
     if(fVisualizeChamber) CreateChamberView();
     if(fVisualizeSignal) CreateSignalView();
     if(fVisualizeField) CreateFieldView();
+
+    G4cout << "(Debug: HeedModel.cc) The HeedModel has been initialized..." << G4endl; 
   }
 }
 
@@ -123,99 +136,104 @@ void HeedModel::makeGas(){
   G4cout << "(Debug: HeedModel.cc) The gas file is: " << gasFile << G4endl;
   const std::string path = getenv("GARFIELD_HOME");
   G4AutoLock lock(&aMutex);
+
+  // The ion mobility file allows for a more precise modelling of the ion tail in the avalanche
   if(ionMobFile!="")
     fMediumMagboltz->LoadIonMobility(path + "/Data/" + ionMobFile);
     G4cout << "(Debug: HeedModel.cc) The ion mobility file is searched in the Garfield database: " << ionMobFile << G4endl;
+  
+  // The gas file, generated by Magboltz, computes the necessary modelization parameters for our gas mixture
   if(gasFile!="")
-    G4cout << "(Debug: HeedModel.cc) The gas file is searched in the Garfield database: " << ionMobFile << G4endl;
-    fMediumMagboltz->LoadGasFile(gasFile.c_str());
+  G4cout << "(Debug: HeedModel.cc) The gas file is searched in the Garfield database: " << ionMobFile << G4endl;
+  fMediumMagboltz->LoadGasFile(gasFile.c_str());
 }
   
+
+
 //Geometry (see Garfield++ documentation)
-void HeedModel::buildBox(){
+void HeedModel::buildBoxAndField(){
 
   geo = new Garfield::GeometrySimple();
 
+  // We must be careful with the coordinates in Garfield++ and Geant4 : the z coordinate in 
+  // Garfield++ corresponds to the y coordinate in Geant4!
   box = new Garfield::SolidBox(0.0, 0.0, 0.0, // Center coordinates (x, y, z)
                                detCon->GetGasBoxLengthX()*0.5/CLHEP::cm,
                                detCon->GetGasBoxLengthY()*0.5/CLHEP::cm,
                                detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm);
 
+  geo->AddSolid(box, fMediumMagboltz);
   G4cout << "(Debug: HeedModel.cc) Added gas box to Garfield geometry." << G4endl;
 
-  geo->AddSolid(box, fMediumMagboltz);
+  // Creating the component analytic field for the field calculation
+  comp = new Garfield::ComponentAnalyticField();
+  comp->SetGeometry(geo);
+
+  // Creating the anode wires geometry
+  const int nbOfAnodes = 64; 
+  const double anodeSpacing = 2.0; // mm
+  const double anodesR = 0.1; // mm
+  const double anodesHalfLength = 16; // mm
+
+  for (int i = 0; i < nbOfAnodes; i++) {
+      const double xPos = anodeSpacing * (i - nbOfAnodes / 2); // mm
+      const double yPos = 0.0; // mm
+      const double zPos = 0.0; // mm
+      wire = new Garfield::SolidTube(xPos / 10.0, // convert mm to cm (Garfield units)
+        yPos, 
+        zPos, 
+        anodesR / 10.0, // radius in cm
+        anodesHalfLength / 10.0 // in cm
+      ); 
+      geo->AddSolid(wire, fMediumMagboltz);
+      comp->AddWire(xPos, yPos, anodesR / 10.0, vAnodeWires, "a"); // Adding the wires for the signal calculation
+  }
+
+  G4cout << "(Debug: HeedModel.cc) All the wires have been added to the Garfield geometry...." << G4endl;
+
+  // Creating the cathode plane geometry
+  const double cathodePlaneHalfX = 65.0 ; // mm
+  const double cathodePlaneWidth = 2.0; // mm
+  const double cathodePlaneHalfZ = 16.0; // mm
+  const double xPosPlane = 0.0; // mm
+  const double yPosPlane = -50.0; // mm
+  const double zPosPlane = 0.0; // mm
+
+  cathodePlane = new Garfield::SolidBox(xPosPlane / 10.0, yPosPlane / 10.0, zPosPlane / 10.0, 
+    cathodePlaneHalfX / 10.0, cathodePlaneWidth / 10.0, cathodePlaneHalfZ / 10.0); // convert mm to cm (Garfield units)
+
+  geo->AddSolid(cathodePlane, fMediumMagboltz);
+  comp->AddPlaneY(yPosPlane, vCathodePlane, "p"); // Adding the wires for the signal calculation
+
+  G4cout << "(Debug: HeedModel.cc) Added cathode plane to Garfield geometry." << G4endl;
 
   geoView = new Garfield::ViewGeometry(geo);
   geoView->Plot3d();
-  gSystem->ProcessEvents(); // To properly keep on processing the events
+  //gSystem->ProcessEvents(); // To properly keep on processing the events
 }
 
-//Construction of the electric field (see Garfield++ documentation)
-void HeedModel::BuildCompField(){
-    // Switch between IROC and OROC.
-    const bool iroc = false;
-    // Switch gating on or off.
-    bool gating = false;
-    // y-axis gap between rows of wires [cm]
-    const double gap = iroc ? 0.2 : 0.3;
-    
-    // y coordinates of the wires [cm]
-    const double ys = gap;            // anode wires
-    const double yc = 2. * gap;       // cathode
-    const double yg = 2. * gap + 0.3; // gate
-    // Periodicity (wire spacing)
-    const double period = 0.25;
-    const int nRep = 2;
-    
-    const double dc = period;
-    const double dg = period / 2;
-    
-    // Wire diameters [cm]
-    const double dSens = 0.0020;
-    const double dCath = 0.0075;
-    const double dGate = 0.0075;
-    
-    comp = new Garfield::ComponentAnalyticField();
-    comp->SetGeometry(geo);
-    
-    comp->SetPeriodicityX(nRep * period);
-    for (int i = 0; i < nRep; ++i) {
-        comp->AddWire((i - 1) * period, (detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm - ys, dSens, vAnodeWires, "s");
-    }
-    for (int i = 0; i < nRep; ++i) {
-        comp->AddWire(dc * (i - 0.5),(detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm - yc, dCath, vCathodeWires, "c");
-    }
-    for (int i = 0; i < nRep * 2; ++i) {
-        const double xg = dg * (i - 1.5);
-        comp->AddWire(xg,(detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm - yg, dGate, vGate, "g", 100., 50., 19.3, 1);
-    }
-    // Add the planes.
-    comp->AddPlaneY((detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm, vPlaneLow, "pad_plane");
-    comp->AddPlaneY(-(detCon->GetGasBoxLengthX()*0.5)/CLHEP::cm, vPlaneHV, "HV");
-    
-  
-}
+
 
 //Build sensor (see Garfield++ documentation)
 void HeedModel::BuildSensor(){
   fSensor = new Garfield::Sensor();
   fSensor->AddComponent(comp);
-  //fSensor->SetTimeWindow(0.,fBinWidth,fNbins); //Lowest time [ns], time bins [ns], number of bins
+  fSensor->SetTimeWindow(0.,1000.,10000); //Lowest time [ns], time bins [ns], number of bins
 }
 
 //Set which tracking mechanism to be used: Runge-kutta, Monte-Carlo or Microscopic (see Garfield++ documentation)
 void HeedModel::SetTracking(){
-  if(driftRKF){
+  if(driftRKF) {
     fDriftRKF = new Garfield::DriftLineRKF();
     fDriftRKF->SetSensor(fSensor);
     fDriftRKF->EnableDebugging();
   }
-  else if(trackMicro){
+  else if(trackMicro) {
     fAvalanche = new Garfield::AvalancheMicroscopic();
     fAvalanche->SetSensor(fSensor);
     fAvalanche->EnableSignalCalculation();
   }
-  else{  
+  else {  
     fDrift = new Garfield::AvalancheMC();
     fDrift->SetSensor(fSensor);
     fDrift->EnableSignalCalculation();
@@ -232,20 +250,13 @@ void HeedModel::SetTracking(){
 
 // Set some visualization variables to see tracks and drift lines (see Garfield++ documentation)
 void HeedModel::CreateChamberView(){
-  char str[30];
-  strcpy(str,name);
-  strcat(str,"_chamber");
-  fChamber = new TCanvas(str, "Chamber View", 700, 700);
-  cellView = new Garfield::ViewCell();
-  cellView->SetComponent(comp);
-  cellView->SetCanvas(fChamber);
-  cellView->Plot2d();
+  TCanvas* fChamber = new TCanvas("Chamber", "Chamber View", 800, 700);
+  Garfield::ViewCell* viewCell = new Garfield::ViewCell();
+  viewCell->SetCanvas(fChamber);
+  viewCell->SetComponent(comp); // Setting the ComponentAnalyticField
+  viewCell->Plot2d();
   fChamber->Update();
-  gSystem->ProcessEvents(); // Ensure the ROOT GUI processes events
-  char str2[30];
-  strcpy(str2,name);
-  strcat(str2,"_chamber.pdf");
-  fChamber->Print(str2);
+  //gSystem->ProcessEvents(); // Ensure the ROOT GUI processes events
   G4cout << "(Debug: HeedModel.cc) Creating chamber view..." << G4endl;
   viewDrift = new Garfield::ViewDrift();
   viewDrift->SetCanvas(fChamber);
@@ -253,15 +264,11 @@ void HeedModel::CreateChamberView(){
   else if(trackMicro) fAvalanche->EnablePlotting(viewDrift);
   else fDrift->EnablePlotting(viewDrift);
   fTrackHeed->EnablePlotting(viewDrift);
-
 }
 
 //Signal plotting (see Garfield++ documentation)
 void HeedModel::CreateSignalView(){
-  char str[30];
-  strcpy(str,name);
-  strcat(str,"_signal");
-  fSignal = new TCanvas(str, "Signal on the wire", 700, 700);
+  fSignal = new TCanvas("Signal", "Signal on the wire", 700, 700);
   viewSignal = new Garfield::ViewSignal();
   viewSignal->SetSensor(fSensor);
   viewSignal->SetCanvas(fSignal);
@@ -288,6 +295,7 @@ void HeedModel::CreateFieldView(){
 // Drift the electrons from point of creation towards the electrodes (This is common for both models, i.e. HeedDeltaElectron and HeedModel) (see Garfield++ documentation)
 void HeedModel::Drift(double x, double y, double z, double t) {
   if (driftElectrons) {
+      G4cout << "(Debug: HeedModel.cc) Now drifting an electron..." << G4endl; 
       DriftLineTrajectory* dlt = new DriftLineTrajectory();
       G4TrackingManager* fpTrackingManager = G4EventManager::GetEventManager()->GetTrackingManager();
       fpTrackingManager->SetTrajectory(dlt);
@@ -301,6 +309,7 @@ void HeedModel::Drift(double x, double y, double z, double t) {
               fDriftRKF->GetEndPoint(xi, yi, zi, ti, status); // Pass correct arguments
               if (G4VVisManager::GetConcreteInstance() && i % 1000 == 0) {
                   dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
+                  G4cout << "(Debug: HeedModel.cc) Appended step: " << xi << " " << yi << " " << zi << G4endl;
               }
           }
       } else if (trackMicro) {
@@ -339,5 +348,11 @@ void HeedModel::PlotTrack(){
       viewDrift->Plot(true,false);
       fChamber->Update();
       fChamber->Print("PrimaryTrack.pdf");
+    }
+    if (fVisualizeSignal) {
+      G4cout << "(Debug: HeedModel.cc) Now plotting the signal..." << G4endl; 
+      viewSignal->PlotSignal("Signal", "h");
+      fSignal->Update();
+      fSignal->Print("Signal.pdf"); 
     }
 }

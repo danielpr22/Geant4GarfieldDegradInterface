@@ -34,18 +34,10 @@ class GasModelParameters{
     //Determines if the electrons are drifted, or only primary ionization is simulated
     inline void SetDriftElectrons(G4bool b) { driftElectrons = b; };
     inline bool GetDriftElectrons(){return driftElectrons;};
-    inline void SetVoltagePlaneHV(G4double v){vPlaneHV = v;};
-    inline double GetVoltagePlaneHV(){return vPlaneHV;};
-    inline void SetVoltagePlaneLow(G4double v){vPlaneLow = v;};
-    inline double GetVoltagePlaneLow(){return vPlaneLow;};
     inline void SetVoltageAnodeWires(G4double v){vAnodeWires = v;};
     inline double GetVoltageAnodeWires(){return vAnodeWires;};
-    inline void SetVoltageCathodeWires(G4double v){vCathodeWires = v;};
-    inline double GetVoltageCathodeWires(){return vCathodeWires;};
-    inline void SetVoltageGate(G4double v){vGate = v;};
-    inline double GetVoltageGate(){return vGate;};
-    inline void SetVoltageDeltaGate(G4double v){vDeltaGate = v;};
-    inline double GetVoltageDeltaGate(){return vDeltaGate;};
+    inline void SetVoltageCathodePlane(G4double v){vCathodePlane = v;};
+    inline double GetVoltageCathodePlane(){return vCathodePlane;};
     inline void SetTrackMicroscopic(bool b){trackMicro=b;};
     inline bool GetTrackMicroscopic(){return trackMicro;};
     inline void SetCreateAvalancheMC(bool b){createAval=b;};
@@ -79,13 +71,8 @@ class GasModelParameters{
     bool driftRKF;
     
 	G4double thermalE;
-    double vPlaneHV;
-    double vPlaneLow;
     double vAnodeWires;
-    double vCathodeWires;
-    double vGate;
-    double vDeltaGate;
-
+    double vCathodePlane;
 };
 
 #endif

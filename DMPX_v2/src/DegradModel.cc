@@ -42,7 +42,7 @@ G4bool DegradModel::ModelTrigger(const G4FastTrack& fastTrack) {
         G4cout << "(Debug: DegradModel.cc) The Degrad model is triggered for the first ionization..." << G4endl;
         nbOfSecondaries++;
         G4cout << "(Debug: DegradModel.cc) Number of secondaries created: " << nbOfSecondaries << G4endl;
-        G4cout << "The position of the primary track is: " << G4BestUnit(currentPos,"Length") << G4endl;
+        G4cout << "(Debug: DegradModel.cc) The position of the primary track is: " << G4BestUnit(currentPos,"Length") << G4endl;
         return true;
     }
   return false;
@@ -65,9 +65,9 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         G4cout<<"(Debug: DegradModel.cc) Global time: "<< G4BestUnit(degradTime,"Time") << ", Position: " << G4BestUnit(degradPos,"Length") << G4endl;
 
         G4int stdout;
-        G4int SEED=54217137*G4UniformRand();
+        G4int SEED=53217137*G4UniformRand();
         G4String seed = G4UIcommand::ConvertToString(SEED);
-        G4String degradString="printf \"1,1,3,1,"+seed+",15000.0,2.0,0.0\n7,0,0,0,0,0\n100.0,0.0,0.0,0.0,0.0,0.0,20.0,900.0\n3000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
+        G4String degradString="printf \"2,1,3,1,"+seed+",15000.0,2.0,0.0\n6,8,0,0,0,0\n90.0,10.0,0.0,0.0,0.0,0.0,20.0,750.062\n3000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
         // G4String degradString="printf \"1,1,3,-1,"+seed+",5900.0,7.0,0.0\n7,0,0,0,0,0\n100.0,0.0,0.0,0.0,0.0,0.0,20.0,900.0\n3000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
         G4cout << "(Debug: DegradModel.cc) String sent to conditions_Degrad.txt: " << degradString << G4endl;
         
@@ -100,22 +100,25 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         G4cout << "(Debug: DegradModel.cc) The Degrad file was properly converted..." << G4endl;
 
         GetElectronsFromDegrad(fastStep,degradPos,degradTime);
-        processOccured=true;
+        processOccured=true; // Once Degrad has finished calculating the positions and times of the generated electrons
     }
 }
 
-void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degradPos,G4double degradTime)
+void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector degradPos,G4double degradTime)
 {
     G4cout << "(Debug: DegradModel.cc) Getting the electrons from Degrad..." << G4endl;
+    G4cout << "(Debug: DegradModel.cc) Position from Degrad: " << G4BestUnit(degradPos, "Length") << G4endl;
+
 
     // 'Nep' is the number of primaries that corresponds to what Biagi calls ‘ELECTRON CLUSTER SIZE (NCLUS)'
-    G4int eventNumber,Nep, nline, i, electronNumber;
+    // 'Nexc' is what Biagi calls EXCITATION CLUSTER SIZE
+    G4int eventNumber,Nep, Nexc, nline, i, electronNumber;
     G4double posX,posY,posZ,time,n;
     G4double  posXDegrad,posYDegrad,posZDegrad,timeDegrad;
-    G4double  posXInitial=degradPos.getX();
-    G4double  posYInitial=degradPos.getY();
-    G4double  posZInitial=degradPos.getZ();
-    G4double  timeInitial=degradTime;
+    G4double  posXInitial=degradPos.getX(); // in mm
+    G4double  posYInitial=degradPos.getY(); // in mm
+    G4double  posZInitial=degradPos.getZ(); // in mm
+    G4double  timeInitial=degradTime; // in ns
     G4String line;
     std::vector<G4double> v;
     
@@ -127,6 +130,7 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degr
     
     nline=1;
     electronNumber=0;
+    // While there is still data in the file, we read it
     while (getline(inFile, line,'\n'))// '\n'is used to indicate the end of the line
     {
         std::istringstream iss(line);
@@ -137,29 +141,31 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degr
                 v.push_back(n); // n is added to the vector
             }
             
-            eventNumber=v[0];
-            Nep=v[1];
-            // Nexc=v[2];
+            eventNumber=v[0]; // (1st column of the first line in DEGRAD.OUT)
+            Nep=v[1]; // NCLUS (2nd column of the first line in DEGRAD.OUT)
+            Nexc=v[2]; // NSTEXC (3rd column of the first line in DEGRAD.OUT)
             v.clear();
         }
-        if (nline ==2) // Ionizations
+        if (nline == 2) // Ionizations
         {
+            G4cout << "(Debug: DegradModel.cc) Now reading the ionizations..." << G4endl; 
+
             while (iss >> n) // each stream will assign a value to 'n'
             {
                 v.push_back(n); // 'n' is added to the vector
             }
             for (i=0;i<v.size();i=i+7){
-                posXDegrad=v[i];
-                posYDegrad=v[i+1];
-                posZDegrad=v[i+2];
-                timeDegrad=v[i+3];
+                posXDegrad=v[i]; // in micrometers
+                posYDegrad=v[i+1]; // in micrometers
+                posZDegrad=v[i+2]; // in micrometers
+                timeDegrad=v[i+3]; // in ps
                 // Convert from um to mm in GEANT4
-                // Also Y and Z axes are swaped in GEANT4 and Garfield++ relatively to Degrad
-                posX=posXDegrad*0.001+posXInitial;
-                posY=posZDegrad*0.001+posYInitial;
-                posZ=posYDegrad*0.001+posZInitial;
+                // CAREFUL: Also Y and Z axes are swaped in GEANT4 and Garfield++ relatively to Degrad
+                posX=posXDegrad*0.001 + posXInitial;
+                posY=posZDegrad*0.001 + posYInitial; // Careful with the units and the coordinate change!
+                posZ=posYDegrad*0.001 + posZInitial;
                 // Convert ps to ns
-                time=timeDegrad*0.001+timeInitial;
+                time=timeDegrad*0.001 + timeInitial;
                 
                 G4ThreeVector myPoint;
                 myPoint.setX(posX);
@@ -172,10 +178,11 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degr
                 G4VPhysicalVolume* myVolume = theNavigator->LocateGlobalPointAndSetup(myPoint);
                 
                 G4String solidName = myVolume->GetName();
-                
-                if (G4StrUtil::contains(solidName, "detectorPhysical")){
 
-                    // Just to limit the number of electrons in tests
+                G4cout << "(Debug: DegradModel.cc) solidName is: " << solidName << G4endl; 
+
+                if (G4StrUtil::contains(solidName, "physGasBox")){
+
                     G4cout << "(Debug: DegradModel.cc) Inside the solid..." << G4endl;
                     
                     // Get the GasBox emission spectrum here
@@ -186,10 +193,11 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degr
                     fGasBoxSD->InsertGasBoxHit(gbh);
                     
                     // Create secondary electron
-                    if(electronNumber % 50 == 0){   
+                    if(electronNumber % 50 == 0){  
+                        // The condition is just set to limit the number of electrons in tests
                         G4cout << "(Debug: DegradModel.cc) Creating secondary electron..." << G4endl; 
-                        G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), 700.0*eV); // Here we write the energy cut in Degrad
-                        G4Track *newTrack=fastStep.CreateSecondaryTrack(electron, myPoint, time,false);
+                        G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), 9.0*eV); // Here we write the energy cut in Degrad
+                        G4Track* newTrack=fastStep.CreateSecondaryTrack(electron, myPoint, time, false);
                     }
                 }
             }

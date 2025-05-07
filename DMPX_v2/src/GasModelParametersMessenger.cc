@@ -73,23 +73,11 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   visualizeFieldCmd = new G4UIcmdWithABool("/gasModelParameters/heed/visualizefield",this);
   visualizeFieldCmd->SetGuidance("true if the electric field has to be shown");
 
-  voltagePlaneHVCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltageplanehv",this);
-  voltagePlaneHVCmd->SetGuidance("Set the voltage on the high voltage plane");
-
-  voltagePlaneLowCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltageplanelow",this);
-  voltagePlaneLowCmd->SetGuidance("Set the voltage on the low voltage plane");
-
   voltageAnodeWiresCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltageanodewire",this);
-  voltageAnodeWiresCmd->SetGuidance("Set the voltage on the anode wire");
+  voltageAnodeWiresCmd->SetGuidance("Set the voltage on the anode wire in V");
 
-  voltageCathodeWiresCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagecathodewire",this);
-  voltageCathodeWiresCmd->SetGuidance("Set the voltage on the cathode wire");
-
-  voltageGateCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagegate",this);
-  voltageGateCmd->SetGuidance("Set the voltage of the gate centroid value");
-
-  voltageDeltaGateCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagedeltagate",this);
-  voltageDeltaGateCmd->SetGuidance("Set the voltage difference of the gate wires with respect to the centroid: v + dv, v-dv");
+  voltageCathodePlaneCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagecathodeplane",this);
+  voltageCathodePlaneCmd->SetGuidance("Set the voltage on the cathode plane in V");
     
   thermalEnergyCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/thermalenergy",this);
   thermalEnergyCmd->SetGuidance("Set the thermal energy to be used by degrad");
@@ -113,12 +101,8 @@ GasModelParametersMessenger::~GasModelParametersMessenger() {
   delete visualizeChamberCmd;
   delete visualizeSignalsCmd;
   delete visualizeFieldCmd;
-  delete voltagePlaneHVCmd;
-  delete voltagePlaneLowCmd;
   delete voltageAnodeWiresCmd;
-  delete voltageCathodeWiresCmd;
-  delete voltageGateCmd;
-  delete voltageDeltaGateCmd;
+  delete voltageCathodePlaneCmd;
   delete thermalEnergyCmd;
 }
 
@@ -156,23 +140,11 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
 	  else if(command == visualizeFieldCmd){
 	  	fGasModelParameters->SetVisualizeField(visualizeFieldCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == voltagePlaneHVCmd){
-	  	fGasModelParameters->SetVoltagePlaneHV(voltagePlaneHVCmd->GetNewDoubleValue(newValues));
-	  }
-	  else if(command == voltagePlaneLowCmd){
-	  	fGasModelParameters->SetVoltagePlaneLow(voltagePlaneLowCmd->GetNewDoubleValue(newValues));
-	  }
 	  else if(command == voltageAnodeWiresCmd){
 	  	fGasModelParameters->SetVoltageAnodeWires(voltageAnodeWiresCmd->GetNewDoubleValue(newValues));
 	  }
-	  else if(command == voltageCathodeWiresCmd){
-	  	fGasModelParameters->SetVoltageCathodeWires(voltageCathodeWiresCmd->GetNewDoubleValue(newValues));
-	  }
-	  else if(command == voltageGateCmd){
-	  	fGasModelParameters->SetVoltageGate(voltageGateCmd->GetNewDoubleValue(newValues));
-      }
-	  else if(command == voltageDeltaGateCmd){
-	  	fGasModelParameters->SetVoltageDeltaGate(voltageDeltaGateCmd->GetNewDoubleValue(newValues));
+	  else if(command == voltageCathodePlaneCmd){
+	  	fGasModelParameters->SetVoltageCathodePlane(voltageCathodePlaneCmd->GetNewDoubleValue(newValues));
 	  }
 }
 

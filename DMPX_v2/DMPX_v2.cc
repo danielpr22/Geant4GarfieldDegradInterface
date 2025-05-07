@@ -29,10 +29,10 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "include/GasModelParameters.hh"
 
 // Added for visualizing ROOT
-TApplication* rootApp = nullptr; 
+// TApplication* rootApp = nullptr; 
 
 int main(int argc, char** argv) {
-  rootApp = new TApplication("ROOT Application", &argc, argv);
+  //rootApp = new TApplication("ROOT Application", &argc, argv);
 
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 #ifdef G4MULTITHREADED
@@ -95,10 +95,10 @@ int main(int argc, char** argv) {
     cout << "(Debug: Xenon.cc) Simulation Time: " << duration << endl;
   }
 
-  rootApp->Run();
+  //rootApp->Run();
 
   delete visManager; 
   delete runManager;
-  delete rootApp; 
+  //delete rootApp; 
   return 0;
 }

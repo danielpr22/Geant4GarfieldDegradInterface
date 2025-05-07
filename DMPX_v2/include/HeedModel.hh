@@ -14,6 +14,7 @@
 
 // Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "SolidBox.hh"                 //Geometry
+#include "SolidTube.hh"                //Geometry
 #include "ComponentAnalyticField.hh"    //Garfield field
 #include "ViewCell.hh"                  //Visualization
 #include "Sensor.hh"
@@ -44,7 +45,7 @@ class HeedModel : public G4VFastSimulationModel {
   //-------------------------
   // Constructor, destructor
   //-------------------------
-  HeedModel(G4String, G4Region*,DetectorConstruction*,GasBoxSD*);
+  HeedModel(GasModelParameters*, G4String, G4Region*,DetectorConstruction*,GasBoxSD*);
   ~HeedModel();
 
 
@@ -82,12 +83,9 @@ class HeedModel : public G4VFastSimulationModel {
   bool fVisualizeField;
   bool driftRKF;
 
-  double vPlaneHV;
-  double vPlaneLow;
+  G4double thermalE; 
   double vAnodeWires;
-  double vCathodeWires;
-  double vGate;
-  double vDeltaGate;
+  double vCathodePlane;
 
   Garfield::TrackHeed* fTrackHeed;
   GasBoxSD* fGasBoxSD;
@@ -97,9 +95,8 @@ class HeedModel : public G4VFastSimulationModel {
   /*The following private methods and variables are user-dependent*/
  private:
   void makeGas();
-  void buildBox();
+  void buildBoxAndField();
   void loadComsol();
-  void BuildCompField();
   void BuildSensor();
   void SetTracking();
   void CreateChamberView();
@@ -108,9 +105,10 @@ class HeedModel : public G4VFastSimulationModel {
 
   Garfield::MediumMagboltz* fMediumMagboltz;
   Garfield::Sensor* fSensor;
-//  Garfield::TrackHeed* fTrackHeed;
   Garfield::GeometrySimple* geo;
   Garfield::SolidBox* box;
+  Garfield::SolidBox* cathodePlane;
+  Garfield::SolidTube* wire; 
   Garfield::ComponentVoxel* voxfield;
   Garfield::ComponentAnalyticField* comp;
   Garfield::AvalancheMC* fDrift;

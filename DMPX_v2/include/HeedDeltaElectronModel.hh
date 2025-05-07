@@ -41,7 +41,7 @@ class HeedDeltaElectronModel : public HeedModel {
   /*Getters and Setters*/
 
  private:
-  virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_keV, double t, double x_cm,
+  virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_eV, double t, double x_cm,
             double y_cm, double z_cm, double dx, double dy, double dz);
 };
 

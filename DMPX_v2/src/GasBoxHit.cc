@@ -61,8 +61,8 @@ GasBoxHit::GasBoxHit(const GasBoxHit& right)
 {
   fTrackID   = right.fTrackID;
   fPos       = right.fPos;
-  fTime      =right.fTime;
-  fEnergy    =right.fEnergy;
+  fTime      = right.fTime;
+  fEnergy    = right.fEnergy;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -71,8 +71,8 @@ const GasBoxHit& GasBoxHit::operator=(const GasBoxHit& right)
 {
   fTrackID   = right.fTrackID;
   fPos       = right.fPos;
-  fTime      =right.fTime;
-  fEnergy    =right.fEnergy;
+  fTime      = right.fTime;
+  fEnergy    = right.fEnergy;
 
   return *this;
 }

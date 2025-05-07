@@ -36,7 +36,6 @@ class GasModelParametersMessenger : public G4UImessenger {
   G4UIdirectory* GasModelParametersDir;
   G4UIdirectory* DegradDir;
   G4UIdirectory* HeedDir;
-  G4UIdirectory* HeedNewTrackDir;
   G4UIdirectory* HeedDeltaElectronDir;
 
   G4UIcommand* addParticleDegradCmd;
@@ -51,12 +50,8 @@ class GasModelParametersMessenger : public G4UImessenger {
   G4UIcmdWithABool* visualizeSignalsCmd;
   G4UIcmdWithABool* visualizeFieldCmd;
   G4UIcmdWithABool* driftRKFCmd;
-  G4UIcmdWithADouble* voltagePlaneHVCmd;
-  G4UIcmdWithADouble* voltagePlaneLowCmd;
   G4UIcmdWithADouble* voltageAnodeWiresCmd;
-  G4UIcmdWithADouble* voltageCathodeWiresCmd;
-  G4UIcmdWithADouble* voltageGateCmd;
-  G4UIcmdWithADouble* voltageDeltaGateCmd;
+  G4UIcmdWithADouble* voltageCathodePlaneCmd;
   G4UIcmdWithADoubleAndUnit* thermalEnergyCmd;
 
   G4String fParticleName;
