@@ -1,6 +1,6 @@
 /**
- *\file Xenon.cc
- *\brief Main program of Xenon simulation
+ *\file DMPX_v2.cc
+ *\brief Main program of DMPX_v2 simulation
  *\author Claire Couratin
  *\date December 2014
 
@@ -19,6 +19,7 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "G4UIExecutive.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
+#include "G4ios.hh"
 #include "G4VSteppingVerbose.hh"
 #include "Randomize.hh" 
 #include "TApplication.h" 
@@ -41,20 +42,20 @@ int main(int argc, char** argv) {
 #else
   G4RunManager* runManager = new G4RunManager();
 #endif
-  G4cout << "(Debug: Xenon.cc) G4RunManager is being created..." << G4endl;
+  G4cout << "(Debug: DMPX_v2.cc) G4RunManager is being created..." << G4endl;
     
   G4int randseed = atoi(argv[2]);
   G4Random::setTheSeed(randseed);
-  G4cout << "(Debug: Xenon.cc) Setting the Random seed: " << randseed << G4endl;
+  G4cout << "(Debug: DMPX_v2.cc) Setting the Random seed: " << randseed << G4endl;
   
-  G4cout << "(Debug: Xenon.cc) Creation of the gas model parameter class" << G4endl;
+  G4cout << "(Debug: DMPX_v2.cc) Creation of the gas model parameter class" << G4endl;
   GasModelParameters* gmp = new GasModelParameters();
     
-  G4cout << "(Debug: Xenon.cc) Creation of DetectorConstruction" << G4endl;
+  G4cout << "(Debug: DMPX_v2.cc) Creation of DetectorConstruction" << G4endl;
   DetectorConstruction* detector = new DetectorConstruction(gmp);
   runManager->SetUserInitialization(detector);
   
-  G4cout << "(Debug: Xenon.cc) Creation of PhysicsList" << G4endl;
+  G4cout << "(Debug: DMPX_v2.cc) Creation of PhysicsList" << G4endl;
   PhysicsList* physics = new PhysicsList();
   runManager->SetUserInitialization(physics);
   
@@ -84,7 +85,7 @@ int main(int argc, char** argv) {
     G4String command = "/control/execute ";
     G4String fileName = argv[1];
     if (argc < 3) {
-      G4cout << "(Debug: Xenon.cc) No random seed has been provided" << G4endl;
+      G4cout << "(Debug: DMPX_v2.cc) No random seed has been provided" << G4endl;
       delete runManager;
       return 0;
     }
@@ -92,7 +93,7 @@ int main(int argc, char** argv) {
     time_t start=time(0);
     UImanager->ApplyCommand(command + fileName);
     double duration = difftime(time(0),start);
-    cout << "(Debug: Xenon.cc) Simulation Time: " << duration << endl;
+    cout << "(Debug: DMPX_v2.cc) Simulation Time: " << duration << endl;
   }
 
   //rootApp->Run();

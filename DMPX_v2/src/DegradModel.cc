@@ -23,7 +23,7 @@ DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* 
         thermalE=gmp->GetThermalEnergy();
         G4cout << "(Debug: DegradModel.cc) Now setting the thermal energy of the Degrad model: " << thermalE / eV << " eV" << G4endl;
         processOccured = false;
-        nbOfSecondaries = 0; 
+        nbOfSecondaries = 0;
     }
 
 DegradModel::~DegradModel() {}
@@ -67,7 +67,7 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         G4int stdout;
         G4int SEED=53217137*G4UniformRand();
         G4String seed = G4UIcommand::ConvertToString(SEED);
-        G4String degradString="printf \"2,1,3,1,"+seed+",15000.0,2.0,0.0\n6,8,0,0,0,0\n90.0,10.0,0.0,0.0,0.0,0.0,20.0,750.062\n3000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
+        G4String degradString="printf \"2,1,3,1,"+seed+",15000.0,2.0,0.0\n6,8,0,0,0,0\n90.0,10.0,0.0,0.0,0.0,0.0,20.0,750.062\n6000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
         // G4String degradString="printf \"1,1,3,-1,"+seed+",5900.0,7.0,0.0\n7,0,0,0,0,0\n100.0,0.0,0.0,0.0,0.0,0.0,20.0,900.0\n3000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
         G4cout << "(Debug: DegradModel.cc) String sent to conditions_Degrad.txt: " << degradString << G4endl;
         
@@ -112,7 +112,7 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
 
     // 'Nep' is the number of primaries that corresponds to what Biagi calls ‘ELECTRON CLUSTER SIZE (NCLUS)'
     // 'Nexc' is what Biagi calls EXCITATION CLUSTER SIZE
-    G4int eventNumber,Nep, Nexc, nline, i, electronNumber;
+    G4int eventNumber,Nep, Nexc, nline, i;
     G4double posX,posY,posZ,time,n;
     G4double  posXDegrad,posYDegrad,posZDegrad,timeDegrad;
     G4double  posXInitial=degradPos.getX(); // in mm
@@ -129,7 +129,7 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
     G4cout<< "(Debug: DegradModel.cc) Working in "<< fname << G4endl;
     
     nline=1;
-    electronNumber=0;
+    nbOfElectronsInBox = 0; 
     // While there is still data in the file, we read it
     while (getline(inFile, line,'\n'))// '\n'is used to indicate the end of the line
     {
@@ -154,6 +154,11 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
             {
                 v.push_back(n); // 'n' is added to the vector
             }
+
+            // Since every electron has 7 information iterms
+            G4cout << "(Debug: DegradModel.cc) Total number of electrons generated (inside and outside the box): " 
+            << v.size()/7 << G4endl; 
+
             for (i=0;i<v.size();i=i+7){
                 posXDegrad=v[i]; // in micrometers
                 posYDegrad=v[i+1]; // in micrometers
@@ -181,19 +186,21 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
 
                 G4cout << "(Debug: DegradModel.cc) solidName is: " << solidName << G4endl; 
 
+                // For the secondary electrons to be generated from the primary photon, we need the 
+                // generated secondary electrons to be inside the gasBox
                 if (G4StrUtil::contains(solidName, "physGasBox")){
+                    nbOfElectronsInBox++; // One more electron is inside the box
 
                     G4cout << "(Debug: DegradModel.cc) Inside the solid..." << G4endl;
                     
                     // Get the GasBox emission spectrum here
-                    electronNumber++;
                     GasBoxHit* gbh = new GasBoxHit();
                     gbh->SetPos(myPoint);
                     gbh->SetTime(time);
                     fGasBoxSD->InsertGasBoxHit(gbh);
                     
                     // Create secondary electron
-                    if(electronNumber % 50 == 0){  
+                    if(nbOfElectronsInBox % 4 == 0){ // To create only some secondary electrons or all of them
                         // The condition is just set to limit the number of electrons in tests
                         G4cout << "(Debug: DegradModel.cc) Creating secondary electron..." << G4endl; 
                         G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), 9.0*eV); // Here we write the energy cut in Degrad
@@ -201,13 +208,13 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
                     }
                 }
             }
-            v.clear(); // Reset the vector otherwise it will continue to add data
+            v.clear(); // Reset the vector otherwise it will store the data for the next electron
             nline=0;
         }
         nline++;
     }
     inFile.close();
-    G4cout << "(Debug: DegradModel.cc) Number of initial electrons: " << electronNumber << G4endl;
+    G4cout << "(Debug: DegradModel.cc) Number of secondary electrons inside the gas box: " << nbOfElectronsInBox << G4endl;
 }
 
 

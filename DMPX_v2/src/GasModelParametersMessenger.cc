@@ -111,27 +111,29 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
     if(command == thermalEnergyCmd){
       fGasModelParameters->SetThermalEnergy(thermalEnergyCmd->GetNewDoubleValue(newValues));
     }
-    if(command == addParticleHeedDeltaElectronCmd)
+    if(command == addParticleHeedDeltaElectronCmd) {
 	  	AddParticleHeedDeltaElectronCommand(newValues);
-	  else if(command == gasFileCmd){
+    }
+	  else if(command == gasFileCmd) {
 	  	fGasModelParameters->SetGasFile(newValues);
 	  }
-	  else if(command == ionMobFileCmd){
+	  else if(command == ionMobFileCmd) {
 	  	fGasModelParameters->SetIonMobilityFile(newValues);
 	  }
-	  else if(command == driftElectronsCmd){
+	  else if(command == driftElectronsCmd) {
 	  	fGasModelParameters->SetDriftElectrons(driftElectronsCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == driftRKFCmd){
+	  else if(command == driftRKFCmd) {
 	  	fGasModelParameters->SetDriftRKF(driftRKFCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == createAvalCmd){
+	  else if(command == createAvalCmd) {
 	  	fGasModelParameters->SetCreateAvalancheMC(createAvalCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == trackMicroCmd){
+	  else if(command == trackMicroCmd) {
 	  	fGasModelParameters->SetTrackMicroscopic(trackMicroCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == visualizeChamberCmd){
+	  else if(command == visualizeChamberCmd) {
+      G4cout << "(Debug: GasModelParametersMessenger.cc) Now reading the command, with value: " << newValues << G4endl; 
 	  	fGasModelParameters->SetVisualizeChamber(visualizeChamberCmd->GetNewBoolValue(newValues));
 	  }
 	  else if(command == visualizeSignalsCmd){

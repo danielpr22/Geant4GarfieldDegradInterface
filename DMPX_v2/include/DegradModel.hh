@@ -42,6 +42,7 @@ class DegradModel : public G4VFastSimulationModel {
 		GasBoxSD* fGasBoxSD;
 		G4bool processOccured;
 		G4int nbOfSecondaries; 
+		G4int nbOfElectronsInBox; 
 };
 
 #endif

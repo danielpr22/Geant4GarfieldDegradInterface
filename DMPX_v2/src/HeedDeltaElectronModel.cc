@@ -33,6 +33,9 @@ HeedDeltaElectronModel::HeedDeltaElectronModel(GasModelParameters* gmp,G4String 
         trackMicro = gmp->GetTrackMicroscopic();
         createAval = gmp->GetCreateAvalancheMC();
         fVisualizeChamber = gmp->GetVisualizeChamber();
+
+        G4cout << "(Debug: HeedDeltaElectronModel.cc) Value of fVisualizeChamber: " << fVisualizeChamber << G4endl; 
+
         fVisualizeSignal = gmp->GetVisualizeSignals();
         fVisualizeField = gmp->GetVisualizeField();
         driftRKF = gmp->GetDriftRKF();
@@ -54,14 +57,15 @@ void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTra
     G4double ekin_keV = ekin_eV / keV; // For the Transport functions
 
     G4cout << "(Debug: HeedDeltaElectronModel.cc) The energy here is: " << ekin_keV << " keV" << G4endl; 
-    int nc = 0, ni=0;
+    int nc = 0, ni=0; // number of electrons/ions produced by the delta electron
     G4cout << "(Debug: HeedDeltaElectronModel.cc) Running interface..." << G4endl;
     if(particleName == "e-"){
         G4cout << "(Debug: HeedDeltaElectronModel.cc) Inside the electron case..." << G4endl;
         G4AutoLock lock(&aMutex);
-        fTrackHeed->TransportDeltaElectron(x_cm, y_cm, z_cm, t, ekin_keV, dx, dy,
+        fTrackHeed->TransportDeltaElectron(x_cm, y_cm, z_cm, t, 
+                                           ekin_keV, dx, dy,
                                            dz, nc, ni);
-        G4cout << "(Debug: HeedDeltaElectronModel.cc) Already transported electron..." << G4endl;
+        G4cout << "(Debug: HeedDeltaElectronModel.cc) The number of electrons produced is: " << nc << G4endl;
     }
     else{
         G4AutoLock lock(&aMutex);
@@ -76,15 +80,19 @@ void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTra
         gbh->SetPos(G4ThreeVector(xe*CLHEP::cm,ye*CLHEP::cm,ze*CLHEP::cm));
         gbh->SetTime(te);
         fGasBoxSD->InsertGasBoxHit(gbh);
-        if(G4VVisManager::GetConcreteInstance() && cl % 100 == 0)
+
+        // If the visManager is on...
+        if(G4VVisManager::GetConcreteInstance() && cl % 1 == 0)
             G4cout << "(Debug: HeedDeltaElectronModel.cc) Now drifting..." << G4endl;
+            G4cout << "(Debug: HeedDeltaElectronModel.cc) Positions (cm) and time for the drift calculation: " << xe 
+            << " " << ye << " " << ze << " " << te << G4endl;
             Drift(xe,ye,ze,te);
     }
+    G4cout << "(Debug: HeedDeltaElectronModel.cc) Now plotting the track..." << G4endl;
     PlotTrack();
     fastStep.KillPrimaryTrack();
     fastStep.ProposePrimaryTrackPathLength(0.0);
     fastStep.ProposeTotalEnergyDeposited(ekin_keV);
-
 }
 
 void HeedDeltaElectronModel::ProcessEvent(){

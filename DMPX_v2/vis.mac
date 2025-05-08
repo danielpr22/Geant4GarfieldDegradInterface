@@ -16,16 +16,15 @@
     /gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0.1 1000
 
     /gasModelParameters/heed/gasfile ar_93_co2_7.gas
-    #/gasModelParameters/heed/ionmobilityfile IonMobility_Ne+_Ne.txt
     /gasModelParameters/heed/drift 1
     /gasModelParameters/heed/driftRKF 1
     /gasModelParameters/heed/trackmicroscopic 0
     /gasModelParameters/heed/createAval 0
-    /gasModelParameters/heed/visualizechamber 0
+    /gasModelParameters/heed/visualizechamber 1
     /gasModelParameters/heed/visualizesignals 1
-    /gasModelParameters/heed/visualizefield 0
-    /gasModelParameters/heed/voltageanodewire 1460.
-    /gasModelParameters/heed/voltagecathodeplane -1000.
+    /gasModelParameters/heed/visualizefield 1
+    /gasModelParameters/heed/voltageanodewire 500.
+    /gasModelParameters/heed/voltagecathodeplane 0.
 
 
 ####################################################
@@ -34,7 +33,7 @@
 
     /run/numberOfThreads 1 # Since Heed is not yet multi-thread safe, we must put 1 here
     /control/cout/ignoreThreadsExcept 0
-    /control/cout/setCoutFile output.dmp
+    #/control/cout/setCoutFile output.dmp
 
     # Below 1 eV, the particles will no longer be tracked. They will either exit the volume, or 
     # give their energy to another particle, that will just store it, after a collision

@@ -76,16 +76,19 @@ class HeedModel : public G4VFastSimulationModel {
   G4String ionMobFile;
   
   bool driftElectrons;
+  bool driftRKF;
   bool trackMicro;
   bool createAval;
   bool fVisualizeChamber;
   bool fVisualizeSignal;
   bool fVisualizeField;
-  bool driftRKF;
 
   G4double thermalE; 
   double vAnodeWires;
   double vCathodePlane;
+
+  // This is the parameter that matters for calculating the gas amplification coefficient G
+  G4int secondaryElectronCounter; 
 
   Garfield::TrackHeed* fTrackHeed;
   GasBoxSD* fGasBoxSD;
@@ -96,12 +99,11 @@ class HeedModel : public G4VFastSimulationModel {
  private:
   void makeGas();
   void buildBoxAndField();
-  void loadComsol();
   void BuildSensor();
   void SetTracking();
-  void CreateChamberView();
-  void CreateSignalView();
-  void CreateFieldView();
+  void SettingChamberView();
+  void SettingSignalView();
+  void SettingFieldView();
 
   Garfield::MediumMagboltz* fMediumMagboltz;
   Garfield::Sensor* fSensor;
@@ -109,19 +111,19 @@ class HeedModel : public G4VFastSimulationModel {
   Garfield::SolidBox* box;
   Garfield::SolidBox* cathodePlane;
   Garfield::SolidTube* wire; 
-  Garfield::ComponentVoxel* voxfield;
   Garfield::ComponentAnalyticField* comp;
   Garfield::AvalancheMC* fDrift;
   Garfield::DriftLineRKF* fDriftRKF;
   Garfield::AvalancheMicroscopic* fAvalanche;
-  TCanvas* fChamber;
-  TCanvas* fSignal;
-  TCanvas* fField;
-  Garfield::ViewCell* cellView;
+  TCanvas* fChamberCanvas;
+  TCanvas* fSignalCanvas;
+  TCanvas* fFieldCanvas;
+  Garfield::ViewCell* viewCell;
   Garfield::ViewDrift* viewDrift;
   Garfield::ViewSignal* viewSignal;
   Garfield::ViewField* viewField;
   Garfield::ViewGeometry* geoView; 
+
 };
 
 #endif /* HeedModel_H_ */

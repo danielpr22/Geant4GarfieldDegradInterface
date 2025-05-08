@@ -65,6 +65,7 @@ DetectorConstruction::~DetectorConstruction() {
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4VPhysicalVolume* DetectorConstruction::Construct() {
+    G4cout << "(Debug: DetectorConstruction.cc) Chamber visualization: " << fGasModelParameters->GetVisualizeChamber() << G4endl; 
 
     //Colors for visualization
     G4VisAttributes* red = new G4VisAttributes(G4Colour(1., 0., 0.));
