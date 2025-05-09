@@ -60,6 +60,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   // Destructor of the DetectorConstruction class
   virtual ~DetectorConstruction();
 
+  DetectorMessenger* GetDetectorMessenger() const { return detectorMessenger; } // To get the pressure
+ 
   /* 
   What is a virtual method? Example:
   class Base {

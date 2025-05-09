@@ -71,15 +71,11 @@ int main(int argc, char** argv) {
 
   if (argc == 1)  //! define UI terminal for interactive mode:
   {
-    //#ifdef G4UI_USE
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-    //#ifdef G4VIS_USE
     UImanager->ApplyCommand("/control/execute vis.mac");
-    //#endif
 
     ui->SessionStart();
     delete ui;
-    //#endif
   } else  //! batch mode:
   {
     G4String command = "/control/execute ";

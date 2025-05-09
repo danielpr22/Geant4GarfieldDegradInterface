@@ -1,6 +1,6 @@
-#include "HeedModel.hh"
-#include "DetectorConstruction.hh"
-#include "DriftLineTrajectory.hh"
+#include "../include/HeedModel.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/DriftLineTrajectory.hh"
 
 #include "G4VPhysicalVolume.hh"
 #include "G4Electron.hh"

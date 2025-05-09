@@ -13,9 +13,8 @@
 #include "G4PhysicalConstants.hh"
 #include "G4UIparameter.hh"
 #include "G4Tokenizer.hh"
+#include "G4UImanager.hh"
 
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
     : fGasModelParameters(gm) {
@@ -81,6 +80,73 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
     
   thermalEnergyCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/thermalenergy",this);
   thermalEnergyCmd->SetGuidance("Set the thermal energy to be used by degrad");
+
+  numberOfGasesCmd = new G4UIcmdWithAnInteger("/gasModelParameters/degrad/numberofgases",this);
+  numberOfGasesCmd->SetGuidance("Set the number of gases to be used by Degrad");
+
+  // Gas list command
+  gasListCmd = new G4UIcommand("/gasModelParameters/degrad/setGasList", this);
+  gasListCmd->SetGuidance("Input the gas identifiers for Degrad.");
+
+  // The following 6 parameters will store the gas identifiers for the gases in Degrad
+  G4UIparameter* gas1 = new G4UIparameter("GAS1", 'd', false); 
+  gas1->SetGuidance("First gas identifier in Degrad");
+  gasListCmd->SetParameter(gas1);
+
+  G4UIparameter* gas2 = new G4UIparameter("GAS2", 'd', false); 
+  gas2->SetGuidance("Second gas identifier in Degrad");
+  gasListCmd->SetParameter(gas2);
+
+  G4UIparameter* gas3 = new G4UIparameter("GAS3", 'd', false); 
+  gas3->SetGuidance("Third gas identifier in Degrad");
+  gasListCmd->SetParameter(gas3);
+
+  G4UIparameter* gas4 = new G4UIparameter("GAS4", 'd', false); 
+  gas4->SetGuidance("Fourth gas identifier in Degrad");
+  gasListCmd->SetParameter(gas4);
+
+  G4UIparameter* gas5 = new G4UIparameter("GAS5", 'd', false);
+  gas5->SetGuidance("Fifth gas identifier in Degrad");
+  gasListCmd->SetParameter(gas5);
+
+  G4UIparameter* gas6 = new G4UIparameter("GAS6", 'd', false);
+  gas6->SetGuidance("Sixth gas identifier in Degrad");
+  gasListCmd->SetParameter(gas6);
+
+  // Gas percentages command
+  gasPercentagesCmd = new G4UIcommand("/gasModelParameters/degrad/setGasPercentages", this);
+  gasPercentagesCmd->SetGuidance("Input the molar gas percentages for Degrad.");
+
+  // The following 6 parameters will store the gas percentages for the gases in Degrad
+  G4UIparameter* gas1Percentage = new G4UIparameter("GAS1", 'd', false);
+  gas1Percentage->SetGuidance("First gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas1Percentage);
+
+  G4UIparameter* gas2Percentage = new G4UIparameter("GAS2", 'd', false);
+  gas2Percentage->SetGuidance("Second gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas2Percentage);
+
+  G4UIparameter* gas3Percentage = new G4UIparameter("GAS3", 'd', false);
+  gas3Percentage->SetGuidance("Third gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas3Percentage);
+
+  G4UIparameter* gas4Percentage = new G4UIparameter("GAS4", 'd', false);
+  gas4Percentage->SetGuidance("Fourth gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas4Percentage);
+
+  G4UIparameter* gas5Percentage = new G4UIparameter("GAS5", 'd', false);
+  gas5Percentage->SetGuidance("Fifth gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas5Percentage);
+
+  G4UIparameter* gas6Percentage = new G4UIparameter("GAS6", 'd', false);
+  gas6Percentage->SetGuidance("Sixth gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas6Percentage);
+
+  temperatureCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/temperature",this);
+  temperatureCmd->SetGuidance("Set the temperature to be used by Degrad");
+
+  distanceAnodeCathodesCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/distanceanodecathodes",this);
+  distanceAnodeCathodesCmd->SetGuidance("Set the distance between the anodes and the cathodes in cm");
 }
 
 
@@ -90,7 +156,6 @@ GasModelParametersMessenger::~GasModelParametersMessenger() {
   delete DegradDir;
   delete HeedDir;
   delete HeedDeltaElectronDir;
-
   delete addParticleHeedDeltaElectronCmd;
   delete gasFileCmd;
   delete ionMobFileCmd;
@@ -104,14 +169,20 @@ GasModelParametersMessenger::~GasModelParametersMessenger() {
   delete voltageAnodeWiresCmd;
   delete voltageCathodePlaneCmd;
   delete thermalEnergyCmd;
+  delete numberOfGasesCmd; 
+  delete gasListCmd;
+  delete gasPercentagesCmd;
+  delete temperatureCmd;
+  delete distanceAnodeCathodesCmd;
 }
 
 
 void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
+
     if(command == thermalEnergyCmd){
       fGasModelParameters->SetThermalEnergy(thermalEnergyCmd->GetNewDoubleValue(newValues));
     }
-    if(command == addParticleHeedDeltaElectronCmd) {
+    else if(command == addParticleHeedDeltaElectronCmd) {
 	  	AddParticleHeedDeltaElectronCommand(newValues);
     }
 	  else if(command == gasFileCmd) {
@@ -133,7 +204,6 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
 	  	fGasModelParameters->SetTrackMicroscopic(trackMicroCmd->GetNewBoolValue(newValues));
 	  }
 	  else if(command == visualizeChamberCmd) {
-      G4cout << "(Debug: GasModelParametersMessenger.cc) Now reading the command, with value: " << newValues << G4endl; 
 	  	fGasModelParameters->SetVisualizeChamber(visualizeChamberCmd->GetNewBoolValue(newValues));
 	  }
 	  else if(command == visualizeSignalsCmd){
@@ -148,6 +218,46 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
 	  else if(command == voltageCathodePlaneCmd){
 	  	fGasModelParameters->SetVoltageCathodePlane(voltageCathodePlaneCmd->GetNewDoubleValue(newValues));
 	  }
+    else if(command == numberOfGasesCmd){
+      fGasModelParameters->SetNumberOfGases(numberOfGasesCmd->GetNewIntValue(newValues));
+    }
+    else if(command == gasListCmd){
+      G4Tokenizer next(newValues);
+      G4int gas1 = StoD(next());
+      G4int gas2 = StoD(next());
+      G4int gas3 = StoD(next());
+      G4int gas4 = StoD(next());
+      G4int gas5 = StoD(next());
+      G4int gas6 = StoD(next());
+      fGasModelParameters->SetGasList(gas1, gas2, gas3, gas4, gas5, gas6);
+      G4cout << "(Debug: GasModelParametersMessenger.cc) Gas list set to: "
+           << gas1 << " " << gas2 << " " << gas3 << " " << gas4 << " " << gas5 << " " << gas6 << G4endl;
+    }
+    else if(command == gasPercentagesCmd){
+      G4Tokenizer next(newValues);
+      G4double gas1Percentage = StoD(next());
+      G4double gas2Percentage = StoD(next());
+      G4double gas3Percentage = StoD(next());
+      G4double gas4Percentage = StoD(next());
+      G4double gas5Percentage = StoD(next());
+      G4double gas6Percentage = StoD(next());
+      fGasModelParameters->SetGasPercentages(gas1Percentage, gas2Percentage, gas3Percentage, 
+        gas4Percentage, gas5Percentage, gas6Percentage);
+      G4cout << "(Debug: GasModelParametersMessenger.cc) Gas percentages set to: "
+           << gas1Percentage << " " << gas2Percentage << " " << gas3Percentage << " " 
+           << gas4Percentage << " " << gas5Percentage << " " << gas6Percentage << G4endl;
+    }
+    else if(command == temperatureCmd) {
+      fGasModelParameters->SetTemperature(temperatureCmd->GetNewDoubleValue(newValues));
+    }
+    else if(command == distanceAnodeCathodesCmd) {
+      fGasModelParameters->SetDistanceAnodeCathodes(distanceAnodeCathodesCmd->GetNewDoubleValue(newValues));
+    }
+    else {
+      G4cerr << "(Debug: GasModelParametersMessenger.cc) GasModelParametersMessenger::"
+      << "SetNewValue: Unknown command" << G4endl;
+    }
+
 }
 
 

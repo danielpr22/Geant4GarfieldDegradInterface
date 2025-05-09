@@ -2,7 +2,7 @@
 ##### GAS PRESSURE #####
 ########################
 
-    /Xenon/geometry/SetGasPressure 1. bar
+    /DMPX/geometry/SetGasPressure 1. bar
 
 ##########################################
 ##### PARAMETERS FOR DEGRAD AND HEED #####
@@ -15,6 +15,14 @@
     /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.001 100
     /gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0.1 1000
 
+    /gasModelParameters/degrad/numberofgases 2
+
+    # Please, input the gas identifier for Degrad (search for "GAS NUMBER" in the Degrad source code)
+    /gasModelParameters/degrad/setGasList 6 8 0 0 0 0
+    /gasModelParameters/degrad/setGasPercentages 90.0 10.0 0.0 0.0 0.0 0.0
+    /gasModelParameters/degrad/temperature 293.15 K
+    /gasModelParameters/degrad/distanceanodecathodes 10. mm
+    
     /gasModelParameters/heed/gasfile ar_93_co2_7.gas
     /gasModelParameters/heed/drift 1
     /gasModelParameters/heed/driftRKF 1
@@ -35,11 +43,12 @@
     /control/cout/ignoreThreadsExcept 0
     #/control/cout/setCoutFile output.dmp
 
-    # Below 1 eV, the particles will no longer be tracked. They will either exit the volume, or 
-    # give their energy to another particle, that will just store it, after a collision
-    /Xenon/phys/setLowLimitE 1. eV 
-    /Xenon/phys/InitializePhysics emlivermore
-    /Xenon/phys/AddParametrisation
+    # Below the energy set in "setLowLimitE", the particles will no longer be tracked. 
+    # They will either exit the volume, or give their energy to another particle, that 
+    # will just store it, after a collision.
+    /DMPX/phys/setLowLimitE 1. eV 
+    /DMPX/phys/InitializePhysics emlivermore
+    /DMPX/phys/AddParametrisation
     /process/em/AddPAIRegion all GasAndAnodesRegion PAIphoton
 
     #/random/setSeeds 0 0
@@ -72,8 +81,8 @@
     /vis/drawVolume
     /vis/scene/add/trajectories smooth
     /vis/scene/add/hits
-    /vis/viewer/set/lightsThetaPhi 90. 0.
-    /vis/viewer/set/viewpointThetaPhi 150. 90.
+    /vis/viewer/set/lightsThetaPhi 90. 0. # In degrees
+    /vis/viewer/set/viewpointThetaPhi 90. 0. # In degrees
     /vis/viewer/set/style surface
     /vis/viewer/set/hiddenEdge true
     /vis/scene/add/axes 0 0 0 3 cm
@@ -111,21 +120,51 @@
 ##### GENERAL PARTICLE SOURCE (GPS) #####
 #########################################
 
-    # The particles are shot from a rectangular plane situated at the position of the slit, in the positive z direction
+    # The particles are shot from a rectangular plane situated at the position of the slit, 
+    # in the positive z direction
     /gps/pos/type Plane
     /gps/pos/shape Rectangle
-    /gps/pos/rot2 0 0 1 # So the rectangle is in the XZ plane
-    #/gps/pos/centre -21. 102.27 2.9 mm
-    /gps/pos/centre -21. 30.0 2.9 mm
-    /gps/pos/halfx 10.0 mm
-    /gps/pos/halfy 1.0 mm
-    /gps/pos/halfz 20.0 mm
+
+    # The height in the y direction will be used for the calculation of the electric field
+    /gps/pos/centre -21. 102.27 2.9 mm
+
+    # By default, the plane would be in the XY plane. However, we want it to be in the XZ plane, Since
+    # Garfield++ can only define the wires following the Z direction. Thus, it is necessary to apply 
+    # a rotation. The default rot1 vector is following the X axis (1 0 0), and the default rot2 
+    # vector follows (0 0 1). The resulting vector for the plane will be in the direction perpendicular
+    # to both rot1 and rot2, i.e. (0 1 0)
+    /gps/pos/rot2 0 0 1 
+
+    # The entry slit is around 30 mm long and 2 mm wide (remember, it is in the XZ plane)
+    /gps/pos/halfx 15. mm 
+    /gps/pos/halfz 0.01 mm # Setting a minimal width for the entry slit, so Geant4 does not crash
+    /gps/pos/halfy 1.5 mm # Careful: y is z here!
 
     # To see where the GPS is
     /vis/scene/add/gps
 
-    /gps/direction 0. -1. 0. 
+    # If we want the photons to be following a given fixed direction, we can uncomment the 
+    # following line (and therefore comment the commands with"/gps/ang")
+    #/gps/direction 0. -1. 0.
+
+    # The particles will be isotropically shot along the angles we precise
+    /gps/ang/type iso 
+
+    # In order for theta and phi to behave as usual in the spherical coordinates, we must correct
+    # the rotation applied to the plane, so the angles are not rotated in the same way.
+    /gps/ang/rot2 0 1 0 
+
+    # Some useful directions:
+    # Direction parallel to the y axis ->  theta = 90. deg, phi = 180 deg.
+    # Direction parallel to the z axis -> theta = 0. deg., for all phi
+    # All angles are in degrees
+    /gps/ang/mintheta 90. deg # Theta is fixed such that the particles are shot in the XY plane
+    /gps/ang/maxtheta 90. deg
+    /gps/ang/minphi 70. deg 
+    /gps/ang/maxphi 110. deg
+
+    # Monoenergetic photon particle source at a given energy
     /gps/particle gamma
     /gps/ene/type Mono
-    /gps/ene/mono 25. keV
+    /gps/ene/mono 12. keV
 

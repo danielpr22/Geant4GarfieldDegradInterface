@@ -4,7 +4,6 @@
 #include "../include/PrimaryGeneratorAction.hh"
 #include "../include/EventAction.hh"
 #include "../include/GasBoxSD.hh"
-#include "../include/SteppingAction.hh"
 
 #include "G4SDManager.hh"
 

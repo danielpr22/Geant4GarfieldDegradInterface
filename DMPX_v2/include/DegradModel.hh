@@ -38,11 +38,20 @@ class DegradModel : public G4VFastSimulationModel {
 		void GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degradPos,G4double degradTime);
 
 		G4double thermalE;
+		G4double voltageAnodeWires;
+		G4double voltageCathodePlane;
+		G4double photonEnergy;
 		DetectorConstruction* detCon;
 		GasBoxSD* fGasBoxSD;
 		G4bool processOccured;
 		G4int nbOfSecondaries; 
 		G4int nbOfElectronsInBox; 
+		G4int numberOfGases;
+		G4String gasList;
+		G4String gasPercentages; 
+		G4double temperature; 
+		G4double pressure; 
+		G4double distanceAnodeCathodes; // Distance from the anodes to the cathodes
 };
 
 #endif

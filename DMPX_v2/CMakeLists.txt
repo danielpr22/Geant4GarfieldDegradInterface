@@ -62,7 +62,6 @@ set(sources
 	${PROJECT_SOURCE_DIR}/src/DriftLineTrajectory.cc
 	${PROJECT_SOURCE_DIR}/src/DriftLineTrajectoryPoint.cc
 	${PROJECT_SOURCE_DIR}/src/EventAction.cc
-	${PROJECT_SOURCE_DIR}/src/GarfieldExcitationHit.cc
 	${PROJECT_SOURCE_DIR}/src/GasBoxHit.cc
 	${PROJECT_SOURCE_DIR}/src/GasBoxSD.cc
 	${PROJECT_SOURCE_DIR}/src/GasModelParameters.cc
@@ -85,7 +84,6 @@ set(headers
 	${PROJECT_SOURCE_DIR}/include/DriftLineTrajectory.hh
 	${PROJECT_SOURCE_DIR}/include/DriftLineTrajectoryPoint.hh
 	${PROJECT_SOURCE_DIR}/include/EventAction.hh
-	${PROJECT_SOURCE_DIR}/include/GarfieldExcitationHit.hh
 	${PROJECT_SOURCE_DIR}/include/GasBoxHit.hh
 	${PROJECT_SOURCE_DIR}/include/GasBoxSD.hh
 	${PROJECT_SOURCE_DIR}/include/GasModelParameters.hh

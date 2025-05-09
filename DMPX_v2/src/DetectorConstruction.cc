@@ -37,20 +37,18 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
     kryptonPercentage(90),        // mixture settings in molar percentage
     ch4Percentage(10),
 
-    // We must handle carefull the coordinates between Garfield++ and Geant4
+    // We must handle carefully the coordinates between Garfield++ and Geant4
     // In Garfield, the wires must be following the z-axis (and it cannot be easily
     // changed), therefore we will also have to define the wires following
     // the z-axis in Geant4.
     GasBoxLengthX(130*mm), // Length of the gas box in the X direction
     GasBoxLengthY(40*mm),  // Length of the gas box in the Y direction
     GasBoxLengthZ(32*mm), // Length of the gas box in the Z direction
+
+    // For simplicity, we will set the center of the gas box at (0,0,0)
     GasBoxCenterPositionX(0.*mm), // X position of the gas box center
     GasBoxCenterPositionY(0.*mm), // Y position of the gas box center
     GasBoxCenterPositionZ(0.*mm) // Z position of the gas box center
-    // GasBoxCenterPositionX(-21*mm), // X position of the gas box center
-    // GasBoxCenterPositionY(0.9*mm), // Y position of the gas box center
-    // GasBoxCenterPositionZ(30*mm) // Z position of the gas box center
-    //GasBoxCenterPositionZ(82*mm) // Z position of the gas box center
 {
   // "This" is a pointer that is conceptually equivalent to the "self" in Python
   detectorMessenger = new DetectorMessenger(this);

@@ -52,6 +52,22 @@ class GasModelParameters{
     inline bool GetDriftRKF(){return driftRKF;};
 	inline void SetThermalEnergy(G4double d){thermalE=d;}
 	inline G4double GetThermalEnergy(){return thermalE;};
+    inline void SetNumberOfGases(int n){numberOfGases=n;};
+    inline int GetNumberOfGases(){return numberOfGases;};
+    inline void SetGasList(G4int g1, G4int g2, G4int g3, G4int g4, G4int g5, G4int g6) {
+        gasList = std::to_string(g1) + "," + std::to_string(g2) + "," + std::to_string(g3) + "," +
+                  std::to_string(g4) + "," + std::to_string(g5) + "," + std::to_string(g6);
+    };
+    inline G4String GetGasList(){return gasList;};
+    inline void SetGasPercentages(G4int g1, G4int g2, G4int g3, G4int g4, G4int g5, G4int g6) {
+        gasPercentages = std::to_string(g1) + "," + std::to_string(g2) + "," + std::to_string(g3) + "," +
+                  std::to_string(g4) + "," + std::to_string(g5) + "," + std::to_string(g6);
+    };
+    inline G4String GetGasPercentages(){return gasPercentages;};
+    inline G4double GetTemperature(){return temperature;};
+    inline void SetTemperature(double n){temperature=n;};
+    inline G4double GetDistanceAnodeCathodes(){return distanceAnodeCathodes;};
+    inline void SetDistanceAnodeCathodes(double n){distanceAnodeCathodes=n;};
     
     inline MapParticlesEnergy GetParticleNamesHeedDeltaElectron(){return fMapParticlesEnergyHeedDeltaElectron;};
 
@@ -60,6 +76,8 @@ class GasModelParameters{
     MapParticlesEnergy fMapParticlesEnergyHeedDeltaElectron; // The particle map for the gas and the anodes will be the same
 
     G4String gasFile;
+    G4String gasList;
+    G4String gasPercentages;
     G4String ionMobFile;
     
     bool driftElectrons;
@@ -71,6 +89,9 @@ class GasModelParameters{
     bool driftRKF;
     
 	G4double thermalE;
+    G4double temperature; 
+    G4double distanceAnodeCathodes; 
+    G4int numberOfGases; 
     double vAnodeWires;
     double vCathodePlane;
 };

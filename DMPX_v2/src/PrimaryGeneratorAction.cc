@@ -1,8 +1,8 @@
 //
 //  PrimaryGeneratorAction.cpp
-//  Xenon
+//  DMPX
 //
-//  Created by Lennert De Keukeleere on 25/10/2018.
+//  Created by Daniel Perales Rios on 09/05/2025.
 //
 
 #include "../include/PrimaryGeneratorAction.hh"
@@ -21,10 +21,15 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(){
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction() {
     delete particleGun;
-    G4cout << "(Debug: PrimaryGeneratorAction.cc) Deleting PrimaryGeneratorAction" << G4endl;
+    G4cout << "(Debug: PrimaryGeneratorAction.cc) Deleting PrimaryGeneratorAction..." << G4endl;
 } 
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     particleGun->GeneratePrimaryVertex(anEvent);
 }
+
+// Method to retrieve the current energy of the particle gun
+// double PrimaryGeneratorAction::GetMonoEnergy() const {
+//     return particleGun->GetCurrentSource()->GetEneDist()->GetMonoEnergy();
+// }
 

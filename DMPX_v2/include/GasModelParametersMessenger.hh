@@ -53,6 +53,11 @@ class GasModelParametersMessenger : public G4UImessenger {
   G4UIcmdWithADouble* voltageAnodeWiresCmd;
   G4UIcmdWithADouble* voltageCathodePlaneCmd;
   G4UIcmdWithADoubleAndUnit* thermalEnergyCmd;
+  G4UIcmdWithAnInteger* numberOfGasesCmd;
+  G4UIcommand* gasListCmd; 
+  G4UIcommand* gasPercentagesCmd;
+  G4UIcmdWithADoubleAndUnit* temperatureCmd;
+  G4UIcmdWithADoubleAndUnit* distanceAnodeCathodesCmd;
 
   G4String fParticleName;
   G4double fEmin;

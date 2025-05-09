@@ -31,8 +31,6 @@ class G4UIcmdWith3Vector;
 /*!/Xenon/geometry/ConstructSlitVertical */
 /*!/Xenon/geometry/ConstructSlitHorizontal */
 /*!/Xenon/geometry/buildCells*/
-/*!/Xenon/geometry/BuildUpperScint*/
-/*!/Xenon/geometry/BuildLowerScint*/
 /*!/Xenon/geometry/update */
 
 class DetectorMessenger : public G4UImessenger {
@@ -41,6 +39,8 @@ class DetectorMessenger : public G4UImessenger {
   ~DetectorMessenger();
 
   void SetNewValue(G4UIcommand*, G4String);
+  G4double GetPressure() const { return pressure; } 
+
 
  private:
   DetectorConstruction* detector;
@@ -48,6 +48,7 @@ class DetectorMessenger : public G4UImessenger {
   G4UIdirectory* geometryDir;  // /Xenon/geometry/
   G4UIcmdWithADoubleAndUnit* setGasPressCmd;
   G4UIcmdWithAString* setupNameCmd;
+  G4double pressure; 
 };
 
 #endif

@@ -2,6 +2,9 @@
 #include "../include/GasModelParameters.hh"
 #include "../include/GasBoxSD.hh"
 #include "../include/GasBoxHit.hh"
+#include "../include/EventAction.hh"
+#include "../include/DetectorConstruction.hh"
+#include "../include/DetectorMessenger.hh"
 
 #include <fstream>
 #include "G4SystemOfUnits.hh"
@@ -16,15 +19,26 @@
 #include "G4DynamicParticle.hh"
 #include "G4RandomDirection.hh"
 #include "G4VProcess.hh"
+#include "G4RunManager.hh"
 
+const static G4double torr = 1. / 760. * atmosphere;
 
 DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : G4VFastSimulationModel(modelName, envelope),detCon(dc), fGasBoxSD(sd) {
         thermalE=gmp->GetThermalEnergy();
+        voltageAnodeWires=gmp->GetVoltageAnodeWires();
+        voltageCathodePlane=gmp->GetVoltageCathodePlane();
         G4cout << "(Debug: DegradModel.cc) Now setting the thermal energy of the Degrad model: " << thermalE / eV << " eV" << G4endl;
         processOccured = false;
         nbOfSecondaries = 0;
-    }
+        numberOfGases = gmp->GetNumberOfGases();  
+        gasList = gmp->GetGasList();
+        gasPercentages = gmp->GetGasPercentages();
+        temperature = gmp->GetTemperature();
+        DetectorMessenger* messenger = detCon->GetDetectorMessenger();
+        pressure = messenger->GetPressure(); // Get the pressure from the DetectorMessenger
+        distanceAnodeCathodes = gmp->GetDistanceAnodeCathodes(); // Distance from the anodes to the source of photons
+}
 
 DegradModel::~DegradModel() {}
 
@@ -57,6 +71,19 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
     G4cout << "(Debug: DegradModel.cc) The primary track has been killed..." << G4endl;
 
     if(!processOccured){
+        // Retrieving the EventAction instance for the energy of the primary
+        auto eventAction = dynamic_cast<EventAction*>(
+            const_cast<G4UserEventAction*>(G4RunManager::GetRunManager()->GetUserEventAction()));
+        G4double energyPrimary;
+        if (eventAction) {
+            energyPrimary = eventAction->GetEnergyPrimary();
+            energyPrimary = energyPrimary / eV; // Convert to eV
+            G4cout << "(Debug: DegradModel.cc) Energy of the primary particle: " << energyPrimary << " eV" << G4endl;
+        } else {
+            energyPrimary = 0.0;
+            G4cerr << "(Debug: DegradModel.cc) Error: EventAction is not set or cannot be cast." << G4endl;
+        }  
+
         G4ThreeVector degradPos =fastTrack.GetPrimaryTrack()->GetVertexPosition();
         G4double degradTime = fastTrack.GetPrimaryTrack()->GetGlobalTime();
         
@@ -67,9 +94,33 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         G4int stdout;
         G4int SEED=53217137*G4UniformRand();
         G4String seed = G4UIcommand::ConvertToString(SEED);
-        G4String degradString="printf \"2,1,3,1,"+seed+",15000.0,2.0,0.0\n6,8,0,0,0,0\n90.0,10.0,0.0,0.0,0.0,0.0,20.0,750.062\n6000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
-        // G4String degradString="printf \"1,1,3,-1,"+seed+",5900.0,7.0,0.0\n7,0,0,0,0,0\n100.0,0.0,0.0,0.0,0.0,0.0,20.0,900.0\n3000.0,0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" > conditions_Degrad.txt";
-        G4cout << "(Debug: DegradModel.cc) String sent to conditions_Degrad.txt: " << degradString << G4endl;
+
+        // Calculation of the electric field for Degrad in V/cm
+        distanceAnodeCathodes = distanceAnodeCathodes / cm; // Convert to cm
+        G4cout << "(Debug: DegradModel.cc) Distance from the anodes to the cathodes: " << distanceAnodeCathodes << " cm" << G4endl;
+        G4double voltageDifference = voltageAnodeWires - voltageCathodePlane; // V
+        G4double electricField = voltageDifference / distanceAnodeCathodes; // V/cm
+        G4cout << "(Debug: DegradModel.cc) Electric field: " << electricField << " V/cm" << G4endl;
+
+        // Here, we configure the input that will be sent to Degrad for the avalanche calculation.
+        std::string energyString = std::to_string(energyPrimary); 
+        std::string electricFieldString = std::to_string(electricField);
+        std::string numberOfGasesString = std::to_string(numberOfGases);
+        std::string thermalEString = std::to_string(thermalE / eV); // Convert thermal energy to eV
+        double temperatureCentigrade = temperature - 273.15; // Convert Kelvin to Celsius
+        std::string temperatureString = std::to_string(temperatureCentigrade);
+        double pressureTorr = pressure / torr; // Convert pressure to Torr
+        std::string pressureString = std::to_string(pressureTorr);
+
+        // Please search for "INPUT CARDS" in the Degrad Fortran source code for more information
+        G4String degradString=numberOfGasesString + ",1,3,1," + seed + "," 
+        + energyString + "," + thermalEString + ",0.0\n" + gasList + "\n"
+        + gasPercentages + "," + temperatureString + "," + pressureString + "\n"
+        + electricFieldString + ",0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" "
+        + "> conditions_Degrad.txt";
+
+        G4cout << "(Debug: DegradModel.cc) String sent to conditions_Degrad.txt: " 
+        << degradString << G4endl;
         
         /*
         The command below involves writing data to a file named conditions_Degrad.txt using 

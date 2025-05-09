@@ -70,6 +70,11 @@ class DriftLineTrajectory : public G4Trajectory
      { return (*fpPointsContainer)[i];};
     inline G4double GetCharge() const
      { return +2.*eplus;}
+    void ClearTrajectory() {
+      if (fpPointsContainer) {
+        fpPointsContainer->clear();
+      }
+    }
   private:
     DriftLineTrajectoryPointContainer* fpPointsContainer;
 };

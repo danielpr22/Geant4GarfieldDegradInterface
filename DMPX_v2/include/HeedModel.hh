@@ -87,8 +87,9 @@ class HeedModel : public G4VFastSimulationModel {
   double vAnodeWires;
   double vCathodePlane;
 
-  // This is the parameter that matters for calculating the gas amplification coefficient G
-  G4int secondaryElectronCounter; 
+  // These are the parameters that matter for calculating the gas amplification coefficient G
+  G4int secondaryElectronCounter;
+  G4int secondaryElectronCounterTotal;  
 
   Garfield::TrackHeed* fTrackHeed;
   GasBoxSD* fGasBoxSD;

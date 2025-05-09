@@ -28,6 +28,7 @@ public:
     // attributes from the Particle Gun
     
     void GeneratePrimaries(G4Event*);
+    //double GetMonoEnergy()const;
     
 private:
     

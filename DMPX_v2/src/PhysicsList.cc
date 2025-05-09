@@ -202,7 +202,8 @@ void PhysicsList::AddIonGasModels() {
   }
 }
 
-//This activates the G4FastSimulationPhysics for all particles and should be called by the user in the macro before '/run/initialize' (command: '/Xenon/phys/AddParametrisation')
+//This activates the G4FastSimulationPhysics for all particles and should be called by the user 
+// in the macro before '/run/initialize' (command: '/DMPX/phys/AddParametrisation')
 void PhysicsList::AddParametrisation() {   
     theParticleTable->GetIterator()->reset();
     while ((*theParticleTable->GetIterator())()) {

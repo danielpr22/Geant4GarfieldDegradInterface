@@ -31,7 +31,6 @@ HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* enve
   fVisualizeChamber = gmp->GetVisualizeChamber();
   fVisualizeSignal = gmp->GetVisualizeSignals();
   fVisualizeField = gmp->GetVisualizeField();
-  secondaryElectronCounter = 0; 
 }
 
 HeedModel::~HeedModel() {}
@@ -211,7 +210,7 @@ void HeedModel::buildBoxAndField(){
   const double cathodePlaneWidth = 0.2; // cm
   const double cathodePlaneHalfZ = 1.6; // cm
   const double xPosPlane = 0.0; // cm
-  const double yPosPlane = -5.0; // cm
+  const double yPosPlane = -1.0; // cm
   const double zPosPlane = 0.0; // cm
 
   cathodePlane = new Garfield::SolidBox(xPosPlane, yPosPlane, zPosPlane, 
@@ -309,7 +308,7 @@ void HeedModel::SettingFieldView(){
   viewField->SetComponent(comp);
   viewField->SetCanvas(fFieldCanvas);
   viewField->SetNumberOfContours(100);
-  viewField->SetArea(-0.4, -0.4, 0.4, 0.4);
+  viewField->SetArea(-7, -2, -4, 2);
   viewField->PlotContour("e");
   fFieldCanvas->Update();
   fFieldCanvas->Print("HeedDeltaElectronModel_efield.pdf");
@@ -320,6 +319,8 @@ void HeedModel::Drift(double x, double y, double z, double t) {
   // Here, we have the point at the START of the drift, and we want to store all the points
   // of the drift calculation
   bool reached_wire = false; 
+  secondaryElectronCounter = 0; 
+
   if (driftElectrons) {
       G4cout << "(Debug: HeedModel.cc) Now drifting an electron..." << G4endl; 
       DriftLineTrajectory* dlt = new DriftLineTrajectory();
@@ -339,7 +340,7 @@ void HeedModel::Drift(double x, double y, double z, double t) {
               fDriftRKF->GetDriftLinePoint(i, xi, yi, zi, ti); // To get the full trajectory
               if (G4VVisManager::GetConcreteInstance() && i % 1 == 0) { // To get all the drift step points or only some of them
                   dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
-                  G4cout << "(Debug: HeedModel.cc) Appended step: " << xi << " " << yi << " " << zi << " " << status << G4endl;
+                  //G4cout << "(Debug: HeedModel.cc) Appended step: " << xi << " " << yi << " " << zi << " " << status << G4endl;
               }
           }
           fDriftRKF->GetEndPoint(xi, yi, zi, ti, status); // Ths command retrieves the endpoint and end time, and the status
@@ -377,6 +378,8 @@ void HeedModel::Drift(double x, double y, double z, double t) {
           }
       }
   }
+  // This is the total number that have reached the anodes in all the events so far
+  secondaryElectronCounterTotal += secondaryElectronCounter;
 }
 
 // Plot the track, only called when visualization is turned on by the user
