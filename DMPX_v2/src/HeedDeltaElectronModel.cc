@@ -26,21 +26,29 @@ namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 // HeedDeltaElectronModel derives from the HeedModel Class and uses the GasModelParameters Class to set some user-defined veriables
 HeedDeltaElectronModel::HeedDeltaElectronModel(GasModelParameters* gmp,G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : HeedModel(gmp, modelName, envelope,dc,sd) {
+        // Particle map
         fMapParticlesEnergy = gmp->GetParticleNamesHeedDeltaElectron();
+
+        // Gas files
         gasFile = gmp->GetGasFile();
         ionMobFile = gmp->GetIonMobilityFile();
-        driftElectrons = gmp->GetDriftElectrons();
-        trackMicro = gmp->GetTrackMicroscopic();
-        createAval = gmp->GetCreateAvalancheMC();
-        fVisualizeChamber = gmp->GetVisualizeChamber();
 
-        G4cout << "(Debug: HeedDeltaElectronModel.cc) Value of fVisualizeChamber: " << fVisualizeChamber << G4endl; 
-
-        fVisualizeSignal = gmp->GetVisualizeSignals();
-        fVisualizeField = gmp->GetVisualizeField();
-        driftRKF = gmp->GetDriftRKF();
+        // Voltages
         vAnodeWires = gmp->GetVoltageAnodeWires();
         vCathodePlane = gmp->GetVoltageCathodePlane();
+
+        // Tracking 
+        driftElectrons = gmp->GetDriftElectrons();
+        driftRKF = gmp->GetDriftRKF();
+        trackMicro = gmp->GetTrackMicroscopic();
+        createAval = gmp->GetCreateAvalancheMC();
+
+        // Visualization
+        fVisualizeChamber = gmp->GetVisualizeChamber();
+        fVisualizeSignal = gmp->GetVisualizeSignals();
+        fVisualizeField = gmp->GetVisualizeField();
+
+        // Name of the model
         name="HeedDeltaElectronModel";
         InitialisePhysics();
 
@@ -52,7 +60,7 @@ HeedDeltaElectronModel::~HeedDeltaElectronModel() {}
 
 //This method is called in the DoIt-method in parent class HeedModel
 void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_eV, double t, double x_cm,
-            double y_cm, double z_cm, double dx, double dy, double dz){
+            double y_cm, double z_cm, double dx, double dy, double dz) {
 
     G4double ekin_keV = ekin_eV / keV; // For the Transport functions
 

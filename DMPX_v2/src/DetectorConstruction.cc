@@ -33,7 +33,6 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
     checkOverlaps(0),
     worldHalfLength(0.2*m),        // World volume is a cube with side length = 3m;
     gasPressure(1.*atmosphere),   // Pressure inside the gas
-    temperature(273.15 *kelvin),  // temperature
     kryptonPercentage(90),        // mixture settings in molar percentage
     ch4Percentage(10),
 
@@ -42,7 +41,7 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
     // changed), therefore we will also have to define the wires following
     // the z-axis in Geant4.
     GasBoxLengthX(130*mm), // Length of the gas box in the X direction
-    GasBoxLengthY(40*mm),  // Length of the gas box in the Y direction
+    GasBoxLengthY(20*mm),  // Length of the gas box in the Y direction
     GasBoxLengthZ(32*mm), // Length of the gas box in the Z direction
 
     // For simplicity, we will set the center of the gas box at (0,0,0)
@@ -52,6 +51,9 @@ DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
 {
   // "This" is a pointer that is conceptually equivalent to the "self" in Python
   detectorMessenger = new DetectorMessenger(this);
+  G4double temperature = fGasModelParameters->GetTemperature(); 
+
+  //G4double GetGasBoxLengthY{return GasBoxLengthY;};
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

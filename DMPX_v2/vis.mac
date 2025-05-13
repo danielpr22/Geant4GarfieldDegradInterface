@@ -9,12 +9,13 @@
 ##########################################
  
     # Thermal energy for the DegradModel. Below this energy, the HeedDeltaElectronModel will be activated
-    /gasModelParameters/degrad/thermalenergy 10 eV
+    /gasModelParameters/degrad/thermalenergy 10. eV
 
     # Adding the energy ranges in keV for which the HeedDeltaElectronModel will be activated
     /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.001 100
     /gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0.1 1000
 
+    # In this simulation, we are using Kr for the detection gas and CH4 for the extinction gas
     /gasModelParameters/degrad/numberofgases 2
 
     # Please, input the gas identifier for Degrad (search for "GAS NUMBER" in the Degrad source code)
@@ -25,14 +26,14 @@
     
     /gasModelParameters/heed/gasfile ar_93_co2_7.gas
     /gasModelParameters/heed/drift 1
-    /gasModelParameters/heed/driftRKF 1
-    /gasModelParameters/heed/trackmicroscopic 0
+    /gasModelParameters/heed/driftRKF 0
+    /gasModelParameters/heed/trackmicroscopic 1
     /gasModelParameters/heed/createAval 0
     /gasModelParameters/heed/visualizechamber 1
     /gasModelParameters/heed/visualizesignals 1
     /gasModelParameters/heed/visualizefield 1
-    /gasModelParameters/heed/voltageanodewire 500.
-    /gasModelParameters/heed/voltagecathodeplane 0.
+    /gasModelParameters/heed/voltageanodewire 1500.    # [V]
+    /gasModelParameters/heed/voltagecathodeplane 0.     # [V]
 
 
 ####################################################
@@ -82,7 +83,7 @@
     /vis/scene/add/trajectories smooth
     /vis/scene/add/hits
     /vis/viewer/set/lightsThetaPhi 90. 0. # In degrees
-    /vis/viewer/set/viewpointThetaPhi 90. 0. # In degrees
+    /vis/viewer/set/viewpointThetaPhi 50. 30. # In degrees
     /vis/viewer/set/style surface
     /vis/viewer/set/hiddenEdge true
     /vis/scene/add/axes 0 0 0 3 cm
@@ -166,5 +167,5 @@
     # Monoenergetic photon particle source at a given energy
     /gps/particle gamma
     /gps/ene/type Mono
-    /gps/ene/mono 12. keV
+    /gps/ene/mono 10. keV
 

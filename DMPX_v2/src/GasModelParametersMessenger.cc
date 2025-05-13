@@ -2,6 +2,8 @@
 #include "../include/GasModelParameters.hh"
 #include "../include/DegradModel.hh"
 
+# include <iomanip> // For dealing with decimal precision 
+
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithABool.hh"
@@ -243,9 +245,6 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
       G4double gas6Percentage = StoD(next());
       fGasModelParameters->SetGasPercentages(gas1Percentage, gas2Percentage, gas3Percentage, 
         gas4Percentage, gas5Percentage, gas6Percentage);
-      G4cout << "(Debug: GasModelParametersMessenger.cc) Gas percentages set to: "
-           << gas1Percentage << " " << gas2Percentage << " " << gas3Percentage << " " 
-           << gas4Percentage << " " << gas5Percentage << " " << gas6Percentage << G4endl;
     }
     else if(command == temperatureCmd) {
       fGasModelParameters->SetTemperature(temperatureCmd->GetNewDoubleValue(newValues));

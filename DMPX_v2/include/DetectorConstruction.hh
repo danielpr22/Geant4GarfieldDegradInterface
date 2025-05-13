@@ -90,7 +90,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   inline void CheckOverlaps(G4bool co){checkOverlaps=co;};
   inline void SetWorldHalfLength(G4double d){worldHalfLength=d;};
   inline void SetGasPressure(G4double d){gasPressure=d;};
-  inline void SetTemperature(G4double d){temperature=d;};
   inline void SetGasBoxLengthX(G4double d){GasBoxLengthX=d;};
   inline void SetGasBoxLengthY(G4double d){GasBoxLengthY=d;};
   inline void SetGasBoxLengthZ(G4double d){GasBoxLengthZ=d;};
@@ -100,7 +99,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
   //Getters for the dimensions and environment variables of the setup
   inline G4double GetWorldHalfLength(){return worldHalfLength;};
   inline G4double GetGasPressure(){return gasPressure;};
-  inline G4double GetTemperature(){return temperature;};
   inline G4double GetKryptonPercentage(){return kryptonPercentage;};
   inline G4double GetCH4Percentage(){return ch4Percentage;}; 
   inline G4double GetGasBoxLengthX(){return GasBoxLengthX;};

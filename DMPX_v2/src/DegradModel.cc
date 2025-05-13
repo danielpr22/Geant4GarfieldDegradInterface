@@ -34,6 +34,7 @@ DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* 
         numberOfGases = gmp->GetNumberOfGases();  
         gasList = gmp->GetGasList();
         gasPercentages = gmp->GetGasPercentages();
+        G4cout << "(Debug: DegradModel.cc) The gas percentages are: " << gasPercentages << G4endl;
         temperature = gmp->GetTemperature();
         DetectorMessenger* messenger = detCon->GetDetectorMessenger();
         pressure = messenger->GetPressure(); // Get the pressure from the DetectorMessenger
@@ -96,28 +97,56 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         G4String seed = G4UIcommand::ConvertToString(SEED);
 
         // Calculation of the electric field for Degrad in V/cm
-        distanceAnodeCathodes = distanceAnodeCathodes / cm; // Convert to cm
-        G4cout << "(Debug: DegradModel.cc) Distance from the anodes to the cathodes: " << distanceAnodeCathodes << " cm" << G4endl;
+        G4double distanceAnodeCathodes_cm = distanceAnodeCathodes / cm; // Convert to cm
+        G4cout << "(Debug: DegradModel.cc) Distance from the anodes to the cathodes: " << distanceAnodeCathodes_cm << " cm" << G4endl;
         G4double voltageDifference = voltageAnodeWires - voltageCathodePlane; // V
-        G4double electricField = voltageDifference / distanceAnodeCathodes; // V/cm
+        G4double electricField = voltageDifference / distanceAnodeCathodes_cm; // V/cm
         G4cout << "(Debug: DegradModel.cc) Electric field: " << electricField << " V/cm" << G4endl;
 
+
+        // Formatting the input that we are going to feed to Degrad
+        // The main issue is that the input double values should have one and only one decimal point
         // Here, we configure the input that will be sent to Degrad for the avalanche calculation.
-        std::string energyString = std::to_string(energyPrimary); 
-        std::string electricFieldString = std::to_string(electricField);
-        std::string numberOfGasesString = std::to_string(numberOfGases);
-        std::string thermalEString = std::to_string(thermalE / eV); // Convert thermal energy to eV
+        std::string numberOfGasesString = std::to_string(numberOfGases); // No formatting needed
+        std::ostringstream oss;
+
+        // Format energyString
+        oss << std::fixed << std::setprecision(1) << energyPrimary;
+        std::string energyString = oss.str();
+        oss.str(""); // Clear the stream
+        oss.clear(); // Reset the state
+
+        // Format thermalEString
+        oss << std::fixed << std::setprecision(1) << (thermalE / eV); // Convert thermal energy to eV
+        std::string thermalEString = oss.str();
+        oss.str("");
+        oss.clear();
+
+        // Format temperatureString
         double temperatureCentigrade = temperature - 273.15; // Convert Kelvin to Celsius
-        std::string temperatureString = std::to_string(temperatureCentigrade);
+        oss << std::fixed << std::setprecision(1) << temperatureCentigrade;
+        std::string temperatureString = oss.str();
+        oss.str("");
+        oss.clear();
+
+        // Format pressureString
         double pressureTorr = pressure / torr; // Convert pressure to Torr
-        std::string pressureString = std::to_string(pressureTorr);
+        oss << std::fixed << std::setprecision(1) << pressureTorr;
+        std::string pressureString = oss.str();
+        oss.str("");
+        oss.clear();
+
+        // Format electricFieldString
+        oss << std::fixed << std::setprecision(1) << electricField;
+        std::string electricFieldString = oss.str();
+        oss.str("");
+        oss.clear();
 
         // Please search for "INPUT CARDS" in the Degrad Fortran source code for more information
         G4String degradString=numberOfGasesString + ",1,3,1," + seed + "," 
         + energyString + "," + thermalEString + ",0.0\n" + gasList + "\n"
         + gasPercentages + "," + temperatureString + "," + pressureString + "\n"
-        + electricFieldString + ",0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0\" "
-        + "> conditions_Degrad.txt";
+        + electricFieldString + ",0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0";
 
         G4cout << "(Debug: DegradModel.cc) String sent to conditions_Degrad.txt: " 
         << degradString << G4endl;
@@ -130,23 +159,39 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         be used later to check for errors.
         */
         
-        stdout=system(degradString.data());
+        std::ofstream outFile("conditions_Degrad.txt");
+        if (!outFile.is_open()) {
+            G4cerr << "(Error: DegradModel.cc) Failed to open conditions_Degrad.txt for writing." << G4endl;
+            return;
+        }
+        outFile << degradString;
+        if (outFile.fail()) {
+            G4cerr << "(Error: DegradModel.cc) Failed to write to conditions_Degrad.txt." << G4endl;
+            outFile.close();
+            return;
+        }
+        outFile.close();
+        G4cout << "(Debug: DegradModel.cc) Successfully wrote to conditions_Degrad.txt." << G4endl;
 
         G4cout << "(Debug: DegradModel.cc) Getting the environment variable for Degrad..." << G4endl;
         const char* degradpath = std::getenv("DEGRAD_HOME");
 
-        if (degradpath) {
-            G4cout << "(Debug: DegradModel.cc) DEGRAD_HOME is set to: " << degradpath << G4endl;
-        } else {
-            G4cerr << "(Debug: DegradModel.cc) Error: DEGRAD_HOME is not set!" << G4endl;
+        if (!degradpath) {
+            G4cerr << "(Error: DegradModel.cc) DEGRAD_HOME is not set!" << G4endl;
+            return;
         }
 
-        std::string exec = "/degrad.exe < conditions_Degrad.txt";
-        std::string full_path = degradpath + exec;
-        const char *mychar = full_path.c_str();
-        G4cout << "(Debug: DegradModel.cc) The mychar pointer is set to: " << mychar << G4endl;
-        stdout=system(mychar); // This command runs the mychar string command in the shell
-        stdout=system("./convertDegradFile.py");
+        std::string exec = std::string(degradpath) + "/degrad.exe < conditions_Degrad.txt";
+        G4cout << "(Debug: DegradModel.cc) Full command: " << exec << G4endl;
+        int execStatus = system(exec.c_str());
+        if (execStatus != 0) {
+            G4cerr << "(Error: DegradModel.cc) Failed to execute Degrad." << G4endl;
+            return;
+        }
+
+        //const char *mychar = exec.c_str();
+        execStatus = system(exec.c_str()); // This command runs the mychar string command in the shell
+        execStatus = system("./convertDegradFile.py");
 
         G4cout << "(Debug: DegradModel.cc) The Degrad file was properly converted..." << G4endl;
 
@@ -176,7 +221,14 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
     std::ifstream inFile;
     G4String fname= "DEGRAD.OUT";
     inFile.open(fname,std::ifstream::in);
-    
+
+    if (!inFile.is_open()) {
+        G4cerr << "(Error: DegradModel.cc) Failed to open file: " << fname << G4endl;
+        return; // Exit the function or handle the error appropriately
+    } else {
+        G4cout << "(Debug: DegradModel.cc) Successfully opened file: " << fname << G4endl;
+    }
+
     G4cout<< "(Debug: DegradModel.cc) Working in "<< fname << G4endl;
     
     nline=1;
@@ -251,10 +303,10 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
                     fGasBoxSD->InsertGasBoxHit(gbh);
                     
                     // Create secondary electron
-                    if(nbOfElectronsInBox % 4 == 0){ // To create only some secondary electrons or all of them
+                    if(nbOfElectronsInBox % 100 == 0){ // To create only some secondary electrons or all of them
                         // The condition is just set to limit the number of electrons in tests
                         G4cout << "(Debug: DegradModel.cc) Creating secondary electron..." << G4endl; 
-                        G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), 9.0*eV); // Here we write the energy cut in Degrad
+                        G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), thermalE - 0.1 * eV); // Here we write the energy cut in Degrad
                         G4Track* newTrack=fastStep.CreateSecondaryTrack(electron, myPoint, time, false);
                     }
                 }

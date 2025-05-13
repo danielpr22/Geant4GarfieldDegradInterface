@@ -4,7 +4,9 @@
 // Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4SystemOfUnits.hh"
 #include "G4String.hh"
+#include "G4ios.hh"
 #include <map>
+#include <iomanip>
 
 class HeedDeltaElectronModelAnodes;
 class DegradModel;
@@ -59,9 +61,13 @@ class GasModelParameters{
                   std::to_string(g4) + "," + std::to_string(g5) + "," + std::to_string(g6);
     };
     inline G4String GetGasList(){return gasList;};
-    inline void SetGasPercentages(G4int g1, G4int g2, G4int g3, G4int g4, G4int g5, G4int g6) {
-        gasPercentages = std::to_string(g1) + "," + std::to_string(g2) + "," + std::to_string(g3) + "," +
-                  std::to_string(g4) + "," + std::to_string(g5) + "," + std::to_string(g6);
+    inline void SetGasPercentages(G4double g1, G4double g2, G4double g3, G4double g4, G4double g5, G4double g6) {
+        std::ostringstream oss; // This is due to the formatting of the gas percentages needed in Degrad
+        oss << std::fixed << std::setprecision(1)
+            << g1 << "," << g2 << "," << g3 << "," << g4 << "," << g5 << "," << g6;
+        gasPercentages = oss.str();
+        G4cout << "(Debug: GasModelParameters.cc) Gas percentages set to: " 
+            << gasPercentages << G4endl;
     };
     inline G4String GetGasPercentages(){return gasPercentages;};
     inline G4double GetTemperature(){return temperature;};
