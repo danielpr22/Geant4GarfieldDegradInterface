@@ -9,7 +9,9 @@
 #include "G4Step.hh"
 #include "G4HCofThisEvent.hh"
 #include "G4TouchableHistory.hh"
+#include "G4ParticleDefinition.hh"
 #include "G4SDManager.hh"
+#include "G4Gamma.hh"
 #include "G4VProcess.hh"
 #include "G4VPhysicalVolume.hh"
 #include "G4VVisManager.hh"
@@ -41,7 +43,11 @@ G4bool GasBoxSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
         G4cout << "(Debug: GasBoxSD.cc) GasBox Hit!" << G4endl;
         G4cout << "(Debug: GasBoxSD.cc)Particle ID: " << aTrack->GetTrackID() << G4endl;
         G4cout << "(Debug: GasBoxSD.cc) Energy electron: " << aTrack->GetKineticEnergy() << G4endl;
-        return true;
+        if(aStep->GetPostStepPoint()->GetProcessDefinedStep() != nullptr) {
+            G4cout << "(Debug: GasBox.cc) Gamma interaction occurred!" << G4endl; 
+            gammaInteractionOccurred = true;
+            return true; 
+        }
     }
 
     return false;  
@@ -55,7 +61,5 @@ void GasBoxSD::EndOfEvent (G4HCofThisEvent * hce){
         auto hit = (*HC)[i];
         G4cout << "(Debug: GasBoxSD.cc) Hit position: " << G4BestUnit(hit->GetPos(), "Length") << ", Time: " << G4BestUnit(hit->GetTime(), "Time") << G4endl;
     }
-    DrawAll();
 }
 
-void GasBoxSD::DrawAll() {}

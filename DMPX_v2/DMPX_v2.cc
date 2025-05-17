@@ -15,7 +15,9 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "G4RunManager.hh"
 #include "G4MTRunManager.hh"
 #include "G4UImanager.hh"
+#include "G4SDManager.hh"
 #include "G4VisExecutive.hh"
+#include "G4Step.hh"
 #include "G4UIExecutive.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
@@ -28,6 +30,8 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "include/PhysicsList.hh"
 #include "include/MyUserActionInitialization.hh"
 #include "include/GasModelParameters.hh"
+#include "include/GasBoxSD.hh"
+
 
 // Added for visualizing ROOT
 // TApplication* rootApp = nullptr; 
@@ -61,21 +65,57 @@ int main(int argc, char** argv) {
   
   runManager->SetUserInitialization(new MyUserActionInitialization());
  
-   // get the pointer to the User Interface manager
+  // User interface manager
   G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
+  // Visual manager
   G4VisManager* visManager = new G4VisExecutive();
   visManager->Initialize();
-
-  //runManager->Initialize();
 
   if (argc == 1)  //! define UI terminal for interactive mode:
   {
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-    UImanager->ApplyCommand("/control/execute vis.mac");
+    UImanager->ApplyCommand("/control/execute scan_energies_angles.mac");
 
-    ui->SessionStart();
-    delete ui;
+    GasBoxSD* gasBoxSD = detector->GetGasBoxSD();
+    if (!gasBoxSD) {
+        G4cerr << "(Error: DMPX_v2.cc) GasBoxSD not found!" << G4endl;
+        return 1;
+    }
+
+    std::vector<double> energies = {3.0, 5.0, 10.0, 20.0, 25.0}; // in keV
+    std::vector<double> angles = {45.0, 50.0, 55.0, 65.0, 80.0}; // in degrees
+
+    for (double energy : energies) {
+      for (double angle : angles) {
+          UImanager->ApplyCommand("/gps/ene/mono " + std::to_string(energy) + " keV");
+          UImanager->ApplyCommand("/gps/ang/minphi " + std::to_string(angle) + " deg");
+          UImanager->ApplyCommand("/gps/ang/maxphi " + std::to_string(angle) + " deg");
+  
+          G4cout << "(Debug: DMPX_v2.cc) Running for energy: " << energy << " keV, angle: " << angle << " degrees" << G4endl;
+  
+          gasBoxSD->ResetGammaInteractionFlag(); // Reset the flag before starting
+  
+          bool interactionOccurred = false;
+          while (!interactionOccurred) {
+              // Process one event
+              runManager->BeamOn(1);
+
+              G4cout << "(Debug: DMPX_v2.cc) Now shooting..." << G4endl;
+  
+              // Check if a gamma interaction occurred to move to the next configuration
+              interactionOccurred = gasBoxSD->HasGammaInteractionOccurred();
+          }
+      }
+  }
+
+  // Initialize the UI manager
+  G4UImanager* UImanager = G4UImanager::GetUIpointer(); 
+
+  // Start the Geant4 UI
+  ui->SessionStart();
+  delete ui;
+
   } else  //! batch mode:
   {
     G4String command = "/control/execute ";
@@ -92,10 +132,7 @@ int main(int argc, char** argv) {
     cout << "(Debug: DMPX_v2.cc) Simulation Time: " << duration << endl;
   }
 
-  //rootApp->Run();
-
   delete visManager; 
   delete runManager;
-  //delete rootApp; 
   return 0;
 }

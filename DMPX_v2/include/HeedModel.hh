@@ -11,6 +11,8 @@
 // Included from the current project
 #include "GasModelParameters.hh"
 #include "GasBoxSD.hh"
+#include "DetectorMessenger.hh"
+#include "DetectorConstruction.hh"
 
 // Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "SolidBox.hh"                 //Geometry
@@ -48,7 +50,6 @@ class HeedModel : public G4VFastSimulationModel {
   HeedModel(GasModelParameters*, G4String, G4Region*,DetectorConstruction*,GasBoxSD*);
   ~HeedModel();
 
-
   virtual G4bool IsApplicable(const G4ParticleDefinition&);
   virtual G4bool ModelTrigger(const G4FastTrack&);
   virtual void DoIt(const G4FastTrack&, G4FastStep&);
@@ -56,11 +57,52 @@ class HeedModel : public G4VFastSimulationModel {
   /*The following public methods are user-dependent*/
 
   //This method is called after each event, to record the relevant data
-  virtual void ProcessEvent() = 0;
+  void ProcessEvent();
   //This method is called at the beginning of an event to reset some variables of the class
-  virtual void Reset() = 0;
+  void Reset();
   G4bool FindParticleName(G4String name);
   G4bool FindParticleNameEnergy(G4String name,double ekin_keV);
+
+  // Getters from DetectorConstruction, to inherit the same values from the 
+  // DetectorMessenger class
+  G4double GetAnodesHalfLength(const DetectorConstruction& detCon) {
+    const DetectorMessenger& detectorMessenger = *(detCon.GetDetectorMessenger());
+    anodesHalfLength = detectorMessenger.GetAnodesHalfLength(); 
+    return anodesHalfLength; 
+  }
+
+  G4double GetAnodesR(const DetectorConstruction& detCon) {
+    const DetectorMessenger& detectorMessenger = *(detCon.GetDetectorMessenger());
+    anodesR = detectorMessenger.GetAnodesR();
+    return anodesR;  
+  }
+
+  G4double GetAnodesSpacing(const DetectorConstruction& detCon) {
+    const DetectorMessenger& detectorMessenger = *(detCon.GetDetectorMessenger());
+    anodesSpacing = detectorMessenger.GetAnodesSpacing();
+    return anodesSpacing; 
+  }
+
+  G4int GetNbOfAnodes(const DetectorConstruction& detCon) {
+    const DetectorMessenger& detectorMessenger = *(detCon.GetDetectorMessenger());
+    nbOfAnodes = detectorMessenger.GetNbOfAnodes();
+    return nbOfAnodes; 
+  }
+
+  G4String GetNameOfSimulation(const DetectorConstruction& detCon) {
+    const DetectorMessenger& detectorMessenger = *(detCon.GetDetectorMessenger());
+    nameOfSimulation = detectorMessenger.GetNameOfSimulation();
+    return nameOfSimulation; 
+  }
+
+  // Setter and getter for the number of events
+  void SetNumberOfEvents(G4int n) {
+    numberOfEvents = n;
+  }
+
+  G4int GetNumberOfEvents() {
+    return numberOfEvents;
+  }
 
  protected:
   void InitialisePhysics();
@@ -69,7 +111,6 @@ class HeedModel : public G4VFastSimulationModel {
   void Drift(double,double, double, double);
   DetectorConstruction* detCon;
   HeedMessenger* fHeedMessenger;
-
   MapParticlesEnergy fMapParticlesEnergy;
 
   G4String gasFile;
@@ -83,13 +124,22 @@ class HeedModel : public G4VFastSimulationModel {
   bool fVisualizeSignal;
   bool fVisualizeField;
 
-  G4double thermalE; 
   double vAnodeWires;
   double vCathodePlane;
+  G4double thermalE; 
+  G4double temperature; 
+  G4double anodesHalfLength;
+  G4double anodesR;
+  G4double anodesSpacing;
+  G4int nbOfAnodes;
+  G4int numberOfEvents; 
 
   // These are the parameters that matter for calculating the gas amplification coefficient G
   G4int secondaryElectronCounter;
   G4int secondaryElectronCounterTotal;  
+
+  // Optional parameters to speed up the calculation of the drift
+  G4int jumpDriftStepPoints;
 
   Garfield::TrackHeed* fTrackHeed;
   GasBoxSD* fGasBoxSD;
@@ -106,6 +156,7 @@ class HeedModel : public G4VFastSimulationModel {
   void SettingSignalView();
   void SettingFieldView();
 
+  DetectorMessenger* detectorMessenger;
   Garfield::MediumMagboltz* fMediumMagboltz;
   Garfield::Sensor* fSensor;
   Garfield::GeometrySimple* geo;
@@ -119,11 +170,20 @@ class HeedModel : public G4VFastSimulationModel {
   TCanvas* fChamberCanvas;
   TCanvas* fSignalCanvas;
   TCanvas* fFieldCanvas;
+  TCanvas* fGeoCanvas;
   Garfield::ViewCell* viewCell;
   Garfield::ViewDrift* viewDrift;
   Garfield::ViewSignal* viewSignal;
   Garfield::ViewField* viewField;
   Garfield::ViewGeometry* geoView; 
+
+  G4double tmin; 
+  G4double tstep; 
+  G4int nbins;
+  G4double gasAmplificationCoefficient; // The averaged amplification coefficient G
+  std::vector<int> electronsInWires; // Vector to store the number of electrons in each wire
+  G4String nameOfSimulation; // Name used for the storing of results
+  G4int shotNumber; 
 
 };
 

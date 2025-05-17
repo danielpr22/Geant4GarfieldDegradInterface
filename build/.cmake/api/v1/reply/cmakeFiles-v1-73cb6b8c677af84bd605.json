@@ -605,13 +605,10 @@
 			"path" : "/usr/share/cmake-3.28/Modules/CMakeParseArguments.cmake"
 		},
 		{
-			"path" : "DMPX_v2/vis.mac"
+			"path" : "DMPX_v2/scan_energies_angles.mac"
 		},
 		{
-			"path" : "DMPX_v2/run1.mac"
-		},
-		{
-			"path" : "DMPX_v2/ar_93_co2_7.gas"
+			"path" : "DMPX_v2/kr_90_ch4_10.gas"
 		},
 		{
 			"path" : "DMPX_v2/convertDegradFile.py"

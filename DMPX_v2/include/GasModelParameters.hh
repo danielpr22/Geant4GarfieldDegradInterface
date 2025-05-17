@@ -74,6 +74,10 @@ class GasModelParameters{
     inline void SetTemperature(double n){temperature=n;};
     inline G4double GetDistanceAnodeCathodes(){return distanceAnodeCathodes;};
     inline void SetDistanceAnodeCathodes(double n){distanceAnodeCathodes=n;};
+    inline void SetJumpDriftStepPoints(int n){jumpDriftStepPoints=n;};
+    inline int GetJumpDriftStepPoints(){return jumpDriftStepPoints;};
+    inline void SetJumpSecondaryElectrons(int n){jumpSecondaryElectrons=n;};
+    inline int GetJumpSecondaryElectrons(){return jumpSecondaryElectrons;};
     
     inline MapParticlesEnergy GetParticleNamesHeedDeltaElectron(){return fMapParticlesEnergyHeedDeltaElectron;};
 
@@ -100,6 +104,8 @@ class GasModelParameters{
     G4int numberOfGases; 
     double vAnodeWires;
     double vCathodePlane;
+    G4int jumpDriftStepPoints;
+    G4int jumpSecondaryElectrons;
 };
 
 #endif

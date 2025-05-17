@@ -52,6 +52,7 @@ class DegradModel : public G4VFastSimulationModel {
 		G4double temperature; 
 		G4double pressure; 
 		G4double distanceAnodeCathodes; // Distance from the anodes to the cathodes
+		G4int jumpSecondaryElectrons;
 };
 
 #endif

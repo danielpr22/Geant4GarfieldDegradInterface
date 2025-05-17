@@ -2,6 +2,7 @@
 #include "../include/DegradModel.hh"
 #include "../include/DetectorConstruction.hh"
 #include "../include/Analysis.hh"
+#include "../include/HeedModel.hh"
 #include "../include/RunAction.hh"
 
 #include "G4Event.hh"
@@ -12,9 +13,11 @@
 #include "G4VPhysicalVolume.hh"
 #include "G4GlobalFastSimulationManager.hh"
 
-EventAction::EventAction() {
+EventAction::EventAction() : eventStarted(false) {
     energyPrimary = 0.0;
     distanceAnodesSource = 0.0;
+    shotNumber = 0;
+    numberOfEvents = 0; 
 }
 
 EventAction::~EventAction() {
@@ -22,6 +25,11 @@ EventAction::~EventAction() {
 }
 
 void EventAction::BeginOfEventAction(const G4Event *ev) {
+    eventStarted = true; 
+    shotNumber++; 
+    G4cout << "(Debug: EventAction.cc) Beginning of event " << shotNumber << G4endl;
+
+
     DegradModel* dm = (DegradModel*)(G4GlobalFastSimulationManager::GetInstance()->GetFastSimulationModel("DegradModel"));
     if(dm)
         dm->Reset();
@@ -42,5 +50,7 @@ void EventAction::BeginOfEventAction(const G4Event *ev) {
 }
 
 
-void EventAction::EndOfEventAction(const G4Event *evt) {}
+void EventAction::EndOfEventAction(const G4Event *evt) {
+    eventStarted = false; 
+}
 

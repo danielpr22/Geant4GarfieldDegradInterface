@@ -1,30 +1,84 @@
-########################
-##### GAS PRESSURE #####
-########################
+#################################################
+########### PRE-REQUISITES / WARNINGS ###########
+#################################################
 
+# For running the Degrad part of the code, an environment variable called DEGRAD_HOME
+# pointing to the location of the degrad.exe executable must be defined.
+
+# For running the Garfield++ part, another environment variable called GARFIELD_HOME
+# must be defined, pointing to the location of the Garfield installation folder.
+
+# If we change the proportion of the gases, this can be controlled in this file. However, 
+# if we want to change the type of gas, we have also to do so inside HeedModel.cc (inside
+# the "makeGas" function) and inside the constructor of DetectorConstruction.cc
+
+
+##########################################
+##### GEOMETRY AND PRESSURE COMMANDS #####
+##########################################
+
+    # World half length for the simulation
+    /DMPX/geometry/SetWorldHalfLength 0.5 m
+
+    # Name for the simulation. There will be a generated results file named Results_{Name of the simulation}
+    /DMPX/geometry/SetNameOfSimulation DMPX_scan_angles_3
+
+    # Checking if there are any volumes that are overlapping (default set to false)
+    /DMPX/geometry/CheckOverlaps 0
+
+    # Pressure inside the gas
     /DMPX/geometry/SetGasPressure 1. bar
+
+    # Setting the krypton and CH4 percentages (ad hoc commands).
+    # WARNING. If the type of gas is also to be changed, please look at "PRE-REQUISITES/WARNINGS"
+    /DMPX/geometry/SetKryptonPercentage 90.0
+    /DMPX/geometry/SetCH4Percentage 10.0
+
+    # We must handle carefully the coordinates between Garfield++ and Geant4. In Garfield, the wires 
+    # must be following the z-axis (and it cannot be easily changed), therefore we will also have to 
+    # define the wires following the z-axis in Geant4
+    /DMPX/geometry/SetGasBoxLengthX 130. mm # Lengths are total lengths, from side to side
+    /DMPX/geometry/SetGasBoxLengthY 8.0 mm
+    /DMPX/geometry/SetGasBoxLengthZ 32.0 mm
+
+    # Position of the center of the gas box
+    /DMPX/geometry/SetGasBoxCenterPositionX 0. mm
+    /DMPX/geometry/SetGasBoxCenterPositionY 0. mm
+    /DMPX/geometry/SetGasBoxCenterPositionZ 0. mm
+
+    # Settings for the anodes and cathodes (than will also be used in Garfield++)
+    # By default, the anodes will be placed in the center of the gas box
+    /DMPX/geometry/SetAnodesHalfLength 16.0 mm
+    /DMPX/geometry/SetAnodesR 0.01 mm # 20 microns in diameter so 10 microns in radius
+    /DMPX/geometry/SetAnodesSpacing 2.0 mm
+    /DMPX/geometry/SetNbOfAnodes 64
 
 ##########################################
 ##### PARAMETERS FOR DEGRAD AND HEED #####
 ##########################################
  
     # Thermal energy for the DegradModel. Below this energy, the HeedDeltaElectronModel will be activated
-    /gasModelParameters/degrad/thermalenergy 10. eV
+    /gasModelParameters/degrad/thermalenergy 2. eV # Set to 2 eV for molecular gas (from S. Biagi)
 
     # Adding the energy ranges in keV for which the HeedDeltaElectronModel will be activated
-    /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.001 100
-    /gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0.1 1000
+    /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.00001 1000
+    /gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0.001 1000
 
     # In this simulation, we are using Kr for the detection gas and CH4 for the extinction gas
     /gasModelParameters/degrad/numberofgases 2
 
     # Please, input the gas identifier for Degrad (search for "GAS NUMBER" in the Degrad source code)
+    # WARNING. If the type of gas is also to be changed, please look at "PRE-REQUISITES/WARNINGS"
     /gasModelParameters/degrad/setGasList 6 8 0 0 0 0
     /gasModelParameters/degrad/setGasPercentages 90.0 10.0 0.0 0.0 0.0 0.0
     /gasModelParameters/degrad/temperature 293.15 K
     /gasModelParameters/degrad/distanceanodecathodes 10. mm
+
+    # If Degrad generates 200 electrons and this option is set to 10, then only 20 
+    # electrons will be actually created and followed later by Heed
+    /gasModelParameters/degrad/jumpSecondaryElectrons 50
     
-    /gasModelParameters/heed/gasfile ar_93_co2_7.gas
+    /gasModelParameters/heed/gasfile kr_90_ch4_10.gas
     /gasModelParameters/heed/drift 1
     /gasModelParameters/heed/driftRKF 0
     /gasModelParameters/heed/trackmicroscopic 1
@@ -32,8 +86,9 @@
     /gasModelParameters/heed/visualizechamber 1
     /gasModelParameters/heed/visualizesignals 1
     /gasModelParameters/heed/visualizefield 1
-    /gasModelParameters/heed/voltageanodewire 1500.    # [V]
+    /gasModelParameters/heed/voltageanodewire 1000.    # [V]
     /gasModelParameters/heed/voltagecathodeplane 0.     # [V]
+    /gasModelParameters/heed/jumpDriftStepPoints 10 # Number of steps to omit for the plotting
 
 
 ####################################################
@@ -47,7 +102,7 @@
     # Below the energy set in "setLowLimitE", the particles will no longer be tracked. 
     # They will either exit the volume, or give their energy to another particle, that 
     # will just store it, after a collision.
-    /DMPX/phys/setLowLimitE 1. eV 
+    /DMPX/phys/setLowLimitE 1 eV 
     /DMPX/phys/InitializePhysics emlivermore
     /DMPX/phys/AddParametrisation
     /process/em/AddPAIRegion all GasAndAnodesRegion PAIphoton
@@ -121,13 +176,11 @@
 ##### GENERAL PARTICLE SOURCE (GPS) #####
 #########################################
 
-    # The particles are shot from a rectangular plane situated at the position of the slit, 
-    # in the positive z direction
+    # The particles are shot from a small rectangular plane situated at one of the corners of the slit, 
+    # in the negative y direction
     /gps/pos/type Plane
     /gps/pos/shape Rectangle
-
-    # The height in the y direction will be used for the calculation of the electric field
-    /gps/pos/centre -21. 102.27 2.9 mm
+    /gps/pos/centre 36. 102.27 0. mm
 
     # By default, the plane would be in the XY plane. However, we want it to be in the XZ plane, Since
     # Garfield++ can only define the wires following the Z direction. Thus, it is necessary to apply 
@@ -137,9 +190,9 @@
     /gps/pos/rot2 0 0 1 
 
     # The entry slit is around 30 mm long and 2 mm wide (remember, it is in the XZ plane)
-    /gps/pos/halfx 15. mm 
+    /gps/pos/halfx 10. mm 
     /gps/pos/halfz 0.01 mm # Setting a minimal width for the entry slit, so Geant4 does not crash
-    /gps/pos/halfy 1.5 mm # Careful: y is z here!
+    /gps/pos/halfy 2. mm # Careful: y is z here!
 
     # To see where the GPS is
     /vis/scene/add/gps
@@ -155,17 +208,11 @@
     # the rotation applied to the plane, so the angles are not rotated in the same way.
     /gps/ang/rot2 0 1 0 
 
-    # Some useful directions:
-    # Direction parallel to the y axis ->  theta = 90. deg, phi = 180 deg.
-    # Direction parallel to the z axis -> theta = 0. deg., for all phi
-    # All angles are in degrees
-    /gps/ang/mintheta 90. deg # Theta is fixed such that the particles are shot in the XY plane
-    /gps/ang/maxtheta 90. deg
-    /gps/ang/minphi 70. deg 
-    /gps/ang/maxphi 110. deg
+    # Shooting electrons at 65°, 70°, 75°, 80°, 85° with specified energies
+    # Each configuration will shoot one primary particle
 
-    # Monoenergetic photon particle source at a given energy
-    /gps/particle gamma
-    /gps/ene/type Mono
-    /gps/ene/mono 10. keV
+    /gps/particle gamma # Setting the type of particle
 
+
+
+   

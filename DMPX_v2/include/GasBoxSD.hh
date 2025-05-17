@@ -20,14 +20,17 @@ class GasBoxSD : public G4VSensitiveDetector{
 	virtual void 	Initialize (G4HCofThisEvent *);
 	virtual void 	EndOfEvent (G4HCofThisEvent *);
 	virtual G4bool ProcessHits(G4Step*, G4TouchableHistory*);
-	virtual void DrawAll();
     void InsertGasBoxHit(GasBoxHit* gbh){fGasBoxHitsCollection->insert(gbh);};
+
+	bool HasGammaInteractionOccurred() const { return gammaInteractionOccurred; }; 
+	void ResetGammaInteractionFlag() { gammaInteractionOccurred = false; };
 	
 	private:
 	
 	using GasBoxHitsCollection = G4THitsCollection<GasBoxHit>;
     GasBoxHitsCollection* fGasBoxHitsCollection;
     G4int GBHCID;
+	bool gammaInteractionOccurred = false; 
 	
 };
 

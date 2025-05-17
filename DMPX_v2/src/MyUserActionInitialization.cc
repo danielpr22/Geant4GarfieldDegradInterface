@@ -12,7 +12,7 @@ MyUserActionInitialization::MyUserActionInitialization(){}
 MyUserActionInitialization::~MyUserActionInitialization(){}
 
 void MyUserActionInitialization::Build() const {
-	PrimaryGeneratorAction* primary = new PrimaryGeneratorAction();
+	PrimaryGeneratorAction* primary = new PrimaryGeneratorAction(); // For the particle gun
 	SetUserAction(primary);
 	EventAction* evt = new EventAction();
 	SetUserAction(evt);

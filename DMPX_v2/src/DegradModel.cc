@@ -39,6 +39,7 @@ DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* 
         DetectorMessenger* messenger = detCon->GetDetectorMessenger();
         pressure = messenger->GetPressure(); // Get the pressure from the DetectorMessenger
         distanceAnodeCathodes = gmp->GetDistanceAnodeCathodes(); // Distance from the anodes to the source of photons
+        jumpSecondaryElectrons = gmp->GetJumpSecondaryElectrons();
 }
 
 DegradModel::~DegradModel() {}
@@ -88,11 +89,11 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         G4ThreeVector degradPos =fastTrack.GetPrimaryTrack()->GetVertexPosition();
         G4double degradTime = fastTrack.GetPrimaryTrack()->GetGlobalTime();
         
+        // Set the true path length of the primary track during the step.
         fastStep.ProposePrimaryTrackPathLength(0.0);
 
         G4cout<<"(Debug: DegradModel.cc) Global time: "<< G4BestUnit(degradTime,"Time") << ", Position: " << G4BestUnit(degradPos,"Length") << G4endl;
 
-        G4int stdout;
         G4int SEED=53217137*G4UniformRand();
         G4String seed = G4UIcommand::ConvertToString(SEED);
 
@@ -189,7 +190,6 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
             return;
         }
 
-        //const char *mychar = exec.c_str();
         execStatus = system(exec.c_str()); // This command runs the mychar string command in the shell
         execStatus = system("./convertDegradFile.py");
 
@@ -204,7 +204,6 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
 {
     G4cout << "(Debug: DegradModel.cc) Getting the electrons from Degrad..." << G4endl;
     G4cout << "(Debug: DegradModel.cc) Position from Degrad: " << G4BestUnit(degradPos, "Length") << G4endl;
-
 
     // 'Nep' is the number of primaries that corresponds to what Biagi calls ‘ELECTRON CLUSTER SIZE (NCLUS)'
     // 'Nexc' is what Biagi calls EXCITATION CLUSTER SIZE
@@ -233,6 +232,7 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
     
     nline=1;
     nbOfElectronsInBox = 0; 
+
     // While there is still data in the file, we read it
     while (getline(inFile, line,'\n'))// '\n'is used to indicate the end of the line
     {
@@ -258,7 +258,7 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
                 v.push_back(n); // 'n' is added to the vector
             }
 
-            // Since every electron has 7 information iterms
+            // Since every electron has 7 items
             G4cout << "(Debug: DegradModel.cc) Total number of electrons generated (inside and outside the box): " 
             << v.size()/7 << G4endl; 
 
@@ -303,10 +303,10 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
                     fGasBoxSD->InsertGasBoxHit(gbh);
                     
                     // Create secondary electron
-                    if(nbOfElectronsInBox % 100 == 0){ // To create only some secondary electrons or all of them
+                    if(nbOfElectronsInBox % jumpSecondaryElectrons == 0){ // To create only some secondary electrons or all of them
                         // The condition is just set to limit the number of electrons in tests
                         G4cout << "(Debug: DegradModel.cc) Creating secondary electron..." << G4endl; 
-                        G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), thermalE - 0.1 * eV); // Here we write the energy cut in Degrad
+                        G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), thermalE); // Here we write the energy cut in Degrad
                         G4Track* newTrack=fastStep.CreateSecondaryTrack(electron, myPoint, time, false);
                     }
                 }

@@ -13,6 +13,7 @@
 
 class G4VPhysicalVolume;
 class DetectorConstruction;
+class DetectorMessenger;
 class HeedDeltaElectronMessenger;
 class GasModelParameters;
 class GasBoxSD;
@@ -29,16 +30,7 @@ class HeedDeltaElectronModel : public HeedModel {
   //-------------------------
   HeedDeltaElectronModel(GasModelParameters *,G4String, G4Region*,DetectorConstruction*, GasBoxSD*);
   ~HeedDeltaElectronModel();
-
-
-  /*The following public methods are user-dependent*/
-
-  //This method is called after each event, to record the relevant data
-  virtual void ProcessEvent();
-  //This method is called at the beginning of an event to reset some variables of the class
-  virtual void Reset();
-  
-  /*Getters and Setters*/
+ 
 
  private:
   virtual void Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_eV, double t, double x_cm,

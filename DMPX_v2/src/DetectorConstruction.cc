@@ -29,31 +29,26 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
-    fGasModelParameters(gmp),
-    checkOverlaps(0),
-    worldHalfLength(0.2*m),        // World volume is a cube with side length = 3m;
-    gasPressure(1.*atmosphere),   // Pressure inside the gas
-    kryptonPercentage(90),        // mixture settings in molar percentage
-    ch4Percentage(10),
-
-    // We must handle carefully the coordinates between Garfield++ and Geant4
-    // In Garfield, the wires must be following the z-axis (and it cannot be easily
-    // changed), therefore we will also have to define the wires following
-    // the z-axis in Geant4.
-    GasBoxLengthX(130*mm), // Length of the gas box in the X direction
-    GasBoxLengthY(20*mm),  // Length of the gas box in the Y direction
-    GasBoxLengthZ(32*mm), // Length of the gas box in the Z direction
-
-    // For simplicity, we will set the center of the gas box at (0,0,0)
-    GasBoxCenterPositionX(0.*mm), // X position of the gas box center
-    GasBoxCenterPositionY(0.*mm), // Y position of the gas box center
-    GasBoxCenterPositionZ(0.*mm) // Z position of the gas box center
+    fGasModelParameters(gmp)
 {
   // "This" is a pointer that is conceptually equivalent to the "self" in Python
   detectorMessenger = new DetectorMessenger(this);
+  G4double worldHalfLength = detectorMessenger->GetWorldHalfLength();
+  G4bool checkOverlaps = detectorMessenger->GetCheckOverlaps();
+  G4double gasPressure = detectorMessenger->GetPressure();
+  G4double kryptonPercentage = detectorMessenger->GetKryptonPercentage();
+  G4double ch4Percentage = detectorMessenger->GetCH4Percentage();
+  G4double GasBoxLengthX = detectorMessenger->GetGasBoxLengthX();
+  G4double GasBoxLengthY = detectorMessenger->GetGasBoxLengthY();
+  G4double GasBoxLengthZ = detectorMessenger->GetGasBoxLengthZ();
+  G4double GasBoxCenterPositionX = detectorMessenger->GetGasBoxCenterPositionX();
+  G4double GasBoxCenterPositionY = detectorMessenger->GetGasBoxCenterPositionY();
+  G4double GasBoxCenterPositionZ = detectorMessenger->GetGasBoxCenterPositionZ();
+  G4double anodesHalfLength = detectorMessenger->GetAnodesHalfLength();
+  G4double anodesR = detectorMessenger->GetAnodesR();
+  G4double anodesSpacing = detectorMessenger->GetAnodesSpacing();
+  G4int nbOfAnodes = detectorMessenger->GetNbOfAnodes();
   G4double temperature = fGasModelParameters->GetTemperature(); 
-
-  //G4double GetGasBoxLengthY{return GasBoxLengthY;};
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -81,7 +76,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     */
 
     G4NistManager* man = G4NistManager::Instance();
-    man->SetVerbose(0);
 
     G4Material* worldMat = man->FindOrBuildMaterial("G4_Galactic");
     G4VSolid* worldSolid = new G4Box("worldSolid", worldHalfLength, worldHalfLength, worldHalfLength);
@@ -130,16 +124,20 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     The density of Kr is 0.00375 g/cm3 and the density of CH4 is 0.000716 g/cm3 (both at STP)
     The density of the mixture is (0.973*0.00375)+ (0.027*0.000716) = 0.00366 g/cm3
     */
-    G4double molarMassKr = 83.798;  // g/mol
-    G4double molarMassCH4 = 16.04;  // g/mol
-    G4double densityKr = 0.00375;   // g/cm3
-    G4double densityCH4 = 0.000716; // g/cm3
-    G4double massFractionKr = (kryptonPercentage * molarMassKr) / ((kryptonPercentage * molarMassKr) + (ch4Percentage * molarMassCH4));
+    G4double molarMassKr = 83.798 * g/mole;  // g/mol
+    G4double molarMassCH4 = 16.04 * g/mole;  // g/mol
+    G4double densityKr = 0.00375 * g/cm3;   // g/cm3
+    G4double densityCH4 = 0.000716 * g/cm3; // g/cm3
+    G4double massFractionKr = (kryptonPercentage/100 * molarMassKr) / ((kryptonPercentage/100 * molarMassKr) + (ch4Percentage/100 * molarMassCH4));
     G4double massFractionCH4 = 1 - massFractionKr;
 
     // Defining the gas density and mixture by fractional mass
     G4double density = (massFractionKr * densityKr +  massFractionCH4 * densityCH4); // g/cm3
-    G4Material* KrCH4_90_10 = new G4Material("KrCH4_90_10", 1 * g/cm3, 2, kStateGas, temperature, gasPressure);
+
+    G4cout << "(Debug: DetectorConstruction.cc) The density of the gas is: " 
+          << G4BestUnit(density, "Volumic Mass") << G4endl;
+
+    G4Material* KrCH4_90_10 = new G4Material("KrCH4_90_10", density, 2, kStateGas, temperature, gasPressure);
     KrCH4_90_10->AddMaterial(Krypton, massFractionKr);  // 97.3% by mass (90% molar)
     KrCH4_90_10->AddMaterial(Methane, massFractionCH4); // 2.7% by mass (10% molar)
 
@@ -156,7 +154,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     logicGasBox->SetRegion(gasAndAnodesRegion); // We set the region for the gas box
     gasAndAnodesRegion->AddRootLogicalVolume(logicGasBox); // We add the gas box to the root logical volume 
 
-    G4cout << "(Debug: DetectorConstruction.cc) The gas box is made of " << logicGasBox->GetMaterial()->GetName() << G4endl;
+    G4cout << "(Debug: DetectorConstruction.cc) The gas box is made of: " << logicGasBox->GetMaterial()->GetName() << G4endl;
 
     // Placing our gas volume inside the world
     new G4PVPlacement(
@@ -178,18 +176,14 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     */
 
     G4Material* anodesMat = man->FindOrBuildMaterial("G4_Au"); // e_ionisation = 790 eV | density = 19.32 g/cm3
-    G4double anodesHalfLength = 16*mm;
-    G4double anodesR = 0.1*mm; // 20 micrometers in diameter (thus 10 in radius)
-    G4double anodesSpacing = 2*mm; // 2 mm spacing between the anodes
-    G4int nbOfAnodes = 64; 
-
     G4VSolid* anodeSolid = new G4Tubs("AnodeSolid", 0, anodesR, anodesHalfLength, 0, twopi);
     G4LogicalVolume* anodeLogical = new G4LogicalVolume(anodeSolid, anodesMat, "AnodeLogical");
 
     for (G4int i = 0; i < nbOfAnodes; i++) {
-        G4double xPos = anodesSpacing * (i - nbOfAnodes/2); 
-        G4double yPos = 0.0 * mm;
-        G4double zPos = 0.0 * mm;
+        G4double xPos = anodesSpacing * (i - nbOfAnodes/2);
+        G4cout << "(Debug: DetectorConstruction.cc) The position of the anode is: " << xPos << G4endl;
+        G4double yPos = GasBoxCenterPositionY;
+        G4double zPos = GasBoxCenterPositionZ;
 
         new G4PVPlacement(
             0,                                // no rotation
@@ -242,13 +236,12 @@ void DetectorConstruction::ConstructSDandField(){
 
   // Initializing the sensitive detector manager
   G4SDManager* SDManager = G4SDManager::GetSDMpointer();
-  SDManager->SetVerboseLevel(0); // Set silent
 
   // Defining the gas box as a sensitive detector for Degrad and then Garfield++, once the avalanche has been calculated
   G4String KrCH4GasBoxSDname = "interface/KrCH4GasBoxSD";
-  GasBoxSD* KrCH4GasBoxSD = new GasBoxSD(KrCH4GasBoxSDname); // GasBoxSD of type G4SensitiveDetector
-  SDManager->AddNewDetector(KrCH4GasBoxSD);
-  SetSensitiveDetector(logicGasBox,KrCH4GasBoxSD);
+  fGasBoxSD = new GasBoxSD(KrCH4GasBoxSDname); // For the gas box getter method
+  SDManager->AddNewDetector(fGasBoxSD);
+  SetSensitiveDetector(logicGasBox,fGasBoxSD);
 
   // Defining the anodes as sensitive detectors for the HeedDeltaElectronModel
   G4String AnodesSDname = "interface/AnodesSD";
@@ -273,12 +266,12 @@ void DetectorConstruction::ConstructSDandField(){
   G4Region* gasAndAnodesRegion = G4RegionStore::GetInstance()->GetRegion("GasAndAnodesRegion");
   
   // These commands generate the two gas models (Degrad and HeedeltaElectron) and connect them 
-  // to the region formed by the fas and the anodes
-  new DegradModel(fGasModelParameters,"DegradModel",gasAndAnodesRegion,this,KrCH4GasBoxSD);
+  // to the region formed by the gas and the anodes
+  new DegradModel(fGasModelParameters,"DegradModel",gasAndAnodesRegion,this,fGasBoxSD);
   G4cout << "(Debug: DetectorConstruction.cc) Gas + anodes region connected with DegradModel..." << G4endl;
 
   // // Attaching the HeedDeltaElectronModel to the anodes, for the signal calculation
-  new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",gasAndAnodesRegion,this,KrCH4GasBoxSD);
+  new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",gasAndAnodesRegion,this,fGasBoxSD);
   G4cout << "(Debug: DetectorConstruction.cc) Gas + anodes region connected with HeedDeltaElectronModel..." << G4endl;
 }
 

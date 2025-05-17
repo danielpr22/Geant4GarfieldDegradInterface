@@ -12,35 +12,31 @@
 #include "G4RunManager.hh"
 
 RunAction::RunAction(){
-  G4cout << "Creating AnalysisManager" << G4endl;
+  G4cout << "(Debug: RunAction.cc) Creating AnalysisManager..." << G4endl;
   auto analysisManager = G4AnalysisManager::Instance();
-//  analysisManager->SetNtupleMerging(true,0,0,10000000);
   analysisManager->SetVerboseLevel(1);
   analysisManager->SetActivation(true);  
   analysisManager->SetFileName("output.root"); 
   analysisManager->SetHistoDirectoryName("histo");
   analysisManager->SetNtupleDirectoryName("ntuple");
-  
   analysisManager->SetNtupleActivation(false);
-
-  G4cout << "Creating RunAction" << G4endl;
+  G4cout << "(Debug: RunAction.cc) Creating RunAction..." << G4endl;
 }
 
 RunAction::~RunAction() { 
-	G4cout << "Deleting RunAction" << G4endl;
-//	delete G4AnalysisManager::Instance();  
+	G4cout << "(Debug: RunAction.cc) Deleting RunAction..." << G4endl;
 }
 
 
 void RunAction::BeginOfRunAction(const G4Run* aRun) {
   G4Random::showEngineStatus();
 
-  G4cout << "Starting run " << aRun->GetRunID() << G4endl;
+  G4cout << "(Debug: RunAction.cc) Starting run " << aRun->GetRunID() << G4endl;
   time_t currentTime;
   tm* ptm;
   time(&currentTime);
   ptm = localtime(&currentTime);
-  G4cout << "Time: " << asctime(ptm) << G4endl;
+  G4cout << "(Debug: RunAction.cc) Time: " << asctime(ptm) << G4endl;
 
   auto analysisManager = G4AnalysisManager::Instance();
   analysisManager->OpenFile("output.root");  
@@ -51,12 +47,12 @@ void RunAction::EndOfRunAction(const G4Run* aRun) {
   analysisManager->Write();
   analysisManager->CloseFile();
 
-  G4cout << "End of run OK!" << G4endl;
+  G4cout << "(Debug: RunAction.cc) End of run OK!" << G4endl;
   time_t currentTime;
   tm* ptm;
   time(&currentTime);
   ptm = localtime(&currentTime);
-  G4cout << "Simulation finished." << G4endl << "Time: " << asctime(ptm)
+  G4cout << "(Debug: RunAction) Simulation finished!" << G4endl << "(Debug: RunAction.cc) Time: " << asctime(ptm)
          << G4endl;
   G4Random::showEngineStatus();
 }

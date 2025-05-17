@@ -119,9 +119,8 @@ target_include_directories(DMPX_v2 PRIVATE
 
 # Copy all scripts to the build directory
 set(DMPX_v2_SCRIPTS
-  vis.mac
-  run1.mac
-  ar_93_co2_7.gas
+  scan_energies_angles.mac
+  kr_90_ch4_10.gas
   convertDegradFile.py
 )
 
