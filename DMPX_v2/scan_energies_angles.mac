@@ -21,7 +21,7 @@
     /DMPX/geometry/SetWorldHalfLength 0.5 m
 
     # Name for the simulation. There will be a generated results file named Results_{Name of the simulation}
-    /DMPX/geometry/SetNameOfSimulation DMPX_scan_angles_3
+    /DMPX/geometry/SetNameOfSimulation DMPX_scan_angles_4
 
     # Checking if there are any volumes that are overlapping (default set to false)
     /DMPX/geometry/CheckOverlaps 0
@@ -46,7 +46,7 @@
     /DMPX/geometry/SetGasBoxCenterPositionY 0. mm
     /DMPX/geometry/SetGasBoxCenterPositionZ 0. mm
 
-    # Settings for the anodes and cathodes (than will also be used in Garfield++)
+    # Settings for the anodes and cathodes (that will also be used in Garfield++)
     # By default, the anodes will be placed in the center of the gas box
     /DMPX/geometry/SetAnodesHalfLength 16.0 mm
     /DMPX/geometry/SetAnodesR 0.01 mm # 20 microns in diameter so 10 microns in radius
@@ -61,7 +61,7 @@
     /gasModelParameters/degrad/thermalenergy 2. eV # Set to 2 eV for molecular gas (from S. Biagi)
 
     # Adding the energy ranges in keV for which the HeedDeltaElectronModel will be activated
-    /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.00001 1000
+    /gasModelParameters/heed/heeddeltaelectron/addparticle e- 0.001 1000
     /gasModelParameters/heed/heeddeltaelectron/addparticle gamma 0.001 1000
 
     # In this simulation, we are using Kr for the detection gas and CH4 for the extinction gas
@@ -76,7 +76,7 @@
 
     # If Degrad generates 200 electrons and this option is set to 10, then only 20 
     # electrons will be actually created and followed later by Heed
-    /gasModelParameters/degrad/jumpSecondaryElectrons 50
+    /gasModelParameters/degrad/secondaryElectronsPerPhoton 1
     
     /gasModelParameters/heed/gasfile kr_90_ch4_10.gas
     /gasModelParameters/heed/drift 1
@@ -86,8 +86,8 @@
     /gasModelParameters/heed/visualizechamber 1
     /gasModelParameters/heed/visualizesignals 1
     /gasModelParameters/heed/visualizefield 1
-    /gasModelParameters/heed/voltageanodewire 1000.    # [V]
-    /gasModelParameters/heed/voltagecathodeplane 0.     # [V]
+    /gasModelParameters/heed/voltageanodewire 0.    # [V]
+    /gasModelParameters/heed/voltagecathodeplane -2000.     # [V]
     /gasModelParameters/heed/jumpDriftStepPoints 10 # Number of steps to omit for the plotting
 
 
@@ -189,10 +189,11 @@
     # to both rot1 and rot2, i.e. (0 1 0)
     /gps/pos/rot2 0 0 1 
 
-    # The entry slit is around 30 mm long and 2 mm wide (remember, it is in the XZ plane)
-    /gps/pos/halfx 10. mm 
+    # Here we built a very thin plane at one of the corners of the slit from which the electrons will be shot
+    # The particle will be shot from a given location within this area
+    /gps/pos/halfx 1. mm 
     /gps/pos/halfz 0.01 mm # Setting a minimal width for the entry slit, so Geant4 does not crash
-    /gps/pos/halfy 2. mm # Careful: y is z here!
+    /gps/pos/halfy 1. mm # Careful: y is z here!
 
     # To see where the GPS is
     /vis/scene/add/gps
@@ -211,7 +212,8 @@
     # Shooting electrons at 65°, 70°, 75°, 80°, 85° with specified energies
     # Each configuration will shoot one primary particle
 
-    /gps/particle gamma # Setting the type of particle
+    /gps/particle gamma # Setting the type of particle and the energy distribution
+    /gps/ene/type Mono
 
 
 

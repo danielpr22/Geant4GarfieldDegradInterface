@@ -36,7 +36,7 @@ class DegradModel : public G4VFastSimulationModel {
 
 	private:
 		void GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degradPos,G4double degradTime);
-
+		GasModelParameters* fGasModelParameters; // Store the GasModelParameters instance
 		G4double thermalE;
 		G4double voltageAnodeWires;
 		G4double voltageCathodePlane;
@@ -52,7 +52,7 @@ class DegradModel : public G4VFastSimulationModel {
 		G4double temperature; 
 		G4double pressure; 
 		G4double distanceAnodeCathodes; // Distance from the anodes to the cathodes
-		G4int jumpSecondaryElectrons;
+		G4int secondaryElectronsPerPhoton;
 };
 
 #endif

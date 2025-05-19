@@ -1,6 +1,6 @@
 # Setting up the project and the CMake and C++ versions
 cmake_minimum_required(VERSION 3.10)
-project(DMPX_v2)
+project(DMPX_scan_angles_energies)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_STANDARD_REQUIRED True)
 
@@ -30,7 +30,7 @@ include(${Geant4_USE_FILE})
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 find_package(ROOT QUIET REQUIRED COMPONENTS RIO Net)
 if(NOT ROOT_FOUND)
-  message(STATUS "DMPX_v2: ROOT package not found. --> DMPX_v2 disabled")  
+  message(STATUS "DMPX_scan_angles_energies: ROOT package not found. --> DMPX_scan_angles_energies disabled")  
   return()
 endif()
 include(${ROOT_USE_FILE})
@@ -102,11 +102,11 @@ set(headers
 # Add the executable and link it to the required libraries
 #find_package(Garfield REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-add_executable(DMPX_v2 DMPX_v2.cc ${sources} ${headers})
-target_link_libraries(DMPX_v2 -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
+add_executable(DMPX_scan_angles_energies DMPX_scan_angles_energies.cc ${sources} ${headers})
+target_link_libraries(DMPX_scan_angles_energies -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
 
 # Restrict include directories to the current folder
-target_include_directories(DMPX_v2 PRIVATE
+target_include_directories(DMPX_scan_angles_energies PRIVATE
   ${PROJECT_SOURCE_DIR}/include
   ${Garfield_INCLUDE_DIRS}
   $ENV{GARFIELD_DIR}
@@ -118,13 +118,13 @@ target_include_directories(DMPX_v2 PRIVATE
 )
 
 # Copy all scripts to the build directory
-set(DMPX_v2_SCRIPTS
+set(DMPX_scan_angles_energies_SCRIPTS
   scan_energies_angles.mac
   kr_90_ch4_10.gas
   convertDegradFile.py
 )
 
-foreach(_script ${DMPX_v2_SCRIPTS})
+foreach(_script ${DMPX_scan_angles_energies_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}
@@ -133,6 +133,6 @@ foreach(_script ${DMPX_v2_SCRIPTS})
 endforeach()
 
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-install(TARGETS DMPX_v2 DESTINATION bin)
+install(TARGETS DMPX_scan_angles_energies DESTINATION bin)
 
 

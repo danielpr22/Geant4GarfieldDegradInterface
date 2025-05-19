@@ -161,7 +161,8 @@ class HeedModel : public G4VFastSimulationModel {
   Garfield::Sensor* fSensor;
   Garfield::GeometrySimple* geo;
   Garfield::SolidBox* box;
-  Garfield::SolidBox* cathodePlane;
+  Garfield::SolidBox* cathodePlane_1;
+  Garfield::SolidBox* cathodePlane_2;
   Garfield::SolidTube* wire; 
   Garfield::ComponentAnalyticField* comp;
   Garfield::AvalancheMC* fDrift;

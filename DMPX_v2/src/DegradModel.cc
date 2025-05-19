@@ -24,9 +24,8 @@
 const static G4double torr = 1. / 760. * atmosphere;
 
 DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
-    : G4VFastSimulationModel(modelName, envelope),detCon(dc), fGasBoxSD(sd) {
+    : G4VFastSimulationModel(modelName, envelope),detCon(dc), fGasBoxSD(sd), fGasModelParameters(gmp){
         thermalE=gmp->GetThermalEnergy();
-        voltageAnodeWires=gmp->GetVoltageAnodeWires();
         voltageCathodePlane=gmp->GetVoltageCathodePlane();
         G4cout << "(Debug: DegradModel.cc) Now setting the thermal energy of the Degrad model: " << thermalE / eV << " eV" << G4endl;
         processOccured = false;
@@ -39,7 +38,7 @@ DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* 
         DetectorMessenger* messenger = detCon->GetDetectorMessenger();
         pressure = messenger->GetPressure(); // Get the pressure from the DetectorMessenger
         distanceAnodeCathodes = gmp->GetDistanceAnodeCathodes(); // Distance from the anodes to the source of photons
-        jumpSecondaryElectrons = gmp->GetJumpSecondaryElectrons();
+        secondaryElectronsPerPhoton = gmp->GetSecondaryElectronsPerPhoton();
 }
 
 DegradModel::~DegradModel() {}
@@ -67,6 +66,9 @@ G4bool DegradModel::ModelTrigger(const G4FastTrack& fastTrack) {
 void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
 
     G4int id = fastTrack.GetPrimaryTrack()->GetTrackID();
+    
+    // If the volatage is updated during the run, we get the new value here
+    voltageAnodeWires = fGasModelParameters->GetVoltageAnodeWires();
 
     G4cout << "(Debug: DegradModel.cc) In the DoIt method of the Degrad model..." << G4endl;
     fastStep.KillPrimaryTrack(); // Kill the Geant4 track for the primary ionization electrons
@@ -303,7 +305,7 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
                     fGasBoxSD->InsertGasBoxHit(gbh);
                     
                     // Create secondary electron
-                    if(nbOfElectronsInBox % jumpSecondaryElectrons == 0){ // To create only some secondary electrons or all of them
+                    if(nbOfElectronsInBox % (Nep / secondaryElectronsPerPhoton) == 0){ // To create only some secondary electrons or all of them
                         // The condition is just set to limit the number of electrons in tests
                         G4cout << "(Debug: DegradModel.cc) Creating secondary electron..." << G4endl; 
                         G4DynamicParticle electron(G4Electron::ElectronDefinition(),G4RandomDirection(), thermalE); // Here we write the energy cut in Degrad

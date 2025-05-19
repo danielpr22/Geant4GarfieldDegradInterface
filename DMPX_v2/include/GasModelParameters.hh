@@ -76,8 +76,8 @@ class GasModelParameters{
     inline void SetDistanceAnodeCathodes(double n){distanceAnodeCathodes=n;};
     inline void SetJumpDriftStepPoints(int n){jumpDriftStepPoints=n;};
     inline int GetJumpDriftStepPoints(){return jumpDriftStepPoints;};
-    inline void SetJumpSecondaryElectrons(int n){jumpSecondaryElectrons=n;};
-    inline int GetJumpSecondaryElectrons(){return jumpSecondaryElectrons;};
+    inline void SetSecondaryElectronsPerPhoton(int n){secondaryElectronsPerPhoton=n;};
+    inline int GetSecondaryElectronsPerPhoton(){return secondaryElectronsPerPhoton;};
     
     inline MapParticlesEnergy GetParticleNamesHeedDeltaElectron(){return fMapParticlesEnergyHeedDeltaElectron;};
 
@@ -105,7 +105,7 @@ class GasModelParameters{
     double vAnodeWires;
     double vCathodePlane;
     G4int jumpDriftStepPoints;
-    G4int jumpSecondaryElectrons;
+    G4int secondaryElectronsPerPhoton;
 };
 
 #endif

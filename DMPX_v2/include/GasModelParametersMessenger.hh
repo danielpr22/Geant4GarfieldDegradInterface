@@ -59,7 +59,7 @@ class GasModelParametersMessenger : public G4UImessenger {
   G4UIcmdWithADoubleAndUnit* temperatureCmd;
   G4UIcmdWithADoubleAndUnit* distanceAnodeCathodesCmd;
   G4UIcmdWithAnInteger* jumpDriftStepPointsCmd;
-  G4UIcmdWithAnInteger* jumpSecondaryElectronsCmd;
+  G4UIcmdWithAnInteger* secondaryElectronsPerPhotonCmd;
 
   G4String fParticleName;
   G4double fEmin;

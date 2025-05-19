@@ -153,8 +153,8 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   jumpDriftStepPointsCmd = new G4UIcmdWithAnInteger("/gasModelParameters/heed/jumpDriftStepPoints",this);
   jumpDriftStepPointsCmd->SetGuidance("Set the number of drift step points to be skipped in the visualization");
 
-  jumpSecondaryElectronsCmd = new G4UIcmdWithAnInteger("/gasModelParameters/degrad/jumpSecondaryElectrons",this);
-  jumpSecondaryElectronsCmd->SetGuidance("Set the number of secondary electrons to be skipped in teh generation of the avalanche in Degrad");
+  secondaryElectronsPerPhotonCmd = new G4UIcmdWithAnInteger("/gasModelParameters/degrad/secondaryElectronsPerPhoton",this);
+  secondaryElectronsPerPhotonCmd->SetGuidance("Set the number of secondary electrons to be calculated in the Degrad avalanche");
 
 }
 
@@ -184,7 +184,7 @@ GasModelParametersMessenger::~GasModelParametersMessenger() {
   delete temperatureCmd;
   delete distanceAnodeCathodesCmd;
   delete jumpDriftStepPointsCmd;
-  delete jumpSecondaryElectronsCmd;
+  delete secondaryElectronsPerPhotonCmd;
 }
 
 
@@ -264,8 +264,8 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
     else if(command == jumpDriftStepPointsCmd) {
       fGasModelParameters->SetJumpDriftStepPoints(jumpDriftStepPointsCmd->GetNewIntValue(newValues));
     } 
-    else if(command ==  jumpSecondaryElectronsCmd) {
-      fGasModelParameters->SetJumpSecondaryElectrons(jumpSecondaryElectronsCmd->GetNewIntValue(newValues));
+    else if(command ==  secondaryElectronsPerPhotonCmd) {
+      fGasModelParameters->SetSecondaryElectronsPerPhoton(secondaryElectronsPerPhotonCmd->GetNewIntValue(newValues));
     } 
     else {
       G4cerr << "(Debug: GasModelParametersMessenger.cc) GasModelParametersMessenger::"

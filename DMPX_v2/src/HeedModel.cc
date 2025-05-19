@@ -262,17 +262,22 @@ void HeedModel::buildBoxAndField(){
 
   // Creating the cathode plane geometry
   const double cathodePlaneHalfX = 6.5 ; // cm
-  const double cathodePlaneWidth = 0.2; // cm
+  const double cathodePlaneWidth = 0.1; // cm
   const double cathodePlaneHalfZ = 1.6; // cm
   const double xPosPlane = 0.0; // cm
-  const double yPosPlane = -10.0; // cm
+  const double yPosPlane = -0.8; // cm
   const double zPosPlane = 0.0; // cm
 
-  cathodePlane = new Garfield::SolidBox(xPosPlane, yPosPlane, zPosPlane, 
+  // The anodes are sandwiched between two cathode planes
+  cathodePlane_1 = new Garfield::SolidBox(xPosPlane, yPosPlane, zPosPlane, 
+    cathodePlaneHalfX, cathodePlaneWidth, cathodePlaneHalfZ); 
+  cathodePlane_2 = new Garfield::SolidBox(xPosPlane, -yPosPlane, zPosPlane, 
     cathodePlaneHalfX, cathodePlaneWidth, cathodePlaneHalfZ);
 
-  geo->AddSolid(cathodePlane, fMediumMagboltz);
-  comp->AddPlaneY(yPosPlane, vCathodePlane, "p"); // Adding the cathode plane
+  geo->AddSolid(cathodePlane_1, fMediumMagboltz);
+  geo->AddSolid(cathodePlane_2, fMediumMagboltz);
+  comp->AddPlaneY(yPosPlane, vCathodePlane, "p_pos_y"); // Adding the cathode plane
+  comp->AddPlaneY(-yPosPlane, vCathodePlane, "p_neg_y"); // Adding the cathode plane
 
   G4cout << "(Debug: HeedModel.cc) Added cathode plane to Garfield geometry." << G4endl;
 
@@ -514,7 +519,7 @@ void HeedModel::PlotTrack(){
     
     // Now we plot the data once the simulation has finished
     if (fVisualizeChamber) {
-      viewCell->SetArea(-6, -3, 6, 4); // xmin, ymin, xmax, ymax, in cm
+      viewCell->SetArea(-6, -1.5, 6, 1.5); // xmin, ymin, xmax, ymax, in cm
       viewCell->Plot2d(); 
       constexpr bool twod = true; 
       constexpr bool drawaxis = false; 
@@ -531,7 +536,7 @@ void HeedModel::PlotTrack(){
     if (fVisualizeField) {
       fFieldCanvas->Clear(); // Clear the field after each event
       viewField->SetNumberOfContours(100);
-      viewField->SetArea(-7, -3, +7, 3);
+      viewField->SetArea(-7, -1.5, +7, 1.5);
       viewField->PlotContour("emag");
       fFieldCanvas->Update();
       fFieldCanvas->Print("HeedDeltaElectronModel_efield.pdf");
