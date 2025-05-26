@@ -55,6 +55,11 @@ class DetectorMessenger : public G4UImessenger {
   G4double GetAnodesSpacing() const { return anodesSpacing; }
   G4int GetNbOfAnodes() const { return nbOfAnodes; }
   G4String GetNameOfSimulation() const { return nameOfSimulation; }
+  G4double GetCathodes1_LengthX() const { return cathodes1_LengthX; } 
+  G4double GetCathodes1_LengthY() const { return cathodes1_LengthY; } 
+  G4double GetCathodes1_LengthZ() const { return cathodes1_LengthZ; } 
+  G4double GetCathodes1_XPos() const { return cathodes1_XPos; }
+  G4double GetCathodes1_ZPos() const { return cathodes1_ZPos; }
 
 
  private:
@@ -78,6 +83,12 @@ class DetectorMessenger : public G4UImessenger {
   G4UIcmdWithADoubleAndUnit* setAnodesSpacingCmd;
   G4UIcmdWithAnInteger* setNbOfAnodesCmd;
   G4UIcmdWithAString* setNameOfSimulationCmd;
+  G4UIcmdWithADoubleAndUnit* setCathodes1_LengthXCmd;
+  G4UIcmdWithADoubleAndUnit* setCathodes1_LengthYCmd;
+  G4UIcmdWithADoubleAndUnit* setCathodes1_LengthZCmd;
+  G4UIcmdWithADoubleAndUnit* setCathodes1_XPosCmd; 
+  G4UIcmdWithADoubleAndUnit* setCathodes1_ZPosCmd; 
+
 
   G4bool checkOverlaps; // Flag to check overlaps
   G4double worldHalfLength; 
@@ -95,6 +106,11 @@ class DetectorMessenger : public G4UImessenger {
   G4double anodesSpacing;
   G4int nbOfAnodes;
   G4String nameOfSimulation;
+  G4double cathodes1_LengthX; 
+  G4double cathodes1_LengthY; 
+  G4double cathodes1_LengthZ; 
+  G4double cathodes1_XPos; 
+  G4double cathodes1_ZPos; 
 };
 
 #endif

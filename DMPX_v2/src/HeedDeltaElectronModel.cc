@@ -62,7 +62,8 @@ HeedDeltaElectronModel::~HeedDeltaElectronModel() {}
 void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_eV, double t, double x_cm,
             double y_cm, double z_cm, double dx, double dy, double dz) {
 
-    // G4double ekin_keV = ekin_eV / keV; // For the Transport functions
+    // We update the gas model parameters in case they have been changed from the previous run (in a scan for example)
+    UpdateFromGasModelParameters();
 
     G4cout << "(Debug: HeedDeltaElectronModel.cc) The energy here is: " << G4BestUnit(ekin_eV, "Energy") << G4endl; 
     int nc = 0, ni=0; // Number of electrons/ions produced by the delta electron
@@ -94,6 +95,9 @@ void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTra
             G4cout << "(Debug: HeedDeltaElectronModel.cc) Now drifting..." << G4endl;
             G4cout << "(Debug: HeedDeltaElectronModel.cc) Positions (cm) and time for the drift calculation: " << xe 
             << " " << ye << " " << ze << " " << te << G4endl;
+
+            G4cout << "(Debug: HeedDeltaElectronModel.cc) Value for the voltage in the cathode: " 
+            << vCathodePlane << G4endl; 
             Drift(xe,ye,ze,te); // Drift from the initial position to the final position in HeedModel
     }
     G4cout << "(Debug: HeedDeltaElectronModel.cc) Now plotting the track..." << G4endl;

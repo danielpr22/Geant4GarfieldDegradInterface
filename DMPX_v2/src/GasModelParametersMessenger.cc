@@ -148,7 +148,7 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   temperatureCmd->SetGuidance("Set the temperature to be used by Degrad");
 
   distanceAnodeCathodesCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/distanceanodecathodes",this);
-  distanceAnodeCathodesCmd->SetGuidance("Set the distance between the anodes and the cathodes in cm"); 
+  distanceAnodeCathodesCmd->SetGuidance("Set the distance between the anodes and the cathodes"); 
   
   jumpDriftStepPointsCmd = new G4UIcmdWithAnInteger("/gasModelParameters/heed/jumpDriftStepPoints",this);
   jumpDriftStepPointsCmd->SetGuidance("Set the number of drift step points to be skipped in the visualization");
@@ -228,6 +228,8 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
 	  }
 	  else if(command == voltageCathodePlaneCmd){
 	  	fGasModelParameters->SetVoltageCathodePlane(voltageCathodePlaneCmd->GetNewDoubleValue(newValues));
+      G4cout << "(Debug: GasModelParametersMessenger.cc) The cathode voltage has been set to: " 
+      << fGasModelParameters->GetVoltageCathodePlane() << G4endl; 
 	  }
     else if(command == numberOfGasesCmd){
       fGasModelParameters->SetNumberOfGases(numberOfGasesCmd->GetNewIntValue(newValues));
@@ -257,9 +259,12 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
     }
     else if(command == temperatureCmd) {
       fGasModelParameters->SetTemperature(temperatureCmd->GetNewDoubleValue(newValues));
+      G4cout << "(Debug: GasModelParametersMessenger) Temperature set to: " 
+      << fGasModelParameters->GetTemperature() << G4endl;
     }
     else if(command == distanceAnodeCathodesCmd) {
       fGasModelParameters->SetDistanceAnodeCathodes(distanceAnodeCathodesCmd->GetNewDoubleValue(newValues));
+      G4cout << "(Debug: GasModelParametersMessenger.cc) Distance anodes-cathodes set to: " << newValues << G4endl; 
     }
     else if(command == jumpDriftStepPointsCmd) {
       fGasModelParameters->SetJumpDriftStepPoints(jumpDriftStepPointsCmd->GetNewIntValue(newValues));

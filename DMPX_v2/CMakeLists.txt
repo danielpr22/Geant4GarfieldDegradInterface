@@ -1,6 +1,6 @@
 # Setting up the project and the CMake and C++ versions
 cmake_minimum_required(VERSION 3.10)
-project(DMPX_scan_angles_energies)
+project(DMPX_G_factor)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_STANDARD_REQUIRED True)
 
@@ -30,7 +30,7 @@ include(${Geant4_USE_FILE})
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 find_package(ROOT QUIET REQUIRED COMPONENTS RIO Net)
 if(NOT ROOT_FOUND)
-  message(STATUS "DMPX_scan_angles_energies: ROOT package not found. --> DMPX_scan_angles_energies disabled")  
+  message(STATUS "DMPX_G_factor: ROOT package not found. --> DMPX_G_factor disabled")  
   return()
 endif()
 include(${ROOT_USE_FILE})
@@ -102,11 +102,11 @@ set(headers
 # Add the executable and link it to the required libraries
 #find_package(Garfield REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-add_executable(DMPX_scan_angles_energies DMPX_scan_angles_energies.cc ${sources} ${headers})
-target_link_libraries(DMPX_scan_angles_energies -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
+add_executable(DMPX_G_factor main_files/DMPX_G_factor.cc ${sources} ${headers})
+target_link_libraries(DMPX_G_factor -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
 
 # Restrict include directories to the current folder
-target_include_directories(DMPX_scan_angles_energies PRIVATE
+target_include_directories(DMPX_G_factor PRIVATE
   ${PROJECT_SOURCE_DIR}/include
   ${Garfield_INCLUDE_DIRS}
   $ENV{GARFIELD_DIR}
@@ -118,13 +118,13 @@ target_include_directories(DMPX_scan_angles_energies PRIVATE
 )
 
 # Copy all scripts to the build directory
-set(DMPX_scan_angles_energies_SCRIPTS
-  scan_energies_angles.mac
+set(DMPX_G_factor_SCRIPTS
+  run_files/G_factor.mac
   kr_90_ch4_10.gas
   convertDegradFile.py
 )
 
-foreach(_script ${DMPX_scan_angles_energies_SCRIPTS})
+foreach(_script ${DMPX_G_factor_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}
@@ -133,6 +133,6 @@ foreach(_script ${DMPX_scan_angles_energies_SCRIPTS})
 endforeach()
 
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-install(TARGETS DMPX_scan_angles_energies DESTINATION bin)
+install(TARGETS DMPX_G_factor DESTINATION bin)
 
 

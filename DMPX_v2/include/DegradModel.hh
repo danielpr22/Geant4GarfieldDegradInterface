@@ -11,9 +11,9 @@
 // Included from the current project
 #include "GasModelParameters.hh"
 #include "GasBoxSD.hh"
+#include "DetectorMessenger.hh"
 
 // Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
-#include "TrackDegrade.hh" // For communicating with Degrad (Fortran code)
 #include "G4ThreeVector.hh"
 #include "G4VFastSimulationModel.hh"
 
@@ -36,8 +36,9 @@ class DegradModel : public G4VFastSimulationModel {
 
 	private:
 		void GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degradPos,G4double degradTime);
-		GasModelParameters* fGasModelParameters; // Store the GasModelParameters instance
+		GasModelParameters* fGasModelParameters;
 		G4double thermalE;
+		DetectorMessenger* messenger; 
 		G4double voltageAnodeWires;
 		G4double voltageCathodePlane;
 		G4double photonEnergy;
@@ -51,7 +52,7 @@ class DegradModel : public G4VFastSimulationModel {
 		G4String gasPercentages; 
 		G4double temperature; 
 		G4double pressure; 
-		G4double distanceAnodeCathodes; // Distance from the anodes to the cathodes
+		G4double distanceAnodeCathodes;
 		G4int secondaryElectronsPerPhoton;
 };
 

@@ -135,6 +135,44 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* HPGeDet)
     setNameOfSimulationCmd->SetDefaultValue("DMPX");
     setNameOfSimulationCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 
+    setCathodes1_LengthXCmd = 
+      new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/cathodes1_LengthX", this); 
+    setCathodes1_LengthXCmd->SetGuidance("Set the absolute length in X for the first cathodes.");
+    setCathodes1_LengthXCmd->SetUnitCategory("Length");
+    setCathodes1_LengthXCmd->SetDefaultValue(5.0 * mm); 
+    setCathodes1_LengthXCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+
+    setCathodes1_LengthYCmd = 
+      new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/cathodes1_LengthY", this); 
+    setCathodes1_LengthYCmd->SetGuidance("Set the absolute length in Y for the first cathodes."); 
+    setCathodes1_LengthYCmd->SetUnitCategory("Length");
+    setCathodes1_LengthYCmd->SetDefaultValue(5.0 * mm); 
+    setCathodes1_LengthYCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+
+    setCathodes1_LengthZCmd = 
+      new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/cathodes1_LengthZ", this); 
+    setCathodes1_LengthZCmd->SetGuidance("Set the absolute length in Z for the first cathodes."); 
+    setCathodes1_LengthZCmd->SetUnitCategory("Length");
+    setCathodes1_LengthZCmd->SetDefaultValue(5.0 * mm); 
+    setCathodes1_LengthZCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+
+    setCathodes1_XPosCmd = 
+      new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/cathodes1_XPos", this); 
+    setCathodes1_XPosCmd->SetGuidance("Set the X center position for the first cathodes."); 
+    setCathodes1_XPosCmd->SetUnitCategory("Length");
+    setCathodes1_XPosCmd->SetDefaultValue(5.0 * mm); 
+    setCathodes1_XPosCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+
+
+    setCathodes1_ZPosCmd = 
+      new G4UIcmdWithADoubleAndUnit("/DMPX/geometry/cathodes1_ZPos", this); 
+    setCathodes1_ZPosCmd->SetGuidance("Set the Z center position for the first cathodes."); 
+    setCathodes1_ZPosCmd->SetUnitCategory("Length");
+    setCathodes1_ZPosCmd->SetDefaultValue(5.0 * mm); 
+    setCathodes1_ZPosCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+
+    
+
     // Default values
     worldHalfLength = 0.2 * m; // Default world half length
     checkOverlaps = false; // Default not to check overlaps
@@ -152,7 +190,13 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction* HPGeDet)
     anodesSpacing = 2.0 * mm; 
     nbOfAnodes = 64;
     nameOfSimulation = "DMPX";
+    cathodes1_LengthX = 5.0 * mm; 
+    cathodes1_LengthY = 5.0 * mm; 
+    cathodes1_LengthZ = 5.0 * mm; 
+    cathodes1_XPos = 5.0 * mm; 
+    cathodes1_ZPos = 5.0 * mm; 
 }
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -175,6 +219,11 @@ DetectorMessenger::~DetectorMessenger() {
     delete setAnodesSpacingCmd;
     delete setNbOfAnodesCmd;
     delete setNameOfSimulationCmd;
+    delete setCathodes1_LengthXCmd; 
+    delete setCathodes1_LengthYCmd; 
+    delete setCathodes1_LengthZCmd; 
+    delete setCathodes1_XPosCmd; 
+    delete setCathodes1_ZPosCmd; 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -260,6 +309,31 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
     detector->SetNameOfSimulation(nameOfSimulation);
     G4cout << "(Debug: DetectorMessenger.cc) Setting name of simulation to " << 
     nameOfSimulation << G4endl;
+  } else if (command == setCathodes1_LengthXCmd) {
+    cathodes1_LengthX = setCathodes1_LengthXCmd->GetNewDoubleValue(newValues);
+    detector->SetCathodes1_LengthX(cathodes1_LengthX);
+    G4cout << "(Debug: DetectorMessenger.cc) Setting the length in X for the first cathodes to: " << 
+    cathodes1_LengthX << G4endl;
+  } else if (command == setCathodes1_LengthYCmd) {
+    cathodes1_LengthY = setCathodes1_LengthYCmd->GetNewDoubleValue(newValues);
+    detector->SetCathodes1_LengthY(cathodes1_LengthY);
+    G4cout << "(Debug: DetectorMessenger.cc) Setting the length in Y for the first cathodes to: " << 
+    cathodes1_LengthY << G4endl;
+  } else if (command == setCathodes1_LengthZCmd) {
+    cathodes1_LengthZ = setCathodes1_LengthZCmd->GetNewDoubleValue(newValues);
+    detector->SetCathodes1_LengthZ(cathodes1_LengthZ);
+    G4cout << "(Debug: DetectorMessenger.cc) Setting the length in Z for the first cathodes to: " << 
+    cathodes1_LengthZ << G4endl; 
+  } else if (command == setCathodes1_XPosCmd) {
+    cathodes1_XPos = setCathodes1_XPosCmd->GetNewDoubleValue(newValues);
+    detector->SetCathodes1_XPos(cathodes1_XPos);
+    G4cout << "(Debug: DetectorMessenger.cc) Setting the center position in X for the first cathodes to: " << 
+    cathodes1_XPos << G4endl;
+  } else if (command == setCathodes1_ZPosCmd) {
+    cathodes1_ZPos = setCathodes1_ZPosCmd->GetNewDoubleValue(newValues);
+    detector->SetCathodes1_ZPos(cathodes1_ZPos);
+    G4cout << "(Debug: DetectorMessenger.cc) Setting the center position in Z for the first cathodes to: " << 
+    cathodes1_ZPos << G4endl;
   } else {
     G4cerr << "(Error: DetectorMessenger.cc) Command not recognized!" << G4endl;
   }

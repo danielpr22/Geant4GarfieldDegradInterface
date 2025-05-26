@@ -103,6 +103,11 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     inline void SetAnodesSpacing(G4double d){anodesSpacing=d;};
     inline void SetNbOfAnodes(G4int d){nbOfAnodes=d;};
     inline void SetNameOfSimulation(G4String s){nameOfSimulation=s;};
+    inline void SetCathodes1_LengthX(G4double d){cathodes1_LengthX=d;}; 
+    inline void SetCathodes1_LengthY(G4double d){cathodes1_LengthY=d;};
+    inline void SetCathodes1_LengthZ(G4double d){cathodes1_LengthZ=d;}; 
+    inline void SetCathodes1_XPos(G4double d){cathodes1_XPos=d;}; 
+    inline void SetCathodes1_ZPos(G4double d){cathodes1_ZPos=d;};
 
     //Getters for the dimensions and environment variables of the setup
     inline G4double GetWorldHalfLength(){return worldHalfLength;};
@@ -120,6 +125,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     inline G4double GetAnodesSpacing(){return anodesSpacing;};
     inline G4int GetNbOfAnodes(){return nbOfAnodes;};
     inline G4String GetNameOfSimulation(){return nameOfSimulation;};
+    inline G4double Getcathodes1_LengthX(){return cathodes1_LengthX;}; 
+    inline G4double Getcathodes1_LengthY(){return cathodes1_LengthY;}; 
+    inline G4double Getcathodes1_LengthZ(){return cathodes1_LengthZ;}; 
+    inline G4double Getcathodes1_XPos(){return cathodes1_XPos;}; 
+    inline G4double Getcathodes1_ZPos(){return cathodes1_ZPos;}; 
+
 
     // Getter method to call the gasBox inside the main file and check if interactions have occurred
     GasBoxSD* GetGasBoxSD() const { return fGasBoxSD; }
@@ -156,7 +167,11 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     G4double anodesSpacing; // Spacing between the anodes
     G4int nbOfAnodes; // Number of anodes
     G4String nameOfSimulation; // Name of the simulation
-
+    G4double cathodes1_LengthX; 
+    G4double cathodes1_LengthY; 
+    G4double cathodes1_LengthZ; 
+    G4double cathodes1_XPos; 
+    G4double cathodes1_ZPos; 
     GasBoxSD* fGasBoxSD; 
 };
 

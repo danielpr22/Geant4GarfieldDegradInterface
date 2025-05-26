@@ -25,8 +25,13 @@ namespace{G4Mutex aMutex = G4MUTEX_INITIALIZER;}
 
 const static G4double torr = 1. / 760. * atmosphere;
 
-HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope,DetectorConstruction* dc,GasBoxSD* sd)
-: G4VFastSimulationModel(modelName, envelope), detCon(dc), fGasBoxSD(sd){
+HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope, DetectorConstruction* dc, GasBoxSD* sd)
+: G4VFastSimulationModel(modelName, envelope), detCon(dc), fGasBoxSD(sd), fGasModelParameters(gmp){
+  
+  /////////////////////////////////////////////////////////////////////////////////////
+  // IMPORTANT: In Garfield++, the distances are expressed in cm and the times in ns //
+  /////////////////////////////////////////////////////////////////////////////////////
+
   thermalE = gmp->GetThermalEnergy(); // eV
   temperature = gmp->GetTemperature(); // Kelvin
   fVisualizeChamber = gmp->GetVisualizeChamber();
@@ -34,15 +39,27 @@ HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* enve
   fVisualizeField = gmp->GetVisualizeField();
   numberOfEvents = 0;
   secondaryElectronCounterTotal = 0;
-  jumpDriftStepPoints = gmp->GetJumpDriftStepPoints(); 
+  jumpDriftStepPoints = gmp->GetJumpDriftStepPoints();
   gasAmplificationCoefficient = 0.0; 
 
   // We get the construction parameters from the DetectorConstruction class
-  G4double anodesHalfLength = GetAnodesHalfLength(*detCon);
-  G4double anodesR = GetAnodesR(*detCon);
-  G4double anodesSpacing = GetAnodesSpacing(*detCon);
-  G4int nbOfAnodes = GetNbOfAnodes(*detCon);
-  G4String nameOfSimulation = GetNameOfSimulation(*detCon); // Name used for the storing of results
+  nameOfSimulation = GetNameOfSimulation(*detCon); // Name used for the storing of results
+  anodesHalfLength = GetAnodesHalfLength(*detCon) / CLHEP::cm;
+  anodesR = GetAnodesR(*detCon) / CLHEP::cm;
+  anodesSpacing = GetAnodesSpacing(*detCon) / CLHEP::cm;
+  nbOfAnodes = GetNbOfAnodes(*detCon);
+  cathodes_1_LengthX = GetCathodes1_LengthX(*detCon); 
+  cathodes_1_LengthY = GetCathodes1_LengthY(*detCon); 
+  cathodes_1_LengthZ = GetCathodes1_LengthZ(*detCon); 
+  cathodes_1_XPos = GetCathodes1_XPos(*detCon); 
+  cathodes_1_ZPos = GetCathodes1_ZPos(*detCon); 
+
+  // Temporary variable to store the old values from the anode and cathode voltages, and check if they have changed
+  vAnodeWires_temp = 0.0; 
+  vCathodePlane_temp = 0.0; 
+
+  // The distance between the anodes and cathodes is equal to the gas box height
+  distanceAnodeCathodes = GetGasBoxLengthY(*detCon);  
 
   // Vector to store the number of electrons in each wire
   std::vector<int> electronsInWires; 
@@ -139,8 +156,13 @@ G4bool HeedModel::FindParticleNameEnergy(G4String name, double ekin_keV) {
   return false;
 }
 
-// Initialize the Garfield++ related geometries and physics/tracking mechanisms, this is specific for each use and should be re-implemented entirely
-// These functions should mimick the situation represented by Geant4
+// Initialize the Garfield++ related geometries and physics/tracking mechanisms, this is specific for each use and 
+// should be re-implemented entirely. 
+
+//////////////////////////////////////////////////////////////////////////////////
+// IMPORTANT: These functions should mimick the situation represented by Geant4 //
+//////////////////////////////////////////////////////////////////////////////////
+
 void HeedModel::InitialisePhysics(){
   if(G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::workerRM || G4RunManager::GetRunManager()->GetRunManagerType() == G4RunManager::sequentialRM){
     makeGas();
@@ -174,9 +196,9 @@ void HeedModel::makeGas(){
   // ##### MAGBOLTZ #####
   // ####################
 
-  // Please, comment out the following lines if you do not want to use Magboltz to 
-  // generate the gas file. The gas file is generated only once, and then it is used
-  // for the rest of the simulation.
+  // // Please, comment out the following lines if you do not want to use Magboltz to 
+  // // generate the gas file. The gas file is generated only once for a given gas configuration,
+  // // and then it is used for the rest of the simulations.
 
   // // Generating the gas file for the current gas mixture
   // // SetFieldGrid(Min electric field [V/cm], max electric field [V/cm], number of points in the field grid, 
@@ -189,7 +211,7 @@ void HeedModel::makeGas(){
   // // Generating the gas table (.gas file)
   // fMediumMagboltz->GenerateGasTable(ncoll);
 
-  // /// we save the generated file for later use
+  // /// We save the generated file for later use
   // fMediumMagboltz->WriteGasFile("kr_90_ch4_10.gas");
 
 
@@ -227,6 +249,8 @@ void HeedModel::buildBoxAndField(){
                                detCon->GetGasBoxLengthY()*0.5/CLHEP::cm,
                                detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm);
 
+  G4cout << "(Debug: HeedModel.cc) The anodes half length in Y is : " << detCon->GetGasBoxLengthY()*0.5/CLHEP::cm << G4endl; 
+
   geo->AddSolid(box, fMediumMagboltz);
   G4cout << "(Debug: HeedModel.cc) Added gas box to Garfield geometry." << G4endl;
 
@@ -234,11 +258,6 @@ void HeedModel::buildBoxAndField(){
   comp = new Garfield::ComponentAnalyticField();
   comp->SetMedium(fMediumMagboltz); // Attaching the gas to the component analytic field
   comp->SetGeometry(geo);
-
-  // Creating the anode wires geometry
-  anodesHalfLength = anodesHalfLength / cm; // cm
-  anodesR = anodesR / cm; // cm
-  anodesSpacing = anodesSpacing / cm; // cm
 
   for (int i = 0; i < nbOfAnodes; i++) {
       const double xPos = anodesSpacing * (i - nbOfAnodes / 2); // cm
@@ -261,23 +280,23 @@ void HeedModel::buildBoxAndField(){
   G4cout << "(Debug: HeedModel.cc) All the wires have been added to the Garfield geometry...." << G4endl;
 
   // Creating the cathode plane geometry
-  const double cathodePlaneHalfX = 6.5 ; // cm
-  const double cathodePlaneWidth = 0.1; // cm
-  const double cathodePlaneHalfZ = 1.6; // cm
-  const double xPosPlane = 0.0; // cm
-  const double yPosPlane = -0.8; // cm
-  const double zPosPlane = 0.0; // cm
+  double cathodePlaneHalfLengthX = 0.5 * cathodes_1_LengthX / CLHEP::cm; // cm (Garfield++ works with half lengths)
+  double cathodePlaneHalfLengthY = 0.5 * cathodes_1_LengthY / CLHEP::cm; // cm
+  double cathodePlaneHalfLengthZ = 0.5 * cathodes_1_LengthZ / CLHEP::cm; // cm
+  double xPosPlane = cathodes_1_XPos / CLHEP::cm; // cm (Positions of the center of the plane)
+  double yPosPlane = 0.5 * distanceAnodeCathodes/CLHEP::cm + cathodePlaneHalfLengthY; 
+  double zPosPlane = cathodes_1_ZPos / CLHEP::cm; // cm
 
   // The anodes are sandwiched between two cathode planes
   cathodePlane_1 = new Garfield::SolidBox(xPosPlane, yPosPlane, zPosPlane, 
-    cathodePlaneHalfX, cathodePlaneWidth, cathodePlaneHalfZ); 
+    cathodePlaneHalfLengthX, cathodePlaneHalfLengthY, cathodePlaneHalfLengthZ); // The two planes are located at equal distance from the anodes
   cathodePlane_2 = new Garfield::SolidBox(xPosPlane, -yPosPlane, zPosPlane, 
-    cathodePlaneHalfX, cathodePlaneWidth, cathodePlaneHalfZ);
+    cathodePlaneHalfLengthX, cathodePlaneHalfLengthY, cathodePlaneHalfLengthZ);
 
   geo->AddSolid(cathodePlane_1, fMediumMagboltz);
   geo->AddSolid(cathodePlane_2, fMediumMagboltz);
-  comp->AddPlaneY(yPosPlane, vCathodePlane, "p_pos_y"); // Adding the cathode plane
-  comp->AddPlaneY(-yPosPlane, vCathodePlane, "p_neg_y"); // Adding the cathode plane
+  comp->AddPlaneY(yPosPlane - cathodePlaneHalfLengthY, vCathodePlane, "p_pos_y"); // Adding the cathode plane
+  comp->AddPlaneY(-yPosPlane + cathodePlaneHalfLengthY, vCathodePlane, "p_neg_y"); // Adding the cathode plane
 
   G4cout << "(Debug: HeedModel.cc) Added cathode plane to Garfield geometry." << G4endl;
 
@@ -298,6 +317,14 @@ void HeedModel::BuildSensor(){
     std::string wireName = "a_" + std::to_string(i); // Wires are named from 0 to nbOfAnodes-1
     fSensor->AddElectrode(comp, wireName);
   }
+
+  // For efficiency reasons, we restrict charge transport to the gas box
+  fSensor->SetArea(-detCon->GetGasBoxLengthX()*0.5/CLHEP::cm, // xmin
+  -detCon->GetGasBoxLengthY()*0.5/CLHEP::cm, // ymin
+  -detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm, // zmin
+  detCon->GetGasBoxLengthX()*0.5/CLHEP::cm, // xmax
+  detCon->GetGasBoxLengthY()*0.5/CLHEP::cm, // y max
+  detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm); // zmax
   //fSensor->SetTimeWindow(tmin, tstep, nbins); //Lowest time [ns], tstep (signal collected during this time) [ns], tfinal [ns]
 }
 
@@ -386,117 +413,149 @@ void HeedModel::Drift(double x, double y, double z, double t) {
   secondaryElectronCounter = 0; 
   electronsInWires.resize(nbOfAnodes, 0); // Initialize the vector to store the number of electrons in each wire
 
+  // If the voltages have changed, we reinitialize the physics
+  if ((vAnodeWires != vAnodeWires_temp) || (vCathodePlane != vCathodePlane_temp)) {
+    G4cout << "(Debug: HeedModel.cc) The physics model has been reinitialized..." << G4endl; 
+
+    vAnodeWires_temp = vAnodeWires; // We update the voltages
+    vCathodePlane_temp = vCathodePlane; 
+    comp->Clear(); // Clearing all the electrodes and planes
+
+    // Updating the anodes
+    G4cout << "(Debug: HeedModel.cc) Value of anodesSpacing: " << anodesSpacing << G4endl; 
+    for (int i = 0; i < nbOfAnodes; i++) {
+      const double xPos = anodesSpacing * (i - nbOfAnodes / 2); // cm
+      const double yPos = detCon->GetGasBoxCenterPositionY()/CLHEP::cm; // cm
+      
+      // Generate a unique name like "a_0", "a_1", ..., "a_63" for the anodes
+      std::string wireName = "a_" + std::to_string(i);
+
+      comp->AddWire(xPos, yPos, anodesR, vAnodeWires, wireName, anodesHalfLength); // Adding the wires for the signal calculation
+    }
+
+    // Updating the cathodes
+    double cathodePlaneHalfLengthY = 0.5 * cathodes_1_LengthY / CLHEP::cm; // cm
+    double yPosPlane = 0.5 * distanceAnodeCathodes/CLHEP::cm + cathodePlaneHalfLengthY; 
+
+    comp->AddPlaneY(yPosPlane - cathodePlaneHalfLengthY, vCathodePlane, "p_pos_y"); // Adding the cathode plane
+    comp->AddPlaneY(-yPosPlane + cathodePlaneHalfLengthY, vCathodePlane, "p_neg_y"); // Adding the cathode plane
+
+    G4cout << "(Debug: HeedModel.cc) The new plane has been added with a voltage of: " << vCathodePlane << G4endl; 
+
+    InitialisePhysics(); // We build the sensor again with the new comp
+  }
 
   if (driftElectrons) {
-      G4cout << "(Debug: HeedModel.cc) Now drifting an electron..." << G4endl; 
-      DriftLineTrajectory* dlt = new DriftLineTrajectory();
-      G4TrackingManager* fpTrackingManager = G4EventManager::GetEventManager()->GetTrackingManager();
-      fpTrackingManager->SetTrajectory(dlt);
+    G4cout << "(Debug: HeedModel.cc) Now drifting an electron..." << G4endl; 
+    DriftLineTrajectory* dlt = new DriftLineTrajectory();
+    G4TrackingManager* fpTrackingManager = G4EventManager::GetEventManager()->GetTrackingManager();
+    fpTrackingManager->SetTrajectory(dlt);
 
-      // Starting point of the drift
-      G4cout << "(Debug: HeedModel.cc) Starting point of the drift: " << x << " " 
-      << y <<  " " << z << " " << t << G4endl; 
+    // Starting point of the drift
+    G4cout << "(Debug: HeedModel.cc) Starting point of the drift: " << x << " " 
+    << y <<  " " << z << " " << t << G4endl; 
 
-      // If RK4 is to be used
-      if (driftRKF) {
-          fDriftRKF->DriftElectron(x, y, z, t);
-          unsigned int n = fDriftRKF->GetNumberOfDriftLinePoints();
-          G4cout << "(Debug: HeedModel.cc) Number of drift line points: " << n << G4endl; 
-          double xi, yi, zi, ti;
-          int status; // Add a variable to store the status
-          for (unsigned int i = 0; i < n; i++) {
-              fDriftRKF->GetDriftLinePoint(i, xi, yi, zi, ti); // To get the full trajectory
-              if (G4VVisManager::GetConcreteInstance() && i % jumpDriftStepPoints == 0) { // To get all the drift step points or only some of them
-                  dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
-              }
-          }
-          fDriftRKF->GetEndPoint(xi, yi, zi, ti, status); // Ths command retrieves the endpoint and end time, and the status
-          if (status > 0) { // If the status is > 0, we are inside a wire (see Garfield++ documentation)
-            secondaryElectronCounter++; // The secondary electron generated by Degrad has touched the wire!  
-          }
-      
-      // If we want to use Monte-Carlo methods for the simulation of the avalanches created
-      // by the secondary electrons. It is this function that allows for example to recover
-      // the gas amplification factor G (average number of electrons created per secondary
-      // electron generated by Degrad)
-      } else if (trackMicro) {
-          G4cout << "(Debug: HeedModel.cc) Now drifting an avalanche..." << G4endl;
-          fAvalanche->AvalancheElectron(x, y, z, t, thermalE, 0, 0, 0); // Initial energy in eV, random direction 
-          unsigned int nLines = fAvalanche->GetNumberOfElectronEndpoints();
+    // If RK4 is to be used
+    if (driftRKF) {
+        fDriftRKF->DriftElectron(x, y, z, t);
+        unsigned int n = fDriftRKF->GetNumberOfDriftLinePoints();
+        G4cout << "(Debug: HeedModel.cc) Number of drift line points: " << n << G4endl; 
+        double xi, yi, zi, ti;
+        int status; // Add a variable to store the status
+        for (unsigned int i = 0; i < n; i++) {
+            fDriftRKF->GetDriftLinePoint(i, xi, yi, zi, ti); // To get the full trajectory
+            if (G4VVisManager::GetConcreteInstance() && i % jumpDriftStepPoints == 0) { // To get all the drift step points or only some of them
+                dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
+            }
+        }
+        fDriftRKF->GetEndPoint(xi, yi, zi, ti, status); // Ths command retrieves the endpoint and end time, and the status
+        if (status > 0) { // If the status is > 0, we are inside a wire (see Garfield++ documentation)
+          secondaryElectronCounter++; // The secondary electron generated by Degrad has touched the wire!  
+        }
+    
+    // If we want to use Monte-Carlo methods for the simulation of the avalanches created
+    // by the secondary electrons. It is this function that allows for example to recover
+    // the gas amplification factor G (average number of electrons created per secondary
+    // electron generated by Degrad)
+    } else if (trackMicro) {
+        G4cout << "(Debug: HeedModel.cc) Now drifting an avalanche..." << G4endl;
+        fAvalanche->AvalancheElectron(x, y, z, t, thermalE, 0, 0, 0); // Initial energy in eV, random direction 
+        unsigned int nLines = fAvalanche->GetNumberOfElectronEndpoints();
 
-          G4cout << "(Debug: HeedModel.cc) Number of electrons in the avalanche: " << nLines << G4endl;
-          for (int i=0; i < nLines; i++) {
-              unsigned int n = fAvalanche->GetNumberOfElectronDriftLinePoints(i);
-              double xfinal , yfinal, zfinal, tfinal, efinal, e0; // Dummy variables to store the end point of the drift line
-              int status; 
-              fAvalanche->GetElectronEndpoint(i, x, y, z, t, e0, xfinal, yfinal, zfinal, tfinal, efinal, status); // To get the end point of the drift line
-              G4cout << "(Debug: HeedModel.cc) The status of the electron is: " << status << G4endl; 
-              if (status == -5) { // If the status is -5, we are inside a wire (see Garfield++ documentation)
-                  // Which wire did we touch?
-                  double min_x = 10000.0; 
-                  int index = -1;
-                  for (int i = 0; i < nbOfAnodes; i++) {
-                    const double xPos = anodesSpacing * (i - nbOfAnodes / 2);
-                    if (abs(xPos - xfinal) < min_x) {
-                      min_x = abs(xPos - xfinal);
-                      index = i;
-                    }
+        G4cout << "(Debug: HeedModel.cc) Number of electrons in the avalanche: " << nLines << G4endl;
+        for (int i=0; i < nLines; i++) {
+            unsigned int n = fAvalanche->GetNumberOfElectronDriftLinePoints(i);
+            double xfinal , yfinal, zfinal, tfinal, efinal, e0; // Dummy variables to store the end point of the drift line
+            int status; 
+            fAvalanche->GetElectronEndpoint(i, x, y, z, t, e0, xfinal, yfinal, zfinal, tfinal, efinal, status); // To get the end point of the drift line
+            G4cout << "(Debug: HeedModel.cc) The status of the electron is: " << status << G4endl; 
+            if (status == -5) { // If the status is -5, we are inside a wire (see Garfield++ documentation)
+                // Which wire did we touch?
+                double min_x = 10000.0; 
+                int index = -1;
+                for (int i = 0; i < nbOfAnodes; i++) {
+                  const double xPos = anodesSpacing * (i - nbOfAnodes / 2);
+                  if (abs(xPos - xfinal) < min_x) {
+                    min_x = abs(xPos - xfinal);
+                    index = i;
                   }
-                  G4cout << "(Debug: HeedModel.cc) The wire touched is: " << index << G4endl;
-                  electronsInWires[index]++; // Increment the number of electrons in the wire
-
-                  secondaryElectronCounter++; // The secondary electron generated by Degrad has touched the wire!  
-                  G4cout << "(Debug: HeedModel.cc) Secondary electron counter: " << secondaryElectronCounter << G4endl;
-              }
-              double xi, yi, zi, ti; 
-
-              for (int j=0; j<n; j++){
-                fAvalanche->GetElectronDriftLinePoint(xi, yi, zi, ti, j, i); 
-                
-                if (G4VVisManager::GetConcreteInstance() && j % jumpDriftStepPoints == 0) { // To get all the drift step points or only some of them
-                    dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
-                    G4cout << "(Debug: HeedModel.cc) Appended step: " << xi << " " << yi << " " << zi << G4endl;
                 }
-              }
+                G4cout << "(Debug: HeedModel.cc) The wire touched is: " << index << G4endl;
+                electronsInWires[index]++; // Increment the number of electrons in the wire
 
-          }
-          for(int i = 0; i < nbOfAnodes; i++) {
-            G4cout << "(Debug: HeedModel.cc) Number of electrons in wire " << i << ": " << electronsInWires[i] << G4endl;
-          } 
-
-      } else if (createAval) {
-          G4cout << "(Debug: HeedModel.cc) Now drifting an avalanche..." << G4endl;
-          fDrift->AvalancheElectron(x, y, z, t);
-          unsigned int nLines = fDrift->GetNumberOfElectronEndpoints();
-          G4cout << "(Debug: HeedModel.cc) Number of electrons in the avalanche: " << nLines << G4endl;
-          double x0, y0, z0, t0;
-          double xi, yi, zi, ti; // Dummy variables to store the end point of the drift line
-          int status;
-          for (unsigned int i = 0; i < nLines; i++) {
-              fDrift->GetElectronEndpoint(i, x0, y0, z0, t0, xi, yi, zi, ti, status);
-              dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
-              G4cout << "(Debug: HeedModel.cc) Endpoint: " << xi << " " << yi << " " << zi << " " << status << G4endl;
-              if (status == -5) { // If the status is -5, we are out of the drift medium (inside a wire) (see Garfield++ documentation)
                 secondaryElectronCounter++; // The secondary electron generated by Degrad has touched the wire!  
                 G4cout << "(Debug: HeedModel.cc) Secondary electron counter: " << secondaryElectronCounter << G4endl;
             }
-          }  
+            double xi, yi, zi, ti; 
 
-      // If we just set "driftElectrons" to true, then the avalanche is created by default    
-      } else {
-          G4cout << "(Debug: HeedModel.cc) Now drifting an avalanche..." << G4endl;
-          fDrift->DriftElectron(x, y, z, t);
-          unsigned int n = fDrift->GetNumberOfIonEndpoints();
-          double x0, y0, z0, t0;
-          double x1, y1, z1, t1;
-          int status;
-          for (unsigned int i = 0; i < n; i++) {
-              fDrift->GetIonEndpoint(i, x0, y0, z0, t0, x1, y1, z1, t1, status);
-              if (G4VVisManager::GetConcreteInstance() && i % jumpDriftStepPoints == 0) {
-                  dlt->AppendStep(G4ThreeVector(x1 * CLHEP::cm, y1 * CLHEP::cm, z1 * CLHEP::cm), t1);
+            for (int j=0; j<n; j++){
+              fAvalanche->GetElectronDriftLinePoint(xi, yi, zi, ti, j, i); 
+              
+              if (G4VVisManager::GetConcreteInstance() && j % jumpDriftStepPoints == 0) { // To get all the drift step points or only some of them
+                  dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
+                  G4cout << "(Debug: HeedModel.cc) Appended step: " << xi << " " << yi << " " << zi << G4endl;
               }
+            }
+
+        }
+        for(int i = 0; i < nbOfAnodes; i++) {
+          G4cout << "(Debug: HeedModel.cc) Number of electrons in wire " << i << ": " << electronsInWires[i] << G4endl;
+        } 
+
+    } else if (createAval) {
+        G4cout << "(Debug: HeedModel.cc) Now drifting an avalanche..." << G4endl;
+        fDrift->AvalancheElectron(x, y, z, t);
+        unsigned int nLines = fDrift->GetNumberOfElectronEndpoints();
+        
+        G4cout << "(Debug: HeedModel.cc) Number of electrons in the avalanche: " << nLines << G4endl;
+        double x0, y0, z0, t0;
+        double xi, yi, zi, ti; // Dummy variables to store the end point of the drift line
+        int status;
+        for (unsigned int i = 0; i < nLines; i++) {
+            fDrift->GetElectronEndpoint(i, x0, y0, z0, t0, xi, yi, zi, ti, status);
+            dlt->AppendStep(G4ThreeVector(xi * CLHEP::cm, yi * CLHEP::cm, zi * CLHEP::cm), ti);
+            G4cout << "(Debug: HeedModel.cc) Endpoint: " << xi << " " << yi << " " << zi << " " << status << G4endl;
+            if (status == -5) { // If the status is -5, we are out of the drift medium (inside a wire) (see Garfield++ documentation)
+              secondaryElectronCounter++; // The secondary electron generated by Degrad has touched the wire!  
+              G4cout << "(Debug: HeedModel.cc) Secondary electron counter: " << secondaryElectronCounter << G4endl;
           }
-      }
+        }  
+
+    // If we just set "driftElectrons" to true, then the avalanche is created by default    
+    } else {
+        G4cout << "(Debug: HeedModel.cc) Now drifting an avalanche..." << G4endl;
+        fDrift->DriftElectron(x, y, z, t);
+        unsigned int n = fDrift->GetNumberOfIonEndpoints();
+        double x0, y0, z0, t0;
+        double x1, y1, z1, t1;
+        int status;
+        for (unsigned int i = 0; i < n; i++) {
+            fDrift->GetIonEndpoint(i, x0, y0, z0, t0, x1, y1, z1, t1, status);
+            if (G4VVisManager::GetConcreteInstance() && i % jumpDriftStepPoints == 0) {
+                dlt->AppendStep(G4ThreeVector(x1 * CLHEP::cm, y1 * CLHEP::cm, z1 * CLHEP::cm), t1);
+            }
+        }
+    }
   }
   G4cout << "(Debug: HeedModel.cc) Number of secondary electrons in this event: " << secondaryElectronCounter << G4endl;
   secondaryElectronCounterTotal += secondaryElectronCounter;   // Total number that have reached the anodes in all the events so far
@@ -550,27 +609,29 @@ void HeedModel::PlotTrack(){
 void HeedModel::ProcessEvent(){
   std::ofstream resultfile("Results_" + nameOfSimulation + ".csv", std::ios::app); // Append mode to avoid overwriting
 
+  // Check if the file is empty (to see if it's the first shot)
+  std::ifstream checkfile("Results_" + nameOfSimulation + ".csv");
+  bool isEmpty = checkfile.peek() == std::ifstream::traits_type::eof();
+  checkfile.close();
+  
   if (!resultfile.is_open()) {
       G4cerr << "(Error: HeedModel.cc) Could not open the results file!" << G4endl;
       return;
   }
 
   // Write the header to the file if it's the first event
-  if (numberOfEvents == 1) {
-      resultfile << "Shot Number,Secondary Electron Number,Anode ID,Electrons in wire,Gas amplification  coefficient\n";
+  if (isEmpty) {
+      resultfile << "Shot Number,Number of events (secondary e.),Anode ID,Electrons in wire,Gas amplification  coefficient\n";
   }
 
   for(int anodeID = 0; anodeID < nbOfAnodes; anodeID++) {
 
-      if(anodeID == 0) {
-        resultfile << ",,,," << gasAmplificationCoefficient << "\n"; // Write the gas amplification coefficient only once
-      }
-
       // Write the data for this anode to the file
-      resultfile << shotNumber << "," << // Shot number (constant for a given incoming photon)
-      numberOfEvents << ","  // Event ID
+      resultfile << shotNumber << "," // Shot number (constant for a given incoming photon)
+      << numberOfEvents << ","  // Event ID
       << anodeID << ","         // Anode ID
-      << electronsInWires[anodeID] << "\n" ;// Averaged gas amplification coefficient
+      << electronsInWires[anodeID] << ","  // Electrons per wire
+      << gasAmplificationCoefficient << "\n" ;// Averaged gas amplification coefficient
   }
                
   // Close the file
@@ -580,3 +641,11 @@ void HeedModel::ProcessEvent(){
 }
 
 void HeedModel::Reset(){}
+
+void HeedModel::UpdateFromGasModelParameters() {
+  // Update voltages
+  vAnodeWires = fGasModelParameters->GetVoltageAnodeWires();
+  vCathodePlane = fGasModelParameters->GetVoltageCathodePlane();
+
+  G4cout << "(Debug: HeedModel.cc) Updated HeedModel parameters from GasModelParameters." << G4endl;
+}

@@ -212,22 +212,22 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-DMPX_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX_v2
+DMPX_G_factor_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX_v2
 
 //Value Computed by CMake
-DMPX_IS_TOP_LEVEL:STATIC=OFF
+DMPX_G_factor_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-DMPX_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX_v2
+DMPX_G_factor_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX_v2
 
 //Value Computed by CMake
-DMPX_scan_angles_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX_v2
+DMPX_default_run_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX_v2
 
 //Value Computed by CMake
-DMPX_scan_angles_IS_TOP_LEVEL:STATIC=OFF
+DMPX_default_run_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-DMPX_scan_angles_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX_v2
+DMPX_default_run_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX_v2
 
 //Value Computed by CMake
 DMPX_scan_angles_energies_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX_v2
