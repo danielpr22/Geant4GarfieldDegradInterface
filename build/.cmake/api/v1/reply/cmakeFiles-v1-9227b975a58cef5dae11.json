@@ -131,11 +131,11 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Geant4ConfigVersion.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/Geant4ConfigVersion.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Geant4Config.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/Geant4Config.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -179,15 +179,15 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/G4EXPATShim.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/G4EXPATShim.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/PTL/PTLConfigVersion.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/PTL/PTLConfigVersion.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/PTL/PTLConfig.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/PTL/PTLConfig.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -231,11 +231,11 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/PTL/PTLTargets.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/PTL/PTLTargets.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/PTL/PTLTargets-release.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/PTL/PTLTargets-release.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -334,7 +334,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/G4X11Shim.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/G4X11Shim.cmake"
 		},
 		{
 			"isExternal" : true,
@@ -515,23 +515,23 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/G4X11Shim.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/G4X11Shim.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Modules/IntelCompileFeatures.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/Modules/IntelCompileFeatures.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Modules/MSVCCompileFeatures.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/Modules/MSVCCompileFeatures.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Geant4LibraryDepends.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/Geant4LibraryDepends.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/Geant4LibraryDepends-release.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/Geant4LibraryDepends-release.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -545,19 +545,19 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/Desktop/GEANT4/geant4_install/lib/cmake/Geant4/UseGeant4.cmake"
+			"path" : "/data/Geant4/geant4_install/lib/cmake/Geant4/UseGeant4.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/ROOTConfig-version.cmake"
+			"path" : "/data/ROOT/root_install/cmake/ROOTConfig-version.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/ROOTConfig.cmake"
+			"path" : "/data/ROOT/root_install/cmake/ROOTConfig.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/RootMacros.cmake"
+			"path" : "/data/ROOT/root_install/cmake/RootMacros.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -566,11 +566,11 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/ROOTConfig-targets.cmake"
+			"path" : "/data/ROOT/root_install/cmake/ROOTConfig-targets.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/ROOTConfig-targets-release.cmake"
+			"path" : "/data/ROOT/root_install/cmake/ROOTConfig-targets-release.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -579,7 +579,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/modules/FindVdt.cmake"
+			"path" : "/data/ROOT/root_install/cmake/modules/FindVdt.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -593,11 +593,11 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/ROOTUseFile.cmake"
+			"path" : "/data/ROOT/root_install/cmake/ROOTUseFile.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/home/Daniel/root/root_install/cmake/RootMacros.cmake"
+			"path" : "/data/ROOT/root_install/cmake/RootMacros.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -617,8 +617,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build",
-		"source" : "/home/Daniel/Desktop/Geant4GarfieldDegradInterface"
+		"build" : "/data/Geant4_Garfield_Degrad_Interface/Geant4GarfieldDegradInterface/build",
+		"source" : "/data/Geant4_Garfield_Degrad_Interface/Geant4GarfieldDegradInterface"
 	},
 	"version" : 
 	{

@@ -59,7 +59,8 @@ HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* enve
   vCathodePlane_temp = 0.0; 
 
   // The distance between the anodes and cathodes is equal to the gas box height
-  distanceAnodeCathodes = GetGasBoxLengthY(*detCon);  
+  distanceAnodeCathodes = 16;
+  //distanceAnodeCathodes = GetGasBoxLengthY(*detCon);  
 
   // Vector to store the number of electrons in each wire
   std::vector<int> electronsInWires; 

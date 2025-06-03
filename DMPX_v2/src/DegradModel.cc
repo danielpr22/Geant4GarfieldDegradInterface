@@ -104,7 +104,8 @@ void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
         G4String seed = G4UIcommand::ConvertToString(SEED);
 
         // Calculation of the electric field for Degrad in V/cm
-        distanceAnodeCathodes = 0.5 * detCon->GetGasBoxLengthY() / cm; // Distance from the anodes to the source of photons
+        distanceAnodeCathodes = 0.8; // cm
+        //distanceAnodeCathodes = 0.5 * detCon->GetGasBoxLengthY() / cm; // Distance from the anodes to the source of photons
         G4double voltageDifference = voltageAnodeWires - voltageCathodePlane; // V
         G4cout << "(Debug: DegradModel.cc) Voltage difference: " << voltageDifference << " V" << G4endl;
 
