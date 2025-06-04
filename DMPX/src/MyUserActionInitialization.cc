@@ -4,31 +4,20 @@
 #include "../include/PrimaryGeneratorAction.hh"
 #include "../include/EventAction.hh"
 #include "../include/GasBoxSD.hh"
-#include "../include/SteppingAction.hh"
 
 #include "G4SDManager.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+MyUserActionInitialization::MyUserActionInitialization(){}
 
-MyUserActionInitialization::MyUserActionInitialization() {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-MyUserActionInitialization::~MyUserActionInitialization() {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+MyUserActionInitialization::~MyUserActionInitialization(){}
 
 void MyUserActionInitialization::Build() const {
-	PrimaryGeneratorAction* primary = new PrimaryGeneratorAction();
+	PrimaryGeneratorAction* primary = new PrimaryGeneratorAction(); // For the particle gun
 	SetUserAction(primary);
-	SteppingAction* stepAct = new SteppingAction();
-	SetUserAction(stepAct);
 	EventAction* evt = new EventAction();
 	SetUserAction(evt);
 	SetUserAction(new RunAction());
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void MyUserActionInitialization::BuildForMaster() const {
 	SetUserAction(new RunAction());

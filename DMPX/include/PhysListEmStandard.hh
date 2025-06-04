@@ -29,6 +29,8 @@
 // $Id: PhysListEmStandard.hh,v 1.3 2006-06-29 16:57:44 gunter Exp $
 // GEANT4 tag $Name: not supported by cvs2svn $
 //
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef PhysListEmStandard_h
 #define PhysListEmStandard_h 1
@@ -37,8 +39,8 @@
 #include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 class GasModelParameters;
+
 
 class PhysListEmStandard : public G4VPhysicsConstructor {
 public:
@@ -57,5 +59,8 @@ public:
     
 private:
 };
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 
 #endif /* PhysListEmStandard_h */

@@ -1,8 +1,8 @@
 #include "../include/GasModelParametersMessenger.hh"
 #include "../include/GasModelParameters.hh"
-#include "../include/HeedDeltaElectronModel.hh"
-#include "../include/HeedNewTrackModel.hh"
-#include "../include/HeedModel.hh"
+#include "../include/DegradModel.hh"
+
+# include <iomanip> // For dealing with decimal precision 
 
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
@@ -15,23 +15,17 @@
 #include "G4PhysicalConstants.hh"
 #include "G4UIparameter.hh"
 #include "G4Tokenizer.hh"
+#include "G4UImanager.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-/* 
-The syntax ": fGasModelParameters(gm)"" is called an initializer list. It is used to 
-initialize member variables before the body of the constructor is executed.
-Using an initializer list is often more efficient than assigning values in the 
-constructor body. "gm" is a pointer to an instance of the GasModelParameters class.
-*/
-
-GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm): fGasModelParameters(gm) {
+GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
+    : fGasModelParameters(gm) {
   GasModelParametersDir = new G4UIdirectory("/gasModelParameters/");
   GasModelParametersDir->SetGuidance("GasModelParameters specific controls");
+  DegradDir = new G4UIdirectory("/gasModelParameters/degrad/");
+  DegradDir->SetGuidance("Degrad specific controls");
   HeedDir = new G4UIdirectory("/gasModelParameters/heed/");
   HeedDir->SetGuidance("Heed specific controls");
-  HeedNewTrackDir = new G4UIdirectory("/gasModelParameters/heed/heedonly/");
-  HeedNewTrackDir->SetGuidance("HeedNewTrack specific controls");
   HeedDeltaElectronDir = new G4UIdirectory("/gasModelParameters/heed/heedinterface/");
   HeedDeltaElectronDir->SetGuidance("HeedDeltaElectron specific controls");
 
@@ -53,24 +47,6 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   paramHDE->SetDefaultValue("1000.");
   addParticleHeedDeltaElectronCmd->SetParameter(paramHDE);
 
-  addParticleHeedNewTrackCmd = new G4UIcommand("/gasModelParameters/heed/heednewtrack/addparticle",this);
-  addParticleHeedNewTrackCmd->SetGuidance("Set properties of the particle to be included");
-  addParticleHeedNewTrackCmd->SetGuidance("[usage] /gasModelParameters/heed/heednewtrack/addparticle P Emin Emax");
-  addParticleHeedNewTrackCmd->SetGuidance("P:(String) particle name (e-, e+, p, mu+, mu-, mu, pi,...");
-  addParticleHeedNewTrackCmd->SetGuidance("Emin:(double) Minimum energy for the model to be activated");
-  addParticleHeedNewTrackCmd->SetGuidance("Emax:(double Maximum energy for the model to be activated");
-
-  G4UIparameter* paramHNT;
-  paramHNT = new G4UIparameter("P",'s',false);
-  paramHNT->SetDefaultValue("e-");
-  addParticleHeedNewTrackCmd->SetParameter(paramHNT);
-  paramHNT = new G4UIparameter("Emin",'d',true);
-  paramHNT->SetDefaultValue("0.001");
-  addParticleHeedNewTrackCmd->SetParameter(paramHNT);
-  paramHNT = new G4UIparameter("Emax",'d',true);
-  paramHNT->SetDefaultValue("1000.");
-  addParticleHeedNewTrackCmd->SetParameter(paramHNT);
-
   gasFileCmd =  new G4UIcmdWithAString("/gasModelParameters/heed/gasfile",this);
   gasFileCmd->SetGuidance("Set name of the gas file");
 
@@ -84,7 +60,7 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   driftRKFCmd->SetGuidance("true if runge kutta is used for the drift");
 
   createAvalCmd = new G4UIcmdWithABool("/gasModelParameters/heed/createAval",this);
-  createAvalCmd->SetGuidance("true if Monte Carlo simulation of avalanches is to be used");
+  createAvalCmd->SetGuidance("true if monte carlo simulation of an avalanches is to be used");
 
   trackMicroCmd = new G4UIcmdWithABool("/gasModelParameters/heed/trackmicroscopic",this);
   trackMicroCmd->SetGuidance("true if microscopic tracking of the drift electrons/ions and avalanche is to be used");
@@ -98,36 +74,98 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   visualizeFieldCmd = new G4UIcmdWithABool("/gasModelParameters/heed/visualizefield",this);
   visualizeFieldCmd->SetGuidance("true if the electric field has to be shown");
 
-  voltagePlaneHVCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltageplanehv",this);
-  voltagePlaneHVCmd->SetGuidance("Set the voltage on the high voltage plane");
-
-  voltagePlaneLowCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltageplanelow",this);
-  voltagePlaneLowCmd->SetGuidance("Set the voltage on the low voltage plane");
-
   voltageAnodeWiresCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltageanodewire",this);
-  voltageAnodeWiresCmd->SetGuidance("Set the voltage on the anode wire");
+  voltageAnodeWiresCmd->SetGuidance("Set the voltage on the anode wire in V");
 
-  voltageCathodeWiresCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagecathodewire",this);
-  voltageCathodeWiresCmd->SetGuidance("Set the voltage on the cathode wire");
+  voltageCathodePlaneCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagecathodeplane",this);
+  voltageCathodePlaneCmd->SetGuidance("Set the voltage on the cathode plane in V");
+    
+  thermalEnergyCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/thermalenergy",this);
+  thermalEnergyCmd->SetGuidance("Set the thermal energy to be used by degrad");
 
-  voltageGateCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagegate",this);
-  voltageGateCmd->SetGuidance("Set the voltage of the gate centroid value");
+  numberOfGasesCmd = new G4UIcmdWithAnInteger("/gasModelParameters/degrad/numberofgases",this);
+  numberOfGasesCmd->SetGuidance("Set the number of gases to be used by Degrad");
 
-  voltageDeltaGateCmd = new G4UIcmdWithADouble("/gasModelParameters/heed/voltagedeltagate",this);
-  voltageDeltaGateCmd->SetGuidance("Set the voltage difference of the gate wires with respect to the centroid: v + dv, v-dv");
+  // Gas list command
+  gasListCmd = new G4UIcommand("/gasModelParameters/degrad/setGasList", this);
+  gasListCmd->SetGuidance("Input the gas identifiers for Degrad.");
+
+  // The following 6 parameters will store the gas identifiers for the gases in Degrad
+  G4UIparameter* gas1 = new G4UIparameter("GAS1", 'd', false); 
+  gas1->SetGuidance("First gas identifier in Degrad");
+  gasListCmd->SetParameter(gas1);
+
+  G4UIparameter* gas2 = new G4UIparameter("GAS2", 'd', false); 
+  gas2->SetGuidance("Second gas identifier in Degrad");
+  gasListCmd->SetParameter(gas2);
+
+  G4UIparameter* gas3 = new G4UIparameter("GAS3", 'd', false); 
+  gas3->SetGuidance("Third gas identifier in Degrad");
+  gasListCmd->SetParameter(gas3);
+
+  G4UIparameter* gas4 = new G4UIparameter("GAS4", 'd', false); 
+  gas4->SetGuidance("Fourth gas identifier in Degrad");
+  gasListCmd->SetParameter(gas4);
+
+  G4UIparameter* gas5 = new G4UIparameter("GAS5", 'd', false);
+  gas5->SetGuidance("Fifth gas identifier in Degrad");
+  gasListCmd->SetParameter(gas5);
+
+  G4UIparameter* gas6 = new G4UIparameter("GAS6", 'd', false);
+  gas6->SetGuidance("Sixth gas identifier in Degrad");
+  gasListCmd->SetParameter(gas6);
+
+  // Gas percentages command
+  gasPercentagesCmd = new G4UIcommand("/gasModelParameters/degrad/setGasPercentages", this);
+  gasPercentagesCmd->SetGuidance("Input the molar gas percentages for Degrad.");
+
+  // The following 6 parameters will store the gas percentages for the gases in Degrad
+  G4UIparameter* gas1Percentage = new G4UIparameter("GAS1", 'd', false);
+  gas1Percentage->SetGuidance("First gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas1Percentage);
+
+  G4UIparameter* gas2Percentage = new G4UIparameter("GAS2", 'd', false);
+  gas2Percentage->SetGuidance("Second gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas2Percentage);
+
+  G4UIparameter* gas3Percentage = new G4UIparameter("GAS3", 'd', false);
+  gas3Percentage->SetGuidance("Third gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas3Percentage);
+
+  G4UIparameter* gas4Percentage = new G4UIparameter("GAS4", 'd', false);
+  gas4Percentage->SetGuidance("Fourth gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas4Percentage);
+
+  G4UIparameter* gas5Percentage = new G4UIparameter("GAS5", 'd', false);
+  gas5Percentage->SetGuidance("Fifth gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas5Percentage);
+
+  G4UIparameter* gas6Percentage = new G4UIparameter("GAS6", 'd', false);
+  gas6Percentage->SetGuidance("Sixth gas percentage in Degrad");
+  gasPercentagesCmd->SetParameter(gas6Percentage);
+
+  temperatureCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/temperature",this);
+  temperatureCmd->SetGuidance("Set the temperature to be used by Degrad");
+
+  distanceAnodeCathodesCmd = new G4UIcmdWithADoubleAndUnit("/gasModelParameters/degrad/distanceanodecathodes",this);
+  distanceAnodeCathodesCmd->SetGuidance("Set the distance between the anodes and the cathodes"); 
   
+  jumpDriftStepPointsCmd = new G4UIcmdWithAnInteger("/gasModelParameters/heed/jumpDriftStepPoints",this);
+  jumpDriftStepPointsCmd->SetGuidance("Set the number of drift step points to be skipped in the visualization");
+
+  secondaryElectronsPerPhotonCmd = new G4UIcmdWithAnInteger("/gasModelParameters/degrad/secondaryElectronsPerPhoton",this);
+  secondaryElectronsPerPhotonCmd->SetGuidance("Set the number of secondary electrons to be calculated in the Degrad avalanche");
+
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 
 GasModelParametersMessenger::~GasModelParametersMessenger() {
   delete GasModelParametersDir;
+  delete DegradDir;
   delete HeedDir;
-  delete HeedNewTrackDir;
   delete HeedDeltaElectronDir;
-
   delete addParticleHeedDeltaElectronCmd;
-  delete addParticleHeedNewTrackCmd;
   delete gasFileCmd;
   delete ionMobFileCmd;
   delete driftElectronsCmd;
@@ -137,40 +175,46 @@ GasModelParametersMessenger::~GasModelParametersMessenger() {
   delete visualizeChamberCmd;
   delete visualizeSignalsCmd;
   delete visualizeFieldCmd;
-  delete voltagePlaneHVCmd;
-  delete voltagePlaneLowCmd;
   delete voltageAnodeWiresCmd;
-  delete voltageCathodeWiresCmd;
-  delete voltageGateCmd;
-  delete voltageDeltaGateCmd;
+  delete voltageCathodePlaneCmd;
+  delete thermalEnergyCmd;
+  delete numberOfGasesCmd; 
+  delete gasListCmd;
+  delete gasPercentagesCmd;
+  delete temperatureCmd;
+  delete distanceAnodeCathodesCmd;
+  delete jumpDriftStepPointsCmd;
+  delete secondaryElectronsPerPhotonCmd;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
-	  if(command == addParticleHeedDeltaElectronCmd)
+
+    if(command == thermalEnergyCmd){
+      fGasModelParameters->SetThermalEnergy(thermalEnergyCmd->GetNewDoubleValue(newValues));
+    }
+    else if(command == addParticleHeedDeltaElectronCmd) {
 	  	AddParticleHeedDeltaElectronCommand(newValues);
-	  else if(command == addParticleHeedNewTrackCmd)
-	  	AddParticleHeedNewTrackCommand(newValues);
-	  else if(command == gasFileCmd){
+    }
+	  else if(command == gasFileCmd) {
 	  	fGasModelParameters->SetGasFile(newValues);
 	  }
-	  else if(command == ionMobFileCmd){
+	  else if(command == ionMobFileCmd) {
 	  	fGasModelParameters->SetIonMobilityFile(newValues);
 	  }
-	  else if(command == driftElectronsCmd){
+	  else if(command == driftElectronsCmd) {
 	  	fGasModelParameters->SetDriftElectrons(driftElectronsCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == driftRKFCmd){
+	  else if(command == driftRKFCmd) {
 	  	fGasModelParameters->SetDriftRKF(driftRKFCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == createAvalCmd){
+	  else if(command == createAvalCmd) {
 	  	fGasModelParameters->SetCreateAvalancheMC(createAvalCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == trackMicroCmd){
+	  else if(command == trackMicroCmd) {
 	  	fGasModelParameters->SetTrackMicroscopic(trackMicroCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == visualizeChamberCmd){
+	  else if(command == visualizeChamberCmd) {
 	  	fGasModelParameters->SetVisualizeChamber(visualizeChamberCmd->GetNewBoolValue(newValues));
 	  }
 	  else if(command == visualizeSignalsCmd){
@@ -179,43 +223,69 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
 	  else if(command == visualizeFieldCmd){
 	  	fGasModelParameters->SetVisualizeField(visualizeFieldCmd->GetNewBoolValue(newValues));
 	  }
-	  else if(command == voltagePlaneHVCmd){
-	  	fGasModelParameters->SetVoltagePlaneHV(voltagePlaneHVCmd->GetNewDoubleValue(newValues));
-	  }
-	  else if(command == voltagePlaneLowCmd){
-	  	fGasModelParameters->SetVoltagePlaneLow(voltagePlaneLowCmd->GetNewDoubleValue(newValues));
-	  }
 	  else if(command == voltageAnodeWiresCmd){
 	  	fGasModelParameters->SetVoltageAnodeWires(voltageAnodeWiresCmd->GetNewDoubleValue(newValues));
 	  }
-	  else if(command == voltageCathodeWiresCmd){
-	  	fGasModelParameters->SetVoltageCathodeWires(voltageCathodeWiresCmd->GetNewDoubleValue(newValues));
+	  else if(command == voltageCathodePlaneCmd){
+	  	fGasModelParameters->SetVoltageCathodePlane(voltageCathodePlaneCmd->GetNewDoubleValue(newValues));
+      G4cout << "(Debug: GasModelParametersMessenger.cc) The cathode voltage has been set to: " 
+      << fGasModelParameters->GetVoltageCathodePlane() << G4endl; 
 	  }
-	  else if(command == voltageGateCmd){
-	  	fGasModelParameters->SetVoltageGate(voltageGateCmd->GetNewDoubleValue(newValues));
-      }
-	  else if(command == voltageDeltaGateCmd){
-	  	fGasModelParameters->SetVoltageDeltaGate(voltageDeltaGateCmd->GetNewDoubleValue(newValues));
-	  }
+    else if(command == numberOfGasesCmd){
+      fGasModelParameters->SetNumberOfGases(numberOfGasesCmd->GetNewIntValue(newValues));
+    }
+    else if(command == gasListCmd){
+      G4Tokenizer next(newValues);
+      G4int gas1 = StoD(next());
+      G4int gas2 = StoD(next());
+      G4int gas3 = StoD(next());
+      G4int gas4 = StoD(next());
+      G4int gas5 = StoD(next());
+      G4int gas6 = StoD(next());
+      fGasModelParameters->SetGasList(gas1, gas2, gas3, gas4, gas5, gas6);
+      G4cout << "(Debug: GasModelParametersMessenger.cc) Gas list set to: "
+           << gas1 << " " << gas2 << " " << gas3 << " " << gas4 << " " << gas5 << " " << gas6 << G4endl;
+    }
+    else if(command == gasPercentagesCmd){
+      G4Tokenizer next(newValues);
+      G4double gas1Percentage = StoD(next());
+      G4double gas2Percentage = StoD(next());
+      G4double gas3Percentage = StoD(next());
+      G4double gas4Percentage = StoD(next());
+      G4double gas5Percentage = StoD(next());
+      G4double gas6Percentage = StoD(next());
+      fGasModelParameters->SetGasPercentages(gas1Percentage, gas2Percentage, gas3Percentage, 
+        gas4Percentage, gas5Percentage, gas6Percentage);
+    }
+    else if(command == temperatureCmd) {
+      fGasModelParameters->SetTemperature(temperatureCmd->GetNewDoubleValue(newValues));
+      G4cout << "(Debug: GasModelParametersMessenger) Temperature set to: " 
+      << fGasModelParameters->GetTemperature() << G4endl;
+    }
+    else if(command == distanceAnodeCathodesCmd) {
+      fGasModelParameters->SetDistanceAnodeCathodes(distanceAnodeCathodesCmd->GetNewDoubleValue(newValues));
+      G4cout << "(Debug: GasModelParametersMessenger.cc) Distance anodes-cathodes set to: " << newValues << G4endl; 
+    }
+    else if(command == jumpDriftStepPointsCmd) {
+      fGasModelParameters->SetJumpDriftStepPoints(jumpDriftStepPointsCmd->GetNewIntValue(newValues));
+    } 
+    else if(command ==  secondaryElectronsPerPhotonCmd) {
+      fGasModelParameters->SetSecondaryElectronsPerPhoton(secondaryElectronsPerPhotonCmd->GetNewIntValue(newValues));
+    } 
+    else {
+      G4cerr << "(Debug: GasModelParametersMessenger.cc) GasModelParametersMessenger::"
+      << "SetNewValue: Unknown command" << G4endl;
+    }
+
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void GasModelParametersMessenger::AddParticleHeedDeltaElectronCommand(G4String newValues) {
+void GasModelParametersMessenger::AddParticleHeedDeltaElectronCommand(G4String newValues){
 	ConvertParameters(newValues);
 	fGasModelParameters->AddParticleNameHeedDeltaElectron(fParticleName,fEmin/keV,fEmax/keV);
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void GasModelParametersMessenger::AddParticleHeedNewTrackCommand(G4String newValues) {
-	ConvertParameters(newValues);
-	fGasModelParameters->AddParticleNameHeedNewTrack(fParticleName,fEmin/keV,fEmax/keV);
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void GasModelParametersMessenger::ConvertParameters(G4String newValues) {
+void GasModelParametersMessenger::ConvertParameters(G4String newValues){
 	G4Tokenizer next( newValues );
 	fParticleName = next();
 	G4String Semin = next();
@@ -232,3 +302,4 @@ void GasModelParametersMessenger::ConvertParameters(G4String newValues) {
 			fEmax = StoD(Semax);
 	}
 }
+

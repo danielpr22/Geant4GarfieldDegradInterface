@@ -28,7 +28,7 @@
 /// \file optical/LXe/src/LXeTrajectory.cc
 /// \brief Implementation of the LXeTrajectory class
 //
-
+//
 #include "../include/DriftLineTrajectory.hh"
 #include "../include/DriftLineTrajectoryPoint.hh"
 
@@ -46,7 +46,8 @@ DriftLineTrajectory::DriftLineTrajectory() {
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right): G4Trajectory(right) {
+DriftLineTrajectory::DriftLineTrajectory(DriftLineTrajectory &right):G4Trajectory(right) {
+  G4cout << "(Debug: DriftLineTrajectory.cc) The electron is drifting?" << G4endl;
   fpPointsContainer = new DriftLineTrajectoryPointContainer();
   for(size_t i=0;i<right.fpPointsContainer->size();++i) {
       DriftLineTrajectoryPoint* rightPoint
@@ -66,7 +67,6 @@ DriftLineTrajectory::~DriftLineTrajectory() {
 	delete fpPointsContainer;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DriftLineTrajectory::AppendStep(G4ThreeVector pos, G4double t) {
 		fpPointsContainer->push_back(new DriftLineTrajectoryPoint(pos,t));

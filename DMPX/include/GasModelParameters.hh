@@ -1,32 +1,29 @@
 #ifndef GasModelParameters_hh
 #define GasModelParameters_hh
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4SystemOfUnits.hh"
 #include "G4String.hh"
+#include "G4ios.hh"
 #include <map>
+#include <iomanip>
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-class HeedDeltaElectronModel;
-class HeedNewTrackModel;
+class HeedDeltaElectronModelAnodes;
+class DegradModel;
 class GasModelParametersMessenger;
 class DetectorConstruction;
 class G4String;
 
-/*
-A std::pair is a standard C++ template class that holds two values, 
-which can be of the same or different types.
-*/ 
+// Map of particles and associated energies
 typedef std::pair<double, double> EnergyRange_keV;
 typedef std::multimap<const G4String, EnergyRange_keV> MapParticlesEnergy;
 
-class GasModelParameters {
+class GasModelParameters{
 	public:
 	
 	GasModelParameters();
 	~GasModelParameters();
     
-    void AddParticleNameHeedNewTrack(const G4String particleName,double ekin_min_keV,double ekin_max_keV);
     void AddParticleNameHeedDeltaElectron(const G4String particleName,double ekin_min_keV,double ekin_max_keV);
     
     /*Getters and Setters*/
@@ -39,18 +36,10 @@ class GasModelParameters {
     //Determines if the electrons are drifted, or only primary ionization is simulated
     inline void SetDriftElectrons(G4bool b) { driftElectrons = b; };
     inline bool GetDriftElectrons(){return driftElectrons;};
-    inline void SetVoltagePlaneHV(G4double v){vPlaneHV = v;};
-    inline double GetVoltagePlaneHV(){return vPlaneHV;};
-    inline void SetVoltagePlaneLow(G4double v){vPlaneLow = v;};
-    inline double GetVoltagePlaneLow(){return vPlaneLow;};
     inline void SetVoltageAnodeWires(G4double v){vAnodeWires = v;};
     inline double GetVoltageAnodeWires(){return vAnodeWires;};
-    inline void SetVoltageCathodeWires(G4double v){vCathodeWires = v;};
-    inline double GetVoltageCathodeWires(){return vCathodeWires;};
-    inline void SetVoltageGate(G4double v){vGate = v;};
-    inline double GetVoltageGate(){return vGate;};
-    inline void SetVoltageDeltaGate(G4double v){vDeltaGate = v;};
-    inline double GetVoltageDeltaGate(){return vDeltaGate;};
+    inline void SetVoltageCathodePlane(G4double v){vCathodePlane = v;};
+    inline double GetVoltageCathodePlane(){return vCathodePlane;};
     inline void SetTrackMicroscopic(bool b){trackMicro=b;};
     inline bool GetTrackMicroscopic(){return trackMicro;};
     inline void SetCreateAvalancheMC(bool b){createAval=b;};
@@ -63,17 +52,42 @@ class GasModelParameters {
     inline bool GetVisualizeField(){return fVisualizeField;};
     inline void SetDriftRKF(bool b){driftRKF=b;};
     inline bool GetDriftRKF(){return driftRKF;};
+	inline void SetThermalEnergy(G4double d){thermalE=d;}
+	inline G4double GetThermalEnergy(){return thermalE;};
+    inline void SetNumberOfGases(int n){numberOfGases=n;};
+    inline int GetNumberOfGases(){return numberOfGases;};
+    inline void SetGasList(G4int g1, G4int g2, G4int g3, G4int g4, G4int g5, G4int g6) {
+        gasList = std::to_string(g1) + "," + std::to_string(g2) + "," + std::to_string(g3) + "," +
+                  std::to_string(g4) + "," + std::to_string(g5) + "," + std::to_string(g6);
+    };
+    inline G4String GetGasList(){return gasList;};
+    inline void SetGasPercentages(G4double g1, G4double g2, G4double g3, G4double g4, G4double g5, G4double g6) {
+        std::ostringstream oss; // This is due to the formatting of the gas percentages needed in Degrad
+        oss << std::fixed << std::setprecision(1)
+            << g1 << "," << g2 << "," << g3 << "," << g4 << "," << g5 << "," << g6;
+        gasPercentages = oss.str();
+        G4cout << "(Debug: GasModelParameters.cc) Gas percentages set to: " 
+            << gasPercentages << G4endl;
+    };
+    inline G4String GetGasPercentages(){return gasPercentages;};
+    inline G4double GetTemperature(){return temperature;};
+    inline void SetTemperature(double n){temperature=n;};
+    inline G4double GetDistanceAnodeCathodes(){return distanceAnodeCathodes;};
+    inline void SetDistanceAnodeCathodes(double n){distanceAnodeCathodes=n;};
+    inline void SetJumpDriftStepPoints(int n){jumpDriftStepPoints=n;};
+    inline int GetJumpDriftStepPoints(){return jumpDriftStepPoints;};
+    inline void SetSecondaryElectronsPerPhoton(int n){secondaryElectronsPerPhoton=n;};
+    inline int GetSecondaryElectronsPerPhoton(){return secondaryElectronsPerPhoton;};
     
-    inline MapParticlesEnergy GetParticleNamesHeedNewTrack(){return fMapParticlesEnergyHeedNewTrack;};
     inline MapParticlesEnergy GetParticleNamesHeedDeltaElectron(){return fMapParticlesEnergyHeedDeltaElectron;};
 
-	
 	private:
 	GasModelParametersMessenger* fMessenger;
-    MapParticlesEnergy fMapParticlesEnergyHeedNewTrack;
-    MapParticlesEnergy fMapParticlesEnergyHeedDeltaElectron;
-    
+    MapParticlesEnergy fMapParticlesEnergyHeedDeltaElectron; // The particle map for the gas and the anodes will be the same
+
     G4String gasFile;
+    G4String gasList;
+    G4String gasPercentages;
     G4String ionMobFile;
     
     bool driftElectrons;
@@ -84,12 +98,14 @@ class GasModelParameters {
     bool fVisualizeField;
     bool driftRKF;
     
-    double vPlaneHV;
-    double vPlaneLow;
+	G4double thermalE;
+    G4double temperature; 
+    G4double distanceAnodeCathodes; 
+    G4int numberOfGases; 
     double vAnodeWires;
-    double vCathodeWires;
-    double vGate;
-    double vDeltaGate;
+    double vCathodePlane;
+    G4int jumpDriftStepPoints;
+    G4int secondaryElectronsPerPhoton;
 };
 
 #endif

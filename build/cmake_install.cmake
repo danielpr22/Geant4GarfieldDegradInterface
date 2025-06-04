@@ -1,4 +1,4 @@
-# Install script for directory: /data/Geant4_Garfield_Degrad_Interface/Geant4GarfieldDegradInterface
+# Install script for directory: /home/Daniel/Desktop/Geant4GarfieldDegradInterface
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/data/Geant4_Garfield_Degrad_Interface/Geant4GarfieldDegradInterface/build/DMPX_v2/cmake_install.cmake")
+  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/data/Geant4_Garfield_Degrad_Interface/Geant4GarfieldDegradInterface/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

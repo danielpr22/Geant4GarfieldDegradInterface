@@ -27,37 +27,46 @@
 // GEANT4 tag $Name: not supported by cvs2svn $
 //
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 #include "../include/PhysListEmStandard.hh"
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4ParticleDefinition.hh"
 #include "G4ProcessManager.hh"
 #include "G4PhysicsListHelper.hh"
 #include "G4SystemOfUnits.hh"
+
 #include "G4ComptonScattering.hh"
 #include "G4GammaConversion.hh"
 #include "G4PhotoElectricEffect.hh"
 #include "G4RayleighScattering.hh"
+
 #include "G4KleinNishinaModel.hh"
 #include "G4eMultipleScattering.hh"
 #include "G4eIonisation.hh"
 #include "G4eBremsstrahlung.hh"
+
 #include "G4eplusAnnihilation.hh"
 #include "G4MuMultipleScattering.hh"
 #include "G4MuIonisation.hh"
 #include "G4MuBremsstrahlung.hh"
+
 #include "G4MuPairProduction.hh"
 #include "G4hMultipleScattering.hh"
 #include "G4hIonisation.hh"
 #include "G4hBremsstrahlung.hh"
+
 #include "G4hPairProduction.hh"
 #include "G4ionIonisation.hh"
 #include "G4IonParametrisedLossModel.hh"
 #include "G4NuclearStopping.hh"
-#include "G4EmParameters.hh"
+
 #include "G4MscStepLimitType.hh"
 #include "G4LossTableManager.hh"
 #include "G4UAtomicDeexcitation.hh"
 #include "G4SystemOfUnits.hh"
+
 #include "G4EmModelActivator.hh"
 #include "G4FastSimulationManagerProcess.hh"
 
@@ -65,14 +74,15 @@
 #undef theParticleIterator
 #endif
 
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PhysListEmStandard::PhysListEmStandard(const G4String& name)
-: G4VPhysicsConstructor(name){}
+: G4VPhysicsConstructor(name) {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PhysListEmStandard::~PhysListEmStandard() {G4cout << "Deleting PhysListEmStandard" << G4endl;}
+PhysListEmStandard::~PhysListEmStandard() {G4cout << "(Debug: PhysListEmStandard.cc) Deleting PhysListEmStandard" << G4endl;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -80,7 +90,6 @@ void PhysListEmStandard::ConstructProcess() {
     G4PhysicsListHelper* ph = G4PhysicsListHelper::GetPhysicsListHelper();
     
     // Add standard EM Processes
-    
     G4ParticleTable::G4PTblDicIterator* theParticleIterator = theParticleTable->GetIterator();
     theParticleIterator->reset();
     while ((*theParticleIterator)() ) {
@@ -102,6 +111,11 @@ void PhysListEmStandard::ConstructProcess() {
             ph->RegisterProcess(eIoni, particle);
             ph->RegisterProcess(new G4eBremsstrahlung(), particle);
             
+        /*
+            From here, these particles are not interesting for this example, but I left them 
+            in case they have an impact on the simulation.
+        */ 
+
         } else if (particleName == "e+") {
             ph->RegisterProcess(new G4eMultipleScattering(), particle);
             G4eIonisation* eIoni = new G4eIonisation();
@@ -155,17 +169,16 @@ void PhysListEmStandard::ConstructProcess() {
     //
     // Main options and setting parameters are shown here.
     // Several of them have default values.
-    //
-    G4EmParameters* emOptions = G4EmParameters::Instance();
-
-    // Set physics tables
-    emOptions->SetMinEnergy(10 * eV);      // default 100 eV
-    emOptions->SetMaxEnergy(10 * TeV);     // default 100 TeV
-    emOptions->SetNumberOfBinsPerDecade(120); // Adjust binning if needed
-
-    // Multiple Coulomb scattering
-    emOptions->SetMscStepLimitType(fUseSafety);  // default
-
+    G4EmParameters* emParams = G4EmParameters::Instance();
+    
+    // Physics tables
+    emParams->SetMinEnergy(10 * eV);      // default 100 eV
+    emParams->SetMaxEnergy(10 * TeV);     // default 100 TeV
+    emParams->SetNumberOfBinsPerDecade(12 * 10); // default=12*7
+    
+    // Multiple coulomb scattering
+    emParams->SetMscStepLimitType(fUseSafety);  // default
+    
     // Deexcitation
     G4VAtomDeexcitation* de = new G4UAtomicDeexcitation();
     de->SetFluo(true);
@@ -176,5 +189,3 @@ void PhysListEmStandard::ConstructProcess() {
     G4EmModelActivator mact(GetPhysicsName());
     
 }
-
-

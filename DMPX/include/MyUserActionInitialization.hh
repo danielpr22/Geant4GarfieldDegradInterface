@@ -1,9 +1,8 @@
 #ifndef MyUserActionInitialization_hh
 #define MyUserActionInitialization_hh
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4VUserActionInitialization.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class DetectorConstruction;
 class PhysicsList;

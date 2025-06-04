@@ -5,7 +5,8 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys): pPhysicsList(pPhys) {
+PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys)
+    : pPhysicsList(pPhys) {
   physDir = new G4UIdirectory("/DMPX/phys/");
   physDir->SetGuidance("DMPX physics list commands");
 
@@ -22,14 +23,7 @@ PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys): pPhysicsList(pPh
   electCutCmd->SetUnitCategory("Length");
   electCutCmd->SetRange("Ecut>0.0");
   electCutCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
-
-  protoCutCmd = new G4UIcmdWithADoubleAndUnit("/DMPX/phys/setPCut", this);
-  protoCutCmd->SetGuidance("Set positron cut.");
-  protoCutCmd->SetParameterName("Pcut", false);
-  protoCutCmd->SetUnitCategory("Length");
-  protoCutCmd->SetRange("Pcut>0.0");
-  protoCutCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
-
+  
   allCutCmd = new G4UIcmdWithADoubleAndUnit("/DMPX/phys/setCuts", this);
   allCutCmd->SetGuidance("Set cut for all.");
   allCutCmd->SetParameterName("cut", false);
@@ -54,6 +48,7 @@ PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys): pPhysicsList(pPh
   lowLimitECmd->SetParameterName("Energy", false);
   lowLimitECmd->SetDefaultUnit("eV");
   lowLimitECmd->SetUnitCandidates("eV keV MeV GeV TeV");
+//  lowLimitECmd->SetRange("limit>10.0");
   lowLimitECmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
@@ -62,7 +57,6 @@ PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys): pPhysicsList(pPh
 PhysicsListMessenger::~PhysicsListMessenger() {
   delete gammaCutCmd;
   delete electCutCmd;
-  delete protoCutCmd;
   delete allCutCmd;
   delete pListCmd;
   delete lowLimitECmd;  
@@ -80,10 +74,6 @@ void PhysicsListMessenger::SetNewValue(G4UIcommand* command, G4String newValue) 
 
   else if (command == electCutCmd) {
     pPhysicsList->SetCutForElectron(electCutCmd->GetNewDoubleValue(newValue));
-  }
-
-  else if (command == protoCutCmd) {
-    pPhysicsList->SetCutForPositron(protoCutCmd->GetNewDoubleValue(newValue));
   }
 
   else if (command == allCutCmd) {

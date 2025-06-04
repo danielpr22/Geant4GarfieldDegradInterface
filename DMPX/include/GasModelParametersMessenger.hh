@@ -1,10 +1,9 @@
 #ifndef GasModelParametersMessenger_h
 #define GasModelParametersMessenger_h 1
 
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4SystemOfUnits.hh"
 #include "G4UImessenger.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4UIcommand;
 class GasModelParameters;
@@ -15,13 +14,13 @@ class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithoutParameter;
 class G4UIcmdWithADouble;
 class G4UIcmdWithAnInteger;
-
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 /*! \class GasModelParametersMessenger*/
 /*! class derived from G4UImessenger*/
 /*! List of available commands*/
 
 class GasModelParametersMessenger : public G4UImessenger {
- public:
+  public:
   GasModelParametersMessenger(GasModelParameters*);
   ~GasModelParametersMessenger();
 
@@ -35,8 +34,8 @@ class GasModelParametersMessenger : public G4UImessenger {
 
   GasModelParameters* fGasModelParameters;
   G4UIdirectory* GasModelParametersDir;
+  G4UIdirectory* DegradDir;
   G4UIdirectory* HeedDir;
-  G4UIdirectory* HeedNewTrackDir;
   G4UIdirectory* HeedDeltaElectronDir;
 
   G4UIcommand* addParticleDegradCmd;
@@ -51,12 +50,16 @@ class GasModelParametersMessenger : public G4UImessenger {
   G4UIcmdWithABool* visualizeSignalsCmd;
   G4UIcmdWithABool* visualizeFieldCmd;
   G4UIcmdWithABool* driftRKFCmd;
-  G4UIcmdWithADouble* voltagePlaneHVCmd;
-  G4UIcmdWithADouble* voltagePlaneLowCmd;
   G4UIcmdWithADouble* voltageAnodeWiresCmd;
-  G4UIcmdWithADouble* voltageCathodeWiresCmd;
-  G4UIcmdWithADouble* voltageGateCmd;
-  G4UIcmdWithADouble* voltageDeltaGateCmd;
+  G4UIcmdWithADouble* voltageCathodePlaneCmd;
+  G4UIcmdWithADoubleAndUnit* thermalEnergyCmd;
+  G4UIcmdWithAnInteger* numberOfGasesCmd;
+  G4UIcommand* gasListCmd; 
+  G4UIcommand* gasPercentagesCmd;
+  G4UIcmdWithADoubleAndUnit* temperatureCmd;
+  G4UIcmdWithADoubleAndUnit* distanceAnodeCathodesCmd;
+  G4UIcmdWithAnInteger* jumpDriftStepPointsCmd;
+  G4UIcmdWithAnInteger* secondaryElectronsPerPhotonCmd;
 
   G4String fParticleName;
   G4double fEmin;

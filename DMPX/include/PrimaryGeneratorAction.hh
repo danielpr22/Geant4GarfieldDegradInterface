@@ -1,6 +1,6 @@
 //
 //  PrimaryGeneratorAction.hh
-//  ALICE (adapted for DMPX by Daniel Perales Rios)
+//  Xenon
 //
 //  Created by Lennert De Keukeleere on 25/10/2018.
 //
@@ -15,8 +15,6 @@
 #include "G4ParticleTable.hh"
 #include "G4GeneralParticleSource.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 class G4Event;
 
 
@@ -30,10 +28,13 @@ public:
     // attributes from the Particle Gun
     
     void GeneratePrimaries(G4Event*);
+    //double GetMonoEnergy()const;
     
 private:
     
-    G4GeneralParticleSource* particleGun; 
+    G4GeneralParticleSource* particleGun;
+    
+    
 };
 
 #endif /* PrimaryGeneratorAction_h */

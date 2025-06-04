@@ -31,32 +31,31 @@
 #ifndef DriftLineTrajectory_h
 #define DriftLineTrajectory_h 1
 
-#include "globals.hh"
+// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4Trajectory.hh"
 #include "G4Allocator.hh"
 #include "G4ios.hh"
+#include "globals.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4TrajectoryPoint.hh"
 #include "G4Track.hh"
 #include "G4Step.hh"
 #include "G4SystemOfUnits.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
+/* 
+This line creates a shorthand for a std::vector that stores pointers to 
+G4VTrajectoryPoint objects. The alias is named DriftLineTrajectoryPointContainer, 
+making it easier to refer to this specific type throughout the code. Instead of 
+repeatedly writing std::vector<G4VTrajectoryPoint*>, we can simply 
+use DriftLineTrajectoryPointContainer.
+*/
 typedef std::vector<G4VTrajectoryPoint*> DriftLineTrajectoryPointContainer;
 
-class DriftLineTrajectory : public G4Trajectory {
+class DriftLineTrajectory : public G4Trajectory
+{
   public:
 
     DriftLineTrajectory();
-
-    /*
-    The "&" represents a reference to an object of the DriftLineTrajectory 
-    class in C++. A reference is an alias for an existing object, meaning 
-    it does not create a new object but instead provides another name for 
-    the same memory location. The & symbol indicates that this is a reference type.
-    */
-
     DriftLineTrajectory(DriftLineTrajectory &);
     virtual ~DriftLineTrajectory();
     virtual void AppendStep(const G4Step* aStep){}; 
@@ -66,40 +65,31 @@ class DriftLineTrajectory : public G4Trajectory {
     inline int operator == (const DriftLineTrajectory& right) const
      { return (this==&right); }
     virtual int GetPointEntries() const
-     { return fpPointsContainer->size(); };
+     { return fpPointsContainer->size();};
     virtual G4VTrajectoryPoint* GetPoint(G4int i) const
-     { return (*fpPointsContainer)[i]; };
+     { return (*fpPointsContainer)[i];};
     inline G4double GetCharge() const
-   { return +2.*eplus; }
-
-
+     { return +2.*eplus;}
+    void ClearTrajectory() {
+      if (fpPointsContainer) {
+        fpPointsContainer->clear();
+      }
+    }
   private:
     DriftLineTrajectoryPointContainer* fpPointsContainer;
 };
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-/*
-The extern keyword indicates that the variable DriftLineTrajectoryAllocator is 
-defined elsewhere, likely in a corresponding .cc file. This allows multiple 
-translation units (source files) to share the same allocator without redefining 
-it in each file.
-
-This declaration is part of the Geant4 memory management system, which uses 
-allocators to efficiently handle the creation and destruction of frequently 
-used objects, such as trajectories, during simulations.
-*/
 extern G4ThreadLocal G4Allocator<DriftLineTrajectory>* DriftLineTrajectoryAllocator;
 
-inline void* DriftLineTrajectory::operator new(size_t) {
+inline void* DriftLineTrajectory::operator new(size_t)
+{
   if(!DriftLineTrajectoryAllocator)
       DriftLineTrajectoryAllocator = new G4Allocator<DriftLineTrajectory>;
   return (void*)DriftLineTrajectoryAllocator->MallocSingle();
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-inline void DriftLineTrajectory::operator delete(void* aTrajectory) {
+inline void DriftLineTrajectory::operator delete(void* aTrajectory)
+{
   DriftLineTrajectoryAllocator->FreeSingle((DriftLineTrajectory*)aTrajectory);
 }
 
