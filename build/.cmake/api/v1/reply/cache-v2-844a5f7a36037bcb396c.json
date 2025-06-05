@@ -139,10 +139,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "CXX compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "/usr/bin/g++"
 		},
 		{
@@ -267,10 +267,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "C compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "FILEPATH",
 			"value" : "/usr/bin/gcc"
 		},
 		{
@@ -1214,7 +1214,7 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "DMPX_anode_spacing_BINARY_DIR",
+			"name" : "DMPX_default_run_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1226,7 +1226,7 @@
 			"value" : "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX"
 		},
 		{
-			"name" : "DMPX_anode_spacing_IS_TOP_LEVEL",
+			"name" : "DMPX_default_run_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1238,7 +1238,7 @@
 			"value" : "OFF"
 		},
 		{
-			"name" : "DMPX_anode_spacing_SOURCE_DIR",
+			"name" : "DMPX_default_run_SOURCE_DIR",
 			"properties" : 
 			[
 				{

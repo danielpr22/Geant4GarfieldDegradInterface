@@ -1,6 +1,6 @@
 # Setting up the project and the CMake and C++ versions
 cmake_minimum_required(VERSION 3.10)
-project(DMPX_anode_spacing)
+project(DMPX_default_run)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_STANDARD_REQUIRED True)
 
@@ -30,7 +30,7 @@ include(${Geant4_USE_FILE})
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 find_package(ROOT QUIET REQUIRED COMPONENTS RIO Net)
 if(NOT ROOT_FOUND)
-  message(STATUS "DMPX_anode_spacing: ROOT package not found. --> DMPX_anode_spacing disabled")  
+  message(STATUS "DMPX_default_run: ROOT package not found. --> DMPX_default_run disabled")  
   return()
 endif()
 include(${ROOT_USE_FILE})
@@ -102,11 +102,11 @@ set(headers
 # Add the executable and link it to the required libraries
 #find_package(Garfield REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-add_executable(DMPX_anode_spacing main_files/DMPX_anode_spacing.cc ${sources} ${headers})
-target_link_libraries(DMPX_anode_spacing -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
+add_executable(DMPX_default_run main_files/DMPX_default_run.cc ${sources} ${headers})
+target_link_libraries(DMPX_default_run -lGarfield -lgfortran ${ROOT_LIBRARIES} ${Geant4_LIBRARIES})
 
 # Restrict include directories to the current folder
-target_include_directories(DMPX_anode_spacing PRIVATE
+target_include_directories(DMPX_default_run PRIVATE
   ${PROJECT_SOURCE_DIR}/include
   ${Garfield_INCLUDE_DIRS}
   $ENV{GARFIELD_DIR}
@@ -118,13 +118,13 @@ target_include_directories(DMPX_anode_spacing PRIVATE
 )
 
 # Copy all scripts to the build directory
-set(DMPX_anode_spacing_SCRIPTS
-  run_files/anode_spacing.mac
+set(DMPX_default_run_SCRIPTS
+  run_files/default_run.mac
   kr_90_ch4_10.gas
   convertDegradFile.py
 )
 
-foreach(_script ${DMPX_anode_spacing_SCRIPTS})
+foreach(_script ${DMPX_default_run_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}
@@ -133,6 +133,6 @@ foreach(_script ${DMPX_anode_spacing_SCRIPTS})
 endforeach()
 
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-install(TARGETS DMPX_anode_spacing DESTINATION bin)
+install(TARGETS DMPX_default_run DESTINATION bin)
 
 

@@ -30,9 +30,9 @@
 			"destination" : "bin",
 			"paths" : 
 			[
-				"DMPX/DMPX_anode_spacing"
+				"DMPX/DMPX_default_run"
 			],
-			"targetId" : "DMPX_anode_spacing::@a84215849a9530372c72",
+			"targetId" : "DMPX_default_run::@a84215849a9530372c72",
 			"targetIndex" : 0,
 			"type" : "target"
 		},
@@ -41,7 +41,7 @@
 			"component" : "Unspecified",
 			"cxxModuleBmiTarget" : 
 			{
-				"id" : "DMPX_anode_spacing::@a84215849a9530372c72",
+				"id" : "DMPX_default_run::@a84215849a9530372c72",
 				"index" : 0
 			},
 			"destination" : "bin",
