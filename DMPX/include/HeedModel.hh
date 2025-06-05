@@ -160,6 +160,7 @@ class HeedModel : public G4VFastSimulationModel {
   G4double vCathodePlane;
   G4double vAnodeWires_temp; 
   G4double vCathodePlane_temp; 
+  G4double anodesSpacing_temp; 
   bool driftElectrons;
   bool driftRKF;
   bool trackMicro;

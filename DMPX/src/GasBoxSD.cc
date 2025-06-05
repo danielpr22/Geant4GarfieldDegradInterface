@@ -43,6 +43,7 @@ G4bool GasBoxSD::ProcessHits(G4Step* aStep, G4TouchableHistory* hist){
         G4cout << "(Debug: GasBoxSD.cc) GasBox Hit!" << G4endl;
         G4cout << "(Debug: GasBoxSD.cc)Particle ID: " << aTrack->GetTrackID() << G4endl;
         G4cout << "(Debug: GasBoxSD.cc) Energy electron: " << aTrack->GetKineticEnergy() << G4endl;
+        G4cout << "(Debug: GasBoxSD.cc) Position electron: " << aTrack->GetVertexPosition().y() << G4endl;
     }
     return false;  
 }
@@ -53,7 +54,11 @@ void GasBoxSD::EndOfEvent (G4HCofThisEvent * hce){
     G4cout << "(GasBoxSD.cc) Number of Electrons: " << entries << G4endl;
     if(entries > 0) {// If there is at least one electron created, a collision occurred
         G4cout << "(Debug: GasBox.cc) Gamma interaction occurred!" << G4endl;
-        gammaInteractionOccurred = true; // This flag will be checked in the main file to go to the next configuration
+        auto hit = (*HC)[0]; // We collect the first hit in the gas box 
+        G4cout << "(Debug: GasBox.cc) Position of the interaction: " << (hit->GetPos().y())/mm << G4endl;
+        if (abs((hit->GetPos().y())/mm) < (0.1)) { // If the ionization has happened close enough to the anode, we take it
+            takeThisEvent = true; // This flag will be checked in the main file to go to the next configuration
+        }
     }
     for(int i=0;i<entries;i++){
         auto hit = (*HC)[i];

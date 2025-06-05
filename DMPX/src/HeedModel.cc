@@ -58,6 +58,9 @@ HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* enve
   vAnodeWires_temp = 0.0; 
   vCathodePlane_temp = 0.0; 
 
+  // Temporary variable to store the old value from anode spacing, to check if it has changed
+  anodesSpacing_temp = 0.0; 
+
   // The distance between the anodes and cathodes is equal to the gas box height
   distanceAnodeCathodes = GetGasBoxLengthY(*detCon);  
 
@@ -413,11 +416,12 @@ void HeedModel::Drift(double x, double y, double z, double t) {
   electronsInWires.resize(nbOfAnodes, 0); // Initialize the vector to store the number of electrons in each wire
 
   // If the voltages have changed, we reinitialize the physics
-  if ((vAnodeWires != vAnodeWires_temp) || (vCathodePlane != vCathodePlane_temp)) {
+  if ((vAnodeWires != vAnodeWires_temp) || (vCathodePlane != vCathodePlane_temp) || (anodesSpacing != anodesSpacing_temp)) {
     G4cout << "(Debug: HeedModel.cc) The physics model has been reinitialized..." << G4endl; 
 
     vAnodeWires_temp = vAnodeWires; // We update the voltages
     vCathodePlane_temp = vCathodePlane; 
+    anodesSpacing_temp = anodesSpacing; 
     comp->Clear(); // Clearing all the electrodes and planes
 
     // Updating the anodes
@@ -453,6 +457,14 @@ void HeedModel::Drift(double x, double y, double z, double t) {
     // Starting point of the drift
     G4cout << "(Debug: HeedModel.cc) Starting point of the drift: " << x << " " 
     << y <<  " " << z << " " << t << G4endl; 
+
+    auto runManager = G4RunManager::GetRunManager(); 
+
+    if (abs(y) > 0.1) {
+      G4cout << "(Debug: HeedModel.cc) Abort event! Position not valid" << G4endl; 
+      runManager -> AbortRun();
+      return;
+    }
 
     // If RK4 is to be used
     if (driftRKF) {

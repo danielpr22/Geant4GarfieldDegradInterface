@@ -88,18 +88,18 @@ int main(int argc, char** argv) {
 
         G4cout << "(Debug: DMPX_anode_spacing.cc) Running for spacing: " << spc << " mm" << G4endl;
 
-        gasBoxSD->ResetGammaInteractionFlag(); // Reset the flag to false before starting
+        gasBoxSD->ResetTakeThisEventFlag(); // Reset the flag to false before starting
 
-        bool interactionOccurred = false; 
-        while (!interactionOccurred) {
+        bool takeThisEvent = false; 
+        while (!takeThisEvent) {
             // Process one event
             runManager->BeamOn(1);
 
             G4cout << "(Debug: DMPX_anode_spacing.cc) Now shooting..." << G4endl;
 
-            // Check if a gamma interaction occurred to move to the next configuration
-            interactionOccurred = gasBoxSD->HasGammaInteractionOccurred();
-            G4cout << "(Debug: DMPX_anode_spacing.cc) Interaction occurred: " << interactionOccurred << G4endl;
+            // Check if a valid interaction occurred to move to the next configuration
+            takeThisEvent = gasBoxSD->IsEventCorrect();
+            G4cout << "(Debug: DMPX_anode_spacing.cc) Take this event? " << takeThisEvent << G4endl;
       }
   }
 
