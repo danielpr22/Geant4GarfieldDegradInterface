@@ -83,7 +83,10 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "base_histo": "cpp",
+        "qrot": "cpp",
+        "tree": "cpp"
     },
     "cmake.additionalCompilerSearchDirs": [
         "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX-with_comments"

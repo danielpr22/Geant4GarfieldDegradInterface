@@ -5,6 +5,7 @@
 #include "DetectorMessenger.hh"
 #include "GasModelParameters.hh"
 #include "GasBoxSD.hh"
+#include "DegradModel.hh"
 
 #include "G4VUserDetectorConstruction.hh"
 #include "G4SystemOfUnits.hh"
@@ -61,26 +62,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     virtual ~DetectorConstruction();
 
     DetectorMessenger* GetDetectorMessenger() const { return detectorMessenger; }
-    
-    /* 
-    What is a virtual method? Example:
-    class Base {
-    public:
-        virtual void Display() {
-            std::cout << "Base class display" << std::endl;
-        }
-    };
-
-    class Derived : public Base {
-    public:
-        void Display() override { // Overrides the base class function
-            std::cout << "Derived class display" << std::endl;
-        }
-    };
-
-    Base* obj = new Derived();
-    obj->Display(); // Outputs: "Derived class display"
-    */
 
     // Mandatory methods
     virtual G4VPhysicalVolume* Construct();
@@ -135,15 +116,11 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     // Getter method to call the gasBox inside the main file and check if interactions have occurred
     GasBoxSD* GetGasBoxSD() const { return fGasBoxSD; }
 
+    // Getter method for the Degrad model
+    DegradModel* GetDegradModel() const { return fDegradModel; }
 
-    /*
-    What is an inline function? Example:
-    inline int Add(int a, int b) {
-        return a + b;
-    }
-
-    int result = Add(3, 5); // The compiler may replace this call with "int result = 3 + 5;"
-    */
+    // Getter method for the HeedDeltaElectron model
+    HeedDeltaElectronModel* GetHeedDeltaElectronModel() const { return fHeedDeltaElectronModel; }
     
  // Variables only accessible by the class itself or related classes
  private:
@@ -173,6 +150,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     G4double cathodes1_XPos; 
     G4double cathodes1_ZPos; 
     GasBoxSD* fGasBoxSD; 
+    DegradModel* fDegradModel; 
+    HeedDeltaElectronModel* fHeedDeltaElectronModel; 
 };
 
 #endif // DetectorConstruction_hh

@@ -22,16 +22,11 @@ class GasBoxSD : public G4VSensitiveDetector{
 	virtual G4bool ProcessHits(G4Step*, G4TouchableHistory*);
     void InsertGasBoxHit(GasBoxHit* gbh){fGasBoxHitsCollection->insert(gbh);};
 
-	bool IsEventCorrect() const { return takeThisEvent; }; 
-	void ResetTakeThisEventFlag() { takeThisEvent = false; };
-	
 	private:
 	
 	using GasBoxHitsCollection = G4THitsCollection<GasBoxHit>;
     GasBoxHitsCollection* fGasBoxHitsCollection;
-    G4int GBHCID;
-	bool takeThisEvent = false; 
-	
+    G4int GBHCID;	
 };
 
 #endif

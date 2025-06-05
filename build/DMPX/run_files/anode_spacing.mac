@@ -21,7 +21,7 @@
     /DMPX/geometry/SetWorldHalfLength 0.5 m
 
     # Name for the simulation. There will be a generated results file named Results_{Name of the simulation}
-    /DMPX/geometry/SetNameOfSimulation DMPX_anode_spacing_4_6
+    /DMPX/geometry/SetNameOfSimulation DMPX_anode_spacing_5_6
 
     # Checking if there are any volumes that are overlapping (default set to false)
     /DMPX/geometry/CheckOverlaps 0
@@ -99,7 +99,7 @@
     /gasModelParameters/heed/visualizesignals 0
     /gasModelParameters/heed/visualizefield 0
     /gasModelParameters/heed/voltageanodewire 0.    # [V]
-    /gasModelParameters/heed/voltagecathodeplane -1800.     # [V]
+    /gasModelParameters/heed/voltagecathodeplane -500.     # [V]
     /gasModelParameters/heed/jumpDriftStepPoints 10 # Number of steps to omit for the plotting
 
 

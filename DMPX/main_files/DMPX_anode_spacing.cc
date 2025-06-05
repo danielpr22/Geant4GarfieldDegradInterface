@@ -74,9 +74,9 @@ int main(int argc, char** argv) {
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
     UImanager->ApplyCommand("/control/execute run_files/anode_spacing.mac");
 
-    GasBoxSD* gasBoxSD = detector->GetGasBoxSD();
-    if (!gasBoxSD) {
-        G4cerr << "(Error: DMPX_anode_spacing.cc) GasBoxSD not found!" << G4endl;
+    DegradModel* fDegradModel = detector->GetDegradModel();
+    if (!fDegradModel) {
+        G4cerr << "(Error: DMPX_anode_spacing.cc) DegradModel not defined!" << G4endl;
         return 1;
     }
 
@@ -88,18 +88,18 @@ int main(int argc, char** argv) {
 
         G4cout << "(Debug: DMPX_anode_spacing.cc) Running for spacing: " << spc << " mm" << G4endl;
 
-        gasBoxSD->ResetTakeThisEventFlag(); // Reset the flag to false before starting
+        fDegradModel->ResetEventSuccessfulFlag(); // Reset the flag to false before starting
 
-        bool takeThisEvent = false; 
-        while (!takeThisEvent) {
+        bool eventSuccessful = false; 
+        while (!eventSuccessful) {
             // Process one event
             runManager->BeamOn(1);
 
             G4cout << "(Debug: DMPX_anode_spacing.cc) Now shooting..." << G4endl;
 
             // Check if a valid interaction occurred to move to the next configuration
-            takeThisEvent = gasBoxSD->IsEventCorrect();
-            G4cout << "(Debug: DMPX_anode_spacing.cc) Take this event? " << takeThisEvent << G4endl;
+            eventSuccessful = fDegradModel->IsEventSuccessful();
+            G4cout << "(Debug: DMPX_anode_spacing.cc) Take this event? " << eventSuccessful << G4endl;
       }
   }
 

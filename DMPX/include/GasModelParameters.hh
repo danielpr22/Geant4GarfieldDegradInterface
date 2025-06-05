@@ -8,8 +8,7 @@
 #include <map>
 #include <iomanip>
 
-class HeedDeltaElectronModelAnodes;
-class DegradModel;
+class HeedDeltaElectronModel;
 class GasModelParametersMessenger;
 class DetectorConstruction;
 class G4String;

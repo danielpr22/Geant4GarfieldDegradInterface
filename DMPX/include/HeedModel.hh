@@ -58,8 +58,6 @@ class HeedModel : public G4VFastSimulationModel {
 
   //This method is called after each event, to record the relevant data
   void ProcessEvent();
-  //This method is called at the beginning of an event to reset some variables of the class
-  void Reset();
   G4bool FindParticleName(G4String name);
   G4bool FindParticleNameEnergy(G4String name,double ekin_keV);
 
@@ -140,7 +138,7 @@ class HeedModel : public G4VFastSimulationModel {
     return numberOfEvents;
   }
 
-  void UpdateFromGasModelParameters(); // Method to update member variables from gmp
+  void UpdateParameters(); // Method to update member variables from gmp
 
 
  protected:

@@ -29,8 +29,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction(GasModelParameters* gmp):
-    fGasModelParameters(gmp)
-{
+    fGasModelParameters(gmp) {
+
   detectorMessenger = new DetectorMessenger(this);
 
   // World, overlaps, pressure and temperature settings
@@ -306,11 +306,11 @@ void DetectorConstruction::ConstructSDandField(){
   
   // These commands generate the two gas models (Degrad and HeedeltaElectron) and connect them 
   // to the region formed by the gas and the anodes
-  new DegradModel(fGasModelParameters,"DegradModel",gasAndAnodesRegion,this,fGasBoxSD);
-  G4cout << "(Debug: DetectorConstruction.cc) Gas + anodes region connected with DegradModel..." << G4endl;
+  fDegradModel = new DegradModel(fGasModelParameters,"DegradModel",gasAndAnodesRegion,this,fGasBoxSD);
+  G4cout << "(Debug: DetectorConstruction.cc) Gas & anodes region connected with DegradModel..." << G4endl;
 
   // // Attaching the HeedDeltaElectronModel to the anodes, for the signal calculation
-  new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",gasAndAnodesRegion,this,fGasBoxSD);
-  G4cout << "(Debug: DetectorConstruction.cc) Gas + anodes region connected with HeedDeltaElectronModel..." << G4endl;
+  fHeedDeltaElectronModel = new HeedDeltaElectronModel(fGasModelParameters,"HeedDeltaElectronModel",gasAndAnodesRegion,this,fGasBoxSD);
+  G4cout << "(Debug: DetectorConstruction.cc) Gas & anodes region connected with HeedDeltaElectronModel..." << G4endl;
 }
 

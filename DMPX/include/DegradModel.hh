@@ -34,7 +34,11 @@ class DegradModel : public G4VFastSimulationModel {
 		inline G4bool FindParticleName(G4String s){if(s == "e-") return true; return false;};
 		inline void Reset(){processOccured=false;};
 
+		bool IsEventSuccessful() const { return isEventSuccessful; }; 
+		void ResetEventSuccessfulFlag() { isEventSuccessful = false; };
+
 	private:
+		bool isEventSuccessful = false; 
 		void GetElectronsFromDegrad(G4FastStep& fastStep,G4ThreeVector degradPos,G4double degradTime);
 		GasModelParameters* fGasModelParameters;
 		G4double thermalE;

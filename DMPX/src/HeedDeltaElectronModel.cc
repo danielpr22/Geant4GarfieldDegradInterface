@@ -62,21 +62,20 @@ HeedDeltaElectronModel::~HeedDeltaElectronModel() {}
 void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTrack, G4String particleName, double ekin_eV, double t, double x_cm,
             double y_cm, double z_cm, double dx, double dy, double dz) {
 
-    // We update the gas model parameters in case they have been changed from the previous run (in a scan for example)
-    UpdateFromGasModelParameters();
+    // If we are changing the parameters of the simulation iteratively in the run, this function updates the value of these parameters
+    UpdateParameters();
 
-    G4cout << "(Debug: HeedDeltaElectronModel.cc) The energy here is: " << G4BestUnit(ekin_eV, "Energy") << G4endl; 
-    int nc = 0, ni=0; // Number of electrons/ions produced by the delta electron
-    G4cout << "(Debug: HeedDeltaElectronModel.cc) Running interface..." << G4endl;
+    int nc = 0, ni = 0; // Number of electrons/ions produced by the delta electron
+    G4cout << "(Debug: HeedDeltaElectronModel.cc) Running Heed..." << G4endl;
     if(particleName == "e-"){
-        G4cout << "(Debug: HeedDeltaElectronModel.cc) Inside the electron case..." << G4endl;
+        G4cout << "(Debug: HeedDeltaElectronModel.cc) Transporting delta electron..." << G4endl;
         G4AutoLock lock(&aMutex);
         fTrackHeed->TransportDeltaElectron(x_cm, y_cm, z_cm, t, 
                                            ekin_eV, dx, dy,
                                            dz, nc, ni);
-        G4cout << "(Debug: HeedDeltaElectronModel.cc) The number of electrons produced is: " << nc << G4endl;
     }
     else{
+        G4cout << "(Debug: HeedDeltaElectronModel.cc) Transporting photon..." << G4endl;
         G4AutoLock lock(&aMutex);
         fTrackHeed->TransportPhoton(x_cm, y_cm, z_cm, t, ekin_eV, dx, dy,
                                     dz, nc);
@@ -92,12 +91,7 @@ void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTra
 
         // If the visManager is on...
         if(G4VVisManager::GetConcreteInstance() && cl % 1 == 0)
-            G4cout << "(Debug: HeedDeltaElectronModel.cc) Now drifting..." << G4endl;
-            G4cout << "(Debug: HeedDeltaElectronModel.cc) Positions (cm) and time for the drift calculation: " << xe 
-            << " " << ye << " " << ze << " " << te << G4endl;
-
-            G4cout << "(Debug: HeedDeltaElectronModel.cc) Value for the voltage in the cathode: " 
-            << vCathodePlane << G4endl; 
+            G4cout << "(Debug: HeedDeltaElectronModel.cc) Now drifting the particle..." << G4endl;
             Drift(xe,ye,ze,te); // Drift from the initial position to the final position in HeedModel
     }
     G4cout << "(Debug: HeedDeltaElectronModel.cc) Now plotting the track..." << G4endl;

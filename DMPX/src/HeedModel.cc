@@ -84,14 +84,16 @@ G4bool HeedModel::IsApplicable(const G4ParticleDefinition& particleType) {
 
 //Method called in every step: checks if the conditions of the particle are met. If true the DoIt-method is called
 G4bool HeedModel::ModelTrigger(const G4FastTrack& fastTrack) {
-  G4cout << "(Debug: HeedModel.cc) Inside the ModelTrigger method..." << G4endl;
   G4double ekin = fastTrack.GetPrimaryTrack()->GetKineticEnergy();
-  G4cout << "(Debug: HeedModel.cc) The kinetic energy of the particle is: " << G4BestUnit(ekin, "Energy") << G4endl;
-  if (ekin<=thermalE) {
+  bool eventSuccessful = detCon->GetDegradModel()->IsEventSuccessful();
+  G4cout << "(Debug: HeedModel.cc) The kinetic energy of the particle from Degrad is: " << G4BestUnit(ekin, "Energy") << G4endl;
+  G4cout << "(Debug: HeedModel.cc) Is event successful? " << eventSuccessful << G4endl;
+
+  // If the energy is above the energy threshold or the ionization event was successful
+  if (ekin >= thermalE && eventSuccessful) { 
 		G4cout << "(Debug: HeedModel.cc) Triggered! The Garfield model is triggered below energies of " <<  G4BestUnit(thermalE, "Energy") << G4endl;
 		return true;
-  }
-  else {return false;} 
+  } else { return false; } 
 }
 
 //Implementation of the general model, the Run method, called at the end, is specifically implemented for the daughter classes
@@ -449,28 +451,20 @@ void HeedModel::Drift(double x, double y, double z, double t) {
   }
 
   if (driftElectrons) {
-    G4cout << "(Debug: HeedModel.cc) Now drifting an electron..." << G4endl; 
+    // Starting point of the drift
+    G4cout << "(Debug: HeedModel.cc) Starting point of the drift: " << G4BestUnit(x, "Length") << " " 
+    << G4BestUnit(y, "Length") <<  " " << G4BestUnit(z, "Length") << " " << G4BestUnit(t, "Time") << G4endl; 
+
     DriftLineTrajectory* dlt = new DriftLineTrajectory();
     G4TrackingManager* fpTrackingManager = G4EventManager::GetEventManager()->GetTrackingManager();
     fpTrackingManager->SetTrajectory(dlt);
 
-    // Starting point of the drift
-    G4cout << "(Debug: HeedModel.cc) Starting point of the drift: " << x << " " 
-    << y <<  " " << z << " " << t << G4endl; 
-
-    auto runManager = G4RunManager::GetRunManager(); 
-
-    if (abs(y) > 0.1) {
-      G4cout << "(Debug: HeedModel.cc) Abort event! Position not valid" << G4endl; 
-      runManager -> AbortRun();
-      return;
-    }
-
     // If RK4 is to be used
     if (driftRKF) {
+        G4cout << "(Debug: HeedModel.cc) Using RK4 for the drift..." << G4endl; 
+
         fDriftRKF->DriftElectron(x, y, z, t);
         unsigned int n = fDriftRKF->GetNumberOfDriftLinePoints();
-        G4cout << "(Debug: HeedModel.cc) Number of drift line points: " << n << G4endl; 
         double xi, yi, zi, ti;
         int status; // Add a variable to store the status
         for (unsigned int i = 0; i < n; i++) {
@@ -611,9 +605,6 @@ void HeedModel::PlotTrack(){
       fFieldCanvas->Update();
       fFieldCanvas->Print("HeedDeltaElectronModel_efield.pdf");
     }
-
-    // Once we have plotted the data, we reset the parameters for the next shot
-    Reset();
 }
 
 
@@ -651,12 +642,11 @@ void HeedModel::ProcessEvent(){
   G4cout << "(Debug: HeedModel.cc) Event data saved to Results_" + nameOfSimulation + ".csv" << G4endl;
 }
 
-void HeedModel::Reset(){}
-
-void HeedModel::UpdateFromGasModelParameters() {
+void HeedModel::UpdateParameters() {
   // Update voltages
   vAnodeWires = fGasModelParameters->GetVoltageAnodeWires();
   vCathodePlane = fGasModelParameters->GetVoltageCathodePlane();
+  anodesSpacing = detCon->GetAnodesSpacing();
 
-  G4cout << "(Debug: HeedModel.cc) Updated HeedModel parameters from GasModelParameters." << G4endl;
+  G4cout << "(Debug: HeedModel.cc) The parameters for the HeedModel have been updated!" << G4endl;
 }

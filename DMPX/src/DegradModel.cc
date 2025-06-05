@@ -21,18 +21,18 @@
 #include "G4VProcess.hh"
 #include "G4RunManager.hh"
 
+// Converting the pressure to Torr is required for interacting with Degrad
 const static G4double torr = 1. / 760. * atmosphere;
 
 DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : G4VFastSimulationModel(modelName, envelope),detCon(dc), fGasBoxSD(sd), fGasModelParameters(gmp){
         thermalE=gmp->GetThermalEnergy();
         voltageCathodePlane=gmp->GetVoltageCathodePlane();
-        G4cout << "(Debug: DegradModel.cc) Now setting the thermal energy of the Degrad model: " << thermalE / eV << " eV" << G4endl;
+        G4cout << "(Debug: DegradModel.cc) The thermalization energy for electrons in the Degrad model is: " << thermalE / eV << " eV" << G4endl;
         processOccured = false;
         numberOfGases = gmp->GetNumberOfGases();  
         gasList = gmp->GetGasList();
         gasPercentages = gmp->GetGasPercentages();
-        G4cout << "(Debug: DegradModel.cc) The gas percentages are: " << gasPercentages << G4endl;
         temperature = gmp->GetTemperature();
         messenger = detCon->GetDetectorMessenger();
         pressure = messenger->GetPressure(); // Get the pressure from the DetectorMessenger
@@ -53,160 +53,179 @@ G4bool DegradModel::ModelTrigger(const G4FastTrack& fastTrack) {
   G4int id = fastTrack.GetPrimaryTrack()->GetParentID();
   G4ThreeVector currentPos = fastTrack.GetPrimaryTrack()->GetVertexPosition();
     if (id == 1){ // If it's the first ionization, Degrad is triggered
-        G4cout << "(Debug: DegradModel.cc) The Degrad model is triggered for the first ionization..." << G4endl;
+        G4cout << "(Debug: DegradModel.cc) First ionization detected! The Degrad model is triggered..." << G4endl;
         nbOfSecondaries++;
         G4cout << "(Debug: DegradModel.cc) Number of secondaries created: " << nbOfSecondaries << G4endl;
-        G4cout << "(Debug: DegradModel.cc) The position of the primary track is: " << G4BestUnit(currentPos,"Length") << G4endl;
-        return true;
+        G4cout << "(Debug: DegradModel.cc) The position of the first ionization is: " << G4BestUnit(currentPos,"Length") << G4endl;
+        
+        auto runManager = G4RunManager::GetRunManager(); 
+
+        if (abs(currentPos.y()/cm) > 0.1) { // If the drift starts too far away from the anodes, we stop the processing of the current run
+            G4cout << "(Debug: DegradModel.cc) Position of the ionization: " << abs(currentPos.y()) << G4endl; 
+            G4cout << "(Debug: DegradModel.cc) Abort event! First ionization position not valid!" << G4endl; 
+            runManager -> AbortRun();
+            isEventSuccessful = false; 
+            return false;
+        } else { 
+            isEventSuccessful = true; 
+            return true; 
+        }
     }
   return false;
 }
 
 void DegradModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
 
-    G4int id = fastTrack.GetPrimaryTrack()->GetTrackID();
-    
-    // If the volatage is updated during the run, we get the new value here
-    voltageAnodeWires = fGasModelParameters->GetVoltageAnodeWires();
-    voltageCathodePlane = fGasModelParameters->GetVoltageCathodePlane();
+    // We kill the primary track from Geant4. If the event was successful, we pass the particle
+    // to Degrad, if not, we stop here and shoot another photon
+    fastStep.KillPrimaryTrack(); 
 
-    G4cout << "(Debug: DegradModel.cc) In the DoIt method of the Degrad model..." << G4endl;
-    fastStep.KillPrimaryTrack(); // Kill the Geant4 track for the primary ionization electrons
-    G4cout << "(Debug: DegradModel.cc) The primary track has been killed..." << G4endl;
+    if (isEventSuccessful) {
 
-    G4cout << "(Debug: DegradModel.cc) Value of processOccured: " << processOccured << G4endl;
-    // This condition avoids that, if Geant4 produces more than one electron from photoionization, 
-    // the calculation from Degrad is done multiple times
-    if(!processOccured){
-        // Retrieving the EventAction instance for the energy of the primary
-        auto eventAction = dynamic_cast<EventAction*>(
-            const_cast<G4UserEventAction*>(G4RunManager::GetRunManager()->GetUserEventAction()));
+        G4int id = fastTrack.GetPrimaryTrack()->GetTrackID();
         
-            G4double energyPrimary;
-        if (eventAction) {
-            energyPrimary = eventAction->GetEnergyPrimary();
-            energyPrimary = energyPrimary / eV; // Convert to eV
-            G4cout << "(Debug: DegradModel.cc) Energy of the primary particle: " << energyPrimary << " eV" << G4endl;
-        } else {
-            energyPrimary = 0.0;
-            G4cerr << "(Debug: DegradModel.cc) Error: EventAction is not set or cannot be cast." << G4endl;
-        }  
+        // If the volatage is updated during the run, we get the new value here
+        voltageAnodeWires = fGasModelParameters->GetVoltageAnodeWires();
+        voltageCathodePlane = fGasModelParameters->GetVoltageCathodePlane();
 
-        G4ThreeVector degradPos =fastTrack.GetPrimaryTrack()->GetVertexPosition();
-        G4double degradTime = fastTrack.GetPrimaryTrack()->GetGlobalTime();
-        
-        // Set the true path length of the primary track during the step.
-        fastStep.ProposePrimaryTrackPathLength(0.0);
+        G4cout << "(Debug: DegradModel.cc) In the DoIt method of the Degrad model..." << G4endl;
+        G4cout << "(Debug: DegradModel.cc) The primary track has been killed..." << G4endl;
 
-        G4cout<<"(Debug: DegradModel.cc) Global time: "<< G4BestUnit(degradTime,"Time") << ", Position: " << G4BestUnit(degradPos,"Length") << G4endl;
+        G4cout << "(Debug: DegradModel.cc) Value of processOccured: " << processOccured << G4endl;
+        // This condition avoids that, if Geant4 produces more than one electron from photoionization, 
+        // the calculation from Degrad is done multiple times
+        if(!processOccured){
+            // Retrieving the EventAction instance for the energy of the primary
+            auto eventAction = dynamic_cast<EventAction*>(
+                const_cast<G4UserEventAction*>(G4RunManager::GetRunManager()->GetUserEventAction()));
+            
+                G4double energyPrimary;
+            if (eventAction) {
+                energyPrimary = eventAction->GetEnergyPrimary();
+                energyPrimary = energyPrimary / eV; // Convert to eV
+                G4cout << "(Debug: DegradModel.cc) Energy of the primary particle: " << energyPrimary << " eV" << G4endl;
+            } else {
+                energyPrimary = 0.0;
+                G4cerr << "(Debug: DegradModel.cc) Error: EventAction is not set or cannot be cast." << G4endl;
+            }  
 
-        G4int SEED=53217137*G4UniformRand();
-        G4String seed = G4UIcommand::ConvertToString(SEED);
+            G4ThreeVector degradPos =fastTrack.GetPrimaryTrack()->GetVertexPosition();
+            G4double degradTime = fastTrack.GetPrimaryTrack()->GetGlobalTime();
+            
+            // Set the true path length of the primary track during the step.
+            fastStep.ProposePrimaryTrackPathLength(0.0);
 
-        // Calculation of the electric field for Degrad in V/cm
-        distanceAnodeCathodes = 0.5 * detCon->GetGasBoxLengthY() / cm; // Distance from the anodes to the source of photons
-        G4double voltageDifference = voltageAnodeWires - voltageCathodePlane; // V
-        G4cout << "(Debug: DegradModel.cc) Voltage difference: " << voltageDifference << " V" << G4endl;
+            G4cout<<"(Debug: DegradModel.cc) Global time: "<< G4BestUnit(degradTime,"Time") << ", Position: " << G4BestUnit(degradPos,"Length") << G4endl;
 
-        G4double electricField = voltageDifference / distanceAnodeCathodes; // V/cm
-        G4cout << "(Debug: DegradModel.cc) Electric field: " << electricField << " V/cm" << G4endl;
+            G4int SEED=53217137*G4UniformRand();
+            G4String seed = G4UIcommand::ConvertToString(SEED);
+
+            // Calculation of the electric field for Degrad in V/cm
+            distanceAnodeCathodes = 0.5 * detCon->GetGasBoxLengthY() / cm; // Distance from the anodes to the source of photons
+            G4double voltageDifference = voltageAnodeWires - voltageCathodePlane; // V
+            G4cout << "(Debug: DegradModel.cc) Voltage difference: " << voltageDifference << " V" << G4endl;
+
+            G4double electricField = voltageDifference / distanceAnodeCathodes; // V/cm
+            G4cout << "(Debug: DegradModel.cc) Electric field: " << electricField << " V/cm" << G4endl;
 
 
-        // Formatting the input that we are going to feed to Degrad
-        // The main issue is that the input double values should have one and only one decimal point
-        // Here, we configure the input that will be sent to Degrad for the avalanche calculation.
-        std::string numberOfGasesString = std::to_string(numberOfGases); // No formatting needed
-        std::ostringstream oss;
+            // Formatting the input that we are going to feed to Degrad
+            // The main issue is that the input double values should have one and only one decimal point
+            // Here, we configure the input that will be sent to Degrad for the avalanche calculation.
+            std::string numberOfGasesString = std::to_string(numberOfGases); // No formatting needed
+            std::ostringstream oss;
 
-        // Format energyString
-        oss << std::fixed << std::setprecision(1) << energyPrimary;
-        std::string energyString = oss.str();
-        oss.str(""); // Clear the stream
-        oss.clear(); // Reset the state
+            // Format energyString
+            oss << std::fixed << std::setprecision(1) << energyPrimary;
+            std::string energyString = oss.str();
+            oss.str(""); // Clear the stream
+            oss.clear(); // Reset the state
 
-        // Format thermalEString
-        oss << std::fixed << std::setprecision(1) << (thermalE / eV); // Convert thermal energy to eV
-        std::string thermalEString = oss.str();
-        oss.str("");
-        oss.clear();
+            // Format thermalEString
+            oss << std::fixed << std::setprecision(1) << (thermalE / eV); // Convert thermal energy to eV
+            std::string thermalEString = oss.str();
+            oss.str("");
+            oss.clear();
 
-        // Format temperatureString
-        double temperatureCentigrade = temperature - 273.15; // Convert Kelvin to Celsius
-        oss << std::fixed << std::setprecision(1) << temperatureCentigrade;
-        std::string temperatureString = oss.str();
-        oss.str("");
-        oss.clear();
+            // Format temperatureString
+            double temperatureCentigrade = temperature - 273.15; // Convert Kelvin to Celsius
+            oss << std::fixed << std::setprecision(1) << temperatureCentigrade;
+            std::string temperatureString = oss.str();
+            oss.str("");
+            oss.clear();
 
-        // Format pressureString
-        double pressureTorr = pressure / torr; // Convert pressure to Torr
-        oss << std::fixed << std::setprecision(1) << pressureTorr;
-        std::string pressureString = oss.str();
-        oss.str("");
-        oss.clear();
+            // Format pressureString
+            double pressureTorr = pressure / torr; // Convert pressure to Torr
+            oss << std::fixed << std::setprecision(1) << pressureTorr;
+            std::string pressureString = oss.str();
+            oss.str("");
+            oss.clear();
 
-        // Format electricFieldString
-        oss << std::fixed << std::setprecision(1) << electricField;
-        std::string electricFieldString = oss.str();
-        oss.str("");
-        oss.clear();
+            // Format electricFieldString
+            oss << std::fixed << std::setprecision(1) << electricField;
+            std::string electricFieldString = oss.str();
+            oss.str("");
+            oss.clear();
 
-        // Please search for "INPUT CARDS" in the Degrad Fortran source code for more information
-        G4String degradString=numberOfGasesString + ",1,3,1," + seed + "," 
-        + energyString + "," + thermalEString + ",0.0\n" + gasList + "\n"
-        + gasPercentages + "," + temperatureString + "," + pressureString + "\n"
-        + electricFieldString + ",0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0";
+            // Please search for "INPUT CARDS" in the Degrad Fortran source code for more information
+            G4String degradString=numberOfGasesString + ",1,3,1," + seed + "," 
+            + energyString + "," + thermalEString + ",0.0\n" + gasList + "\n"
+            + gasPercentages + "," + temperatureString + "," + pressureString + "\n"
+            + electricFieldString + ",0.0,0.0,1,0\n100.0,0.5,1,1,1,1,1,1,1\n0,0,0,0,0,0";
 
-        G4cout << "(Debug: DegradModel.cc) String sent to conditions_Degrad.txt: " 
-        << degradString << G4endl;
-        
-        /*
-        The command below involves writing data to a file named conditions_Degrad.txt using 
-        the printf command. The output of the command is directed to the file, and the system() 
-        function returns an integer status code indicating the success or failure of the 
-        command execution. This return value is stored in the stdout variable, which can 
-        be used later to check for errors.
-        */
-        
-        std::ofstream outFile("conditions_Degrad.txt");
-        if (!outFile.is_open()) {
-            G4cerr << "(Error: DegradModel.cc) Failed to open conditions_Degrad.txt for writing." << G4endl;
-            return;
-        }
-        outFile << degradString;
-        if (outFile.fail()) {
-            G4cerr << "(Error: DegradModel.cc) Failed to write to conditions_Degrad.txt." << G4endl;
+            G4cout << "(Debug: DegradModel.cc) String sent to conditions_Degrad.txt: " 
+            << degradString << G4endl;
+            
+            /*
+            The command below involves writing data to a file named conditions_Degrad.txt using 
+            the printf command. The output of the command is directed to the file, and the system() 
+            function returns an integer status code indicating the success or failure of the 
+            command execution. This return value is stored in the stdout variable, which can 
+            be used later to check for errors.
+            */
+            
+            std::ofstream outFile("conditions_Degrad.txt");
+            if (!outFile.is_open()) {
+                G4cerr << "(Error: DegradModel.cc) Failed to open conditions_Degrad.txt for writing." << G4endl;
+                return;
+            }
+            outFile << degradString;
+            if (outFile.fail()) {
+                G4cerr << "(Error: DegradModel.cc) Failed to write to conditions_Degrad.txt." << G4endl;
+                outFile.close();
+                return;
+            }
             outFile.close();
-            return;
+            G4cout << "(Debug: DegradModel.cc) Successfully wrote to conditions_Degrad.txt." << G4endl;
+
+            G4cout << "(Debug: DegradModel.cc) Getting the environment variable for Degrad..." << G4endl;
+            const char* degradpath = std::getenv("DEGRAD_HOME");
+
+            if (!degradpath) {
+                G4cerr << "(Error: DegradModel.cc) DEGRAD_HOME is not set!" << G4endl;
+                return;
+            }
+
+            std::string exec = std::string(degradpath) + "/degrad.exe < conditions_Degrad.txt";
+            G4cout << "(Debug: DegradModel.cc) Full command: " << exec << G4endl;
+            int execStatus = system(exec.c_str());
+            if (execStatus != 0) {
+                G4cerr << "(Error: DegradModel.cc) Failed to execute Degrad." << G4endl;
+                return;
+            }
+
+            execStatus = system(exec.c_str()); // This command runs the mychar string command in the shell
+            execStatus = system("./convertDegradFile.py");
+
+            G4cout << "(Debug: DegradModel.cc) The Degrad file was properly converted..." << G4endl;
+
+            GetElectronsFromDegrad(fastStep,degradPos,degradTime);
+            processOccured=true; // Once Degrad has finished calculating the positions and times of the generated electrons
         }
-        outFile.close();
-        G4cout << "(Debug: DegradModel.cc) Successfully wrote to conditions_Degrad.txt." << G4endl;
-
-        G4cout << "(Debug: DegradModel.cc) Getting the environment variable for Degrad..." << G4endl;
-        const char* degradpath = std::getenv("DEGRAD_HOME");
-
-        if (!degradpath) {
-            G4cerr << "(Error: DegradModel.cc) DEGRAD_HOME is not set!" << G4endl;
-            return;
-        }
-
-        std::string exec = std::string(degradpath) + "/degrad.exe < conditions_Degrad.txt";
-        G4cout << "(Debug: DegradModel.cc) Full command: " << exec << G4endl;
-        int execStatus = system(exec.c_str());
-        if (execStatus != 0) {
-            G4cerr << "(Error: DegradModel.cc) Failed to execute Degrad." << G4endl;
-            return;
-        }
-
-        execStatus = system(exec.c_str()); // This command runs the mychar string command in the shell
-        execStatus = system("./convertDegradFile.py");
-
-        G4cout << "(Debug: DegradModel.cc) The Degrad file was properly converted..." << G4endl;
-
-        GetElectronsFromDegrad(fastStep,degradPos,degradTime);
-        processOccured=true; // Once Degrad has finished calculating the positions and times of the generated electrons
     }
     nbOfSecondaries = 0; // The number of secondaries created by the primary photon is reset
 }
+
 
 void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector degradPos,G4double degradTime)
 {
@@ -314,7 +333,8 @@ void DegradModel::GetElectronsFromDegrad(G4FastStep& fastStep, G4ThreeVector deg
                     G4cout << "(Debug: DegradModel.cc) Creating secondary electron..." << G4endl; 
                     nbOfElectronsGenerated += 1; 
 
-                    if (nbOfElectronsGenerated == secondaryElectronsPerPhoton) {
+                    // If we reach the desired number of secondaries, we exit the loop
+                    if (nbOfElectronsGenerated == secondaryElectronsPerPhoton) { 
                         break; 
                     }
                 }
