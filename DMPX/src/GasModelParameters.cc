@@ -3,6 +3,7 @@
 #include "../include/GasModelParametersMessenger.hh"
 #include "../include/DetectorConstruction.hh"
 #include "../include/HeedDeltaElectronModel.hh"
+#include "G4UnitsTable.hh"
 
 
 GasModelParameters::GasModelParameters(){
@@ -17,7 +18,8 @@ void GasModelParameters::AddParticleNameHeedDeltaElectron(const G4String particl
     }
 
     fMapParticlesEnergyHeedDeltaElectron.insert(
-                                std::make_pair(particleName, std::make_pair(ekin_min_keV, ekin_max_keV)));
+        std::make_pair(particleName, std::make_pair(ekin_min_keV, ekin_max_keV)));
     
-    G4cout << "(Debug: GasModelParameters.cc) HeedDeltaElectronGas/Anodes: Particle added: " << ekin_min_keV << " " << ekin_max_keV << G4endl;
+    G4cout << "(Debug: GasModelParameters.cc) HeedDeltaElectronModel: Particle added: " << G4BestUnit(ekin_min_keV, "Energy") 
+    << " " << G4BestUnit(ekin_max_keV, "Energy") << G4endl;
 }

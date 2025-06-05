@@ -51,46 +51,38 @@ use DriftLineTrajectoryPointContainer.
 */
 typedef std::vector<G4VTrajectoryPoint*> DriftLineTrajectoryPointContainer;
 
-class DriftLineTrajectory : public G4Trajectory
-{
-  public:
-
-    DriftLineTrajectory();
-    DriftLineTrajectory(DriftLineTrajectory &);
-    virtual ~DriftLineTrajectory();
-    virtual void AppendStep(const G4Step* aStep){}; 
-    void AppendStep(G4ThreeVector pos, G4double t);
-    inline void* operator new(size_t);
-    inline void  operator delete(void*);
-    inline int operator == (const DriftLineTrajectory& right) const
-     { return (this==&right); }
-    virtual int GetPointEntries() const
-     { return fpPointsContainer->size();};
-    virtual G4VTrajectoryPoint* GetPoint(G4int i) const
-     { return (*fpPointsContainer)[i];};
-    inline G4double GetCharge() const
-     { return +2.*eplus;}
-    void ClearTrajectory() {
-      if (fpPointsContainer) {
-        fpPointsContainer->clear();
-      }
-    }
-  private:
-    DriftLineTrajectoryPointContainer* fpPointsContainer;
+class DriftLineTrajectory : public G4Trajectory{
+    public:
+        DriftLineTrajectory();
+        DriftLineTrajectory(DriftLineTrajectory &);
+        virtual ~DriftLineTrajectory();
+        virtual void AppendStep(const G4Step* aStep){}; 
+        void AppendStep(G4ThreeVector pos, G4double t);
+        inline void* operator new(size_t);
+        inline void  operator delete(void*);
+        inline int operator == (const DriftLineTrajectory& right) const{ return (this==&right); }
+        virtual int GetPointEntries() const{ return fpPointsContainer->size();};
+        virtual G4VTrajectoryPoint* GetPoint(G4int i) const{ return (*fpPointsContainer)[i];};
+        inline G4double GetCharge() const{ return +2.*eplus;}
+        void ClearTrajectory(){
+            if (fpPointsContainer){
+                fpPointsContainer->clear();
+            }
+        }
+    private:
+        DriftLineTrajectoryPointContainer* fpPointsContainer;
 };
 
 extern G4ThreadLocal G4Allocator<DriftLineTrajectory>* DriftLineTrajectoryAllocator;
 
-inline void* DriftLineTrajectory::operator new(size_t)
-{
-  if(!DriftLineTrajectoryAllocator)
-      DriftLineTrajectoryAllocator = new G4Allocator<DriftLineTrajectory>;
-  return (void*)DriftLineTrajectoryAllocator->MallocSingle();
+inline void* DriftLineTrajectory::operator new(size_t){
+    if(!DriftLineTrajectoryAllocator)
+        DriftLineTrajectoryAllocator = new G4Allocator<DriftLineTrajectory>;
+    return (void*)DriftLineTrajectoryAllocator->MallocSingle();
 }
 
-inline void DriftLineTrajectory::operator delete(void* aTrajectory)
-{
-  DriftLineTrajectoryAllocator->FreeSingle((DriftLineTrajectory*)aTrajectory);
+inline void DriftLineTrajectory::operator delete(void* aTrajectory){
+    DriftLineTrajectoryAllocator->FreeSingle((DriftLineTrajectory*)aTrajectory);
 }
 
 #endif

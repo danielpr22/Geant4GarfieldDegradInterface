@@ -23,6 +23,7 @@ https://svs.icts.kuleuven.be/projects/svs_project014/wiki/Wiki
 #include "G4UItcsh.hh"
 #include "G4ios.hh"
 #include "G4VSteppingVerbose.hh"
+#include "G4UnitsTable.hh"
 #include "Randomize.hh" 
 #include "TApplication.h" 
 
@@ -86,7 +87,7 @@ int main(int argc, char** argv) {
     for (double spc : spacing) {
         UImanager->ApplyCommand("/DMPX/geometry/SetAnodesSpacing " + std::to_string(spc) + " mm");
 
-        G4cout << "(Debug: DMPX_anode_spacing.cc) Running for spacing: " << spc << " mm" << G4endl;
+        G4cout << "(Debug: DMPX_anode_spacing.cc) Running for spacing: " << G4BestUnit(spc, "Length") << G4endl;
 
         fDegradModel->ResetEventSuccessfulFlag(); // Reset the flag to false before starting
 
@@ -99,7 +100,6 @@ int main(int argc, char** argv) {
 
             // Check if a valid interaction occurred to move to the next configuration
             eventSuccessful = fDegradModel->IsEventSuccessful();
-            G4cout << "(Debug: DMPX_anode_spacing.cc) Take this event? " << eventSuccessful << G4endl;
       }
   }
 

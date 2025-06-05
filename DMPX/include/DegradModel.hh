@@ -3,17 +3,18 @@
  *
  *  Created on: Apr 9, 2014
  *      Author: dpfeiffe
+ * 
+ *  Updated on: Jun 6, 2025
+ * 		Update: Daniel Perales Rios
  */
 
 #ifndef DEGRADMODEL_H_
 #define DEGRADMODEL_H_
 
-// Included from the current project
 #include "GasModelParameters.hh"
 #include "GasBoxSD.hh"
 #include "DetectorMessenger.hh"
 
-// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "G4ThreeVector.hh"
 #include "G4VFastSimulationModel.hh"
 
@@ -22,7 +23,7 @@ class DetectorConstruction;
 class GasBoxSD;
 
 
-class DegradModel : public G4VFastSimulationModel {
+class DegradModel : public G4VFastSimulationModel{
 	public:
 		// Constructor and destructor
 		DegradModel(GasModelParameters*, G4String, G4Region*,DetectorConstruction*,GasBoxSD*);
@@ -31,8 +32,8 @@ class DegradModel : public G4VFastSimulationModel {
 		virtual G4bool IsApplicable(const G4ParticleDefinition&);
 		virtual G4bool ModelTrigger(const G4FastTrack&);
 		virtual void DoIt(const G4FastTrack&, G4FastStep&);
-		inline G4bool FindParticleName(G4String s){if(s == "e-") return true; return false;};
-		inline void Reset(){processOccured=false;};
+		inline G4bool FindParticleName(G4String s){ if(s == "e-") return true; return false; };
+		inline void Reset(){ processOccured=false; };
 
 		bool IsEventSuccessful() const { return isEventSuccessful; }; 
 		void ResetEventSuccessfulFlag() { isEventSuccessful = false; };

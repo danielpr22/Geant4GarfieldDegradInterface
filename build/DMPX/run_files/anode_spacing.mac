@@ -95,11 +95,11 @@
     /gasModelParameters/heed/driftRKF 0
     /gasModelParameters/heed/trackmicroscopic 1
     /gasModelParameters/heed/createAval 0
-    /gasModelParameters/heed/visualizechamber 0
+    /gasModelParameters/heed/visualizechamber 1
     /gasModelParameters/heed/visualizesignals 0
     /gasModelParameters/heed/visualizefield 0
     /gasModelParameters/heed/voltageanodewire 0.    # [V]
-    /gasModelParameters/heed/voltagecathodeplane -500.     # [V]
+    /gasModelParameters/heed/voltagecathodeplane -100.     # [V]
     /gasModelParameters/heed/jumpDriftStepPoints 10 # Number of steps to omit for the plotting
 
 

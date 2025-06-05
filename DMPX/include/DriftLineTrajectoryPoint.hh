@@ -34,7 +34,6 @@
 #ifndef WLSTrajectoryPoint_h_seen
 #define WLSTrajectoryPoint_h_seen 1
 
-// Included from the loaded libraries (G4, ROOT, Garfield++, Degrad...)
 #include "globals.hh"
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
@@ -56,8 +55,7 @@ class DriftLineTrajectoryPoint : public G4TrajectoryPoint {
 		// Operators
 		inline void *operator new(size_t);
 		inline void operator delete(void *aTrajectoryPoint);
-		inline int operator==(const DriftLineTrajectoryPoint& right) const
-		{ return (this==&right); };
+		inline int operator==(const DriftLineTrajectoryPoint& right) const{ return (this==&right); };
 
 		virtual std::vector<G4AttValue>* CreateAttValues() const;
 
@@ -69,17 +67,14 @@ class DriftLineTrajectoryPoint : public G4TrajectoryPoint {
 
 extern G4ThreadLocal G4Allocator<DriftLineTrajectoryPoint>* DriftLineTrajectoryPointAllocator;
 
-inline void* DriftLineTrajectoryPoint::operator new(size_t)
-{
+inline void* DriftLineTrajectoryPoint::operator new(size_t){
     if(!DriftLineTrajectoryPointAllocator)
     	DriftLineTrajectoryPointAllocator = new G4Allocator<DriftLineTrajectoryPoint>;
     return (void *) DriftLineTrajectoryPointAllocator->MallocSingle();
 }
 
-inline void DriftLineTrajectoryPoint::operator delete(void *aTrajectoryPoint)
-{
-    DriftLineTrajectoryPointAllocator->FreeSingle(
-        (DriftLineTrajectoryPoint *) aTrajectoryPoint);
+inline void DriftLineTrajectoryPoint::operator delete(void *aTrajectoryPoint){
+    DriftLineTrajectoryPointAllocator->FreeSingle((DriftLineTrajectoryPoint *) aTrajectoryPoint);
 }
 
 #endif

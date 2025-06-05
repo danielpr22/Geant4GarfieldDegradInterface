@@ -26,8 +26,7 @@
 // $Id: PhysicsListMessenger.hh,v 1.3 2006-06-29 16:57:52 gunter Exp $
 // GEANT4 tag $Name: not supported by cvs2svn $
 //
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 
 #ifndef PhysicsListMessenger_h
 #define PhysicsListMessenger_h 1
@@ -41,35 +40,30 @@
 #include "G4UIcmdWithAnInteger.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithABool.hh"
-/*! \class PhysicsListMessenger*/
-/*! class derived from G4UImessenger*/
-/*! taken from an example*/
+
 
 class G4UIcommand;
 class PhysicsList;
 class G4UIcmdWithoutParameter;
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
+// This class is derived from G4UImessenger
 class PhysicsListMessenger : public G4UImessenger {
- public:
-  PhysicsListMessenger(PhysicsList *);
-  ~PhysicsListMessenger();
+    public:
+        PhysicsListMessenger(PhysicsList *);
+        ~PhysicsListMessenger();
 
-  void SetNewValue(G4UIcommand *, G4String);
+        void SetNewValue(G4UIcommand *, G4String);
 
- private:
-  PhysicsList *pPhysicsList;
+    private:
+        PhysicsList *pPhysicsList;
 
-  G4UIdirectory *physDir;
-  G4UIcmdWithADoubleAndUnit *gammaCutCmd;
-  G4UIcmdWithADoubleAndUnit *electCutCmd;
-  G4UIcmdWithADoubleAndUnit *allCutCmd;
-  G4UIcmdWithAString *pListCmd;
-  G4UIcmdWithADoubleAndUnit *lowLimitECmd;
-  G4UIcmdWithoutParameter* addParamCmd;
+        G4UIdirectory *physDir;
+        G4UIcmdWithADoubleAndUnit *gammaCutCmd;
+        G4UIcmdWithADoubleAndUnit *electCutCmd;
+        G4UIcmdWithADoubleAndUnit *allCutCmd;
+        G4UIcmdWithAString *pListCmd;
+        G4UIcmdWithADoubleAndUnit *lowLimitECmd;
+        G4UIcmdWithoutParameter* addParamCmd;
 };
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

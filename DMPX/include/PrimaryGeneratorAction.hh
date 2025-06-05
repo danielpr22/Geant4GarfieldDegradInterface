@@ -1,8 +1,9 @@
 //
 //  PrimaryGeneratorAction.hh
-//  Xenon
+//  DMPX
 //
 //  Created by Lennert De Keukeleere on 25/10/2018.
+//  Adapted for the DMPX by Daniel Perales Rios on 5/6/2025
 //
 
 #ifndef PrimaryGeneratorAction_h
@@ -19,22 +20,20 @@ class G4Event;
 
 
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
-public:
-    PrimaryGeneratorAction();
-    ~PrimaryGeneratorAction();
-    
-    // you must define this method, it is called by the G4RunManager
-    // run manager passes the pointer to an event object, it will be given
-    // attributes from the Particle Gun
-    
-    void GeneratePrimaries(G4Event*);
-    //double GetMonoEnergy()const;
-    
-private:
-    
-    G4GeneralParticleSource* particleGun;
-    
-    
+    public:
+        PrimaryGeneratorAction();
+        ~PrimaryGeneratorAction();
+        
+        // you must define this method, it is called by the G4RunManager
+        // run manager passes the pointer to an event object, it will be given
+        // attributes from the Particle Gun
+        
+        void GeneratePrimaries(G4Event*);
+        //double GetMonoEnergy()const;
+        
+    private:
+        // Instance for the particle gun
+        G4GeneralParticleSource* particleGun;
 };
 
 #endif /* PrimaryGeneratorAction_h */

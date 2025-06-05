@@ -9,14 +9,11 @@ class PhysicsList;
 
 class MyUserActionInitialization : public G4VUserActionInitialization{
 	public:
-	MyUserActionInitialization();
-	~MyUserActionInitialization();
-	
-	void Build() const;
-	void BuildForMaster() const;
-	
-	private:
-	
+        MyUserActionInitialization();
+        ~MyUserActionInitialization();
+        
+        void Build() const;
+        void BuildForMaster() const;	
 };
 
 #endif

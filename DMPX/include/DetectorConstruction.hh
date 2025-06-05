@@ -67,7 +67,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     virtual G4VPhysicalVolume* Construct();
     virtual void ConstructSDandField();
 
-    //Setters for the dimensions and environment variables of the setup
+    //Setters for the detector's setup
     inline void CheckOverlaps(G4bool co){checkOverlaps=co;};
     inline void SetWorldHalfLength(G4double d){worldHalfLength=d;};
     inline void SetGasPressure(G4double d){gasPressure=d;};
@@ -90,7 +90,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction {
     inline void SetCathodes1_XPos(G4double d){cathodes1_XPos=d;}; 
     inline void SetCathodes1_ZPos(G4double d){cathodes1_ZPos=d;};
 
-    //Getters for the dimensions and environment variables of the setup
+    //Getters for the detector's setup
     inline G4double GetWorldHalfLength(){return worldHalfLength;};
     inline G4double GetGasPressure(){return gasPressure;};
     inline G4double GetKryptonPercentage(){return kryptonPercentage;};

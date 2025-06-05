@@ -37,73 +37,64 @@
 #include "G4ThreeVector.hh"
 #include "tls.hh"
 
-/// Tracker hit class
-///
-/// It defines data members to store the trackID, FibberNb, energy deposit,
-/// and position of charged particles in a selected volume:
-/// - fTrackID, fFibberNB, fEdep, fPos
+// Tracker hit class
+//
+// It defines data members to store the trackID, energy deposit,
+// and position of charged particles in a selected volume:
 
-class GasBoxHit : public G4VHit
-{
-  public:
-    GasBoxHit();
-    GasBoxHit(const GasBoxHit&);
-    virtual ~GasBoxHit();
+class GasBoxHit : public G4VHit{
+    public:
+        GasBoxHit();
+        GasBoxHit(const GasBoxHit&);
+        virtual ~GasBoxHit();
 
-    // operators
-    const GasBoxHit& operator=(const GasBoxHit&);
-    G4int operator==(const GasBoxHit&) const;
+        // operators
+        const GasBoxHit& operator=(const GasBoxHit&);
+        G4int operator==(const GasBoxHit&) const;
 
-    inline void* operator new(size_t);
-    inline void  operator delete(void*);
+        inline void* operator new(size_t);
+        inline void  operator delete(void*);
 
-    // methods from base class
-    virtual void Draw();
-    virtual void Print();
+        // methods from base class
+        virtual void Draw();
+        virtual void Print();
 
-    // Set methods
-    void SetTrackID  (G4int track)      { fTrackID = track; };
-    void SetPos      (G4ThreeVector xyz){ fPos = xyz; };
-    void SetTime      (G4double t){ fTime = t; };
-    void SetPhotonEnergy (G4double e){ fEnergy = e; };
+        // Set methods
+        void SetTrackID(G4int track)        { fTrackID = track; };
+        void SetPos(G4ThreeVector xyz)      { fPos = xyz; };
+        void SetTime(G4double t)            { fTime = t; };
+        void SetPhotonEnergy(G4double e)    { fEnergy = e; };
 
-    // Get methods
-    G4int GetTrackID() const     { return fTrackID; };
-    G4ThreeVector GetPos() const { return fPos; };
-     G4double GetTime() const     { return fTime; };
-      G4double GetPhotonEnergy() const     { return fEnergy; };
+        // Get methods
+        G4int GetTrackID()          const{ return fTrackID; };
+        G4ThreeVector GetPos()      const{ return fPos; };
+        G4double GetTime()          const{ return fTime; };
+        G4double GetPhotonEnergy()  const{ return fEnergy; };
 
-  private:
-
-      G4int         fTrackID;
-      G4double      fTime;
-      G4ThreeVector fPos;
-      G4double      fEnergy;
+    private:
+        G4int         fTrackID;
+        G4double      fTime;
+        G4ThreeVector fPos;
+        G4double      fEnergy;
       
 };
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 typedef G4THitsCollection<GasBoxHit> GasBoxHitsCollection;
 
 extern G4ThreadLocal G4Allocator<GasBoxHit>* GasBoxHitAllocator;
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-inline void* GasBoxHit::operator new(size_t)
-{
+inline void* GasBoxHit::operator new(size_t){
   if(!GasBoxHitAllocator)
       GasBoxHitAllocator = new G4Allocator<GasBoxHit>;
   return (void *) GasBoxHitAllocator->MallocSingle();
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-inline void GasBoxHit::operator delete(void *hit)
-{
+inline void GasBoxHit::operator delete(void *hit){
   GasBoxHitAllocator->FreeSingle((GasBoxHit*) hit);
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
