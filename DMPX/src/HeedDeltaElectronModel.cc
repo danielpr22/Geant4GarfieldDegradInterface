@@ -85,7 +85,7 @@ void HeedDeltaElectronModel::Run(G4FastStep& fastStep,const G4FastTrack& fastTra
         double ee, dxe, dye, dze;
         fTrackHeed->GetElectron(cl, xe, ye, ze, te, ee, dxe, dye, dze);
         GasBoxHit* gbh = new GasBoxHit();
-        gbh->SetPos(G4ThreeVector(xe*CLHEP::cm,ye*CLHEP::cm,ze*CLHEP::cm));
+        gbh->SetPos(G4ThreeVector(xe * CLHEP::cm, ye * CLHEP::cm, ze * CLHEP::cm));
         gbh->SetTime(te);
         fGasBoxSD->InsertGasBoxHit(gbh);
 

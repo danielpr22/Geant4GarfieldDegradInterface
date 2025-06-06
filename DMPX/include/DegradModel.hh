@@ -59,6 +59,7 @@ class DegradModel : public G4VFastSimulationModel{
 		G4double pressure; 
 		G4double distanceAnodeCathodes;
 		G4int secondaryElectronsPerPhoton;
+        G4double driftDistanceThreshold; 
 };
 
 #endif

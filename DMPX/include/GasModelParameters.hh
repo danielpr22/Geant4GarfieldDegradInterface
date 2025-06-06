@@ -49,6 +49,8 @@ class GasModelParameters{
         inline int GetJumpDriftStepPoints()                 { return jumpDriftStepPoints; };
         inline void SetSecondaryElectronsPerPhoton(int n)   { secondaryElectronsPerPhoton=n; };
         inline int GetSecondaryElectronsPerPhoton()         { return secondaryElectronsPerPhoton; };
+        inline void SetDriftDistanceThreshold(G4double d)   { driftDistanceThreshold=d; }; 
+        inline G4double GetDriftDistanceThreshold()         { return driftDistanceThreshold; };
 
 
         // Visualization options
@@ -111,6 +113,7 @@ class GasModelParameters{
         bool createAval;
         G4int jumpDriftStepPoints;
         G4int secondaryElectronsPerPhoton;
+        G4double driftDistanceThreshold; 
 
         // Visualization variables
         bool fVisualizeChamber;

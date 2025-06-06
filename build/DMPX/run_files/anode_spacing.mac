@@ -21,7 +21,7 @@
     /DMPX/geometry/SetWorldHalfLength 0.5 m
 
     # Name for the simulation. There will be a generated results file named Results_{Name of the simulation}
-    /DMPX/geometry/SetNameOfSimulation DMPX_anode_spacing_5_6
+    /DMPX/geometry/SetNameOfSimulation DMPX_anode_spacing_6_6
 
     # Checking if there are any volumes that are overlapping (default set to false)
     /DMPX/geometry/CheckOverlaps 0
@@ -88,19 +88,25 @@
 
     # If Degrad generates 200 electrons and this option is set to 10, then only 20 
     # electrons will be actually created and followed later by Heed
-    /gasModelParameters/degrad/secondaryElectronsPerPhoton 1
+    /gasModelParameters/degrad/secondaryElectronsPerPhoton 100
     
     /gasModelParameters/heed/gasfile kr_90_ch4_10.gas
     /gasModelParameters/heed/drift 1
-    /gasModelParameters/heed/driftRKF 0
-    /gasModelParameters/heed/trackmicroscopic 1
-    /gasModelParameters/heed/createAval 0
+    /gasModelParameters/heed/driftRKF 1
+    /gasModelParameters/heed/trackmicroscopic 0
+    /gasModelParameters/heed/createAval 0 
     /gasModelParameters/heed/visualizechamber 1
     /gasModelParameters/heed/visualizesignals 0
     /gasModelParameters/heed/visualizefield 0
     /gasModelParameters/heed/voltageanodewire 0.    # [V]
-    /gasModelParameters/heed/voltagecathodeplane -100.     # [V]
+    /gasModelParameters/heed/voltagecathodeplane -1800.     # [V]
     /gasModelParameters/heed/jumpDriftStepPoints 10 # Number of steps to omit for the plotting
+
+    # This variable is important for the calculation time. It stores the maximum distance allowed for the 
+    # drift between the ionization point and the anodes. Too long drifts result in very long calculations, 
+    # and we are mainly interested in what happens very close to the anodes. For a distance greater than 
+    # this, the process will be aborted.
+    /gasModelParameters/degrad/driftDistanceThreshold 4.0 mm
 
 
 ####################################################
@@ -180,7 +186,7 @@
     /vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
     /vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 6
 
-    /vis/scene/endOfEventAction accumulate 100
+    #/vis/scene/endOfEventAction accumulate 100
 
     /tracking/storeTrajectory 1
    
@@ -229,8 +235,8 @@
     # All angles are in degrees
     /gps/ang/mintheta 90. deg # Theta is fixed such that the particles are shot in the XY plane
     /gps/ang/maxtheta 90. deg
-    /gps/ang/minphi 75. deg # We fix it this time
-    /gps/ang/maxphi 75. deg
+    /gps/ang/minphi 100. deg # We fix it this time
+    /gps/ang/maxphi 100. deg
 
     # Monoenergetic photon particle source at a given energy
     /gps/particle gamma

@@ -94,9 +94,8 @@ int main(int argc, char** argv) {
         bool eventSuccessful = false; 
         while (!eventSuccessful) {
             // Process one event
-            runManager->BeamOn(1);
-
             G4cout << "(Debug: DMPX_anode_spacing.cc) Now shooting..." << G4endl;
+            runManager->BeamOn(1);
 
             // Check if a valid interaction occurred to move to the next configuration
             eventSuccessful = fDegradModel->IsEventSuccessful();

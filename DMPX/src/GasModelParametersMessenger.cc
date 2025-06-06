@@ -156,6 +156,8 @@ GasModelParametersMessenger::GasModelParametersMessenger(GasModelParameters* gm)
   secondaryElectronsPerPhotonCmd = new G4UIcmdWithAnInteger("/gasModelParameters/degrad/secondaryElectronsPerPhoton",this);
   secondaryElectronsPerPhotonCmd->SetGuidance("Set the number of secondary electrons to be calculated in the Degrad avalanche");
 
+  driftDistanceThresholdCmd = new G4UIcmdWithADouble("/gasModelParameters/degrad/driftDistanceThreshold", this); 
+  driftDistanceThresholdCmd->SetGuidance("Set the maximum drifting distance allowed"); 
 }
 
 
@@ -185,6 +187,7 @@ GasModelParametersMessenger::~GasModelParametersMessenger() {
   delete distanceAnodeCathodesCmd;
   delete jumpDriftStepPointsCmd;
   delete secondaryElectronsPerPhotonCmd;
+  delete driftDistanceThresholdCmd; 
 }
 
 
@@ -272,6 +275,9 @@ void GasModelParametersMessenger::SetNewValue(G4UIcommand* command, G4String new
     else if(command ==  secondaryElectronsPerPhotonCmd) {
       fGasModelParameters->SetSecondaryElectronsPerPhoton(secondaryElectronsPerPhotonCmd->GetNewIntValue(newValues));
     } 
+    else if(command == driftDistanceThresholdCmd) {
+        fGasModelParameters->SetDriftDistanceThreshold(driftDistanceThresholdCmd->GetNewDoubleValue(newValues));
+    }
     else {
       G4cerr << "(Debug: GasModelParametersMessenger.cc) GasModelParametersMessenger::"
       << "SetNewValue: Unknown command" << G4endl;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <filesystem>
 
 #include "../include/HeedModel.hh"
 #include "../include/DriftLineTrajectory.hh"
@@ -50,9 +51,9 @@ HeedModel::HeedModel(GasModelParameters* gmp, G4String modelName, G4Region* enve
 
     // We get the construction parameters from the DetectorConstruction class
     nameOfSimulation = GetNameOfSimulation(*detCon); // Name used for the storing of results
-    anodesHalfLength = GetAnodesHalfLength(*detCon) / CLHEP::cm;
-    anodesR = GetAnodesR(*detCon) / CLHEP::cm;
-    anodesSpacing = GetAnodesSpacing(*detCon) / CLHEP::cm;
+    anodesHalfLength = GetAnodesHalfLength(*detCon) / cm;
+    anodesR = GetAnodesR(*detCon) / cm;
+    anodesSpacing = GetAnodesSpacing(*detCon) / cm;
     nbOfAnodes = GetNbOfAnodes(*detCon);
     cathodes_1_LengthX = GetCathodes1_LengthX(*detCon); 
     cathodes_1_LengthY = GetCathodes1_LengthY(*detCon); 
@@ -136,8 +137,8 @@ void HeedModel::DoIt(const G4FastTrack& fastTrack, G4FastStep& fastStep) {
     G4String particleName = fastTrack.GetPrimaryTrack()->GetParticleDefinition()->GetParticleName();
 
     // This Run method calls HeedDeltaElectronModel
-    Run(fastStep, fastTrack, particleName, ekin, time, worldPosition.x() / CLHEP::cm,
-        worldPosition.y() / CLHEP::cm, worldPosition.z() / CLHEP::cm,
+    Run(fastStep, fastTrack, particleName, ekin, time, worldPosition.x() / cm,
+        worldPosition.y() / cm, worldPosition.z() / cm,
         dir.x(), dir.y(), dir.z());
 }
 
@@ -254,12 +255,12 @@ void HeedModel::buildBoxAndField(){
 
     // We must be careful with the coordinates in Garfield++ and Geant4 : the z coordinate in 
     // Garfield++ corresponds to the y coordinate in Geant4!
-    box = new Garfield::SolidBox(detCon->GetGasBoxCenterPositionX()/CLHEP::cm, 
-                                detCon->GetGasBoxCenterPositionY()/CLHEP::cm, 
-                                detCon->GetGasBoxCenterPositionZ()/CLHEP::cm,
-                                detCon->GetGasBoxLengthX()*0.5/CLHEP::cm,
-                                detCon->GetGasBoxLengthY()*0.5/CLHEP::cm,
-                                detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm);
+    box = new Garfield::SolidBox(detCon->GetGasBoxCenterPositionX() / cm, 
+                                detCon->GetGasBoxCenterPositionY() / cm, 
+                                detCon->GetGasBoxCenterPositionZ() / cm,
+                                detCon->GetGasBoxLengthX()*0.5 / cm,
+                                detCon->GetGasBoxLengthY()*0.5 / cm,
+                                detCon->GetGasBoxLengthZ()*0.5 / cm);
 
     G4cout << "(Debug: HeedModel.cc) The anodes half length in Y is: " << G4BestUnit(detCon->GetGasBoxLengthY()*0.5, "Length") << G4endl; 
 
@@ -272,9 +273,9 @@ void HeedModel::buildBoxAndField(){
     comp->SetGeometry(geo);
 
     for (int i = 0; i < nbOfAnodes; i++) {
-        const double xPos = anodesSpacing * (i - nbOfAnodes / 2); // cm
-        const double yPos = detCon->GetGasBoxCenterPositionY()/CLHEP::cm; // cm
-        const double zPos = detCon->GetGasBoxCenterPositionZ()/CLHEP::cm; // cm
+        const double xPos = (anodesSpacing / cm) * (i - nbOfAnodes / 2); // cm
+        const double yPos = detCon->GetGasBoxCenterPositionY()/ cm; // cm
+        const double zPos = detCon->GetGasBoxCenterPositionZ()/ cm; // cm
         wire = new Garfield::SolidTube(xPos, // cm
             yPos, 
             zPos, 
@@ -292,12 +293,12 @@ void HeedModel::buildBoxAndField(){
     G4cout << "(Debug: HeedModel.cc) All the wires have been added to the Garfield geometry." << G4endl;
 
     // Creating the cathode plane geometry
-    double cathodePlaneHalfLengthX = 0.5 * cathodes_1_LengthX / CLHEP::cm; // cm (Garfield++ works with half lengths)
-    double cathodePlaneHalfLengthY = 0.5 * cathodes_1_LengthY / CLHEP::cm; // cm
-    double cathodePlaneHalfLengthZ = 0.5 * cathodes_1_LengthZ / CLHEP::cm; // cm
-    double xPosPlane = cathodes_1_XPos / CLHEP::cm; // cm (Positions of the center of the plane)
-    double yPosPlane = 0.5 * distanceAnodeCathodes/CLHEP::cm + cathodePlaneHalfLengthY; 
-    double zPosPlane = cathodes_1_ZPos / CLHEP::cm; // cm
+    G4double cathodePlaneHalfLengthX = 0.5 * cathodes_1_LengthX /  cm; // cm (Garfield++ works with half lengths)
+    G4double cathodePlaneHalfLengthY = 0.5 * cathodes_1_LengthY /  cm; // cm
+    G4double cathodePlaneHalfLengthZ = 0.5 * cathodes_1_LengthZ /  cm; // cm
+    G4double xPosPlane = cathodes_1_XPos /  cm; // cm (Positions of the center of the plane)
+    G4double yPosPlane = 0.5 * distanceAnodeCathodes/ cm + cathodePlaneHalfLengthY; 
+    G4double zPosPlane = cathodes_1_ZPos /  cm; // cm
 
     // The anodes are sandwiched between two cathode planes
     cathodePlane_1 = new Garfield::SolidBox(xPosPlane, yPosPlane, zPosPlane, 
@@ -317,7 +318,11 @@ void HeedModel::buildBoxAndField(){
     fGeoCanvas = new TCanvas("fGeoCanvas", "Geometry view", 800, 600);
     geoView->SetCanvas(fGeoCanvas);
     geoView->Plot3d();
-    fGeoCanvas->Print("Geometry.png");
+
+    // We create the directory for storing the results if we didn't do it yet
+    std::filesystem::create_directory(std::string(nameOfSimulation));
+
+    fGeoCanvas->Print((nameOfSimulation + "/Geometry_" + std::to_string(shotNumber) + ".png").c_str());
 }
 
 
@@ -331,12 +336,12 @@ void HeedModel::BuildSensor(){
     }
 
     // For efficiency reasons, we restrict charge transport to the gas box
-    fSensor->SetArea(-detCon->GetGasBoxLengthX()*0.5/CLHEP::cm, // xmin
-                     -detCon->GetGasBoxLengthY()*0.5/CLHEP::cm, // ymin
-                     -detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm, // zmin
-                      detCon->GetGasBoxLengthX()*0.5/CLHEP::cm, // xmax
-                      detCon->GetGasBoxLengthY()*0.5/CLHEP::cm, // y max
-                      detCon->GetGasBoxLengthZ()*0.5/CLHEP::cm); // zmax
+    fSensor->SetArea(-detCon->GetGasBoxLengthX()*0.5/ cm, // xmin
+                     -detCon->GetGasBoxLengthY()*0.5/ cm, // ymin
+                     -detCon->GetGasBoxLengthZ()*0.5/ cm, // zmin
+                      detCon->GetGasBoxLengthX()*0.5/ cm, // xmax
+                      detCon->GetGasBoxLengthY()*0.5/ cm, // y max
+                      detCon->GetGasBoxLengthZ()*0.5/ cm); // zmax
 
     //Lowest time [ns], tstep (signal collected during this time) [ns], tfinal [ns]
     //fSensor->SetTimeWindow(tmin, tstep, nbins); 
@@ -360,7 +365,6 @@ void HeedModel::SetTracking(){
         fDrift->SetSensor(fSensor);
         fDrift->EnableSignalCalculation(); // So we can count the number of electrons and not the readout signal
         fDrift->SetDistanceSteps(1.e-5); // Step size for the drift line set to 1 micron
-        G4cout << "(Debug: HeedModel.cc) The avalanche is being created..." << G4endl;
         if(createAval){
             fDrift->DisableAvalancheSizeLimit();
             fDrift->EnableAttachment();
@@ -387,7 +391,8 @@ void HeedModel::SettingChamberView(){
 
     if (driftRKF) {
         fDriftRKF->EnablePlotting(viewDrift);
-    } else if (trackMicro) { fAvalanche->EnablePlotting(viewDrift); }
+    } 
+    else if (trackMicro) { fAvalanche->EnablePlotting(viewDrift); }
     else { fDrift->EnablePlotting(viewDrift); }
     
     fTrackHeed->EnablePlotting(viewDrift);
@@ -429,37 +434,13 @@ void HeedModel::Drift(double x, double y, double z, double t) {
     if ((vAnodeWires != vAnodeWires_temp) || (vCathodePlane != vCathodePlane_temp) 
         || (anodesSpacing != anodesSpacing_temp)) {
 
-        G4cout << "(Debug: HeedModel.cc) HeedModel has been reinitialized..." << G4endl; 
-
         vAnodeWires_temp = vAnodeWires; // We update the voltages
         vCathodePlane_temp = vCathodePlane; 
         anodesSpacing_temp = anodesSpacing; 
         comp->Clear(); // Clearing all the electrodes and planes
 
-        // Updating the anodes
-        G4cout << "(Debug: HeedModel.cc) Value of anodesSpacing: " << G4BestUnit(anodesSpacing, "Length") << G4endl; 
-        for (int i = 0; i < nbOfAnodes; i++) {
-            const double xPos = anodesSpacing/10 * (i - nbOfAnodes / 2); // cm
-            const double yPos = detCon->GetGasBoxCenterPositionY()/CLHEP::cm; // cm
-            
-            // Generate a unique name like "a_0", "a_1", ..., "a_63" for the anodes
-            std::string wireName = "a_" + std::to_string(i);
-
-            // Adding the wires for the signal calculation
-            comp->AddWire(xPos, yPos, anodesR, vAnodeWires, wireName, anodesHalfLength); 
-        }
-
-        // Updating the cathodes
-        double cathodePlaneHalfLengthY = 0.5 * cathodes_1_LengthY / CLHEP::cm; // cm
-        double yPosPlane = 0.5 * distanceAnodeCathodes/CLHEP::cm + cathodePlaneHalfLengthY; 
-
-        comp->AddPlaneY(yPosPlane - cathodePlaneHalfLengthY, vCathodePlane, "p_pos_y"); // Adding the cathode plane
-        comp->AddPlaneY(-yPosPlane + cathodePlaneHalfLengthY, vCathodePlane, "p_neg_y"); // Adding the cathode plane
-
-        G4cout << "(Debug: HeedModel.cc) The new plane has been added with a voltage of: " 
-        << vCathodePlane << " V" << G4endl; 
-
         InitialisePhysics(); // We build the sensor again with the new comp
+        G4cout << "(Debug: HeedModel.cc) HeedModel has been reinitialized..." << G4endl; 
     }
 
     if (driftElectrons) {
@@ -595,38 +576,52 @@ void HeedModel::PlotTrack(){
     G4cout << "(Debug: HeedModel.cc) Number of events: " << numberOfEvents << G4endl;
     G4cout << "(Debug: HeedModel.cc) Average gas amplification coefficient G: " << double(secondaryElectronCounterTotal) / double(numberOfEvents) << G4endl;
     
+    // we create a directoy to store the resulting figures, if it doesn't exist
+    std::filesystem::create_directory(std::string(nameOfSimulation));
+
     // Now we plot the data once the simulation has finished
     if (fVisualizeChamber) {
-      viewCell->SetArea(-6, -1.5, 6, 1.5); // xmin, ymin, xmax, ymax, in cm
+      viewCell->SetArea(-0.5 * nbOfAnodes * anodesSpacing / cm, // xmin (all in cm)
+                        -1.5 * distanceAnodeCathodes/ cm, // ymin
+                        0.5 * nbOfAnodes * anodesSpacing / cm, // xmax
+                        1.5 * distanceAnodeCathodes/ cm); // ymax
+
       viewCell->Plot2d(); 
       constexpr bool twod = true; 
       constexpr bool drawaxis = false; 
       viewDrift->Plot(twod, drawaxis); 
       fChamberCanvas->Update();
-      G4cout << "(Debug: HeedModel.cc) Value of anodespacing: " << G4BestUnit(anodesSpacing, "Length") << G4endl; 
-      fChamberCanvas->Print(("HeedDeltaElectronModel_chamber_" + std::to_string(shotNumber) + ".pdf").c_str());
+      fChamberCanvas->Print((nameOfSimulation + "/HeedDeltaElectronModel_chamber_" + std::to_string(shotNumber) + ".pdf").c_str());
     }
     if (fVisualizeSignal) {
       fSignalCanvas->Clear(); // Clear the signal after each event
       fSensor->PlotSignal("a_5", fSignalCanvas);
       fSignalCanvas->Update();
-      fSignalCanvas->Print(("HeedDeltaElectronModel_signal_ " + std::to_string(shotNumber) + ".pdf").c_str());
+      fSignalCanvas->Print((nameOfSimulation + "/HeedDeltaElectronModel_signal_" + std::to_string(shotNumber) + ".pdf").c_str());
     }
     if (fVisualizeField) {
       fFieldCanvas->Clear(); // Clear the field after each event
       viewField->SetNumberOfContours(100);
-      viewField->SetArea(-7, -1.5, +7, 1.5);
+      viewField->SetArea(-0.5 * nbOfAnodes * anodesSpacing / cm, // xmin (all in cm)
+                         -1.5 * distanceAnodeCathodes/ cm, // ymin
+                         0.5 * nbOfAnodes * anodesSpacing / cm, // xmax
+                         1.5 * distanceAnodeCathodes/ cm); // ymax
       viewField->PlotContour("emag");
       fFieldCanvas->Update();
-      fFieldCanvas->Print("HeedDeltaElectronModel_efield.pdf");
+      fFieldCanvas->Print((nameOfSimulation + "/HeedDeltaElectronModel_efield_" + std::to_string(shotNumber) + ".pdf").c_str());
+      
     }
 }
 
 void HeedModel::ProcessEvent(){
-    std::ofstream resultfile("Results_" + nameOfSimulation + ".csv", std::ios::app); // Append mode to avoid overwriting
+    // Create the directory for storing the results if it doesn't exist
+    std::filesystem::create_directory(std::string(nameOfSimulation));
+
+    std::string filePath = nameOfSimulation + "/Results_" + nameOfSimulation + ".csv";
+    std::ofstream resultfile(filePath, std::ios::app); // Append mode to avoid overwriting
 
     // Check if the file is empty (to see if it's the first shot)
-    std::ifstream checkfile("Results_" + nameOfSimulation + ".csv");
+    std::ifstream checkfile(filePath);
     bool isEmpty = checkfile.peek() == std::ifstream::traits_type::eof();
     checkfile.close();
     
@@ -660,7 +655,9 @@ void HeedModel::UpdateParameters() {
     // Update voltages
     vAnodeWires = fGasModelParameters->GetVoltageAnodeWires();
     vCathodePlane = fGasModelParameters->GetVoltageCathodePlane();
-    anodesSpacing = detCon->GetAnodesSpacing();
+    anodesSpacing = GetAnodesSpacing(*detCon) / cm;
+
+    G4cout << "(Debug: HeedModel.cc) Anode spacing: " << GetAnodesSpacing(*detCon) / cm << G4endl; 
 
     G4cout << "(Debug: HeedModel.cc) The parameters for the HeedModel have been updated!" << G4endl;
 }

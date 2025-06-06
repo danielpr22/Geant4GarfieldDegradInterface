@@ -313,27 +313,27 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command, G4String newValues) {
     cathodes1_LengthX = setCathodes1_LengthXCmd->GetNewDoubleValue(newValues);
     detector->SetCathodes1_LengthX(cathodes1_LengthX);
     G4cout << "(Debug: DetectorMessenger.cc) Setting the length in X for the first cathodes to: " << 
-    cathodes1_LengthX << G4endl;
+    G4BestUnit(cathodes1_LengthX, "Length") << G4endl;
   } else if (command == setCathodes1_LengthYCmd) {
     cathodes1_LengthY = setCathodes1_LengthYCmd->GetNewDoubleValue(newValues);
     detector->SetCathodes1_LengthY(cathodes1_LengthY);
     G4cout << "(Debug: DetectorMessenger.cc) Setting the length in Y for the first cathodes to: " << 
-    cathodes1_LengthY << G4endl;
+    G4BestUnit(cathodes1_LengthY, "Length") << G4endl;
   } else if (command == setCathodes1_LengthZCmd) {
     cathodes1_LengthZ = setCathodes1_LengthZCmd->GetNewDoubleValue(newValues);
     detector->SetCathodes1_LengthZ(cathodes1_LengthZ);
     G4cout << "(Debug: DetectorMessenger.cc) Setting the length in Z for the first cathodes to: " << 
-    cathodes1_LengthZ << G4endl; 
+    G4BestUnit(cathodes1_LengthZ, "Length") << G4endl; 
   } else if (command == setCathodes1_XPosCmd) {
     cathodes1_XPos = setCathodes1_XPosCmd->GetNewDoubleValue(newValues);
     detector->SetCathodes1_XPos(cathodes1_XPos);
     G4cout << "(Debug: DetectorMessenger.cc) Setting the center position in X for the first cathodes to: " << 
-    cathodes1_XPos << G4endl;
+    G4BestUnit(cathodes1_XPos, "Length") << G4endl;
   } else if (command == setCathodes1_ZPosCmd) {
     cathodes1_ZPos = setCathodes1_ZPosCmd->GetNewDoubleValue(newValues);
     detector->SetCathodes1_ZPos(cathodes1_ZPos);
     G4cout << "(Debug: DetectorMessenger.cc) Setting the center position in Z for the first cathodes to: " << 
-    cathodes1_ZPos << G4endl;
+    G4BestUnit(cathodes1_ZPos, "Length") << G4endl;
   } else {
     G4cerr << "(Error: DetectorMessenger.cc) Command not recognized!" << G4endl;
   }

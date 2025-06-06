@@ -57,6 +57,7 @@ class GasModelParametersMessenger : public G4UImessenger{
         G4UIcmdWithABool* createAvalCmd;
         G4UIcmdWithAnInteger* secondaryElectronsPerPhotonCmd;
         G4UIcmdWithAnInteger* jumpDriftStepPointsCmd;
+        G4UIcmdWithADouble* driftDistanceThresholdCmd; 
 
         // Visualization commands
         G4UIcmdWithABool* visualizeChamberCmd;

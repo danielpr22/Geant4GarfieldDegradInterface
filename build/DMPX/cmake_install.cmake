@@ -43,26 +43,26 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_default_run" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_default_run")
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_anode_spacing" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_anode_spacing")
     file(RPATH_CHECK
-         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_default_run"
+         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_anode_spacing"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/DMPX_default_run")
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_default_run" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_default_run")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/DMPX_anode_spacing")
+  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_anode_spacing" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_anode_spacing")
     file(RPATH_CHANGE
-         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_default_run"
+         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_anode_spacing"
          OLD_RPATH "/home/Daniel/root/root_install/lib:/home/Daniel/garfield_install/lib:/home/Daniel/Desktop/GEANT4/geant4_install/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_default_run")
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/DMPX_anode_spacing")
     endif()
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/DMPX_default_run.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
+  include("/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX/CMakeFiles/DMPX_anode_spacing.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
 endif()
 

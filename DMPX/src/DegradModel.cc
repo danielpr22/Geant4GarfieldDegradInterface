@@ -26,18 +26,33 @@ const static G4double torr = 1. / 760. * atmosphere;
 
 DegradModel::DegradModel(GasModelParameters* gmp, G4String modelName, G4Region* envelope,DetectorConstruction* dc, GasBoxSD* sd)
     : G4VFastSimulationModel(modelName, envelope),detCon(dc), fGasBoxSD(sd), fGasModelParameters(gmp){
+        // Gas model parameters
         thermalE=gmp->GetThermalEnergy();
-        voltageCathodePlane=gmp->GetVoltageCathodePlane();
         G4cout << "(Debug: DegradModel.cc) The thermalization energy for electrons in the Degrad model is: " << thermalE / eV << " eV" << G4endl;
-        processOccured = false;
+
+        voltageCathodePlane=gmp->GetVoltageCathodePlane();
         numberOfGases = gmp->GetNumberOfGases();  
-        gasList = gmp->GetGasList();
         gasPercentages = gmp->GetGasPercentages();
+        gasList = gmp->GetGasList();
         temperature = gmp->GetTemperature();
+        secondaryElectronsPerPhoton = gmp->GetSecondaryElectronsPerPhoton();
+
+        // This variable is important for the calculation time. It stores the maximum distance allowed for the 
+        // drift between the ionization point and the anodes. Too long drifts result in very long calculations, 
+        // and we are mainly interested in what happens very close to the anodes. For a distance greater than 
+        // this, the process will be aborted.
+        driftDistanceThreshold = gmp->GetDriftDistanceThreshold(); 
+
+
+        // Flag not to calculate the same process more than one (the primary ionization)
+        processOccured = false;
+
+        // Messenger to get the parameters from the detector
         messenger = detCon->GetDetectorMessenger();
         pressure = messenger->GetPressure(); // Get the pressure from the DetectorMessenger
-        secondaryElectronsPerPhoton = gmp->GetSecondaryElectronsPerPhoton();
-        nbOfSecondaries = 0;
+        
+        nbOfSecondaries = 0; // Here we will store the number of secondaries created by Degrad
+
 }
 
 DegradModel::~DegradModel() {}
@@ -60,7 +75,9 @@ G4bool DegradModel::ModelTrigger(const G4FastTrack& fastTrack) {
         
         auto runManager = G4RunManager::GetRunManager(); 
 
-        if (abs(currentPos.y()/cm) > 0.1) { // If the drift starts too far away from the anodes, we stop the processing of the current run
+        G4cout << "(Debug: DegradModel.cc) Value of the threshold: " << G4BestUnit(driftDistanceThreshold, "Length") << G4endl; 
+
+        if (abs(currentPos.y()/cm) > driftDistanceThreshold/cm) { // If the drift starts too far away from the anodes, we stop the processing of the current run
             G4cout << "(Debug: DegradModel.cc) Position of the ionization: " << abs(currentPos.y()) << G4endl; 
             G4cout << "(Debug: DegradModel.cc) Abort event! First ionization position not valid!" << G4endl; 
             runManager -> AbortRun();
