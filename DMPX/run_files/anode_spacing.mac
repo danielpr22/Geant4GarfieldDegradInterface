@@ -58,7 +58,7 @@
 
     # Settings for the first cathodes (that will also be used in Garfield++)
     /DMPX/geometry/cathodes1_LengthX 13.0 cm # Lengths are total lengths, from side to side
-    /DMPX/geometry/cathodes1_LengthY 0.2 cm
+    /DMPX/geometry/cathodes1_LengthY 0.2 cm # Width
     /DMPX/geometry/cathodes1_LengthZ 3.2 cm
     /DMPX/geometry/cathodes1_XPos 0.0 cm
     /DMPX/geometry/cathodes1_ZPos 0.0 cm
@@ -92,8 +92,8 @@
     
     /gasModelParameters/heed/gasfile kr_90_ch4_10.gas
     /gasModelParameters/heed/drift 1
-    /gasModelParameters/heed/driftRKF 1
-    /gasModelParameters/heed/trackmicroscopic 0
+    /gasModelParameters/heed/driftRKF 0
+    /gasModelParameters/heed/trackmicroscopic 1
     /gasModelParameters/heed/createAval 0 
     /gasModelParameters/heed/visualizechamber 1
     /gasModelParameters/heed/visualizesignals 0
@@ -186,6 +186,7 @@
     /vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
     /vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 6
 
+    # To see N events plotted at the same time
     #/vis/scene/endOfEventAction accumulate 100
 
     /tracking/storeTrajectory 1

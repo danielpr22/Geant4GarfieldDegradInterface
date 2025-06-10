@@ -74,36 +74,30 @@ int main(int argc, char** argv) {
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);
     UImanager->ApplyCommand("/control/execute run_files/G_factor.mac");
 
-    GasBoxSD* gasBoxSD = detector->GetGasBoxSD();
-    if (!gasBoxSD) {
-        G4cerr << "(Error: DMPX_G_factor.cc) GasBoxSD not found!" << G4endl;
+    DegradModel* fDegradModel = detector->GetDegradModel();
+    if (!fDegradModel) {
+        G4cerr << "(Error: DMPX_G_factor.cc) DegradModel not defined!" << G4endl;
         return 1;
     }
 
-    // std::vector<double> voltages = {-100.0, -200.0, -300.0, -400.0, -500.0, -600.0, -700.0, -800.0, -900.0, -1000.0, 
-    //   -1100.0, -1200.0, -1300.0, -1400.0, -1500.0, -1600.0, -1700.0, -1800.0, -1900.0, -2000.0, -2100.0, -2200.0, -2300.0, -2400.0, -2500.0, 
-    //   -2600.0, -2700.0, -2800.0, -2900.0, -3000.0, -3100.0, -3200.0, -3300.0, -3400.0, -3500.0}; // in V
 
-
-    std::vector<double> voltages = {-3100.0, -3200.0, -3300.0, -3400.0, -3500.0}; // in V
+    std::vector<double> voltages = {-6500.0}; // in V
 
     for (double voltage : voltages) {
         UImanager->ApplyCommand("/gasModelParameters/heed/voltagecathodeplane " + std::to_string(voltage) + " V");
 
         G4cout << "(Debug: DMPX_G_factor.cc) Running for voltage: " << voltage << " V" << G4endl;
 
-        gasBoxSD->ResetGammaInteractionFlag(); // Reset the flag to false before starting
+        fDegradModel->ResetEventSuccessfulFlag(); // Reset the flag to false before starting
 
-        bool interactionOccurred = false; 
-        while (!interactionOccurred) {
+        bool eventSuccessful = false; 
+        while (!eventSuccessful) {
             // Process one event
+            G4cout << "(Debug: DMPX_G_factor.cc) Now shooting..." << G4endl;
             runManager->BeamOn(1);
 
-            G4cout << "(Debug: DMPX_G_factor.cc) Now shooting..." << G4endl;
-
             // Check if a gamma interaction occurred to move to the next configuration
-            interactionOccurred = gasBoxSD->HasGammaInteractionOccurred();
-            G4cout << "(Debug: DMPX_G_factor.cc) Interaction occurred: " << interactionOccurred << G4endl;
+            eventSuccessful = fDegradModel->IsEventSuccessful();
       }
   }
 

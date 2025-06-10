@@ -212,6 +212,15 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
+DMPX_G_factor_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX
+
+//Value Computed by CMake
+DMPX_G_factor_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+DMPX_G_factor_SOURCE_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/DMPX
+
+//Value Computed by CMake
 DMPX_anode_spacing_BINARY_DIR:STATIC=/home/Daniel/Desktop/Geant4GarfieldDegradInterface/build/DMPX
 
 //Value Computed by CMake
